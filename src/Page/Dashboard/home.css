@@ -1,0 +1,8 @@
+.blog-comments__item {
+    padding: 0;
+    border-bottom: 1px solid #e1e5eb;
+}
+
+.card-body {
+    margin-right: 5px;
+}

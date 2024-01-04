@@ -84,8 +84,7 @@ export const Login = ({handleClick}) => {
     }
     try {
       setIsLoading(true)
-      const res = await API_AUTH.post('/login', values)
-      console.log(res)
+      const res = await API_AUTH.post('/login', values);
       if(res.data.Status === "Success"){
         navigate('/');
       }

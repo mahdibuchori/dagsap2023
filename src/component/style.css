@@ -1,0 +1,201 @@
+.containersbox{
+    display: flex;
+}
+
+.sidebar{
+    flex: 0;
+    position: fixed;
+    background: var(--blue);
+    display: block;
+}
+
+.sidebar ul{
+    margin-top: 80px;
+    left: 0;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 5px;
+}
+
+.sidebar ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active{
+  background: var(--white);
+}
+
+.sidebar ul li:nth-child(1){
+    margin-top: 20px;
+}
+
+.sidebar ul li .coverAll{
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer;
+}
+
+.sidebar ul li:hover .coverAll,
+.sidebar ul li.active .coverAll{
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.sidebar ul li .coverAll .icon{
+    position: relative;
+    display: block;
+    min-width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sidebar ul li .coverAll .icon i{
+    font-size: 1.5em;
+}
+
+.sidebar ul li .coverAll .title{
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+}
+
+.sidebar>ul.logout {
+    position:absolute;
+    left:0;
+    bottom:0;
+}
+
+.topbar{
+    width: 100%;
+    height: 50px;
+    background-color: var(--white);
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    border-bottom-left-radius: 50px;
+    margin-bottom: 20px;
+    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.49);
+    -webkit-box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.49);
+    -moz-box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.49);
+}
+
+.topName{
+    text-align: right;
+    padding: 10px 0 0 10px ;
+    font-size: 16px;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.topOut{
+    text-align: right;
+    padding: 10px 15px 0 0 ;
+    font-size: 16px;
+    color: var(--blue);
+    font-weight: bold;
+    display: flex;
+}
+
+.imgTop{
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-right: 10px;
+}
+
+.bottomBar{
+    bottom: 0;
+    position: fixed;
+    height: 45px;
+    width: 100%;
+    background: var(--white);
+    display: block;
+    justify-content: space-between;
+    display: none;
+    -webkit-box-shadow: 0px 0px 12px -10px rgba(0, 0, 0, 0.75) inset;
+    box-shadow: 0px 0px 12px -10px rgba(0, 0, 0, 0.75) inset;
+}
+
+.bottomBar ul{
+    display: flex;
+    justify-content: space-between; 
+}
+
+.bottomBar ul li{
+    position: relative;
+    list-style: none;
+    width: 70px;
+    height: 70px;
+    z-index: 1;
+}
+
+.bottomBar ul li .coverAll{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.bottomBar ul li .coverAll .icon{
+    position: relative;
+    display: block;
+    line-height: 10px;
+    font-size: 1em;
+    text-align: center;
+    transition: 0.5s;
+    top: 10px;
+    color: var(--black1);
+}
+
+.bottomBar ul li.active .coverAll .icon{
+    color: var(--blue);
+}
+
+.bottomBar ul li .coverAll .title{
+    position: absolute;
+    color: var(--black1);
+    font-weight: 400;
+    font-size: 0.75em;
+    width: 100%;
+    letter-spacing: 0.05em;
+    transition: 0.5s;
+    transform: translateY(28px);
+}
+
+.bottomBar ul li.active .coverAll .title
+{
+    color: var(--blue);
+}
+
+
+@media screen and (max-width: 1023px){
+    .sidebar{
+        display: none;
+    }
+  }
+  @media screen and (max-width: 1022px){
+    .bottomBar{
+        display: block;
+    }
+}
