@@ -9,7 +9,7 @@ import News from './Page/Bulletin/News';
 import MenuCenter from './Page/MenuForm/MenuCenter';
 import Pengadaan from './Forms/PengadaanBarang/Pengadaan';
 import { CreatePengadaan } from './Forms/PengadaanBarang/CreatePengadaan';
-import UpdatePengadaan from './Forms/PengadaanBarang/UpdatePengadaan';
+import { UpdatePengadaan } from './Forms/PengadaanBarang/UpdatePengadaan';
 import { VerifyPengadaan } from './Forms/PengadaanBarang/VerifyPengadaan';
 
 function App() {
