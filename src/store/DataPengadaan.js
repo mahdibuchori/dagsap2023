@@ -1,5 +1,5 @@
 import produce from 'immer';
-import create from 'zustand';
+import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
 import { API_AUTH } from '../apis/apisData';
 
