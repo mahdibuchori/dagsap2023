@@ -12,12 +12,15 @@ export const API_AUTH = axios.create({
 
 export const API_GSHEET = axios.create({
     baseURL: urlGsheet,
+    withCredentials : true
 })
 
 export const API_FINA = axios.create({
   baseURL: urlFina,
+  withCredentials : true
 })
   
 export const API_FINASEND = axios.create({
   baseURL: urlFinaSend,
+  withCredentials : true
 })
