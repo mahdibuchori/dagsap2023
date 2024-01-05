@@ -11,6 +11,8 @@ import Pengadaan from './Forms/PengadaanBarang/Pengadaan';
 import { CreatePengadaan } from './Forms/PengadaanBarang/CreatePengadaan';
 import { UpdatePengadaan } from './Forms/PengadaanBarang/UpdatePengadaan';
 import { VerifyPengadaan } from './Forms/PengadaanBarang/VerifyPengadaan';
+import { PurcahsingOrder } from './Forms/PurchasingOrder/PurcahsingOrder';
+import { CreatePo } from './Forms/PurchasingOrder/CreatePo';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/form/pengadaan/create" element={<CreatePengadaan />} /> 
         <Route path="/form/pengadaan/data" element={<UpdatePengadaan />} /> 
         <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} /> 
+        <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
+        <Route path="/form/purchaseorder/create" element={<CreatePo />} /> 
         </Route>
         <Route path='/login' element={<Portofolio />}></Route>
       </Routes>

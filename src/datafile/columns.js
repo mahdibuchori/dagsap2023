@@ -1,5 +1,5 @@
 import { BtnPengadaan } from '../Forms/PengadaanBarang/BtnPengadaan';
-// import { BtnPurchasing } from '../Forms/PurchasingOrder/BtnPurchasing';
+import { BtnPurchasing } from '../Forms/PurchasingOrder/BtnPurchasing';
 // import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
 // import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
 
@@ -1331,7 +1331,7 @@ export const COLUMNS_PO =[
     {
         field : 'Action',
         headerName: 'Action',
-        // cellRenderer: BtnPurchasing,
+        cellRenderer: BtnPurchasing,
           cellRendererParams: {
             clicked: function (field) {
               alert(`${field} was clicked`);

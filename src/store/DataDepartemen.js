@@ -27,7 +27,6 @@ const useDataDepartemen = create(
                         })
                     }
                     jo.departemen = data; */
-                    console.log(data)
                     set(produce((state) => {
                         state.departemen = data;
                         state.departemenReady = true;

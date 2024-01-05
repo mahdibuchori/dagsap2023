@@ -124,7 +124,8 @@ export const UpdatePengadaan = () => {
         return { value: element.itemno, label: `${element.itemno} - ${element.itemdescription}`, item: element.itemdescription , satuan: element.unit1 };
     });
     const filMate = modifiedArr.filter(x => x.value.toUpperCase() === String(data?.material[0].itemNo).toUpperCase());
-
+    console.log(filMate)
+    console.log(data?.material[0])
     setitemNo(data?.material[0].itemNo)
     setFileBar(modifiedArr);
     setKode(data?.id_Pengadaan);

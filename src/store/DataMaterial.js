@@ -30,7 +30,6 @@ const useDataMaterial = create(
                         })
                     } */
                     const { data } = await API_GSHEET.get(`exec?tipe=dataMaterial`);
-                    console.log(data)
                     // jo.material = data;
                     set(produce((state) => {
                         state.material = data;

@@ -44,7 +44,6 @@ const useDataProvider = create(
                     }
                     jo.provider = data; */
                     const { data } = await API_GSHEET.get(`exec?tipe=dataProv`);
-                    console.log(data)
                     set(produce((state) => {
                         state.provider = data;
                         state.providerReady = true;
