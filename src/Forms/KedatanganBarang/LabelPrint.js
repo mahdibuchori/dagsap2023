@@ -218,7 +218,7 @@ export const LabelPrint = () => {
                                         <Text style={{fontSize: '6', marginLeft : '1mm'}}>
                                             kode   
                                         </Text>
-                                        <Image style={{width: '24mm', height:'24mm'}} src={`http://api.qrserver.com/v1/create-qr-code/?data=${kode}`}/> 
+                                        <Image style={{width: '24mm', height:'24mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=${kode}`}/> 
                                     </View>
                                 </View>
 
@@ -274,7 +274,7 @@ export const LabelPrint = () => {
                                         <Text style={{fontSize: '6', marginLeft : '1mm'}}>
                                             detail   
                                         </Text>
-                                        <Image style={{width: '24mm', height:'24mm'}} src={`http://api.qrserver.com/v1/create-qr-code/?data=${detail}`}/> 
+                                        <Image style={{width: '24mm', height:'24mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=${detail}`}/> 
                                     </View>
                                 </View>
 
