@@ -1,7 +1,7 @@
 import { BtnPengadaan } from '../Forms/PengadaanBarang/BtnPengadaan';
 import { BtnPurchasing } from '../Forms/PurchasingOrder/BtnPurchasing';
-// import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
-// import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
+import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
+import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
 
 export const COLUMNS_PENGADAAN =[
     {
@@ -1566,7 +1566,7 @@ export const COLUMNS_TERBANG =[
     {
         field : 'Action',
         headerName: 'Action',
-        // cellRenderer: BtnTerima,
+        cellRenderer: BtnTerima,
           cellRendererParams: {
             clicked: function (field) {
               alert(`${field} was clicked`);
@@ -1708,7 +1708,7 @@ export const COLUMNS_LOGBOOK =[
     {
         field : 'Action',
         headerName: 'Action',
-        // cellRenderer: BtnLogbook,
+        cellRenderer: BtnLogbook,
           cellRendererParams: {
             clicked: function (field) {
               alert(`${field} was clicked`);

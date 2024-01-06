@@ -179,7 +179,7 @@ export const CreatePo = () => {
             setIsLoading(false);
         }
         else{
-            console.log(data)
+            // console.log(data)
             const next = data.filter((e)=> e.status === "Pengajuan")
             console.log(next.length)
             setInputList(location.state.data);
@@ -276,7 +276,7 @@ export const CreatePo = () => {
                         const cek = dataPo.filter(obj => obj.id_Pengadaan === dataSementara.id_Pengadaan && obj.tgl_datang
                             === dataSementara.tgl_datang
                         );
-                        console.log(cek)
+                        // console.log(cek)
                         if(cek.length === 0){
                             setDataPo(prev => [...prev, data1])
                         }
@@ -344,7 +344,7 @@ export const CreatePo = () => {
 
     const cekProvider =()=>{
         const data = provider.provider
-        console.log(data)
+        // console.log(data)
         let result = data?.map(function(e){
             let pajak = "";
             if(e.tax2code === ""){
@@ -445,7 +445,7 @@ export const CreatePo = () => {
             let plan = String(userData.uplan).toUpperCase();
             let data = [];
             for(let x = 0; x< dataPo.length; x++){
-                console.log(dataPo[x])
+                // console.log(dataPo[x])
                 let file = {
                     material : dataPo[x].material,
                     qty : parseFloat(dataPo[x].qty).toFixed(2),
@@ -481,7 +481,6 @@ export const CreatePo = () => {
                     
                 }
             }
-            console.log(data)
             setRowData(data)
             setShow(false)
         }
@@ -523,6 +522,7 @@ export const CreatePo = () => {
         try {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
+            setIsLoading(true)
             const next = await API_AUTH.post(`/createpo`, {
                 id_po : nopo,
                 po_no: '',
@@ -547,7 +547,6 @@ export const CreatePo = () => {
                 tgl_approve : '',
                 plan : userData.uplan
             });
-            console.log(next)
             Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');
             setIsLoading(false);
         } catch (error) {
@@ -587,7 +586,6 @@ export const CreatePo = () => {
         })
         const pjk = modifiedArr[0]?.pajak;
         let dataPo = numbPo.data;
-        console.log(numbPo.data)
         if(dataPo.length === 0){
             if(pjk === ""){
                 const numb = ("00" + 1).slice(-2);

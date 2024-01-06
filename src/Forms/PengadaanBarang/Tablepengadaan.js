@@ -314,8 +314,6 @@ export const Tablepengadaan = ({columns}) => {
   const onGridReady = () =>{
     try {
       setDataPo([])
-      // setDataPo()
-      console.log(newPengadaan)
       const fg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FG");
       const hrga =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "HR-GA");
       const maintenance = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "MAINTENANCE");
@@ -466,7 +464,6 @@ export const Tablepengadaan = ({columns}) => {
       if(fData.length === 0){
         let newArray = newPengadaan.filter(
           (array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
-          console.log(newArray)
           navigate(`/form/purchaseorder/create`,{state:{
             data : newArray
           }}
