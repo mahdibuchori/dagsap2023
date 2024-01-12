@@ -115,7 +115,7 @@ export const SideBar = ({menubar, data}) => {
                     </ul>
                     <ul className="logout">
                         <li className="dashboard">
-                            <OverlayTrigger
+                            <OverlayTrigger 
                                 placement="right"
                                 delay={{ show: 150, hide: 250 }}
                                 overlay={renderLogout}

@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware';
 import { API_AUTH } from '../apis/apisData';
 const emptyString = '';
 const initialUser = [];
+
 const useAuthStore = create(
     persist(
         (set) => ({

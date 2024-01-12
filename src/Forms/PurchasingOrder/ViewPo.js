@@ -240,7 +240,7 @@ export const ViewPo = () => {
         let bln = date.getMonth() + 1;
         let tahu = date.getFullYear();
         let day = date.getDate();
-        const nTang = `${day}/${bln}/${tahu}`;
+        const nTang = `${bln}/${day}/${tahu}`;
         const inputList = data.dataPO;
         if(data.dataPO.length <2){
           let files = inputList.map((x, i) => {
@@ -248,26 +248,25 @@ export const ViewPo = () => {
               {"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
           )})
           let file = JSON.stringify(files)
-          // console.log(file)
+          console.log(file)
           const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
           const encoded = encodeURIComponent(uri);
           const newStr = encoded.replace(/%3A/g, ':')
-                        .replace(/%5B/g, '[')
-                        .replace(/%2C/g, ',')
-                        .replace(/%5D/g, ']');
-          
+          .replace(/%5B/g, '[')
+          .replace(/%2C/g, ',')
+          .replace(/%5D/g, ']');
           handleSendFina(newStr);
-          setIsLoading(true);
+          setIsLoading(false);
         }
         else{
           let files = inputList.map((x, i) => {
             return(
               {"SEQ":`${i}`,"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
           )})
-    
+          console.log(files)
           let file = JSON.stringify(files);
-          const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
-          const encoded = encodeURIComponent(uri);
+          const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+          const encoded = encodeURIComponent(uris)
           const newStr = encoded.replace(/%3A/g, ':')
                         .replace(/%5B/g, '[')
                         .replace(/%2C/g, ',')

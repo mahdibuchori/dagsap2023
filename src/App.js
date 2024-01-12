@@ -20,6 +20,7 @@ import { ViewTerima } from './Forms/KedatanganBarang/ViewTerima';
 import { LogBook } from './Forms/KedatanganBarang/LogBook';
 import { ViewLogbook } from './Forms/KedatanganBarang/ViewLogbook';
 import { LabelPrint } from './Forms/KedatanganBarang/LabelPrint';
+import { Karyawan } from './Forms/karyawan/Karyawan';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/form/Kedatangan/logbook" element={<LogBook />} /> 
         <Route path="/form/Kedatangan/logbookview" element={<ViewLogbook />} /> 
         <Route path="/form/Kedatangan/labelbarang" element={<LabelPrint />} /> 
+        <Route path="/form/karyawan" element={<Karyawan />} /> 
         </Route>
         <Route path='/login' element={<Portofolio />}></Route>
       </Routes>

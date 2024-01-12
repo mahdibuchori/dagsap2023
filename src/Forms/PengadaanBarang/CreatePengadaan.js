@@ -40,6 +40,7 @@ export const CreatePengadaan = () => {
   const [selectedValue, setSelectedValue] = useState();
 
   useEffect(() => {
+    console.log(material)
       const result = material.material?.reduce((unique, o) => {
           if(!unique.some(obj => obj.kategori === o.kategori)) {
             unique.push({

@@ -2,6 +2,7 @@ import { BtnPengadaan } from '../Forms/PengadaanBarang/BtnPengadaan';
 import { BtnPurchasing } from '../Forms/PurchasingOrder/BtnPurchasing';
 import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
 import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
+import { BtnKaryawan } from '../Forms/karyawan/BtnKaryawan';
 
 export const COLUMNS_PENGADAAN =[
     {
@@ -141,7 +142,7 @@ export const COLUMNS_KARYAWAN =[
     {
         field : '',
         headerName: '',
-        // cellRenderer: BtnKaryawan,
+        cellRenderer: BtnKaryawan,
         width: 170,
         pinned: 'right'
     }
@@ -1718,4 +1719,6 @@ export const COLUMNS_LOGBOOK =[
         pinned: 'right'
     }
 ]
+
+
 
