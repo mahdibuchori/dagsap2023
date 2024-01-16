@@ -7,14 +7,12 @@ import { Breadcrumb, Dropdown, Stack } from 'react-bootstrap';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
-import useAuthStore, { selectUser } from '../../store/DataUser';
 import useUserStore, { selectUserReady, selectOnEmployee, selectKaryawan, selectFalseEmployee } from '../../store/dataKaryawan';
 
 
 //useUserStore, 
 export const TableKaryawan = ({columns, data}) => {
   let navigate = useNavigate();
-  const userData = useAuthStore(selectUser);
   const onEmploye = useUserStore(selectOnEmployee);
   const dataKaryawan = useUserStore(selectKaryawan);
   const userReady = useUserStore(selectUserReady);
