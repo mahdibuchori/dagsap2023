@@ -6,7 +6,7 @@ const MenuDevelop = () => {
   return (
     <div className='divisi'>
         <div className='divisiWidgets'>
-            <Row xs={1} md={4} className="g-4">
+            <Row xs={1} md={4} className="mb-5 g-4">
                 {/* BOM */}
                 <Link to={"/"} className='link'>
                     <Col>

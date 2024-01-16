@@ -6,7 +6,7 @@ export const MenuPurchasing = () => {
     return (
         <div className='setContain'>
             <Container fluid>
-                <Row xs={1} md={4} className="g-4">
+                <Row xs={1} md={4} className="mb-5 g-4">
             {/* Eksternal Provider */}
                     <Link to={"/"} className='link'>
                         <Col>

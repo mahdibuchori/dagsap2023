@@ -514,7 +514,7 @@ export const CreatePo = () => {
                 savePengadaan()
             }
         } catch (error) {
-            
+            console.log(error)
         }
     };
 

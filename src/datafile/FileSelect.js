@@ -26,19 +26,17 @@ export const FileTahun = [
 ]
 
 export const FileDivisi = [
-  { value: 'All', label: 'All' },
-  { value: 'BOD/BOC', label: 'BOD/BOC' },
-  { value: 'Develop', label: 'Develop' },
-  { value: 'FAT', label: 'FAT' },
-  { value: 'HR-GA', label: 'HR-GA' },
-  { value: 'Koperasi', label: 'Koperasi' },
-  { value: 'Maintenance', label: 'Maintenance' },
-  { value: 'PPIC-Purchasing', label: 'PPIC-WH' },
-  { value: 'Produksi', label: 'Produksi' },
-  { value: 'QAQC', label: 'QAQC' },
-  { value: 'RnD', label: 'RnD' },
-  { value: 'Sales-Marketing', label: 'Sales-Marketing' },
-  { value: 'SSD', label: 'SSD' }
+  { value: 'All', label: 'All', subDiv :[{lab: 'All', valu: 'All'}]},
+  { value: 'BOD/BOC', label: 'BOD/BOC', subDiv :[{lab: 'BOD/BOC', valu: 'BOD/BOC'}]},
+  { value: 'FAT', label: 'FAT', subDiv :[{lab: 'FAT', valu: 'FAT'}]},
+  { value: 'HR-GA', label: 'HR-GA', subDiv :[{lab: 'HR-GA', valu: 'HR-GA'}]},
+  { value: 'Maintenance', label: 'Maintenance', subDiv :[{lab: 'Maintenance', valu: 'Maintenance'}]},
+  { value: 'PPIC-Purchasing', label: 'PPIC-Purchasing', subDiv :[{lab: 'PPIC-WH', valu: 'PPIC-WH'},{lab: 'Purchasing', valu: 'Purchasing'},{lab: 'WIP', valu: 'WIP'},{lab: 'FG', valu: 'FG'},{lab: 'Koperasi', valu: 'Koperasi'}]},
+  { value: 'Produksi', label: 'Produksi', subDiv :[{lab: 'Produksi', valu: 'Produksi'}]},
+  { value: 'QAQC', label: 'QAQC', subDiv :[{lab: 'QAQC', valu: 'QAQC'}]},
+  { value: 'RnD', label: 'RnD', subDiv :[{lab: 'RnD', valu: 'RnD'}]},
+  { value: 'Sales-Marketing', label: 'Sales-Marketing', subDiv :[{lab: 'Marketing', valu: 'Marketing'},{lab: 'Sales', valu: 'Sales'}]},
+  { value: 'SSD', label: 'SSD', subDiv :[{lab: 'SSD', valu: 'SSD'}]}
 ]
 
 export const SubDivisi = [
@@ -62,13 +60,13 @@ export const FilePlan = [
 ]
 
 export const FileLevel = [
-  { value: 'Level1', label: 'Level1' },
-  { value: 'Level2', label: 'Level2' },
-  { value: 'Level3', label: 'Level3' },
-  { value: 'Level4', label: 'Level4' },
-  { value: 'Level5', label: 'Level5' },
-  { value: 'Level6', label: 'Level6' },
-  { value: 'Level7', label: 'Level7' },
+  { value: 1, label: 'Level1', jabatan :[{lab: 'BOD/BOC', val : 'BOD/BOC'}]},
+  { value: 2, label: 'Level2', jabatan :[{lab: 'Manager', val : 'Manager'}]},
+  { value: 3, label: 'Level3', jabatan :[{lab: 'Supervisor', val : 'Supervisor'}]},
+  { value: 4, label: 'Level4', jabatan :[{lab: 'Leader', val : 'Leader'}]},
+  { value: 5, label: 'Level5', jabatan :[{lab: 'Admin', val : 'Admin'},{lab: 'Staff', val : 'Staff'}]},
+  { value: 6, label: 'Level6', jabatan :[{lab: 'Operator', val : 'Operator'}, {lab: 'Helper', val : 'Helper'}]},
+  { value: 7, label: 'Level7', jabatan :[{lab: 'None', val : 'None'}]},
 ]
 
 export const FileSatuan = [

@@ -74,7 +74,6 @@ export const PrintPo = () => {
     const [listPar, setListPar] = useState([]);
     const [numbering, setNumbering] = useState([]);
     const [inputList, setInputList] = useState();
-    const [nopo, setNopo] = useState('');
     const [kirim, setKirim] = useState('');
     const [tglPo, setTglPo] = useState('');
     const [bayar, setBayar] = useState('');
@@ -123,10 +122,10 @@ export const PrintPo = () => {
             let total = 0;
             let tinggi = parseInt(window.innerHeight)
             if(parseInt(window.innerWidth) < 1022){
-            total = parseInt(window.innerWidth) - 30;
+                total = parseInt(window.innerWidth) - 30;
             }
             else{
-            total = parseInt(window.innerWidth) - 99 ;
+                total = parseInt(window.innerWidth) - 99 ;
             }
             setScreenWidth(total);
             setScreenHeight(tinggi);
@@ -212,7 +211,6 @@ export const PrintPo = () => {
 
     const cekData = () =>{
         const data = location.state.data;
-        setNopo(data?.id_po);
         setBayar(data?.pembayaran);
         setTukar(data?.tukar);
         setExprovider(data?.expro);
@@ -345,7 +343,7 @@ export const PrintPo = () => {
                                     </View>
 
                                     <View style={{ width: '25mm', height: "25mm",marginLeft: '8mm' ,padding: 0}}>
-                                        <Image style={{width: '24mm', height:'24mm'}} src={`http://api.qrserver.com/v1/create-qr-code/?data=${nopo}`}/> 
+                                        <Image style={{width: '24mm', height:'24mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=${location.state.data.id_po}`}/> 
                                     </View>
                                 </View>
                                 <Text style={{fontSize: "8px"}}> </Text>
@@ -395,7 +393,7 @@ export const PrintPo = () => {
                                             No. PO
                                         </Text>
                                         <Text style={[styles.fontBold,styles.border,{height: '5mm',textAlign: 'center',padding:2, fontSize: "8px", marginBottom: '5mm'}]}>
-                                            {nopo}
+                                            {location.state.data.id_po}
                                         </Text>
                                         <Text style={[styles.fontBold,styles.border,{height: '5mm',textAlign: 'center',padding:2, fontSize: "8px"}]}>
                                             Nilai Tukar
@@ -447,13 +445,13 @@ export const PrintPo = () => {
                                         <View style={[styles.row,{width: '60mm',height: '30mm', textAlign: 'center'}]}>
                                             <View style={[{width: '20mm', marginTop: '2mm'}]}>
                                                 <Text>Disiapkan Oleh</Text>
-                                                <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`http://api.qrserver.com/v1/create-qr-code/?data=Endang W`}/> 
+                                                <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Endang W`}/> 
                                                 <Text style={{marginTop: '2mm'}}>Endang W</Text>
                                             </View>
                                             <View style={[{width: '20mm', marginLeft : '1mm', marginTop: '2mm'}]}>
                                                 <Text>Diperiksa Oleh</Text>
                                                 {stVeri ?
-                                                    <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`http://api.qrserver.com/v1/create-qr-code/?data=Mawi Prabudi`}/> 
+                                                    <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Mawi Prabudi`}/> 
                                                     :
                                                     <Text style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}}> </Text>
                                                 }
@@ -462,7 +460,7 @@ export const PrintPo = () => {
                                             <View style={[{width: '20mm', marginLeft : '1mm', marginTop: '2mm'}]}>
                                                 <Text>Disiapkan Oleh</Text>
                                                 {stAppro ? 
-                                                    <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`http://api.qrserver.com/v1/create-qr-code/?data=Rusli Adna`}/> 
+                                                    <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Rusli Adna`}/> 
                                                     :
                                                     <Text style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}}> </Text>
                                                 }
