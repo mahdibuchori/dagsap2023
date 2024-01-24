@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
-
+ 
 export const MenuPurchasing = () => {
     return (
         <div className='setContain'>

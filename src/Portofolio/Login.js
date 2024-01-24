@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
 import { API_AUTH } from '../apis/apisData';
 import { LoadingPage } from '../LoadingPage/LoadingPage';
-const ID_REGEX = /^[a-zA-Z0-9]{3,16}$/
+const ID_REGEX = /^[a-zA-Z0-9_-]{3,16}$/
 
 export const Login = ({handleClick}) => {
   const navigate = useNavigate()
@@ -108,18 +108,54 @@ export const Login = ({handleClick}) => {
     }
   }
 
-  const handleUpdate = () =>{}
+  const handleUpdate =async (e) =>{
+    e.preventDefault()
+    const v1 = ID_REGEX.test(idReg);
+    const v2 = pwdReg;
+    const v3 = newPass;
+    const v4 = matchPwd;
+    if(!v1 || !v2 || !v3 || !v4){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Invalid Entry',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+      return;
+    }
+    try {
+      setIsLoading(true)
+      const res = await API_AUTH.put(`/users/${idReg}`,{
+        "password" : pwdReg,
+        "newPassword" : newPass,
+        "confPassword" : matchPwd
+      });
+      setIsLoading(false)
+      Swal.fire('Success',`${res.data.msg}`,'success')
+      handleClick(false)
+    } catch (error) {
+      setIsLoading(false)
+      Swal.fire('Oppss...',`${error.response.data.msg}`,'error');
+    }
+  }
 
   const handlePass = (e) =>{
     const x = document.getElementById("passAw");
     const y = document.getElementById("passAny");
+    const z = document.getElementById("passAwNew");
     if(e.target.checked){
       x.type = "text";
       y.type = "text";
+      z.type = "text";
     }
     else{
       x.type = "password";
       y.type = "password";
+      z.type = "password";
     }
   }
   /* const navigate = useNavigate();
@@ -221,7 +257,10 @@ export const Login = ({handleClick}) => {
                 type="text" 
                 placeholder="id karyaawan"
                 name="idkar"
-                onChange={(e) => setidkar(e.target.value)}
+                onChange={(e) => {
+                  const nilai = e.target.value.toUpperCase();
+                  setidkar(nilai);
+                }}
                 value={idkar}
               />
               <label htmlFor='idkaryawan'>

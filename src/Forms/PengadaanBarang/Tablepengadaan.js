@@ -329,7 +329,13 @@ export const Tablepengadaan = ({columns}) => {
       const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
       const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");
 
-      setRowFg(fg);
+      ppic.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      console.log(ppic)
+      setRowFg(fg); 
       setRowHrga(hrga);
       setRowMaintenance(maintenance);
       setRowPpic(ppic);

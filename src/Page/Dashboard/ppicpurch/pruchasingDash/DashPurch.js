@@ -44,9 +44,9 @@ export const DashPurch = () => {
   }, []);
 
   useEffect(() => {
-      if (!purchYdReady) return;
-      onGridReady(0)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!purchYdReady) return;
+    onGridReady(0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [purchYdReady]);
 
   useEffect(() => { 
@@ -70,21 +70,20 @@ export const DashPurch = () => {
   }, [pengadaanReady]);
 
   useEffect(() => {
-      performRefresh();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    performRefresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMaterial]);
 
   const onGridReady = (x) =>{
     setIsLoading(false); 
     const data = PurchYDashboard.data;
-    console.log(data);
-      
+    // console.log(data);
     const resultItem = data.filter((v,i,a)=>a.findIndex(v2=>(v2.item===v.item))===i);
-      let material = resultItem.map(d => { 
-        return {value:  d.item.trim(), label: d.item.trim()}
-      });
+    let material = resultItem.map(d => { 
+      return {value:  d.item.trim(), label: d.item.trim()}
+    });
     setItem(material)
-    console.log(material)
+    // console.log(material)
     if(material.length > 0){
         let nama = material[0].value;
         if(nama === undefined){
@@ -99,8 +98,7 @@ export const DashPurch = () => {
   }
 
   const onDataReady = () =>{
-    setIsLoading(false)
-    console.log(newPengadaan)
+    setIsLoading(false);
     const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
     const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
     const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
@@ -115,6 +113,7 @@ export const DashPurch = () => {
   const handleSelect = (e) =>{
     setNabar(e.value)
   }
+
   const onSetDate =async (event) => {
     setIsLoading(true)
     pengadaanFalse();
@@ -124,15 +123,15 @@ export const DashPurch = () => {
 
   const performRefresh = () =>{
     if(isMaterial === ""){
-        console.log(isMaterial);
+      console.log(isMaterial);
     }
     else{
-        try {
-            setNaMet({value: isMaterial, label: isMaterial});
-            setNabar(isMaterial)
-        } catch (error) {
-            // Swal.fire('Opsss..','Terjadi Kesalahan Harap Refresh Page','error')
-        }
+      try {
+        setNaMet({value: isMaterial, label: isMaterial});
+        setNabar(isMaterial);
+      } catch (error) {
+        // Swal.fire('Opsss..','Terjadi Kesalahan Harap Refresh Page','error')
+      }
     }
   }
 

@@ -1394,6 +1394,7 @@ export const COLUMNS_TERBANG =[
     },
     {
         headerName: 'Status',
+        field : 'status_brng',
         width: 150,
         cellRenderer: params => {
             let date1 = new Date();

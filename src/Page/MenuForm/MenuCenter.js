@@ -7,6 +7,7 @@ import { DontAccess } from '../../component/DontAccess';
 import { MenuPpicPurch } from './MenuPpicPurch';
 import { MenuPpic } from './MenuPpic';
 import { MenuPurchasing } from './MenuPurchasing';
+import { MenuHrga } from './MenuHrga';
 
 
 const MenuCenter = () => {
@@ -63,6 +64,13 @@ const MenuCenter = () => {
         <PageNotFo />
       </div>
       
+    )
+  }
+  else if(userData?.udivisi === "HR-GA" ){
+    return (
+      <div className='setContain'>
+        <MenuHrga />
+      </div>
     )
   }
   else{

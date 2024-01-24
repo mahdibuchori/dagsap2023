@@ -33,7 +33,6 @@ export const InputKaryawan = () => {
     const [fileReady, setFileReady] = useState(false);
     const [divReady, setDivReady] = useState(true);
     
-
     useEffect (() => {
         if(!dataReady) return;
         const gntiDta = async () =>{
@@ -119,9 +118,27 @@ export const InputKaryawan = () => {
 
     const handleSubmit =async (e) =>{
         e.preventDefault();
+        setIsLoading(true)
+        setPicture('https://bootdey.com/img/Content/avatar/avatar7.png')
+        if(userData.udivisi === "Develop" || userData.udivisi === "HR-GA" ){
+            console.log('nik :' +nik)
+            if(nik === ""){
+                Swal.fire(`Oppsss...`, `Harap ulangi input nik karyawan`, 'info');
+                setIsLoading(false);
+            }
+            else{
+                handleSave()
+            }
+            
+        }
+        else{
+            Swal.fire('oppss','Anda tidak memiliki akses','info')
+        }
+        
+    }
+
+    const handleSave = async () =>{  
         try {
-            setIsLoading(true)
-            setPicture('https://bootdey.com/img/Content/avatar/avatar7.png')
             console.log({
                 nik : nik,
                 nama : nama,
@@ -133,33 +150,29 @@ export const InputKaryawan = () => {
                 cutTah : cutTah,
                 cutBes : cutBes,
                 userData
-            })  
-            if(userData.udivisi === "Develop" || userData.udivisi === "HR-GA" ){
-                const next = await API_AUTH.post(`/register`, 
-                    {
-                        "id" : nik,
-                        "name" : nama,
-                        "divisi" : divisi.value,
-                        "subdivisi" : subDiv.value,
-                        "jabatan" : selectedValue.value,
-                        "level" : level.value,
-                        "plan" : plan.value,
-                        "img" : picture,
-                        "password" : "dagsap123",
-                        "confPassword" : "dagsap123"
-                    }
-                )
-                Swal.fire(`${next.data.success}`, navigate(`/form/karyawan`), 'success');
-                setIsLoading(false);
-            }
-            else{
-                Swal.fire('oppss','Anda tidak memiliki akses','info')
-            }
+            })
+            const next = await API_AUTH.post(`/register`, 
+                {
+                    "id" : nik,
+                    "name" : nama,
+                    "divisi" : divisi.value,
+                    "subdivisi" : subDiv.value,
+                    "jabatan" : selectedValue.value,
+                    "level" : level.value,
+                    "plan" : plan.value,
+                    "img" : picture,
+                    "password" : "dagsap123",
+                    "confPassword" : "dagsap123"
+                }
+            )
+            Swal.fire(`${next.data.success}`, navigate(`/form/karyawan`), 'success');
+            setIsLoading(false);
         } catch (error) {
+            setIsLoading(false);
+            console.log(error)
             Swal.fire('Opsss',`${error.response.data.message}`,'error');
             setNik('')
             console.log(error.response.data.message);
-            setIsLoading(false);
         }
     }
   return (
@@ -236,7 +249,11 @@ export const InputKaryawan = () => {
                                             <Form.Control
                                                 required
                                                 type="text"
-                                                onChange={ (e) => setNik(e.target.value) }
+                                                value={nik}
+                                                onChange={ (e) =>{
+                                                    const nilai = e.target.value.toUpperCase();
+                                                    setNik(nilai)
+                                                } }
                                             />
                                             <Form.Control.Feedback type="invalid">Harap Input NIK</Form.Control.Feedback>
                                         </Form.Group>

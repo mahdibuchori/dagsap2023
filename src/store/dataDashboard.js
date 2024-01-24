@@ -27,7 +27,6 @@ const useDashboardStore = create(
                 let date = new Date()
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=reportPurch&date=${date}`);
-                    console.log(data)
                     set(produce((state) => {
                         state.dashPurchW = data;
                         state.purchWReady = true;
@@ -49,7 +48,6 @@ const useDashboardStore = create(
                 let date = new Date()
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=reportYearPurch&date=${date}`);
-                    console.log(data)
                     set(produce((state) => {
                         state.dashPurchY = data;
                         state.purchYReady = true;

@@ -58,13 +58,15 @@ export const CreatePengadaan = () => {
 
   useEffect(() => {
     const createUniq = () => {
-        let bln = format(new Date(), "MM", { locale: id });
-        let tahu = format(new Date(), "yy", { locale: id });
-        const xsd = Math.random().toString(36).slice(-4);
-        let d = new Date();
-        let b = d.toLocaleDateString("id-ID", {day: '2-digit', month: 'long', year: 'numeric'});
-        setTgl(b);
-        setKode(xsd.toUpperCase()+bln+tahu);
+      let bln = format(new Date(), "MM", { locale: id });
+      let tahu = format(new Date(), "yy", { locale: id });
+
+      let bul = format(new Date(), "MM", { locale: id });
+      let days = format(new Date(), "dd", { locale: id });
+      let yea = format(new Date(), "yyyy", { locale: id });
+      const xsd = Math.random().toString(36).slice(-4);
+      setTgl(`${yea}-${bul}-${days}`);
+      setKode(xsd.toUpperCase()+bln+tahu);
     }
     createUniq()
   }, []);

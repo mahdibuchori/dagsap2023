@@ -19,7 +19,7 @@ const MenuDevelop = () => {
                     </Col>
                 </Link>
                 {/* Data karyawan */}
-                <Link to={"Karyawan"} className='link'>
+                <Link to={"/form/karyawan"} className='link'>
                     <Col>
                     <Card className="text-center">
                         <span className='icon'><i className="bi bi-person-circle"></i></span>
