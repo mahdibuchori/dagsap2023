@@ -103,22 +103,22 @@ export const ViewPo = () => {
       }
     
       const handleSubmit = (e) =>{
-        // console.log(userData)
+        console.log(status)
         if(userData?.udivisi === "Develop"){
           handleAlert(e)
         }
         else{
           if(userData?.uplan === "Sentul"){
             if(status === "Pengajuan"){
-              if(userData?.udivisi === "PPIC Purchasing" && userData?.ulevel === 2){
+              if(userData?.udivisi === "PPIC-Purchasing" && userData?.ulevel === 2){
                 handleAlert(e)
               }
               else{
                 Swal.fire('Oppss...','Akses Dibatasi','warning')
               }
             }
-            else if(status === "Terverifikasi"){
-              if(userData?.udivisi === "BOD" && userData?.ulevel === 1){
+            else if(status === "Verifikasi"){
+              if(userData?.udivisi === "BOD/BOC" && userData?.ulevel === 1){
                 handleAlert(e)
               }
               else{
@@ -141,8 +141,6 @@ export const ViewPo = () => {
             Swal.fire('Info','Saat ini hanya tersedia untuk Plan Sentul','info')
           }
         }
-        
-        
       }
     
       const handleAlert = (e) =>{

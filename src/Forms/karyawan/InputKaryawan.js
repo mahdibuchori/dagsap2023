@@ -139,7 +139,7 @@ export const InputKaryawan = () => {
 
     const handleSave = async () =>{  
         try {
-            console.log({
+            /* console.log({
                 nik : nik,
                 nama : nama,
                 level : level.value,
@@ -150,7 +150,7 @@ export const InputKaryawan = () => {
                 cutTah : cutTah,
                 cutBes : cutBes,
                 userData
-            })
+            }) */
             const next = await API_AUTH.post(`/register`, 
                 {
                     "id" : nik,
@@ -319,12 +319,13 @@ export const InputKaryawan = () => {
                                             <Form.Label>Divisi</Form.Label>
                                             <Select 
                                                 required
+                                                value={divisi}
                                                 onChange={(value) => {
                                                     setDivisi(value)
                                                     setFileReady(true)
                                                 }}
                                                 options = {FileDivisi}
-                                                isSearchable = {false}
+                                                isSearchable = {true}
                                                 isClearable = {true}
                                             />
                                         </Form.Group>
@@ -358,8 +359,9 @@ export const InputKaryawan = () => {
                                                 onChange={(value) => {
                                                     setPlan(value)
                                                 }}
+                                                value={plan}
                                                 options = {FilePlan}
-                                                isSearchable = {false}
+                                                isSearchable = {true}
                                                 isClearable = {true}
                                             />
                                         </Form.Group>

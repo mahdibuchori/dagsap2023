@@ -3,11 +3,15 @@ import Swal from "sweetalert2";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import useAuthStore, { selectUser } from '../../store/DataUser';
+import usePengadaanStore, {selectFalsePengadaan, selectPengadaanReady} from '../../store/DataPengadaan';
+
 
 export const BtnPengadaan = (props) => {
     const navigate = useNavigate();
     const [cekData, setCekData] = useState('none');
     const userData = useAuthStore(selectUser);
+    const pengadaanFalse = usePengadaanStore(selectFalsePengadaan);
+    const pengadaanReady = usePengadaanStore(selectPengadaanReady);
 
     const renderVerify = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -33,14 +37,15 @@ export const BtnPengadaan = (props) => {
       }});
     }
 
-    const handleVerifikasi = () =>{
+    const handleVerifikasi =async () =>{
       setCekData('none')
       let level = userData.ulevel;
       let divisi = userData.udivisi.toUpperCase();
       let plan = userData.uplan;
       let divPengadaan = props.data.user[0].divisi;
       let planPengadaan = props.data.user[0].plan;
-
+      await pengadaanFalse()
+      console.log(pengadaanReady)
       if(level === 0){
           navigate(`/form/pengadaan/data`,{state:{
               data : props.data
@@ -67,7 +72,7 @@ export const BtnPengadaan = (props) => {
               if(planPengadaan === plan ){
                   let myDivisi = "";
                   if(divPengadaan.toUpperCase() === "PPIC-WH" ||divPengadaan.toUpperCase() === "PURCHASING" ||divPengadaan.toUpperCase() === "FG"){
-                    myDivisi = "PPIC PURCHASING";
+                    myDivisi = "PPIC-PURCHASING";
                   }
                   else{
                     myDivisi = divPengadaan.toUpperCase();
@@ -106,7 +111,7 @@ export const BtnPengadaan = (props) => {
                               Swal.fire('Info','Tidak memiliki akses','warning');
                             }
                           break;
-                          case "PPIC PURCHASING":
+                          case "PPIC-PURCHASING":
                             if(level === 2){
                               navigate(`/form/pengadaan/verfikasi`,{state:{
                                   data : props.data
@@ -163,7 +168,7 @@ export const BtnPengadaan = (props) => {
                       if(divPengadaan.toUpperCase() === divisi){
                           switch (divisi) {
                               case "FG":
-                                  if(level === "LEVEL2" || level === "LEVEL3"){
+                                  if(level === 2 || level === 3){
                                       navigate(`/form/pengadaan/verfikasi`,{state:{
                                           data : props.data
                                       }});
@@ -173,7 +178,7 @@ export const BtnPengadaan = (props) => {
                                   }
                               break;
                               case "HR-GA":
-                                if(level === "LEVEL3"){
+                                if(level === 2){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -183,7 +188,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "MAINTENANCE":
-                                if(level === "LEVEL2" || level === "LEVEL3"){
+                                if(level === 2 || level === 3){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -193,7 +198,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "PPIC-WH":
-                                if(level === "LEVEL2" || level === "LEVEL3"){
+                                if(level === 2){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -203,7 +208,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "PRODUKSI":
-                                if(level === "LEVEL2"){
+                                if(level === 2){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -213,7 +218,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "PURCHASING":
-                                if(level === "LEVEL2" || level === "LEVEL3"){
+                                if(level === 2 || level === 3){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -223,7 +228,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "QAQC":
-                                if(level === "LEVEL2"){
+                                if(level === 2){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -233,7 +238,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "RND":
-                                if(level === "LEVEL2"){
+                                if(level === 2){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});
@@ -243,7 +248,7 @@ export const BtnPengadaan = (props) => {
                                 }
                               break;
                               case "SSD":
-                                if(level === "LEVEL3"){
+                                if(level === 3){
                                   navigate(`/form/pengadaan/verfikasi`,{state:{
                                       data : props.data
                                   }});

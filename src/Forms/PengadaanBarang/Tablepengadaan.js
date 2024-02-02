@@ -10,7 +10,6 @@ import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaanReady, selectFalsePengadaan} from '../../store/DataPengadaan';
 
-
 export const Tablepengadaan = ({columns}) => {
     
   const arrDiv = ['FG', 'HR-GA', 'Maintenance', 'PPIC-WH', 'Produksi', 'Purchasing', 'QAQC', 'RnD', 'SSD']
@@ -48,7 +47,6 @@ export const Tablepengadaan = ({columns}) => {
   const [usSsd, setUsSsd] = useState(true);
   const [usRnd, setUsRnd] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-//   const [show, setShow] = useState(false);
   const [dataReady, setDataReady] = useState(false);
 
 //   const toggleShow = () => setShow(p => !p);
@@ -68,19 +66,6 @@ export const Tablepengadaan = ({columns}) => {
   const [jmlRevisi, setJmlRevisi] = useState(0);
   const [jmlVerify, setJmlVerify] = useState(0);
   const [jmlSelesai, setJmlSelesai] = useState(0);
-
-  useEffect(() => { 
-    // setIsLoading(true);
-    pengadaanFalse();
-    const date = new Date();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    let bb = String(month).padStart(2, '0');
-    setBulan(`${year}-${bb}`);
-    fetchPengadaan(`${year}-${bb}`, userData.uplan);
-    // setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -102,17 +87,38 @@ export const Tablepengadaan = ({columns}) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  
+  useEffect(() => { 
+    setIsLoading(true);
+    pengadaanFalse();
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let bb = String(month).padStart(2, '0');
+    setBulan(`${year}-${bb}`);
+    fetchPengadaan(`${year}-${bb}`, userData.uplan);
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-    if (!pengadaanReady) return;
-    onGridReady()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // setIsLoading(true);
+      if (!pengadaanReady) return;
+      onGridReady()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pengadaanReady]);
 
   useEffect(()=>{
     const cekList = () => {
-      const meme = userData.usubdiv;
+      let meme = "";
+      if(userData.udivisi.toUpperCase() === "PPIC-PURCHASING" && userData.ulevel === 2){
+        meme = "PPIC-Purchasing"
+      }
+      else{
+        meme = userData.usubdiv;
+      }
+      // const meme = userData.usubdiv;
+
       switch (meme) {
         case "FG":
             setKey("FG");
@@ -222,7 +228,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsSsd(false);
             setUsRnd(true);
         break;
-        case "PPICPurchasing":
+        case "PPIC-Purchasing":
             setKey("FG");
             setUsFg(false);
             setUsHrga(false);
@@ -272,7 +278,7 @@ export const Tablepengadaan = ({columns}) => {
             if(e.assigned){
               return (setDataPo(prev => [...prev, e.name]))
             }
-            else{return(console.log(e))}
+            else{return(console.log(e.assigned))}
           })
         }
         else{
@@ -311,7 +317,7 @@ export const Tablepengadaan = ({columns}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dataReady]);
 
-  const onGridReady = () =>{
+  const onGridReady =async () =>{
     try {
       setDataPo([])
       const fg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FG");
@@ -329,12 +335,52 @@ export const Tablepengadaan = ({columns}) => {
       const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
       const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");
 
+      fg.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      hrga.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      maintenance.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
       ppic.sort(function(a, b) {
         const dateA = new Date(a.t_pengadaan);
         const dateB = new Date(b.t_pengadaan);
         return dateB - dateA;
       });
-      console.log(ppic)
+      produksi.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      purchasing.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      qaqc.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      rnd.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      ssd.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+
       setRowFg(fg); 
       setRowHrga(hrga);
       setRowMaintenance(maintenance);
@@ -349,7 +395,11 @@ export const Tablepengadaan = ({columns}) => {
       setJmlRevisi(jumRevisi.length);
       setJmlVerify(jumVerify.length);
       setJmlSelesai(jumSelesai.length);
-
+      await pengadaanFalse()
+      if(pengadaanReady){
+        await pengadaanFalse()
+      }
+      
       setIsLoading(false);
     } catch (error) {
       Swal.fire({
@@ -368,7 +418,7 @@ export const Tablepengadaan = ({columns}) => {
     setBulan(event.target.value);
     await fetchPengadaan(event.target.value, userData.uplan);
     
-  } 
+  }
 
   const defaultColDef = useMemo(() => {
     return {
@@ -390,6 +440,52 @@ export const Tablepengadaan = ({columns}) => {
     const rnd =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "RND" && x.status.toUpperCase() === data.toUpperCase());
     const ssd = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SSD" && x.status.toUpperCase() === data.toUpperCase());
 
+    fg.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    hrga.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    maintenance.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    ppic.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    produksi.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    purchasing.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    qaqc.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    rnd.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    ssd.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+
     setRowFg(fg);
     setRowHrga(hrga);
     setRowMaintenance(maintenance);
@@ -406,15 +502,20 @@ export const Tablepengadaan = ({columns}) => {
     usubdiv
     */
     if(userData.uplan === "Sentul"){
-      if(userData.usubdiv.toUpperCase() === "PURCHASING" || userData.usubdiv.toUpperCase() === "DEVELOP" || userData.usubdiv.toUpperCase() === "PPICPURCHASING"){
+      if(userData.udivisi.toUpperCase() === "PPIC-PURCHASING" && userData.ulevel === 2 ){
         setKey(key)
       }
       else{
-        if(key.toUpperCase() === userData.usubdiv.toUpperCase()){
-          setKey(key);
+        if(userData.usubdiv.toUpperCase() === "PURCHASING" || userData.usubdiv.toUpperCase() === "DEVELOP"){
+          setKey(key)
         }
         else{
-          Swal.fire("Info","Anda tidak memiliki akses",'warning');
+          if(key.toUpperCase() === userData.usubdiv.toUpperCase()){
+            setKey(key);
+          }
+          else{
+            Swal.fire("Info","Anda tidak memiliki akses",'warning');
+          }
         }
       }
     }
@@ -487,6 +588,10 @@ export const Tablepengadaan = ({columns}) => {
     
     
   }
+
+  const refreshPage = () => {
+    window.location.reload(false);
+  }
   return (
     
     <>
@@ -524,7 +629,7 @@ export const Tablepengadaan = ({columns}) => {
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={printChange}><i className="bi bi-printer"></i> Print</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item onClick={onGridReady}><i className="bi bi-arrow-clockwise"></i> Refresh</Dropdown.Item>
+                <Dropdown.Item onClick={refreshPage}><i className="bi bi-arrow-clockwise"></i> Refresh</Dropdown.Item>
                   
               </Dropdown.Menu>
             </Dropdown>
@@ -696,6 +801,7 @@ export const Tablepengadaan = ({columns}) => {
                         defaultColDef={defaultColDef}
                         pagination={false}
                         cacheQuickFilter={true}
+                        onSelectionChanged={onSelectionChanged}
                     ></AgGridReact>
                 </div>
             </Tab>
@@ -706,6 +812,8 @@ export const Tablepengadaan = ({columns}) => {
                     rowData={rowHrga}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
                     pagination={false}
                     cacheQuickFilter={true}
                     ></AgGridReact>
@@ -720,6 +828,8 @@ export const Tablepengadaan = ({columns}) => {
                     defaultColDef={defaultColDef}
                     pagination={false}
                     cacheQuickFilter={true}
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
                     ></AgGridReact>
                 </div>
             </Tab>
@@ -747,7 +857,7 @@ export const Tablepengadaan = ({columns}) => {
                     defaultColDef={defaultColDef}
                     pagination={false}
                     rowSelection={'multiple'}
-                    // onSelectionChanged={onSelectionChanged}
+                    onSelectionChanged={onSelectionChanged}
                     cacheQuickFilter={true}
                     ></AgGridReact>
                 </div>
@@ -762,7 +872,6 @@ export const Tablepengadaan = ({columns}) => {
                     defaultColDef={defaultColDef}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
-                    // isRowSelectable={isRowSelectable}
                     rowMultiSelectWithClick={true}
                     pagination={false}
                     cacheQuickFilter={true}
@@ -772,37 +881,43 @@ export const Tablepengadaan = ({columns}) => {
             <Tab eventKey="QAQC" title="QAQC" disabled={usQaqc}>
                 <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
                     <AgGridReact
-                    ref={gridRef}
-                    rowData={rowQaqc}
-                    columnDefs={columns}
-                    defaultColDef={defaultColDef}
-                    pagination={false}
-                    cacheQuickFilter={true}
+                      ref={gridRef}
+                      rowData={rowQaqc}
+                      columnDefs={columns}
+                      defaultColDef={defaultColDef}
+                      pagination={false}
+                      cacheQuickFilter={true}
+                      rowSelection={'multiple'}
+                      onSelectionChanged={onSelectionChanged}
                     ></AgGridReact>
                 </div>
             </Tab>
             <Tab eventKey="RnD" title="RnD" disabled={usRnd}>
-                <div style={{height: 400, width: screenWidth, padding: 10}} className="ag-theme-alpine">
-                    <AgGridReact
+                <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                  <AgGridReact
                     ref={gridRef}
                     rowData={rowRnD}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     pagination={false}
                     cacheQuickFilter={true}
-                    ></AgGridReact>
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
+                  ></AgGridReact>
                 </div>
             </Tab>
             <Tab eventKey="SSD" title="SSD" disabled={usSsd}>
-                <div style={{height: 400, width: screenWidth, padding: 10}} className="ag-theme-alpine">
-                    <AgGridReact
+                <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                  <AgGridReact
                     ref={gridRef}
                     rowData={rowSsd}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     pagination={false}
                     cacheQuickFilter={true}
-                    ></AgGridReact>
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
+                  ></AgGridReact>
                 </div>
             </Tab>
         

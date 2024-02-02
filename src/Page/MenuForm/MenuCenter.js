@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './menuForm.css';
 import MenuDevelop from './MenuDevelop';
-import PageNotFo from '../../component/PageNotFo';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import { DontAccess } from '../../component/DontAccess';
 import { MenuPpicPurch } from './MenuPpicPurch';
 import { MenuPpic } from './MenuPpic';
 import { MenuPurchasing } from './MenuPurchasing';
 import { MenuHrga } from './MenuHrga';
+import { MenuProduksi } from './MenuProduksi';
+import { MenuQaqc } from './MenuQaqc';
+import { MenuFg } from './MenuFg';
+import { MenuMtc } from './MenuMtc';
 
 
 const MenuCenter = () => {
@@ -25,7 +28,7 @@ const MenuCenter = () => {
     }
 
   
-  if(userData?.udivisi === "Develop" || userData?.udivisi === "BOD"){
+  if(userData?.udivisi === "Develop" || userData?.udivisi === "BOD/BOC"){
     return (
       <div className='setContain'>
         <MenuDevelop />
@@ -34,7 +37,7 @@ const MenuCenter = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.ulevel === 2){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.ulevel === 2){
     return (
       <div className='setContain'>
         <MenuPpicPurch />
@@ -42,7 +45,7 @@ const MenuCenter = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "PPIC-WH"){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "PPIC-WH"){
     return (
       <div className='setContain'>
         <MenuPpic />
@@ -50,7 +53,7 @@ const MenuCenter = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "Purchasing"){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "Purchasing"){
     return (
       <div className='setContain'>
         <MenuPurchasing />
@@ -58,10 +61,18 @@ const MenuCenter = () => {
       
     )
   }
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "FG"){
+    return (
+      <div className='setContain'>
+        <MenuFg />
+      </div>
+      
+    )
+  }
   else if(userData?.udivisi === "Produksi" ){
     return (
       <div className='setContain'>
-        <PageNotFo />
+        <MenuProduksi />
       </div>
       
     )
@@ -70,6 +81,27 @@ const MenuCenter = () => {
     return (
       <div className='setContain'>
         <MenuHrga />
+      </div>
+    )
+  }
+  else if(userData?.udivisi === "QAQC" ){
+    return (
+      <div className='setContain'>
+        <MenuQaqc />
+      </div>
+    )
+  }
+  else if(userData?.udivisi === "SSD" ){
+    return (
+      <div className='setContain'>
+        <MenuQaqc />
+      </div>
+    )
+  }
+  else if(userData?.udivisi === "Maintenance" ){
+    return (
+      <div className='setContain'>
+        <MenuMtc />
       </div>
     )
   }

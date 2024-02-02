@@ -28,6 +28,8 @@ export const CreatePengadaan = () => {
 
   const [ satuan, setSatuan ] = useState('');
   const [ spesifikasi, setSpesifikasi ] = useState('');
+  const [tipeMaterial, setTipeMaterial] = useState('');
+  const [brand, setBrand] = useState('');
   const [fileNab, setFileNab] = useState(FileBarang);
   const [fileBar, setFileBar] = useState(FileBarang);
   const [inputList, setInputList] = useState([{ tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }]);
@@ -36,11 +38,12 @@ export const CreatePengadaan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [fileReady, setFileReady] = useState(false);
+  const [kontak, setKontak] = useState(false);
+  const [hilang, setHilang] = useState('flex');
 
   const [selectedValue, setSelectedValue] = useState();
 
   useEffect(() => {
-    console.log(material)
       const result = material.material?.reduce((unique, o) => {
           if(!unique.some(obj => obj.kategori === o.kategori)) {
             unique.push({
@@ -80,6 +83,16 @@ export const CreatePengadaan = () => {
         setFileBar([
           { value: '', label: '' }
         ])
+        if(tibar.value === "NonInventori" || tibar.value === "Sparepart"){
+          setHilang('flex')
+          setKontak(true)
+        }
+        else{
+          setHilang('none')
+          setKontak(false)
+          setBrand(" ")
+          setTipeMaterial(" ")
+        }
         const newFileNab = material.material?.filter(x => x.kategori === tibar.value);
         let modifiedArr = newFileNab.map(function(element){
             return { value: element.itemno, label: `${element.itemno} - ${element.itemdescription}`, item: element.itemdescription , satuan: element.unit1 };
@@ -238,6 +251,8 @@ export const CreatePengadaan = () => {
         tgl_verify : "",
         tgl_approve : "",
         filter_bulan : `${yy}-${bulan}`,
+        tipeMaterial : tipeMaterial,
+        brandMaterial : brand
       });
     
       Swal.fire(`${next.data.success}`, navigate(`/form/Pengadaan`), 'success');
@@ -372,10 +387,46 @@ export const CreatePengadaan = () => {
                             rows={1}
                             value = {materil}
                             onChange = {e => setMateril(e.target.value)}
+                            disabled={kontak}
                             required
                           />
                           <Form.Control.Feedback type="invalid">
                             Harap Masukan Nama Item
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row  g-2" style={{display: hilang}}>
+                      <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Tipe Item</Form.Label>
+                          <Form.Control 
+                              as="textarea" 
+                              aria-label="With textarea" 
+                              rows={1}
+                              value = {tipeMaterial}
+                              onChange = {e => setTipeMaterial(e.target.value)}
+                              required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Harap Masukan Nama Item
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Merk/ Brand Item</Form.Label>
+                          <Form.Control 
+                            as="textarea" 
+                            aria-label="With textarea" 
+                            rows={1}
+                            value = {brand}
+                            onChange = {e => setBrand(e.target.value)}
+                            required
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Harap Masukan Nama Merk/Brand
                           </Form.Control.Feedback>
                         </Form.Group>
                       </div>
@@ -397,7 +448,7 @@ export const CreatePengadaan = () => {
                             Harap Masukan Spesifikasi Data Pengadaan barang
                         </Form.Control.Feedback>
                       </Form.Group>
-                  </div>
+                    </div>
                   </Card.Body>
                 </Card>
 

@@ -16,6 +16,7 @@ const usePengadaanStore = create(
             fetchPengadaan: async (id,plan) => {
                 try {
                     const { data } =  await API_AUTH.get(`pengadaan/${id}/${plan}`);
+                    console.log(data)
                     set(produce((state) => {
                         state.pengadaan = data.reverse();
                         state.pengadaanReady = true;

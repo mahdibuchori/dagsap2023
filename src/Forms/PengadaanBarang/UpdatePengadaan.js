@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Swal from "sweetalert2";
 import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { format } from "date-fns";
+import id from 'date-fns/locale/id';
 import { NumericFormat } from 'react-number-format';
 import { Accordion, Breadcrumb, Button, Card, Col, Container, Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -28,6 +30,9 @@ export const UpdatePengadaan = () => {
   const [ satuan, setSatuan ] = useState('');
   const [ spesifikasi, setSpesifikasi ] = useState('');
   
+  const [tipeMaterial, setTipeMaterial] = useState('');
+  const [brand, setBrand] = useState('');
+  
   const [fileNab, setFileNab] = useState(FileBarang);
   const [fileBar, setFileBar] = useState(FileBarang);
   const [fileMaterial, setFileMaterial] = useState(FileBarang);
@@ -36,6 +41,11 @@ export const UpdatePengadaan = () => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dataReady, setDataReady] = useState(false);
+  const [muncul, setMuncul] = useState(true);
+  const [munculs, setMunculs] = useState(true);
+  const [kontak, setKontak] = useState(false);
+
+  const [hilangs, setHilangs] = useState('flex');
   const [hilang, setHilang] = useState('none');
   const [nmButton, setnmButton] = useState('View Data');
   
@@ -57,9 +67,10 @@ export const UpdatePengadaan = () => {
 
   useEffect(() => {
       const createUniq = () => {
-          let d = new Date();
-          let b = d.toLocaleDateString("id-ID", {day: '2-digit', month: 'long', year: 'numeric'});
-          setTgl(b);
+        let bul = format(new Date(), "MM", { locale: id });
+        let days = format(new Date(), "dd", { locale: id });
+        let yea = format(new Date(), "yyyy", { locale: id });
+        setTgl(`${yea}-${bul}-${days}`);
       }
     createUniq()
   }, []);
@@ -70,6 +81,20 @@ export const UpdatePengadaan = () => {
       try {
         setIsLoading(true);
         const newFileNab = material.material?.filter(x => x.kategori === tibar.value);
+        console.log(tibar.value)
+        if(tibar.value === "NonInventori" || tibar.value === "Sparepart"){
+          setHilangs('flex')
+          setKontak(true)
+          setMunculs(true)
+        }
+        else{
+          setHilangs('none')
+          setKontak(false)
+          setMunculs(false)
+        }
+        setBrand('')
+        setTipeMaterial('')
+        setMateril('')
         let modifiedArr = newFileNab.map(function(element){
             return { value: element.itemno, label: `${element.itemno} - ${element.itemdescription}`, item: element.itemdescription , satuan: element.unit1 };
         });
@@ -134,18 +159,33 @@ export const UpdatePengadaan = () => {
     setInputList(data?.parsial_data);
     setTibar({value: filTipe[0]?.value, label: filTipe[0]?.label, kategori: filTipe[0]?.kategori, labelId: filTipe[0]?.labelId});
     setSatuan(data?.qty_pengadaan[0].satuan)
-
+    setBrand(data?.brandMaterial)
+    setTipeMaterial(data?.tipeMaterial)
+    console.log(filTipe[0]?.value)
     if(String(data?.status).toUpperCase() === "PENGAJUAN" || String(data?.status).toUpperCase() === "REVISI"){
       if(String(data?.user[0].pemohon).toUpperCase() === String(userData?.uname).toUpperCase()){
         setHilang('block');
         setnmButton('Update Data');
+        setMuncul(false)
       }
       else if(userData?.udivisi === "Develop"){
         setHilang('block');
         setnmButton('Update Data');
+        setMuncul(false)
       }
       else{
         setHilang('none'); 
+      }
+
+      if(filTipe[0]?.value === "NonInventori" || filTipe[0]?.value === "Sparepart"){
+        setHilangs('flex')
+        setKontak(true)
+        setMunculs(true)
+      }
+      else{
+        setHilangs('none')
+        setKontak(false)
+        setMunculs(false)
       }
         
     }
@@ -221,54 +261,56 @@ export const UpdatePengadaan = () => {
   }
 
   const handleSave = async () =>{
-      try {
-          const date = new Date();
-          let mm = parseInt(date.getMonth()) + 1;
-          let yy = date.getFullYear();
-          let bulan = String(mm).padStart(2, '0');
-          
-          const sum = inputList.map(item => parseFloat(item.qty)).reduce((prev, curr) => prev + curr, 0);
+    try {
+      const date = new Date();
+      let mm = parseInt(date.getMonth()) + 1;
+      let yy = date.getFullYear();
+      let bulan = String(mm).padStart(2, '0');
+      
+      const sum = inputList.map(item => parseFloat(item.qty)).reduce((prev, curr) => prev + curr, 0);
 
-          let myDivisi = "";
-          const nDiv = location.state.data.user[0].divisi;
-          if(nDiv === "PPIC Purchasing" && location.state.data.user[0].jabatan === "Manager"){
-            myDivisi = 'PPIC-WH'
-          }
-          else{
-            myDivisi = nDiv
-          }
-          const next = await API_AUTH.put(`/updatePengadaan`, {
-              id_Pengadaan : location.state.data.id_Pengadaan,
-              t_pengadaan : tgl,
-              user : [{
-                  pemohon : location.state.data.user[0].pemohon,
-                  jabatan : location.state.data.user[0].jabatan,
-                  divisi : myDivisi,
-                  plan : location.state.data.user[0].plan,
-              }],
-              status : 'Pengajuan',
-              material : [{
-                  tipe : tibar?.value,
-                  itemNo : itemNo,
-                  material : materil
-              }],
-              qty_pengadaan : [{
-                  order : sum,
-                  satuan : satuan
-              }],
-              spesifikasi : spesifikasi,
-              parsial_data : inputList,
-              tgl_verify : "",
-              tgl_approve : "",
-              filter_bulan : `${yy}-${bulan}`,
-          });
-          
-          Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
-          setIsLoading(false);
-      } catch (error) {
-          Swal.fire('Info', `${error.response.data.message}`, 'warning');
-          setIsLoading(false);
+      let myDivisi = "";
+      const nDiv = location.state.data.user[0].divisi;
+      if(nDiv === "PPIC Purchasing" && location.state.data.user[0].jabatan === "Manager"){
+        myDivisi = 'PPIC-WH'
       }
+      else{
+        myDivisi = nDiv
+      }
+      const next = await API_AUTH.put(`/updatePengadaan`, {
+          id_Pengadaan : location.state.data.id_Pengadaan,
+          t_pengadaan : tgl,
+          user : [{
+              pemohon : location.state.data.user[0].pemohon,
+              jabatan : location.state.data.user[0].jabatan,
+              divisi : myDivisi,
+              plan : location.state.data.user[0].plan,
+          }],
+          status : 'Pengajuan',
+          material : [{
+              tipe : tibar?.value,
+              itemNo : itemNo,
+              material : materil
+          }],
+          qty_pengadaan : [{
+              order : sum,
+              satuan : satuan
+          }],
+          spesifikasi : spesifikasi,
+          parsial_data : inputList,
+          tgl_verify : "",
+          tgl_approve : "",
+          filter_bulan : `${yy}-${bulan}`,
+          tipeMaterial : tipeMaterial,
+          brandMaterial : brand
+      });
+      
+      Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
+      setIsLoading(false);
+    } catch (error) {
+        Swal.fire('Info', `${error.response.data.message}`, 'warning');
+        setIsLoading(false);
+    }
   }
 
   const renderTooltip = (props) => (
@@ -399,6 +441,7 @@ export const UpdatePengadaan = () => {
                           value={tibar}
                           options = {fileNab}
                           isSearchable = {false}
+                          isDisabled={muncul}
                       />
                     </Form.Group>
                     </div>
@@ -416,6 +459,7 @@ export const UpdatePengadaan = () => {
                           value={fileMaterial}
                           options = {fileBar}
                           isSearchable = {true}
+                          isDisabled={muncul}
                         />
                       </Form.Group>
                     </div>
@@ -431,6 +475,7 @@ export const UpdatePengadaan = () => {
                           rows={1}
                           value = {materil}
                           onChange = {e => setMateril(e.target.value)}
+                          disabled={munculs}
                           required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -439,6 +484,41 @@ export const UpdatePengadaan = () => {
                       </Form.Group>
                     </div>
                   </div>
+
+                  <div className="row  g-2" style={{display: hilangs}}>
+                      <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Tipe Item</Form.Label>
+                          <Form.Control 
+                              as="textarea" 
+                              aria-label="With textarea" 
+                              rows={1}
+                              value = {tipeMaterial}
+                              onChange = {e => setTipeMaterial(e.target.value)}
+                              required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Harap Masukan Nama Item
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Merk/ Brand Item</Form.Label>
+                          <Form.Control 
+                            as="textarea" 
+                            aria-label="With textarea" 
+                            rows={1}
+                            value = {brand}
+                            onChange = {e => setBrand(e.target.value)}
+                            required
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Harap Masukan Nama Merk/Brand
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                    </div>
 
                   <div className="row  g-2 ">
                     <Form.Group as={Col} controlId="formGridArea">
@@ -451,6 +531,7 @@ export const UpdatePengadaan = () => {
                         onChange={(e) => {
                             setSpesifikasi(e.target.value)
                         }}
+                        disabled={muncul}
                         required
                       />
                       <Form.Control.Feedback type="invalid">
@@ -523,7 +604,7 @@ export const UpdatePengadaan = () => {
                                 rows={1}
                                 value = {materil}
                                 onChange = {e => setMateril(e.target.value)}
-                                disabled
+                                disabled={kontak}
                               />
                             </Form.Group>
                           </div>

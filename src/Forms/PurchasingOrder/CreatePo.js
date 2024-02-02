@@ -174,8 +174,7 @@ export const CreatePo = () => {
         let data = location.state.data
         if(location.state === null || data.length === 0) {
             navigate(`/form/pengadaan`);
-            Swal.fire('Info','Harap lengkapi data permintaan barang', 'info')
-            
+            Swal.fire('Info','Harap lengkapi data permintaan barang', 'info');
             setIsLoading(false);
         }
         else{

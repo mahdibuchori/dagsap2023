@@ -29,7 +29,7 @@ const Home = () => {
     console.log(userData)
   }
 
-  if(userData?.udivisi === "Develop" || userData?.udivisi === "BOD"){
+  if(userData?.udivisi === "Develop" || userData?.udivisi === "BOD/BOC"){
     return (
       <div className='setContain'>
         <DashDev />
@@ -38,7 +38,7 @@ const Home = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.ulevel === 2){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.ulevel === 2){
     return (
       <div className='setContain'>
         <DashMngr />
@@ -46,7 +46,7 @@ const Home = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "PPIC-WH"){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "PPIC-WH"){
     return (
       <div className='setContain'>
         <DashPpic />
@@ -54,7 +54,7 @@ const Home = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "Purchasing"){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "Purchasing"){
     return (
       <div className='setContain'>
         <DashPurch />
@@ -62,7 +62,7 @@ const Home = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "FG"){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "FG"){
     return (
       <div className='setContain'>
         <DashFg />
@@ -70,7 +70,7 @@ const Home = () => {
       
     )
   }
-  else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "Wip"){
+  else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "WIP"){
     return (
       <div className='setContain'>
         <DashWip />

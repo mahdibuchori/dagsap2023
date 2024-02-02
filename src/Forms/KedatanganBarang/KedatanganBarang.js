@@ -13,21 +13,21 @@ export const KedatanganBarang = () => {const userData = useAuthStore(selectUser)
         </div>
       )
     }
-    else if(userData?.udivisi === "PPIC Purchasing" && userData?.ulevel === 2){
+    else if(userData?.udivisi === "PPIC-Purchasing" && userData?.ulevel === 2){
       return (
         <div className='setContain'>
           <TerimaAll />
         </div>
       )
     }
-    else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "PPIC-WH"){
+    else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "PPIC-WH"){
       return (
         <div className='setContain'>
           <TerimaPpic />
         </div>
       )
     }
-    else if(userData?.udivisi === "PPIC Purchasing" && userData?.usubdiv === "Purchasing"){
+    else if(userData?.udivisi === "PPIC-Purchasing" && userData?.usubdiv === "Purchasing"){
       return (
         <div className='setContain'>
           <TerimaPurch />

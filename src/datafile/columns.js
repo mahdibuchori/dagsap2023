@@ -89,7 +89,8 @@ export const COLUMNS_PENGADAAN =[
         }
     },
     {
-        field : 'keterangan',
+        headerName: 'Spesifikasi',
+        field : 'spesifikasi',
         width:430,
         maxWidth: 550
     },
@@ -924,7 +925,7 @@ export const COLUMNS_DATAPO =[
         headerName: 'Jumlah',
         field : 'qty',
         width: 110,
-        editable: false,
+        editable: true,
         cellRenderer: params => {
             let data = params.data;
             let hSatuan = 0;
@@ -1259,7 +1260,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#800000', backgroundColor: '#d07979a7', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-secondary"></i>
+                    <i className="bi bi-circle-fill text-light"></i>
                     </div>
                 )
                 
@@ -1268,7 +1269,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#800000', backgroundColor: '#d07979a7', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-success"></i>
+                    <i className="bi bi-circle-fill text-danger"></i>
                     </div>
                 )
                 
@@ -1277,7 +1278,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#120cce', backgroundColor: '#120cce60', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-secondary"></i>
+                    <i className="bi bi-circle-fill text-light"></i>
                     </div>
                 )
             }
@@ -1285,7 +1286,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#120cce', backgroundColor: '#120cce60', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-success"></i>
+                    <i className="bi bi-circle-fill text-danger"></i>
                     </div>
                 )
             }
@@ -1293,7 +1294,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#008011', backgroundColor: '#38cc4c73', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-secondary"></i>
+                    <i className="bi bi-circle-fill text-light"></i>
                     </div>
                 )      
             }
@@ -1301,7 +1302,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#008011', backgroundColor: '#38cc4c73', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-success"></i>
+                    <i className="bi bi-circle-fill text-danger"></i>
                     </div>
                 )      
             }
@@ -1309,7 +1310,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#7a0080', backgroundColor: '#a35ea6c4', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-secondary"></i>
+                    <i className="bi bi-circle-fill text-light"></i>
                     </div>
                 )
             }
@@ -1317,7 +1318,7 @@ export const COLUMNS_PO =[
                 return (
                     <div>
                     <span style={{color: '#7a0080', backgroundColor: '#a35ea6c4', borderRadius: '5px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',padding: '5px'}}>{data}</span> &nbsp;
-                    <i className="bi bi-circle-fill text-success"></i>
+                    <i className="bi bi-circle-fill text-danger"></i>
                     </div>
                 )
             }

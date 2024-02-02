@@ -3,7 +3,10 @@ import Swal from "sweetalert2";
 import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { NumericFormat } from 'react-number-format';
+import useAuthStore, { selectUser } from '../../store/DataUser';
 import { Accordion, Breadcrumb, Button, Card, Col, Container, Form, InputGroup } from 'react-bootstrap';
+import usePengadaanStore, {selectFalsePengadaan, selectFetchPengadaan} from '../../store/DataPengadaan';
+
 
 import { FileBarang } from '../../datafile/FileSelect';
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
@@ -13,7 +16,10 @@ import { API_AUTH } from '../../apis/apisData';
 export const VerifyPengadaan = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const userData = useAuthStore(selectUser);
   const material = useDataMaterial(selectMaterial);
+  const fetchPengadaan = usePengadaanStore(selectFetchPengadaan);
+  const pengadaanFalse = usePengadaanStore(selectFalsePengadaan);
   
   const [kode, setKode] = useState('');
   const [tgl, setTgl] = useState('');
@@ -131,27 +137,32 @@ export const VerifyPengadaan = () => {
   }
 
   const handleSave =async (stat,rev) =>{
+    setIsLoading(true);
     try {
+      await pengadaanFalse();
       const date = new Date();
       let mm = parseInt(date.getMonth()) + 1;
       let yy = date.getFullYear();
       let dd = date.getDate();
       let bulan = String(mm).padStart(2, '0');
       let tang = String(dd).padStart(2, '0');
-      console.log({
+      /* console.log({
           id_Pengadaan : location.state.data.id_Pengadaan,
           status : stat,
           tgl_verify : `${yy}-${bulan}-${tang}`,
           tgl_approve : rev,
-      })
+      }) */
       const next = await API_AUTH.put(`/verifyPengadaan`, {
-          id_Pengadaan : location.state.data.id_Pengadaan,
-          status : stat,
-          tgl_verify : `${yy}-${bulan}-${tang}`,
-          tgl_approve : rev,
+        id_Pengadaan : location.state.data.id_Pengadaan,
+        status : stat,
+        tgl_verify : `${yy}-${bulan}-${tang}`,
+        tgl_approve : rev,
       });
+
+      await fetchPengadaan(`${yy}-${bulan}`, userData.uplan);
       
       Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
+      // Swal.fire(navigate(`/form/pengadaan`), navigate(0), 'success');
       setIsLoading(false);
   } catch (error) {
       Swal.fire('Info', `${error.response.data.message}`, 'warning');
