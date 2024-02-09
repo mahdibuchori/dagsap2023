@@ -50,19 +50,19 @@ export const UpdatePengadaan = () => {
   const [nmButton, setnmButton] = useState('View Data');
   
   useEffect(() => {
-      const result = material.material?.reduce((unique, o) => {
-          if(!unique.some(obj => obj.kategori === o.kategori)) {
-            unique.push({
-              value :o.kategori,
-              label :o.kategori,
-              kategori :o.kategori,
-              labelId :o.categoryid,
-            });
-          }
-          return unique;
-      },[]);
-      setFileNab(result);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    const result = material.material?.reduce((unique, o) => {
+      if(!unique.some(obj => obj.kategori === o.kategori)) {
+        unique.push({
+          value :o.kategori,
+          label :o.kategori,
+          kategori :o.kategori,
+          labelId :o.categoryid,
+        });
+      }
+      return unique;
+    },[]);
+    setFileNab(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -129,7 +129,6 @@ export const UpdatePengadaan = () => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   const cekData = () =>{
     const data = location.state.data;
     const result = material.material?.reduce((unique, o) => {
@@ -161,7 +160,8 @@ export const UpdatePengadaan = () => {
     setSatuan(data?.qty_pengadaan[0].satuan)
     setBrand(data?.brandMaterial)
     setTipeMaterial(data?.tipeMaterial)
-    console.log(filTipe[0]?.value)
+    console.log(data)
+    console.log(data?.user[0].plan)
     if(String(data?.status).toUpperCase() === "PENGAJUAN" || String(data?.status).toUpperCase() === "REVISI"){
       if(String(data?.user[0].pemohon).toUpperCase() === String(userData?.uname).toUpperCase()){
         setHilang('block');
@@ -189,7 +189,13 @@ export const UpdatePengadaan = () => {
       }
         
     }
-    else if(String(data?.status).toUpperCase() === "VERIFIKASI"){}
+    else if(String(data?.status).toUpperCase() === "VERIFIKASI"){
+      if(String(data?.user[0].plan).toUpperCase() === String(userData?.uplan).toUpperCase() && userData?.usubdiv === 'Purchasing'){
+        setHilang('block');
+        setnmButton('Update Data');
+        setMuncul(true)
+      }
+    }
     else if(String(data?.status).toUpperCase() === "SELESAI"){}
     setIsLoading(false);
       
@@ -277,16 +283,33 @@ export const UpdatePengadaan = () => {
       else{
         myDivisi = nDiv
       }
+      const data = location.state.data;
+      let statusny = "";
+      let tglVerif = "";
+      let tglPeng = "";
+      let filt = "";
+      if(String(data?.user[0].plan).toUpperCase() === String(userData?.uplan).toUpperCase() && userData?.usubdiv === 'Purchasing'){
+        statusny = "Verifikasi";
+        tglVerif = location.state.data.tgl_verify;
+        tglPeng = location.state.data.t_pengadaan;
+        filt = location.state.data.filter_bulan;
+      }
+      else{
+        statusny = "Pengajuan";
+        tglVerif = "";
+        tglPeng = tgl;
+        filt = `${yy}-${bulan}`;
+      }
       const next = await API_AUTH.put(`/updatePengadaan`, {
           id_Pengadaan : location.state.data.id_Pengadaan,
-          t_pengadaan : tgl,
+          t_pengadaan : tglPeng,
           user : [{
               pemohon : location.state.data.user[0].pemohon,
               jabatan : location.state.data.user[0].jabatan,
               divisi : myDivisi,
               plan : location.state.data.user[0].plan,
           }],
-          status : 'Pengajuan',
+          status : statusny,
           material : [{
               tipe : tibar?.value,
               itemNo : itemNo,
@@ -298,9 +321,9 @@ export const UpdatePengadaan = () => {
           }],
           spesifikasi : spesifikasi,
           parsial_data : inputList,
-          tgl_verify : "",
+          tgl_verify : tglVerif,
           tgl_approve : "",
-          filter_bulan : `${yy}-${bulan}`,
+          filter_bulan : filt,
           tipeMaterial : tipeMaterial,
           brandMaterial : brand
       });
@@ -428,7 +451,6 @@ export const UpdatePengadaan = () => {
                       <Select 
                           required
                           onChange={(value) => {
-                              console.log(value)
                               setTibar(value)
                               setFileBar([
                                 { value: '', label: '' }

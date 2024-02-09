@@ -22,6 +22,7 @@ import { ViewLogbook } from './Forms/KedatanganBarang/ViewLogbook';
 import { LabelPrint } from './Forms/KedatanganBarang/LabelPrint';
 import { Karyawan } from './Forms/karyawan/Karyawan';
 import { InputKaryawan } from './Forms/karyawan/InputKaryawan';
+import { EditPo } from './Forms/PurchasingOrder/EditPo';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} /> 
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
+        <Route path="/form/purchaseorder/update" element={<EditPo />} />  
         <Route path="/form/purchaseorder/data" element={<ViewPo />} /> 
         <Route path="/form/purchaseorder/printview" element={<PrintPo />} /> 
         <Route path="/form/Kedatangan" element={<KedatanganBarang />} /> 

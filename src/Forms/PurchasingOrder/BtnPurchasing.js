@@ -12,10 +12,16 @@ export const BtnPurchasing = (props) => {
         </Tooltip>
     )
     const buttonClicked = () => {
-        console.log(props?.data)
-        navigate(`/form/purchaseorder/data`,{state:{
-            data : props.data
-        }});
+        if(props?.data.status === "Pengajuan" && userData.usubdiv === "Purchasing" && userData.uplan === "Sentul"){
+            navigate(`/form/purchaseorder/update`,{state:{
+                data : props.data
+            }});
+        }
+        else{
+            navigate(`/form/purchaseorder/data`,{state:{
+                data : props.data
+            }});
+        }
       
       };
   return (

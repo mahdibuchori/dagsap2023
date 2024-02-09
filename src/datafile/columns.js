@@ -39,7 +39,8 @@ export const COLUMNS_PENGADAAN =[
             let nilai  = params.data.material[0].material;
             return nilai;
         },
-        width: 300
+        width: 200,
+        maxWidth:505,
     },
     {
         field : 'order',
@@ -89,9 +90,21 @@ export const COLUMNS_PENGADAAN =[
         }
     },
     {
+        headerName: 'Tipe',
+        field : 'tipeMaterial',
+        width:150,
+        maxWidth: 550
+    },
+    {
+        headerName: 'Merk',
+        field : 'brandMaterial',
+        width:150,
+        maxWidth: 550
+    },
+    {
         headerName: 'Spesifikasi',
         field : 'spesifikasi',
-        width:430,
+        width:400,
         maxWidth: 550
     },
     {
@@ -949,7 +962,12 @@ export const COLUMNS_DATAPO =[
             let data = params.data;
             let hSatuan = 0;
             if(data.hargasatuan === undefined || data.hargasatuan === ""){hSatuan = 0}
-            else{hSatuan = (parseFloat(data.hargasatuan)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            else{
+                let nilai = (parseFloat(data.hargasatuan)).toFixed(4);
+                const x  = ((parseFloat(nilai)) * 10000) / 10000;
+                console.log(x);
+                hSatuan = (parseFloat(x)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
             return hSatuan
         }
     },
@@ -969,7 +987,7 @@ export const COLUMNS_DATAPO =[
         width: 120,
         valueGetter: params => {
             let data = params.data;
-            console.log(params.data)
+            // console.log(params.data)
             let jmlh = 0;
             let hSatuan = 0;
             let diskon = 0;
@@ -1010,7 +1028,19 @@ export const COLUMNS_DATAPO =[
         headerName: 'Pajak',
         field : 'pajak',
         width: 80,
-        editable: false,
+        editable: true,
+        cellRenderer: params => {
+            let data = params.data;
+            let pajak = "";
+            if(data.pajak === ""){
+                pajak = "";
+            }
+            else{
+                pajak = String(data.pajak).toUpperCase();
+            }
+            console.log(pajak)
+            return pajak
+        }
     },
     { 
         headerName: 'Divisi',

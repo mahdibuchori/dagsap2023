@@ -801,6 +801,7 @@ export const Tablepengadaan = ({columns}) => {
                         defaultColDef={defaultColDef}
                         pagination={false}
                         cacheQuickFilter={true}
+                        rowSelection={'multiple'}
                         onSelectionChanged={onSelectionChanged}
                     ></AgGridReact>
                 </div>

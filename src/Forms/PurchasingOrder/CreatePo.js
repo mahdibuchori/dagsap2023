@@ -54,8 +54,8 @@ export const CreatePo = () => {
     const [fileDep, setFileDep] = useState(FileBarang);
     const [tax1name, setTax1name] = useState('');
     const [tax2name, setTax2name] = useState('');
-    const [tax1id, setTax1id] = useState('');
-    const [tax2id, setTax2id] = useState('');
+    // const [tax1id, setTax1id] = useState('');
+    // const [tax2id, setTax2id] = useState('');
     const [expro, setExpro] = useState();
     const [totalSub, setTotalSub] = useState(0);
     const [diskon, setDiskon] = useState(0);
@@ -68,6 +68,7 @@ export const CreatePo = () => {
     const [dataReady, setDataReady] = useState(false);
     const [isReady, setisReady] = useState(false);
     const [show, setShow] = useState(true);
+    
     const handleClose = () => {
         navigate(`/form/Pengadaan`)
         setShow(false)
@@ -103,13 +104,13 @@ export const CreatePo = () => {
     tWidth = parseInt(window.innerWidth) - 280;
     }
     else if(parseInt(window.innerWidth) >= 600){
-    tWidth = parseInt(window.innerWidth) - 260;
+        tWidth = parseInt(window.innerWidth) - 260;
     }
     else if(parseInt(window.innerWidth) >= 576){
-    tWidth = parseInt(window.innerWidth) - 240;
+        tWidth = parseInt(window.innerWidth) - 240;
     }
     else{
-    tWidth = parseInt(window.innerWidth) - 50
+        tWidth = parseInt(window.innerWidth) - 50
     }
 
     const [screenWidth, setScreenWidth] = useState(tWidth);
@@ -556,10 +557,11 @@ export const CreatePo = () => {
     }
 
     const handleEprov = (value) =>{
+
         setTax1name(value.tax1name);
         setTax2name(value.tax2name);
-        setTax1id(value.tax1code);
-        setTax2id(value.tax2code);
+        // setTax1id(value.tax1code);
+        // setTax2id(value.tax2code);
         setExpro(value)
         let modifiedArr = rowData.map((e)=>{
             let pjk = "";
@@ -684,18 +686,100 @@ export const CreatePo = () => {
         let ntotal = 0;
         let nDiskon = 0;
         let nBantar = 0;
-
         if(diskon === ""){nDiskon = 0} else{nDiskon = diskon}
         if(bantar === ""){nBantar = 0} else{nBantar = bantar}
+        // console.log(tax1id+""+tax2id)
         rowData.map((e)=>{
             if(e.jmlhHarga === "" || e.jmlhHarga === 0 ){ntotalSub += 0}
             else{ntotalSub += parseFloat(e.jmlhHarga)}
+            const pjk = e.pajak;
+            let pjk1 = "";
+            let pjk2 = "";
+            if(pjk.length === 2){
+                pjk1 = pjk[0];
+                pjk2 = pjk[1];
+            }
+            else if (pjk.length === 1){
+                pjk1 = pjk[0];
+                pjk2 = "" 
+            }
+            else{
+                pjk1 = "";
+                pjk2 = "" 
+            }
+
+            if(pjk1.toUpperCase() === "A"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
+            }
+            else if(pjk1.toUpperCase() === "B"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
+            }
+            else if(pjk1.toUpperCase() === "E"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
+            }
+            else if(pjk1.toUpperCase() === "G"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
+            }
+            else if(pjk1.toUpperCase() === "R"){
+                nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+                npph += 0;
+            }
+            else if(pjk1.toUpperCase() === "S"){
+                nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
+                npph += 0;
+            }
+            else if(pjk1.toUpperCase() === "T"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+            }
+            else{
+                nppn += 0;
+                npph += 0;
+            }
+    
+            if(pjk2.toUpperCase() === "A"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
+            }
+            else if(pjk2.toUpperCase() === "B"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
+            }
+            else if(pjk2.toUpperCase() === "E"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
+            }
+            else if(pjk2.toUpperCase() === "G"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
+            }
+            else if(pjk2.toUpperCase() === "R"){
+                nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+                npph += 0;
+            }
+            else if(pjk2.toUpperCase() === "S"){
+                nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
+                npph += 0;
+            }
+            else if(pjk2.toUpperCase() === "T"){
+                nppn += 0;
+                npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+            }
+            else{
+                nppn += 0;
+                npph += 0;
+            }
+
             return(
                 setTotalSub(ntotalSub.toFixed(2))
             )
         })
 
-        if(tax1id === "A"){
+        /* if(tax1id === "A"){
             nppn += 0;
             npph += ((ntotalSub - nDiskon) * 2.5) / 100;
         }
@@ -759,7 +843,7 @@ export const CreatePo = () => {
         else{
             nppn += 0;
             npph += 0;
-        }
+        } */
 
         setPpn(nppn.toFixed(2));
         setPph(npph.toFixed(2));
@@ -805,7 +889,10 @@ export const CreatePo = () => {
                                 type="text"
                                 placeholder="No PO"
                                 value={nopo}
-                                disabled = {true}
+                                onChange={(e)=>{
+                                    setNopo(e.target.value)
+                                }}
+                                disabled = {false}
                             />
                             </div>
                             <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
@@ -814,7 +901,10 @@ export const CreatePo = () => {
                                 required
                                 type="date"
                                 value={tgl}
-                                disabled = {true}
+                                onChange={(e)=>{
+                                    setTgl(e.target.value)
+                                }}
+                                disabled = {false}
                             />
                             </div>
                             <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
@@ -1029,7 +1119,9 @@ export const CreatePo = () => {
                 inputList?.map((e,i)=>{
                     return(
                         <Accordion.Item eventKey={i}>
-                            <Accordion.Header>({e.material[0].itemNo})&nbsp;{e.material[0].material}&nbsp;{e.qty_pengadaan[0].order}&nbsp;{e.qty_pengadaan[0].satuan}</Accordion.Header>
+                            <Accordion.Header>
+                                ({e.material[0].itemNo})&nbsp;{e.material[0].material}&nbsp;{e.qty_pengadaan[0].order}&nbsp;{e.qty_pengadaan[0].satuan}
+                            </Accordion.Header>
                             <Accordion.Body>
                             <Form>
                                 {e.parsial_data.map((i)=>{
