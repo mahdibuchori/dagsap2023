@@ -348,7 +348,6 @@ export const ListMounthly = () => {
     }
 
     const changeData = (e) =>{
-        // console.log(e)
         const date = new Date(month);
         const months = date.getMonth() + 1;
         const year = date.getFullYear();
@@ -395,20 +394,30 @@ export const ListMounthly = () => {
             else{
                 file = post.desember
             }
-            let {n23, n22, n21, q23, q22, q21} = 0;
+            let {n24,n23, n22, n21, q24, q23, q22, q21} = 0;
+            if(file.th24 === ""){n24 = 0}else{n24 = parseInt(file.th24)}
             if(file.th23 === ""){n23 = 0}else{n23 = parseInt(file.th23)}
             if(file.th22 === ""){n22 = 0}else{n22 = parseInt(file.th22)}
             if(file.th21 === ""){n21 = 0}else{n21 = parseInt(file.th21)}
 
+            if(file.qth24 === ""){q24 = 0}else{q24 = parseInt(file.qth24)}
             if(file.qth23 === ""){q23 = 0}else{q23 = parseInt(file.qth23)}
             if(file.qth22 === ""){q22 = 0}else{q22 = parseInt(file.qth22)}
             if(file.qth21 === ""){q21 = 0}else{q21 = parseInt(file.qth21)}
 
+            const total24 = n24 * q24;
             const total23 = n23 * q23;
             const total22 = n22 * q22;
             const total21 = n21 * q21;
+            let persentase24 = 0
             let persentase23 = 0
             let persentase22 = 0
+            if(n24 > 0){
+                persentase24 =((n24 - n23) / (n23)) * 100 ;
+            }
+            else{
+                persentase24 = 0
+            }
             if(n23 > 0){
                 persentase23 =((n23 - n22) / (n22)) * 100 ;
             }
@@ -422,10 +431,12 @@ export const ListMounthly = () => {
                 persentase22 = 0
             }
             return(
-                {item: post.item, th23 : n23, th22 : n22, th21 : n21, qth23 : q23, qth22 : q22, qth21 : q21, total21 : total21, total22 : total22, total23 : total23, satuan : post.satuan, tipe : post.tipe, persentase23: persentase23.toFixed(2), persentase22 : persentase22.toFixed(2), persentase21: "0" }
+                {item: post.item, th24 : n24, th23 : n23, th22 : n22, th21 : n21, qth24 : q24, qth23 : q23, qth22 : q22, qth21 : q21, total21 : total21, total22 : total22, total23 : total23, total24 : total24, satuan : post.satuan, tipe : post.tipe, persentase23: persentase23.toFixed(2), persentase22 : persentase22.toFixed(2), persentase24 : persentase24.toFixed(2), persentase21: "0" }
             )
         });
-        // console.log(postIds)
+        console.log(postIds)
+        let cek = postIds.filter(x=> x.item === "T10");
+        console.log(cek)
         // console.log(isTipe)
         let listData = {};
         if(e === ""){
@@ -437,7 +448,27 @@ export const ListMounthly = () => {
         }
         // console.log(listData)
         let nilai = {}
-        if(year === 2023){
+        if(year === 2024){
+            if(e === "jumlah"){
+                nilai = listData.sort(function(a, b) {
+                    return b.total24 - a.total24;
+                });
+                setKurs('Rp. ')
+            }
+            else if(e === "harga"){
+                nilai = listData.sort(function(a, b) {
+                    return b.th24 - a.th24;
+                });
+                setKurs('Rp. ')
+            }
+            else{
+                nilai = listData.sort(function(a, b) {
+                    return b.qth24 - a.qth24;
+                });
+                setKurs('')
+            }
+        }
+        else if(year === 2023){
             if(e === "jumlah"){
                 nilai = listData.sort(function(a, b) {
                     return b.total23 - a.total23;
@@ -499,19 +530,20 @@ export const ListMounthly = () => {
         }
         let datas = [];
         for(let x= 0; x < nilai.length; x++){
-            if(year === 2023){
-                datas.push({ item: nilai[x].item, harga : nilai[x].th23 , qty : nilai[x].qth23, total : nilai[x].total23, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
+            if(year === 2024){
+                datas.push({ item: nilai[x].item, harga : nilai[x].th24 , qty : nilai[x].qth24, total : nilai[x].total24, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase24 : nilai[x].persentase24, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
+            }
+            else if(year === 2023){
+                datas.push({ item: nilai[x].item, harga : nilai[x].th23 , qty : nilai[x].qth23, total : nilai[x].total23, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase24 : nilai[x].persentase24, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
             }
             else if(year === 2022){
-                datas.push({ item: nilai[x].item, harga : nilai[x].th22 , qty : nilai[x].qth22, total : nilai[x].total22, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
+                datas.push({ item: nilai[x].item, harga : nilai[x].th22 , qty : nilai[x].qth22, total : nilai[x].total22, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase24 : nilai[x].persentase24, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
             }
             else{
-                datas.push({item: nilai[x].item, harga : nilai[x].th21 , qty : nilai[x].qth21, total : nilai[x].total21, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
+                datas.push({item: nilai[x].item, harga : nilai[x].th21 , qty : nilai[x].qth21, total : nilai[x].total21, satuan : nilai[x].satuan, tipe : nilai[x].tipe, persentase24 : nilai[x].persentase24, persentase23 : nilai[x].persentase23, persentase22 : nilai[x].persentase22, persentase21 : nilai[x].persentase21  })
             }
             
         }
-
-        console.log(datas)
         
         setFileName(datas);
 
@@ -570,20 +602,31 @@ export const ListMounthly = () => {
             else{
                 file = post.desember
             }
-            let {n23, n22, n21, q23, q22, q21} = 0;
+            let {n24,n23, n22, n21, q24, q23, q22, q21} = 0;
+            if(file.th24 === ""){n24 = 0}else{n24 = parseInt(file.th24)}
             if(file.th23 === ""){n23 = 0}else{n23 = parseInt(file.th23)}
             if(file.th22 === ""){n22 = 0}else{n22 = parseInt(file.th22)}
             if(file.th21 === ""){n21 = 0}else{n21 = parseInt(file.th21)}
 
+            if(file.qth24 === ""){q24 = 0}else{q24 = parseInt(file.qth24)}
             if(file.qth23 === ""){q23 = 0}else{q23 = parseInt(file.qth23)}
             if(file.qth22 === ""){q22 = 0}else{q22 = parseInt(file.qth22)}
             if(file.qth21 === ""){q21 = 0}else{q21 = parseInt(file.qth21)}
 
+            const total24 = n24 * q24;
             const total23 = n23 * q23;
             const total22 = n22 * q22;
             const total21 = n21 * q21;
+            let persentase24 = 0
             let persentase23 = 0
             let persentase22 = 0
+            if(n24 > 0){
+                persentase24 =((n24 - n23) / (n23)) * 100 ;
+            }
+            else{
+                persentase24 = 0
+            }
+
             if(n23 > 0){
                 persentase23 =((n23 - n22) / (n22)) * 100 ;
             }
@@ -597,7 +640,7 @@ export const ListMounthly = () => {
                 persentase22 = 0
             }
             return(
-                {item: post.item, th23 : n23, th22 : n22, th21 : n21, qth23 : q23, qth22 : q22, qth21 : q21, total21 : total21, total22 : total22, total23 : total23, satuan : post.satuan, tipe : post.tipe, persentase23: persentase23.toFixed(2), persentase22 : persentase22.toFixed(2), persentase21: "0" }
+                {item: post.item, th24 : n24, th23 : n23, th22 : n22, th21 : n21, qth24 : q24, qth23 : q23, qth22 : q22, qth21 : q21, total21 : total21, total22 : total22, total23 : total23, total24 : total24, satuan : post.satuan, tipe : post.tipe, persentase24: persentase24.toFixed(2), persentase23: persentase23.toFixed(2), persentase22 : persentase22.toFixed(2), persentase21: "0" }
             )
         });
 
@@ -969,7 +1012,15 @@ export const ListMounthly = () => {
             let presentase = 0;
             let warna = 'secondary';
             let icon = '';
-            if(yy === 2023){
+            if(yy === 2024){
+                if(e.persentase24 === Infinity || e.persentase24 === 'Infinity'){
+                    presentase = 0
+                }else{
+                    presentase = parseFloat(e.persentase24);
+                }
+                
+            }
+            else if(yy === 2023){
                 if(e.persentase23 === Infinity || e.persentase23 === 'Infinity'){
                     presentase = 0
                 }else{
