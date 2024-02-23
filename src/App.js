@@ -23,6 +23,7 @@ import { LabelPrint } from './Forms/KedatanganBarang/LabelPrint';
 import { Karyawan } from './Forms/karyawan/Karyawan';
 import { InputKaryawan } from './Forms/karyawan/InputKaryawan';
 import { EditPo } from './Forms/PurchasingOrder/EditPo';
+import { UpdatePrevPengada } from './Forms/PengadaanBarang/UpdatePrevPengada';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/form/pengadaan" element={<Pengadaan />} /> 
         <Route path="/form/pengadaan/create" element={<CreatePengadaan />} /> 
         <Route path="/form/pengadaan/data" element={<UpdatePengadaan />} /> 
+        <Route path="/form/pengadaan/update" element={<UpdatePrevPengada />} /> 
         <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} /> 
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  

@@ -1119,8 +1119,8 @@ export const CreatePo = () => {
                 inputList?.map((e,i)=>{
                     return(
                         <Accordion.Item eventKey={i}>
-                            <Accordion.Header>
-                                ({e.material[0].itemNo})&nbsp;{e.material[0].material}&nbsp;{e.qty_pengadaan[0].order}&nbsp;{e.qty_pengadaan[0].satuan}
+                            <Accordion.Header>{i+1}.&nbsp;
+                                ({e.material[0].itemNo})&nbsp;{e.material[0].material}&nbsp;{e.qty_pengadaan[0].order}&nbsp;{e.qty_pengadaan[0].satuan}||{e.spesifikasi}
                             </Accordion.Header>
                             <Accordion.Body>
                             <Form>

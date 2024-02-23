@@ -862,8 +862,8 @@ export const ListMounthly = () => {
         {
         label: 'Tahun 2024',
         data : thn4,
-        borderColor: '#eee',
-        backgroundColor: '#eee',
+        borderColor: '#EBF400',
+        backgroundColor: '#EBF400',
         },
     ],
     };

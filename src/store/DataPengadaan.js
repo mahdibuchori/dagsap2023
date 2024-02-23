@@ -5,18 +5,20 @@ import { API_AUTH } from '../apis/apisData';
 
 const initialPengadaan = [];
 const pengadaanByID = [];
+const pengadaanID = [];
 
 const usePengadaanStore = create(
     persist(
         (set) => ({
             pengadaan: initialPengadaan,
             pengadaanById : pengadaanByID,
+            pengadaanId : pengadaanID,
             pengadaanReady: false,
             pengadaanIdReady: false,
+            pengadaanIsReady: false,
             fetchPengadaan: async (id,plan) => {
                 try {
                     const { data } =  await API_AUTH.get(`pengadaan/${id}/${plan}`);
-                    console.log(data)
                     set(produce((state) => {
                         state.pengadaan = data.reverse();
                         state.pengadaanReady = true;
@@ -47,6 +49,19 @@ const usePengadaanStore = create(
                     }))
                 }
             },
+            filterIdPengadaan: async (id) => {
+                try {
+                    const data  = await API_AUTH.get(`pengadaanId/${id}`);
+                    set(produce((state) => {
+                        state.pengadaanId = data.data;
+                        state.pengadaanIsReady = true;
+                    }))
+                } catch (error) {
+                    set(produce((state) => {
+                        state.errorLogin = error.message;
+                    }))
+                }
+            },
         }),
         {
             name: 'pengadaan-storage',
@@ -64,5 +79,8 @@ export const selectPengadaanID = (state) => state.pengadaanById;
 export const selectFilterPengadaan = (state) => state.filterPengadaan;
 export const selectPengadaanIdReady = (state) => state.pengadaanIdReady;
 
-export default usePengadaanStore;
+export const selectPengadaanId = (state) => state.pengadaanId;
+export const selectFilterIdPengadaan = (state) => state.filterIdPengadaan;
+export const selectPengadaanIsReady = (state) => state.pengadaanIsReady;
 
+export default usePengadaanStore;

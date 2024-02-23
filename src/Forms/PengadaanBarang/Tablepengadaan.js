@@ -399,7 +399,6 @@ export const Tablepengadaan = ({columns}) => {
       if(pengadaanReady){
         await pengadaanFalse()
       }
-      
       setIsLoading(false);
     } catch (error) {
       Swal.fire({
@@ -520,7 +519,6 @@ export const Tablepengadaan = ({columns}) => {
       }
     }
     else{}
-    
   }
 
   const printChange = () => {

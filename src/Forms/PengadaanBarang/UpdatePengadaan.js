@@ -14,7 +14,6 @@ import useDataMaterial, { selectMaterial } from '../../store/DataMaterial';
 import { API_AUTH } from '../../apis/apisData';
 
 export const UpdatePengadaan = () => {
-  
   const navigate = useNavigate();
   const location = useLocation();
   const userData = useAuthStore(selectUser);
@@ -216,7 +215,14 @@ export const UpdatePengadaan = () => {
   };
 
   const handleAddClick = () => {
+    const data = location.state.data;
+    if(String(data?.user[0].plan).toUpperCase() === String(userData?.uplan).toUpperCase() && userData?.usubdiv === 'Purchasing'){
+      setInputList([...inputList, { tglDatang: '', qty: '', expro: '', po: '', noAkun: 'purch' }]);
+    }
+    else{
       setInputList([...inputList, { tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }]);
+    }
+      
   };
 
 
@@ -288,8 +294,15 @@ export const UpdatePengadaan = () => {
       let tglVerif = "";
       let tglPeng = "";
       let filt = "";
+      console.log("test : "+location.state.data.tgl_verify)
       if(String(data?.user[0].plan).toUpperCase() === String(userData?.uplan).toUpperCase() && userData?.usubdiv === 'Purchasing'){
-        statusny = "Verifikasi";
+        if(location.state.data.tgl_verify === ""){
+          statusny = "Pengajuan";
+        }
+        else{
+          statusny = "Verifikasi";
+        }
+        
         tglVerif = location.state.data.tgl_verify;
         tglPeng = location.state.data.t_pengadaan;
         filt = location.state.data.filter_bulan;
@@ -300,6 +313,8 @@ export const UpdatePengadaan = () => {
         tglPeng = tgl;
         filt = `${yy}-${bulan}`;
       }
+
+      
       const next = await API_AUTH.put(`/updatePengadaan`, {
           id_Pengadaan : location.state.data.id_Pengadaan,
           t_pengadaan : tglPeng,
@@ -655,6 +670,7 @@ export const UpdatePengadaan = () => {
                             placeholder="Tanggal Kirim"
                             value={x.tglDatang}
                             onChange={(e) => handleInputChange(e, i)}
+                            
                           />
                         </Form.Group>
                       </div>
