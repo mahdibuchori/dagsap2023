@@ -598,6 +598,7 @@ export const CreatePo = () => {
             return {
                 material : e.material,
                 qty : parseFloat(e.qty).toFixed(2),
+                qtyAwal : parseFloat(e.qtyAwal).toFixed(2),
                 satuan : e.satuan,
                 hargasatuan : e.hargasatuan,
                 diskon : e.diskon,
@@ -611,6 +612,7 @@ export const CreatePo = () => {
                 id_Pengadaan : e.id_Pengadaan,
                 tipe : e.tipe,
                 parsial: e.parsial,
+                parsialAwal : e.parsialAwal,
                 po : e.po,                                      
             }
         })
@@ -657,6 +659,7 @@ export const CreatePo = () => {
             return {
                 material : e.material,
                 qty : parseFloat(e.qty).toFixed(2),
+                qtyAwal : parseFloat(e.qtyAwal).toFixed(2),
                 satuan : e.satuan,
                 hargasatuan : e.hargasatuan,
                 diskon : e.diskon,
@@ -670,6 +673,7 @@ export const CreatePo = () => {
                 id_Pengadaan : e.id_Pengadaan,
                 tipe : e.tipe,
                 parsial: e.parsial,
+                parsialAwal : e.parsialAwal,
                 po : e.po,                                      
             }
         })
