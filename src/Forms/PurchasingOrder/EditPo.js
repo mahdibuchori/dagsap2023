@@ -172,7 +172,7 @@ export const EditPo = () => {
       setLastPO(location.state.data.id_po);
       setTgl(location.state.data.tgl_po);
       setTglKrm(location.state.data.tgl_kirim);
-      setRowData(location.state.data.dataPO)
+      setRowData(location.state.data.dataPO);
       // const next = data.filter((e)=> e.status === "Pengajuan")
       // console.log(next.length)
       // setInputList(location.state.data);
@@ -320,6 +320,7 @@ export const EditPo = () => {
       return {
         material : e.material,
         qty : parseFloat(e.qty).toFixed(2),
+        qtyAwal : parseFloat(e.qtyAwal).toFixed(2),
         satuan : e.satuan,
         hargasatuan : e.hargasatuan,
         diskon : e.diskon,
@@ -333,6 +334,7 @@ export const EditPo = () => {
         id_Pengadaan : e.id_Pengadaan,
         tipe : e.tipe,
         parsial: e.parsial,
+        parsialAwal : e.parsialAwal,
         po : e.po,                                      
       }
     })
@@ -379,6 +381,7 @@ export const EditPo = () => {
       return {
         material : e.material,
         qty : parseFloat(e.qty).toFixed(2),
+        qtyAwal : parseFloat(e.qtyAwal).toFixed(2),
         satuan : e.satuan,
         hargasatuan : e.hargasatuan,
         diskon : e.diskon,
@@ -392,6 +395,7 @@ export const EditPo = () => {
         id_Pengadaan : e.id_Pengadaan,
         tipe : e.tipe,
         parsial: e.parsial,
+        parsialAwal : e.parsialAwal,
         po : e.po,                                      
       }
     })
@@ -426,7 +430,7 @@ export const EditPo = () => {
 
   const onCellValueChanged = (e) => {
     const data = rowData[e.rowIndex];
-    console.log(data)
+    // console.log(data)
     let jmlh = 0;
     let hSatuan = 0;
     let diskon = 0;
@@ -587,7 +591,7 @@ export const EditPo = () => {
       let bln = format(new Date(), "MM", { locale: id });
       let tahu = format(new Date(), "yyyy", { locale: id });
       setIsLoading(true)
-      console.log({
+      /* console.log({
         id_po : nopo,
         po_no: '',
         tgl_po: tgl,
@@ -610,7 +614,7 @@ export const EditPo = () => {
         tgl_verify : '',
         tgl_approve : '',
         plan : userData.uplan
-      })
+      }) */
       const next = await API_AUTH.put(`/createpo/${lastPO}`, {
         id_po : nopo,
         po_no: '',

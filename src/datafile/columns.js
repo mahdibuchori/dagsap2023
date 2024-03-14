@@ -510,7 +510,7 @@ export const COLUMNS_PERMINTAAN =[
         field : 'list_data',
         valueGetter: params => {
             let data = params.data.list_data;
-            console.log(data)
+            // console.log(data)
             let hasil = [];
             for(let x = 0; x < data.length; x ++){
                 hasil.push(`${data[x].lot}(${data[x].qty}) ${data[x].supplier}`)
@@ -588,7 +588,7 @@ export const COLUMNS_SPAREPART =[
         field : 'status_item',
         width: 105,
         cellStyle: function(params) {
-            console.log(params.value)
+            // console.log(params.value)
             if (params.value ==='STOCK LIMIT') {
                 return {color: '#800000', backgroundColor: '#d07979a7', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center'};
                 
@@ -941,7 +941,7 @@ export const COLUMNS_DATAPO =[
         editable: true,
         cellRenderer: params => {
             let data = params.data;
-            console.log(data);
+            // console.log(data);
             data.parsial = []
             const parAwal = data.parsialAwal;
             for(let x = 0; x < parAwal.length; x++){
@@ -950,7 +950,7 @@ export const COLUMNS_DATAPO =[
                     qty: parAwal[x].qty
                 })
             }
-            console.log(data.parsial)
+            // console.log(data.parsial)
             let hSatuan = 0;
             if(data.qty === undefined || data.qty === ""){
                 hSatuan = 0;
@@ -1018,7 +1018,7 @@ export const COLUMNS_DATAPO =[
                     }
                 }
             }
-            console.log(data.parsial)
+            // console.log(data.parsial)
             return hSatuan
         }
     },
@@ -1040,7 +1040,7 @@ export const COLUMNS_DATAPO =[
             else{
                 let nilai = (parseFloat(data.hargasatuan)).toFixed(4);
                 const x  = ((parseFloat(nilai)) * 10000) / 10000;
-                console.log(x);
+                // console.log(x);
                 hSatuan = (parseFloat(x)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
             return hSatuan
@@ -1343,7 +1343,7 @@ export const COLUMNS_PO =[
         width: 110,
         cellRenderer: params => {
             let data = params.data.dataPO;
-            console.log(data.length)
+            // console.log(data.length)
             let hSatuan = data.length;
             return hSatuan
         }
@@ -1359,7 +1359,7 @@ export const COLUMNS_PO =[
         cellRenderer: params => {
             let data = params.data.status;
             let fina = params.data.statusfina;
-            console.log(data)
+            // console.log(data)
             if (data ==='Pengajuan' && fina === "") {
                 return (
                     <div>
