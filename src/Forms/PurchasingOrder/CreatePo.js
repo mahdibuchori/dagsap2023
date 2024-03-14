@@ -54,8 +54,6 @@ export const CreatePo = () => {
     const [fileDep, setFileDep] = useState(FileBarang);
     const [tax1name, setTax1name] = useState('');
     const [tax2name, setTax2name] = useState('');
-    // const [tax1id, setTax1id] = useState('');
-    // const [tax2id, setTax2id] = useState('');
     const [expro, setExpro] = useState();
     const [totalSub, setTotalSub] = useState(0);
     const [diskon, setDiskon] = useState(0);
@@ -248,6 +246,7 @@ export const CreatePo = () => {
                 let data1 = {
                     material : dataSementara.material,
                     qty : dataSementara.qty,
+                    qtyAwal : dataSementara.qty,
                     satuan : dataSementara.satuan,
                     hargasatuan : "",
                     diskon : "",
@@ -264,9 +263,14 @@ export const CreatePo = () => {
                     po : dataSementara.po,
                     parsial: {
                         tgl: dataSementara.tgl_datang,
-                        qty :dataSementara.qty
+                        qty :dataSementara.qty,
+                    },
+                    parsialAwal: {
+                        tgl: dataSementara.tgl_datang,
+                        qty :dataSementara.qty,
                     }
-                                                            
+                        
+                    
                 }
                 if(dataPo.length < 1){
                     if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
@@ -292,7 +296,6 @@ export const CreatePo = () => {
                                 layer.push(dataPo[x])
                             }
                         }
-
                         setDataPo(layer)
                     }
                 }
@@ -324,6 +327,7 @@ export const CreatePo = () => {
           try {
             setIsLoading(true);
             handleTotal()
+            console.log('aktivitas')
             setisReady(false)
             setIsLoading(false);
           } catch (error) {
@@ -344,7 +348,6 @@ export const CreatePo = () => {
 
     const cekProvider =()=>{
         const data = provider.provider
-        // console.log(data)
         let result = data?.map(function(e){
             let pajak = "";
             if(e.tax2code === ""){
@@ -441,11 +444,9 @@ export const CreatePo = () => {
             Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
         }
         else{
-            // console.log(dataPo)
             let plan = String(userData.uplan).toUpperCase();
             let data = [];
             for(let x = 0; x< dataPo.length; x++){
-                // console.log(dataPo[x])
                 let file = {
                     material : dataPo[x].material,
                     qty : parseFloat(dataPo[x].qty).toFixed(2),
@@ -462,7 +463,9 @@ export const CreatePo = () => {
                     id_Pengadaan : dataPo[x].id_Pengadaan,
                     tipe : dataPo[x].tipe,
                     parsial: [dataPo[x].parsial],
-                    po : dataPo[x].po,                                      
+                    po : dataPo[x].po,
+                    qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
+                    parsialAwal: [dataPo[x].parsialAwal],
                 }
                 if(data.length === 0){
                     data.push(file)
@@ -471,9 +474,13 @@ export const CreatePo = () => {
                     let foundIndex = data.findIndex(i => i.id_Pengadaan === dataPo[x].id_Pengadaan);
                     if(foundIndex >= 0){
                         data[foundIndex].qty = (parseFloat(data[foundIndex].qty) + parseFloat(dataPo[x].qty)).toFixed(2);
+                        data[foundIndex].qtyAwal = (parseFloat(data[foundIndex].qtyAwal) + parseFloat(dataPo[x].qtyAwal)).toFixed(2);
                         let parsil = data[foundIndex].parsial;
+                        let parsilA = data[foundIndex].parsialAwal;
                         parsil.push(dataPo[x].parsial)
+                        parsilA.push(dataPo[x].parsialAwal)
                         data[foundIndex].parsial = parsil;
+                        data[foundIndex].parsialAwal = parsilA;
                     }
                     else{
                         data.push(file)
@@ -523,6 +530,30 @@ export const CreatePo = () => {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
             setIsLoading(true)
+            /* console.log({
+                id_po : nopo,
+                po_no: '',
+                tgl_po: tgl,
+                tgl_kirim : tglKrm,
+                filter_bulan: `${tahu}-${bln}`,
+                pembayaran: termName,
+                tukar : currencyName,
+                idexpro	: expro?.id,
+                expro : expro?.value,
+                status : 'Pengajuan',
+                statusfina : '',
+                dataPO : rowData,
+                keterangan : spesifikasi,
+                totalSub : totalSub,
+                diskon : parseFloat(diskon).toFixed(2),
+                ppn : ppn,
+                pph : pph,
+                bAntar : parseFloat(bantar).toFixed(2),
+                total : total,
+                tgl_verify : '',
+                tgl_approve : '',
+                plan : userData.uplan
+            }) */
             const next = await API_AUTH.post(`/createpo`, {
                 id_po : nopo,
                 po_no: '',
@@ -560,8 +591,6 @@ export const CreatePo = () => {
 
         setTax1name(value.tax1name);
         setTax2name(value.tax2name);
-        // setTax1id(value.tax1code);
-        // setTax2id(value.tax2code);
         setExpro(value)
         let modifiedArr = rowData.map((e)=>{
             let pjk = "";

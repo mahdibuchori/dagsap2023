@@ -8,7 +8,13 @@ export const BtnPurchasing = (props) => {
     const userData = useAuthStore(selectUser);
     const renderEdit = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-          Cek Data
+          Cek PO
+        </Tooltip>
+    )
+
+    const renderPO = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          Edit PO
         </Tooltip>
     )
     const buttonClicked = () => {
@@ -25,7 +31,6 @@ export const BtnPurchasing = (props) => {
       
       };
   return (
-
         <span style={{display: 'flex'}}>
             <OverlayTrigger
                 placement="bottom"
@@ -34,13 +39,28 @@ export const BtnPurchasing = (props) => {
             >
                 <button
                     style={{ height: 30, lineHeight: 0.5 }}
-                    onClick={() => buttonClicked()}
+                    // onClick={() => buttonClicked()}
                     className="buttonSet"
                 >
                 <i className="bi bi-clipboard"></i>
                 <p style={{display:"none"}}>{userData.uname}</p>
                 </button>
             </OverlayTrigger>
+
+            <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 150, hide: 250 }}
+                overlay={renderPO}
+            >
+                <button
+                    style={{ height: 30, lineHeight: 0.5}}
+                    onClick={() => buttonClicked()}
+                    className="buttonReset"
+                >
+                <i className="bi bi-pencil"></i>
+                </button>
+            </OverlayTrigger>
         </span>
+        
   )
 }

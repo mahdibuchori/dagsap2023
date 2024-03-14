@@ -653,7 +653,6 @@ export const Tablepengadaan = ({columns}) => {
                                         }
                                         else{
                                           index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "PENGAJUAN");
-                                            
                                         }
                                         
                                         index2 = `${index} (${index1.length})`

@@ -434,9 +434,6 @@ export const ListMounthly = () => {
                 {item: post.item, th24 : n24, th23 : n23, th22 : n22, th21 : n21, qth24 : q24, qth23 : q23, qth22 : q22, qth21 : q21, total21 : total21, total22 : total22, total23 : total23, total24 : total24, satuan : post.satuan, tipe : post.tipe, persentase23: persentase23.toFixed(2), persentase22 : persentase22.toFixed(2), persentase24 : persentase24.toFixed(2), persentase21: "0" }
             )
         });
-        console.log(postIds)
-        let cek = postIds.filter(x=> x.item === "T10");
-        console.log(cek)
         // console.log(isTipe)
         let listData = {};
         if(e === ""){

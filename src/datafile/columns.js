@@ -941,9 +941,84 @@ export const COLUMNS_DATAPO =[
         editable: true,
         cellRenderer: params => {
             let data = params.data;
+            console.log(data);
+            data.parsial = []
+            const parAwal = data.parsialAwal;
+            for(let x = 0; x < parAwal.length; x++){
+                data.parsial.push({
+                    tgl: parAwal[x].tgl,
+                    qty: parAwal[x].qty
+                })
+            }
+            console.log(data.parsial)
             let hSatuan = 0;
-            if(data.qty === undefined || data.qty === ""){hSatuan = 0}
-            else{hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            if(data.qty === undefined || data.qty === ""){
+                hSatuan = 0;
+                params.data.parsial[0].qty = 0;
+            }
+            else{
+                const awaln = parseFloat(data.qtyAwal);
+                const akhrn = parseFloat(data.qty);
+                hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                if(data.parsial.length < 2){
+                    if(akhrn <= awaln){
+                        params.data.parsial[0].qty = data.qty;
+                    }
+                    else{
+                        const sisan = ((akhrn - awaln) * 1000) / 1000;
+                        params.data.parsial.push({
+                            tgl: params.data.parsial[0].tgl,
+                            qty: String(sisan)
+                        })
+                    }
+                }
+                else{
+                    const p = data.parsial;
+                    if(awaln === akhrn){
+                        console.log('data sama')
+                    }
+                    else if(akhrn < awaln){
+                        let datd = [];
+                        let nilaiX = akhrn;
+                        for (let i = 0; i < p.length; i++) {
+                            let hsl = parseFloat(data.parsial[i].qty);
+                            if (hsl <= nilaiX){
+                                datd.push(data.parsial[i])
+                                nilaiX -= hsl;
+                            }
+                            else { 
+                                break; 
+                            }
+                            
+                        }
+
+                        let sum = datd.reduce((s, a) => parseFloat(s) + parseFloat(a.qty), 0);
+                        if(akhrn !== sum){
+                            const sisan = ((akhrn - sum) * 1000) / 1000;
+                            datd.push({
+                                tgl: data.parsial[p.length-1].tgl,
+                                qty: String(sisan)
+                            })
+                        }
+
+                        data.parsial = [];
+                        for(let x = 0; x < datd.length; x++){
+                            params.data.parsial.push({
+                                tgl: datd[x].tgl,
+                                qty: datd[x].qty
+                            })
+                        }
+                    }
+                    else{
+                        const sisan = ((akhrn - awaln) * 1000) / 1000;
+                        params.data.parsial.push({
+                            tgl: params.data.parsial[p.length-1].tgl,
+                            qty: String(sisan)
+                        })
+                    }
+                }
+            }
+            console.log(data.parsial)
             return hSatuan
         }
     },
@@ -1038,7 +1113,6 @@ export const COLUMNS_DATAPO =[
             else{
                 pajak = String(data.pajak).toUpperCase();
             }
-            console.log(pajak)
             return pajak
         }
     },
