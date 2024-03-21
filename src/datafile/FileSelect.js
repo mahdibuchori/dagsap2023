@@ -28,7 +28,7 @@ export const FileTahun = [
 export const FileDivisi = [
   { value: 'All', label: 'All', subDiv :[{lab: 'All', valu: 'All'}]},
   { value: 'BOD/BOC', label: 'BOD/BOC', subDiv :[{lab: 'BOD/BOC', valu: 'BOD/BOC'}]},
-  { value: 'FAT', label: 'FAT', subDiv :[{lab: 'FAT', valu: 'FAT'}]},
+  { value: 'FAT', label: 'FAT', subDiv :[{lab: 'FAT', valu: 'FAT'},{lab: 'Budgeting', valu: 'Budgeting'}]},
   { value: 'HR-GA', label: 'HR-GA', subDiv :[{lab: 'HR-GA', valu: 'HR-GA'}]},
   { value: 'Maintenance', label: 'Maintenance', subDiv :[{lab: 'Maintenance', valu: 'Maintenance'}]},
   { value: 'PPIC-Purchasing', label: 'PPIC-Purchasing', subDiv :[{lab: 'PPIC-WH', valu: 'PPIC-WH'},{lab: 'Purchasing', valu: 'Purchasing'},{lab: 'WIP', valu: 'WIP'},{lab: 'FG', valu: 'FG'},{lab: 'Koperasi', valu: 'Koperasi'}]},
@@ -36,7 +36,7 @@ export const FileDivisi = [
   { value: 'QAQC', label: 'QAQC', subDiv :[{lab: 'QAQC', valu: 'QAQC'}]},
   { value: 'RnD', label: 'RnD', subDiv :[{lab: 'RnD', valu: 'RnD'}]},
   { value: 'Sales-Marketing', label: 'Sales-Marketing', subDiv :[{lab: 'Marketing', valu: 'Marketing'},{lab: 'Sales', valu: 'Sales'}]},
-  { value: 'SSD', label: 'SSD', subDiv :[{lab: 'SSD', valu: 'SSD'}]}
+  { value: 'SSD', label: 'SSD', subDiv :[{lab: 'SSD', valu: 'SSD'}]},
 ]
 
 export const SubDivisi = [

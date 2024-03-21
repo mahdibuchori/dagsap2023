@@ -34,6 +34,8 @@ export const Tablepengadaan = ({columns}) => {
   const [rowQaqc, setRowQaqc] = useState();
   const [rowRnD, setrowRnD] = useState();
   const [rowSsd, setRowSsd] = useState();
+  const [rowFat, setRowFat] = useState();
+  const [rowBudget, setRowBudget] = useState();
   const [dataPo, setDataPo] = useState([]);
   const [fileBox, setFileBox] = useState([]);
 
@@ -320,6 +322,7 @@ export const Tablepengadaan = ({columns}) => {
   const onGridReady =async () =>{
     try {
       setDataPo([])
+      console.log(newPengadaan)
       const fg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FG");
       const hrga =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "HR-GA");
       const maintenance = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "MAINTENANCE");
@@ -329,6 +332,8 @@ export const Tablepengadaan = ({columns}) => {
       const qaqc =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "QAQC");
       const rnd =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "RND");
       const ssd = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SSD");
+      const fat = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FAT");
+      const budg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "BUDGETING");
 
       const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
       const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
@@ -380,7 +385,17 @@ export const Tablepengadaan = ({columns}) => {
         const dateB = new Date(b.t_pengadaan);
         return dateB - dateA;
       });
-
+      fat.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      budg.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
+      
       setRowFg(fg); 
       setRowHrga(hrga);
       setRowMaintenance(maintenance);
@@ -390,6 +405,8 @@ export const Tablepengadaan = ({columns}) => {
       setRowQaqc(qaqc);
       setrowRnD(rnd)
       setRowSsd(ssd);
+      setRowFat(fat);
+      setRowBudget(budg);
 
       setJmlPengajuan(jumPengajuan.length);
       setJmlRevisi(jumRevisi.length);
@@ -438,6 +455,8 @@ export const Tablepengadaan = ({columns}) => {
     const qaqc =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "QAQC" && x.status.toUpperCase() === data.toUpperCase());
     const rnd =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "RND" && x.status.toUpperCase() === data.toUpperCase());
     const ssd = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SSD" && x.status.toUpperCase() === data.toUpperCase());
+    const fat = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FAT" && x.status.toUpperCase() === data.toUpperCase());
+    const budg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "BUDGETING" && x.status.toUpperCase() === data.toUpperCase());
 
     fg.sort(function(a, b) {
       const dateA = new Date(a.t_pengadaan);
@@ -484,6 +503,16 @@ export const Tablepengadaan = ({columns}) => {
       const dateB = new Date(b.t_pengadaan);
       return dateB - dateA;
     });
+    fat.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
+    budg.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
 
     setRowFg(fg);
     setRowHrga(hrga);
@@ -494,6 +523,8 @@ export const Tablepengadaan = ({columns}) => {
     setRowQaqc(qaqc);
     setrowRnD(rnd)
     setRowSsd(ssd);
+    setRowFat(fat);
+    setRowBudget(budg);
     /* 
     uuid	
     uname	
@@ -544,6 +575,29 @@ export const Tablepengadaan = ({columns}) => {
             footer: 'Harap Hubungi Divisi Purchasing'
           })
     } */
+    let uniqueChars = [...new Set(dataPo)];
+      let next = uniqueChars.map((e)=>{
+          let cekData = newPengadaan.filter((i)=>i.id_Pengadaan === e);
+          return(
+            {status : cekData[0].status}
+          )
+          
+      })
+      let fData = next.filter((i)=>i.status !== "Verifikasi");
+      if(fData.length === 0){
+        let newArray = newPengadaan.filter(
+          (array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+          console.log(newArray)
+          navigate(`/form/pengadaan/printview`,{state:{
+            data : newArray
+          }
+        }
+        );
+      }
+      else{
+        Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
+      }
+    
   }
 
   const onSelectionChanged = useCallback((params) => {
@@ -909,6 +963,34 @@ export const Tablepengadaan = ({columns}) => {
                   <AgGridReact
                     ref={gridRef}
                     rowData={rowSsd}
+                    columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    pagination={false}
+                    cacheQuickFilter={true}
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
+                  ></AgGridReact>
+                </div>
+            </Tab>
+            <Tab eventKey="FAT" title="FAT" disabled={usSsd}>
+                <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                  <AgGridReact
+                    ref={gridRef}
+                    rowData={rowFat}
+                    columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    pagination={false}
+                    cacheQuickFilter={true}
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
+                  ></AgGridReact>
+                </div>
+            </Tab>
+            <Tab eventKey="Budgeting" title="Budgeting" disabled={usSsd}>
+                <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                  <AgGridReact
+                    ref={gridRef}
+                    rowData={rowBudget}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     pagination={false}

@@ -36,6 +36,7 @@ export const PrevPengadaan = ({data}) => {
                     <Accordion.Header>
                       <div className="p-0 ms-1 me-auto">
                         <h6>{x.id_Pengadaan}</h6>
+                        <h6>{x.t_pengadaan}</h6>
                         <h6>{a.po}</h6>
                       </div>
                       <Badge bg={warna} pill>{statusn}</Badge>

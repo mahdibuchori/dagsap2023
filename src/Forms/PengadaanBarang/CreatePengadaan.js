@@ -32,6 +32,7 @@ export const CreatePengadaan = () => {
   const [tipeMaterial, setTipeMaterial] = useState('');
   const [dataPO, setDataPO] = useState();
   const [brand, setBrand] = useState('');
+  const [mesin, setMesin] = useState('');
   const [fileNab, setFileNab] = useState(FileBarang);
   const [fileBar, setFileBar] = useState(FileBarang);
   const [inputList, setInputList] = useState([{ tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }]);
@@ -95,6 +96,7 @@ export const CreatePengadaan = () => {
           setKontak(false)
           setBrand(" ")
           setTipeMaterial(" ")
+          setMesin("")
         }
         const newFileNab = material.material?.filter(x => x.kategori === tibar.value);
         let modifiedArr = newFileNab.map(function(element){
@@ -201,6 +203,7 @@ export const CreatePengadaan = () => {
                   tgl_approve : e.tgl_approve,
                   tgl_verify : e.tgl_verify,
                   tipeMaterial : e.tipeMaterial,
+                  mesin : mesin,
                   user : e.user,
                   newPar : result
                 }
@@ -282,7 +285,53 @@ export const CreatePengadaan = () => {
         });
 
         if(ndata.length === inputList.length){
-            handleSave();
+            const cSta = []
+            console.log(dataPO)
+            if(dataPO === undefined){
+              handleSave()
+            }
+            else{
+              dataPO.map((x,i) =>{
+                return(
+                  x.newPar.map((a,z)=>{
+                    let statusn = "";
+                    if(a.noAkun === "" && a.po !== ""){
+                      statusn = "Closed";
+                    }
+                    else if(a.noAkun === "" && a.po === ""){
+                      statusn = "Progress";
+                    }
+                    else{
+                      statusn = "Open";
+                    }
+                    return (
+                      cSta.push(statusn)
+                    )
+                  })
+                )
+              });
+              const nil = cSta.filter(x => x === 'Open');
+              if(nil.length > 0){
+                Swal.fire({
+                  title: "Apakah anda akan melanjutkan pembuatan pengadaan?",
+                  text: "Masih ada PO open dan butuh untuk dibuatkan jadawal kedatangan",
+                  icon: "question",
+                  showDenyButton: true,
+                  confirmButtonText: "Lanjut",
+                  denyButtonText: `Batal`
+                }).then((result) => {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (result.isConfirmed) {
+                    handleSave();
+                  } else if (result.isDenied) {
+                    Swal.fire("Pengadaan Dibatalkan", "", "info");
+                  }
+                });
+              }
+              else{
+                handleSave();
+              }
+            }
         }
         else{
             Swal.fire('Info',`Harap input qty pengadaan parsial`, 'warning')
@@ -333,7 +382,8 @@ export const CreatePengadaan = () => {
         tgl_approve : "",
         filter_bulan : `${yy}-${bulan}`,
         tipeMaterial : tipeMaterial,
-        brandMaterial : brand
+        brandMaterial : brand,
+        mesin : mesin
       });
     
       Swal.fire(`${next.data.success}`, navigate(`/form/Pengadaan`), 'success');
@@ -484,7 +534,7 @@ export const CreatePengadaan = () => {
                   </div>
 
                   <div className="row  g-2" style={{display: hilang}}>
-                    <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                       <Form.Group as={Col} controlId="validationCustom01">
                         <Form.Label>Tipe Item</Form.Label>
                         <Form.Control 
@@ -500,7 +550,7 @@ export const CreatePengadaan = () => {
                           </Form.Control.Feedback>
                       </Form.Group>
                     </div>
-                    <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                       <Form.Group as={Col} controlId="validationCustom01">
                         <Form.Label>Merk/ Brand Item</Form.Label>
                         <Form.Control 
@@ -513,6 +563,22 @@ export const CreatePengadaan = () => {
                         />
                         <Form.Control.Feedback type="invalid">
                           Harap Masukan Nama Merk/Brand
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Mesin</Form.Label>
+                        <Form.Control 
+                          as="textarea" 
+                          aria-label="With textarea" 
+                          rows={1}
+                          value = {mesin}
+                          onChange = {e => setMesin(e.target.value)}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Harap Masukan Nama Mesin
                         </Form.Control.Feedback>
                       </Form.Group>
                     </div>

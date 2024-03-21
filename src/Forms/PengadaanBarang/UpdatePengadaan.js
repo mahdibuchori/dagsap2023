@@ -31,6 +31,7 @@ export const UpdatePengadaan = () => {
   
   const [tipeMaterial, setTipeMaterial] = useState('');
   const [brand, setBrand] = useState('');
+  const [mesin, setMesin] = useState('');
   
   const [fileNab, setFileNab] = useState(FileBarang);
   const [fileBar, setFileBar] = useState(FileBarang);
@@ -92,6 +93,7 @@ export const UpdatePengadaan = () => {
           setMunculs(false)
         }
         setBrand('')
+        setMesin('')
         setTipeMaterial('')
         setMateril('')
         let modifiedArr = newFileNab.map(function(element){
@@ -158,6 +160,7 @@ export const UpdatePengadaan = () => {
     setTibar({value: filTipe[0]?.value, label: filTipe[0]?.label, kategori: filTipe[0]?.kategori, labelId: filTipe[0]?.labelId});
     setSatuan(data?.qty_pengadaan[0].satuan)
     setBrand(data?.brandMaterial)
+    setMesin(data?.mesin)
     setTipeMaterial(data?.tipeMaterial)
     console.log(data)
     console.log(data?.user[0].plan)
@@ -340,7 +343,8 @@ export const UpdatePengadaan = () => {
           tgl_approve : "",
           filter_bulan : filt,
           tipeMaterial : tipeMaterial,
-          brandMaterial : brand
+          brandMaterial : brand,
+          mesin : mesin
       });
       
       Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
@@ -523,7 +527,7 @@ export const UpdatePengadaan = () => {
                   </div>
 
                   <div className="row  g-2" style={{display: hilangs}}>
-                      <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                         <Form.Group as={Col} controlId="validationCustom01">
                           <Form.Label>Tipe Item</Form.Label>
                           <Form.Control 
@@ -539,7 +543,7 @@ export const UpdatePengadaan = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
                       </div>
-                      <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                         <Form.Group as={Col} controlId="validationCustom01">
                           <Form.Label>Merk/ Brand Item</Form.Label>
                           <Form.Control 
@@ -552,6 +556,22 @@ export const UpdatePengadaan = () => {
                           />
                           <Form.Control.Feedback type="invalid">
                             Harap Masukan Nama Merk/Brand
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Mesin</Form.Label>
+                          <Form.Control 
+                            as="textarea" 
+                            aria-label="With textarea" 
+                            rows={1}
+                            value = {mesin}
+                            onChange = {e => setMateril(e.target.value)}
+                            required
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Harap Masukan Nama Mesin
                           </Form.Control.Feedback>
                         </Form.Group>
                       </div>

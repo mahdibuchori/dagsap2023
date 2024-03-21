@@ -70,19 +70,18 @@ export const UpdatePrevPengada = () => {
     };
 
     const handleSubmit = (e) =>{
-        e.preventDefault()
+        e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
             e.stopPropagation();
             setValidated(true);
             
-            Swal.fire('Text','coba','error')
+            Swal.fire('Info','Lengkapi data','error')
         }
         else{
+            const tpBtn = e.nativeEvent.submitter.name;
             let cekN =  inputList.filter(x=> x.qty === "");
-            console.log(cekN.length)
-            console.log(inputList)
             if(cekN.length === 0){
                 let jum = 0;
                 inputList.map((x,i)=>{
@@ -93,7 +92,12 @@ export const UpdatePrevPengada = () => {
                 })
 
                 if(location.state.data.qty_pengadaan[0].order === jum){
-                    handleSave()
+                    if(tpBtn === 'open'){
+                        handleOpen()
+                    }
+                    else{
+                        handleClose()
+                    }
                 }
                 else{
                     Swal.fire('Oppss...','Harap cek kembali total qty','info')
@@ -107,7 +111,7 @@ export const UpdatePrevPengada = () => {
         }
     }
 
-    const handleSave =async () =>{
+    const handleClose =async () =>{
         try {
             const nilai = inputList.map((e,i)=>{
                 return(
@@ -137,6 +141,7 @@ export const UpdatePrevPengada = () => {
                     "tgl_verify": file.tgl_verify,
                     "tipeMaterial": file.tipeMaterial,
                     "user": file.user,
+                    "mesin" : file.mesin
                 });
                 
                 Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
@@ -148,6 +153,58 @@ export const UpdatePrevPengada = () => {
         } catch (error) {
             Swal.fire('Info', `${error.response.data.message}`, 'warning');
             setIsLoading(false);
+        }
+    }
+
+    const handleOpen =async () =>{
+        try {
+            let file = location.state.data;
+            const nilai = inputList.map((e,i)=>{
+                let no = inputList.length - 1;
+                let akun = '';
+                if(i === no){
+                    akun = 'purch';
+                }
+                else{
+                    akun = '';
+                }
+                return(
+                    { 
+                        tglDatang: e.tglDatang,
+                        qty: e.qty,
+                        expro: e.expro,
+                        po: e.po,
+                        noAkun: akun
+                    }
+                )
+            });
+            if(userData.usubdiv === file.user[0].divisi && userData.uplan === file.user[0].plan){
+                setIsLoading(true)
+                const next = await API_AUTH.put(`/updatePengadaan`, {
+                    "brandMaterial": file.brandMaterial,
+                    "filter_bulan": file.filter_bulan,
+                    "id_Pengadaan": file.id_Pengadaan,
+                    "material": file.material,
+                    "parsial_data": nilai,
+                    "qty_pengadaan": file.qty_pengadaan,
+                    "spesifikasi": file.spesifikasi,
+                    "status": file.status,
+                    "t_pengadaan": file.t_pengadaan,
+                    "tgl_approve": file.tgl_approve,
+                    "tgl_verify": file.tgl_verify,
+                    "tipeMaterial": file.tipeMaterial,
+                    "user": file.user,
+                    "mesin" : file.mesin
+                });
+                
+                Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
+                setIsLoading(false);
+            }
+            else{
+                Swal.fire(`Oppss...`, 'Anda tidak memiliki akses', 'info');
+            }
+        } catch (error) {
+            
         }
     }
 
@@ -304,7 +361,7 @@ export const UpdatePrevPengada = () => {
                                     </div>
 
                                     <div className="row  g-2">
-                                        <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                                        <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                                             <Form.Group as={Col} controlId="validationCustom01">
                                             <Form.Label>Tipe Item</Form.Label>
                                             <Form.Control 
@@ -319,7 +376,7 @@ export const UpdatePrevPengada = () => {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </div>
-                                        <div className='col-sm-12 col-md-6 col-lg-6 col-xl-6'>
+                                        <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                                             <Form.Group as={Col} controlId="validationCustom01">
                                             <Form.Label>Merk/ Brand Item</Form.Label>
                                             <Form.Control 
@@ -331,6 +388,21 @@ export const UpdatePrevPengada = () => {
                                             />
                                             <Form.Control.Feedback type="invalid">
                                                 Harap Masukan Nama Merk/Brand
+                                            </Form.Control.Feedback>
+                                            </Form.Group>
+                                        </div>
+                                        <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                            <Form.Group as={Col} controlId="validationCustom01">
+                                            <Form.Label>Mesin</Form.Label>
+                                            <Form.Control 
+                                                as="textarea"
+                                                aria-label="With textarea"
+                                                rows={1}
+                                                value = {location.state.data?.mesin}
+                                                disabled
+                                            />
+                                            <Form.Control.Feedback type="invalid">
+                                                Harap Masukan Nama Mesin
                                             </Form.Control.Feedback>
                                             </Form.Group>
                                         </div>
@@ -457,11 +529,25 @@ export const UpdatePrevPengada = () => {
                                 <div className='d-flex align-items-end flex-wrap'>
                                     <div className='row p-2'>
                                         <Button 
-                                            type="submit" 
+                                            type="submit"  
+                                            name="open"
                                             variant="outline-primary m-2" 
                                             className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
+                                            value="open"
                                         >
-                                            Update
+                                            Update Open
+                                        </Button>
+                                        
+                                    </div>
+                                    <div className='row p-2'>
+                                        <Button
+                                            type="submit" 
+                                            name="close"
+                                            variant="outline-danger m-2" 
+                                            className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
+                                            value="close"
+                                        >
+                                            Update close
                                         </Button>
                                         
                                     </div>

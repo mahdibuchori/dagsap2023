@@ -1031,7 +1031,7 @@ export const COLUMNS_DATAPO =[
     { 
         headerName: 'Harga Satuan',
         field : 'hargasatuan',
-        width: 120,
+        width: 110,
         cellDataType: 'number',
         cellRenderer: params => {
             let data = params.data;
@@ -1047,9 +1047,9 @@ export const COLUMNS_DATAPO =[
         }
     },
     { 
-        headerName: '% Diskon',
+        headerName: '% Disc',
         field : 'diskon',
-        width: 90,
+        width: 80,
         /* valueFormatter: params => {
             console.log(params)
             return params.data.diskon
@@ -1096,13 +1096,13 @@ export const COLUMNS_DATAPO =[
     { 
         headerName: 'Barang',
         field : 'itemNo',
-        width: 120,
+        width: 110,
         editable: false,
     },
     { 
         headerName: 'Pajak',
         field : 'pajak',
-        width: 80,
+        width: 70,
         editable: true,
         cellRenderer: params => {
             let data = params.data;
@@ -1117,9 +1117,15 @@ export const COLUMNS_DATAPO =[
         }
     },
     { 
+        headerName: 'Spesifikasi',
+        field : 'spesifikasi',
+        width: 110,
+        editable: true,
+    },
+    { 
         headerName: 'Divisi',
         field : 'divisi',
-        width: 120,
+        width: 110,
         editable: true,
     },
     { 

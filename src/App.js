@@ -24,6 +24,7 @@ import { Karyawan } from './Forms/karyawan/Karyawan';
 import { InputKaryawan } from './Forms/karyawan/InputKaryawan';
 import { EditPo } from './Forms/PurchasingOrder/EditPo';
 import { UpdatePrevPengada } from './Forms/PengadaanBarang/UpdatePrevPengada';
+import { CetakPengadaan } from './Forms/PengadaanBarang/CetakPengadaan';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/form/pengadaan/data" element={<UpdatePengadaan />} /> 
         <Route path="/form/pengadaan/update" element={<UpdatePrevPengada />} /> 
         <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} /> 
+        <Route path="/form/pengadaan/printview" element={<CetakPengadaan />} /> 
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
         <Route path="/form/purchaseorder/update" element={<EditPo />} />  
