@@ -391,7 +391,7 @@ export const ViewPo = () => {
       <Form>
         <div className='row g-2 mb-1'>
           <div className='col-sm-4	col-md-4	col-lg-2	col-xl-2 mb-1'>
-            <Card>
+            <Card bg='white'>
               <Card.Body>
                 <Form.Group as={Col} controlId="validationCustom01">
                   <Form.Label>Id Po</Form.Label>
@@ -427,7 +427,7 @@ export const ViewPo = () => {
               </Card.Body>
             </Card>
             
-            <Card style={{ marginTop: 10 }}>
+            <Card bg='white' style={{ marginTop: 10 }}>
               <Card.Body>
                 <Form.Group as={Col} controlId="validationCustom01">
                   <Form.Label>Nilai Tukar</Form.Label>

@@ -18,7 +18,7 @@ const Profil = () => {
 
             <div className="row gutters-sm">
                 <div className="col-md-4 mb-3">
-                    <div className="card">
+                    <div className="card bg-white">
                         <div className="card-body border-start border-0 border-3 border-warning">
                             <div className="d-flex flex-column align-items-center text-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" classname="rounded-circle" width="150" />
@@ -33,7 +33,7 @@ const Profil = () => {
                         </div>
                     </div>
                     
-                    <div className="card mt-3">
+                    <div className="card bg-white mt-3">
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 className="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" classname="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
@@ -59,7 +59,7 @@ const Profil = () => {
                     </div>
                 </div>
                 <div className="col-md-8">
-                    <div className="card mb-3">
+                    <div className="card bg-white mb-3">
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-sm-3">
@@ -115,7 +115,7 @@ const Profil = () => {
                     </div> 
                     <div className="row gutters-sm">
                         <div className="col-sm-6 mb-3">
-                            <div className="card h-100">
+                            <div className="card bg-white h-100">
                                 <div className="card-body">
                                     <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">assignment</i>Project Status</h6>
                                     <small>Web Design</small>
@@ -142,7 +142,7 @@ const Profil = () => {
                             </div>
                         </div>
                         <div className="col-sm-6 mb-3">
-                            <div className="card h-100">
+                            <div className="card bg-white h-100">
                                 <div className="card-body">
                                     <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">assignment</i>Project Status</h6>
                                     <small>Web Design</small>

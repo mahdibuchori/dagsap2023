@@ -710,7 +710,7 @@ export const EditPo = () => {
 
                 <div className='row g-2 mb-1 mt-1'>
                     <div className='col-sm-4 col-md-4 col-lg-2 col-xl-2 mb-1'>
-                      <Card>
+                      <Card bg='white'>
                         <Card.Body>
                         <Form.Group as={Col} controlId="validationCustom01">
                             <Form.Label>Eksternal Provider</Form.Label>

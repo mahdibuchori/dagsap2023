@@ -9,7 +9,7 @@ export const PrevPengadaan = ({data}) => {
   return (
     <>
     {data === undefined ? 
-      <Card mt-2></Card>
+      <Card mt-2 bg='white'></Card>
       : 
       <Accordion>
         {

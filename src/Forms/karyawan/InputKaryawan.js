@@ -190,7 +190,7 @@ export const InputKaryawan = () => {
             <Form onSubmit={handleSubmit}>
                 <div className="row g-3">
                     <div className='col-12 col-sm-12 col-md-3 col-xl-3 col-lg-3'>
-                        <Card className='mb-0'>
+                        <Card className='mb-0' bg='white'>
                             <Card.Body>
                                 <h3 class="h6">Avatar</h3>
                                 <div className="d-flex flex-column align-items-center text-center">
@@ -240,7 +240,7 @@ export const InputKaryawan = () => {
 
                     <div className='col-12 col-sm-12 col-md-3 col-xl-7 col-lg-7'>
                         <h3 className="h4 mb-2">Buat Data Baru</h3>
-                        <Card className='mb-3'>
+                        <Card className='mb-3' bg='white'>
                             <Card.Body>
                                 <div className="row g-3">
                                     <div className='col-lg-6'>
@@ -311,7 +311,7 @@ export const InputKaryawan = () => {
                                 </div>
                             </Card.Body>
                         </Card>
-                        <Card className='mb-3'>
+                        <Card className='mb-3' bg='white'>
                             <Card.Body>
                                 <div className="row g-3">
                                     <div className='col-xl-4 col-lg-4'>
@@ -369,7 +369,7 @@ export const InputKaryawan = () => {
                                 </div>
                             </Card.Body>
                         </Card>
-                        <Card>
+                        <Card bg='white'>
                             <Card.Body>
                                 <div className="row g-3">
                                     <div className='col-lg-6'>

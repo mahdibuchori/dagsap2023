@@ -909,7 +909,7 @@ export const ListMounthly = () => {
     };
   return (
     <>
-    <div className="card p-2 mb-2" style={{width: screenWidth}}>
+    <div className="card bg-white p-2 mb-2" style={{width: screenWidth}}>
         
         <Stack direction="horizontal" gap={3} style={{padding: "0px 10px 0px 10px"}}>
           <div className="bg-body">
@@ -1050,7 +1050,7 @@ export const ListMounthly = () => {
                 }
             }
             return(
-                <div className="card p-2 m-2" style={{minWidth: '300px', minHeight: '70px'}}>
+                <div className="card bg-white p-2 m-2" style={{minWidth: '300px', minHeight: '70px'}}>
                     <Button 
                         variant="primary" 
                         size="sm" 

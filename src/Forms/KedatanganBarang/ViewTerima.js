@@ -175,7 +175,7 @@ export const ViewTerima = () => {
     
                 <div className='row  g-2  mb-1'>
                   <div className='col-sm-4 col-md-4	col-lg-3 col-xl-3 mb-1'>
-                    <Card>
+                    <Card bg='white'>
                       <Card.Body>
                         <FloatingLabel
                             controlId="floatingInput"
@@ -250,7 +250,7 @@ export const ViewTerima = () => {
                   </div>
                     
                   <div className='col-sm-8	col-md-8 col-lg-8 col-xl-8 mb-1'>
-                    <Card className='mb-3'>
+                    <Card className='mb-3' bg='white'>
                       <Card.Body>
                         <div className="row  g-2 ">
                           <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>

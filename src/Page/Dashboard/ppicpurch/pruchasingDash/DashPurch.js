@@ -154,7 +154,7 @@ export const DashPurch = () => {
             </div>
             <div className='row'>
               <div className='col-xl-12 col-lg-12 mb-2'>
-                <div className='widget-flat card card'>
+                <div className='widget-flat card card bg-white'>
                   <div className='card-body'>
                     <div className='float-end text-danger'>
                       <i class="bi bi-arrow-right-square"></i>
@@ -165,7 +165,7 @@ export const DashPurch = () => {
                 </div>
               </div>
               <div className='col-xl-12 col-lg-12 mb-2'>
-                <div className='widget-flat card'>
+                <div className='widget-flat card bg-white'>
                   <div className='card-body'>
                     <div className='float-end text-warning'>
                       <i className="bi bi-recycle"></i>
@@ -176,7 +176,7 @@ export const DashPurch = () => {
                 </div>
               </div>
               <div className='col-xl-12 col-lg-12 mb-2'>
-                <div className='widget-flat card'>
+                <div className='widget-flat card bg-white'>
                   <div className='card-body'>
                     <div className='float-end text-primary'>
                       <i className="bi bi-check2-circle"></i>
@@ -187,7 +187,7 @@ export const DashPurch = () => {
                 </div>
               </div>
               <div className='col-xl-12 col-lg-12 mb-2'>
-                <div className='widget-flat card'>
+                <div className='widget-flat card bg-white'>
                   <div className='card-body'>
                     <div className='float-end text-success'>
                       <i className="bi bi-truck"></i>

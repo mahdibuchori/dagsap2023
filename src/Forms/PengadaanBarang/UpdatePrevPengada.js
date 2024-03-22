@@ -223,7 +223,7 @@ export const UpdatePrevPengada = () => {
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <div className='row  g-2  mb-1'>
                         <div className='col-sm-4 col-md-4 col-lg-2 col-xl-2 mb-1'>
-                            <Card className='mb-2'>
+                            <Card className='mb-2' bg='white'>
                                 <Card.Body>
                                     <Form.Group as={Col} controlId="validationCustom01">
                                         <Form.Label>Nama</Form.Label>
@@ -260,7 +260,7 @@ export const UpdatePrevPengada = () => {
                                     </Form.Group>
                                 </Card.Body>
                             </Card>
-                            <Card>
+                            <Card bg='white'>
                                 <Card.Body>
                                     <Form.Group as={Col} controlId="validationCustom01">
                                         <Form.Label>Id Pengadaan</Form.Label>
@@ -314,7 +314,7 @@ export const UpdatePrevPengada = () => {
                         </div>
 
                         <div className='col-sm-8 col-md-8 col-lg-9 col-xl-9 mb-1'>
-                            <Card className='mb-3'>
+                            <Card className='mb-3' bg='white'>
                                 <Card.Body>
                                     <div className="row  g-2 ">
                                         <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>

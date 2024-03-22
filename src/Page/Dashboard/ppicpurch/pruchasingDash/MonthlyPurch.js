@@ -323,7 +323,7 @@ export const MonthlyPurch = (props) => {
   };
   return (
     <>
-            <div className='card-h-50 card mt-2'>
+            <div className='card-h-50 card mt-2 bg-white'>
                     <div className='card-body'>
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <h6>REPORT PER TAHUN PURCHASING - HARGA {nabar}</h6>
