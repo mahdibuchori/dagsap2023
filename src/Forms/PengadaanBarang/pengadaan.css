@@ -121,7 +121,7 @@
     cursor: pointer;
     padding: 8px;
     border-radius: 5px;
-    margin-left: 15px;
+    margin-left: 10px;
 }
 .buttonReset{
     border: none;
@@ -131,6 +131,17 @@
     padding: 8px;
     border-radius: 5px;
     margin-left: 15px;
+}
+
+.buttonPrint{
+    border: none;
+    background-color: var(--violet);
+    color: var(--white);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 

@@ -1341,12 +1341,12 @@ export const COLUMNS_PO =[
     {
         headerName: 'No PO',
         field : 'id_po',
-        width: 150,
+        width: 110,
         suppressSizeToFit: true
     },
     {
         headerName: 'Data Po',
-        width: 110,
+        width: 100,
         cellRenderer: params => {
             let data = params.data.dataPO;
             // console.log(data.length)
@@ -1356,7 +1356,7 @@ export const COLUMNS_PO =[
     },
     {
         headerName: 'Eksternal Provider',
-        width: 450,
+        width: 350,
         field : 'expro',
     },
     {
@@ -1456,7 +1456,7 @@ export const COLUMNS_PO =[
               alert(`${field} was clicked`);
             },
           },
-        width: 100,
+        width: 170,
         pinned: 'right'
     }
 ]

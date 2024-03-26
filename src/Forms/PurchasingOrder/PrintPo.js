@@ -180,18 +180,16 @@ export const PrintPo = () => {
                         )
                     })
                 )
-            })
+            });
 
-            const file = data?.map((e) =>{
-                return(
-                    {
-                        nama : e[0].nama,
-                        tanggal : e[0].tanggal,
-                        qty : e[0].qty
-                    }
-                )
-            })
-            setInputList(file)
+            let result = [];
+            for(let x = 0; x < data.length;x++){
+                let nilai = data[x];
+                for(let y = 0; y < nilai.length; y++){
+                    result.push(nilai[y])
+                }
+            }
+            setInputList(result)
             cekData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
