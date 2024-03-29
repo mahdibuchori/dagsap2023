@@ -10,14 +10,14 @@ import useAuthStore, { selectUser } from '../../store/DataUser';
 import { API_AUTH } from '../../apis/apisData';
 
 export const UpdatePrevPengada = () => { 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const userData = useAuthStore(selectUser);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const userData = useAuthStore(selectUser);
 
-  const [inputList, setInputList] = useState([{ tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }]);
-  const [nparsial, setNparsial] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [validated, setValidated] = useState(false);
+    const [inputList, setInputList] = useState([{ tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }]);
+    const [nparsial, setNparsial] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+    const [validated, setValidated] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -34,7 +34,6 @@ export const UpdatePrevPengada = () => {
     }, []);
 
     const cekData = () =>{
-        console.log(location.state.data);
         const data = location.state.data;
         const result = Object.values(
             data.parsial_data.reduce((acc, item) => {
@@ -125,25 +124,16 @@ export const UpdatePrevPengada = () => {
                 )
             })
             let file = location.state.data;
+            let nop = file.newPar[0].po;
+            let swabt = inputList.filter(x=> x.noAkun !== "");
             if(userData.usubdiv === file.user[0].divisi && userData.uplan === file.user[0].plan){
                 setIsLoading(true)
-                const next = await API_AUTH.put(`/updatePengadaan`, {
-                    "brandMaterial": file.brandMaterial,
-                    "filter_bulan": file.filter_bulan,
-                    "id_Pengadaan": file.id_Pengadaan,
-                    "material": file.material,
-                    "parsial_data": nilai,
-                    "qty_pengadaan": file.qty_pengadaan,
-                    "spesifikasi": file.spesifikasi,
-                    "status": file.status,
-                    "t_pengadaan": file.t_pengadaan,
-                    "tgl_approve": file.tgl_approve,
-                    "tgl_verify": file.tgl_verify,
-                    "tipeMaterial": file.tipeMaterial,
-                    "user": file.user,
-                    "mesin" : file.mesin
+                const next = await API_AUTH.put(`/updatePengadaan/parsial`, {
+                    id_Pengadaan : location.state.data.id_Pengadaan,
+                    idPo : nop,
+                    parsial_data: nilai,
+                    swabt : swabt
                 });
-                
                 Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
                 setIsLoading(false);
             }
@@ -159,6 +149,8 @@ export const UpdatePrevPengada = () => {
     const handleOpen =async () =>{
         try {
             let file = location.state.data;
+            let nop = file.newPar[0].po;
+            let swabt = inputList.filter(x=> x.noAkun !== "");
             const nilai = inputList.map((e,i)=>{
                 let no = inputList.length - 1;
                 let akun = '';
@@ -180,23 +172,12 @@ export const UpdatePrevPengada = () => {
             });
             if(userData.usubdiv === file.user[0].divisi && userData.uplan === file.user[0].plan){
                 setIsLoading(true)
-                const next = await API_AUTH.put(`/updatePengadaan`, {
-                    "brandMaterial": file.brandMaterial,
-                    "filter_bulan": file.filter_bulan,
-                    "id_Pengadaan": file.id_Pengadaan,
-                    "material": file.material,
-                    "parsial_data": nilai,
-                    "qty_pengadaan": file.qty_pengadaan,
-                    "spesifikasi": file.spesifikasi,
-                    "status": file.status,
-                    "t_pengadaan": file.t_pengadaan,
-                    "tgl_approve": file.tgl_approve,
-                    "tgl_verify": file.tgl_verify,
-                    "tipeMaterial": file.tipeMaterial,
-                    "user": file.user,
-                    "mesin" : file.mesin
+                const next = await API_AUTH.put(`/updatePengadaan/parsial`, {
+                    id_Pengadaan : location.state.data.id_Pengadaan,
+                    idPo : nop,
+                    parsial_data: nilai,
+                    swabt : swabt
                 });
-                
                 Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
                 setIsLoading(false);
             }
@@ -204,7 +185,8 @@ export const UpdatePrevPengada = () => {
                 Swal.fire(`Oppss...`, 'Anda tidak memiliki akses', 'info');
             }
         } catch (error) {
-            
+            console.log(error);
+            setIsLoading(false);
         }
     }
 
@@ -363,7 +345,7 @@ export const UpdatePrevPengada = () => {
                                     <div className="row  g-2">
                                         <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                                             <Form.Group as={Col} controlId="validationCustom01">
-                                            <Form.Label>Tipe Item</Form.Label>
+                                            <Form.Label>Jenis Item</Form.Label>
                                             <Form.Control 
                                                 as="textarea" 
                                                 aria-label="With textarea" 

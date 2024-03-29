@@ -263,7 +263,7 @@ export const VerifyPengadaan = () => {
                       <div className="row  g-2 ">
                         <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                         <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Tipe Material</Form.Label>
+                          <Form.Label>Jenis Material</Form.Label>
                           <Select 
                               required
                               value={tibar}

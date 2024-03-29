@@ -529,7 +529,7 @@ export const UpdatePengadaan = () => {
                   <div className="row  g-2" style={{display: hilangs}}>
                       <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                         <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Tipe Item</Form.Label>
+                          <Form.Label>Jenis Item</Form.Label>
                           <Form.Control 
                               as="textarea" 
                               aria-label="With textarea" 

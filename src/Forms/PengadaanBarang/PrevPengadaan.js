@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 export const PrevPengadaan = ({data}) => {
   const navigate = useNavigate();
-  console.log(data)
   return (
     <>
     {data === undefined ? 
@@ -30,7 +29,6 @@ export const PrevPengadaan = ({data}) => {
                   statusn = "Open";
                   warna = "danger"
                 }
-                console.log(x)
                 return (
                   <Accordion.Item eventKey={x}>
                     <Accordion.Header>
