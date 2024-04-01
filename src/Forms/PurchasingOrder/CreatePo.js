@@ -181,7 +181,7 @@ export const CreatePo = () => {
             const next = data.filter((e)=> e.status === "Pengajuan")
             console.log(next.length)
             setInputList(location.state.data);
-            
+            console.log(location.state.data);
             setIsLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,6 +243,7 @@ export const CreatePo = () => {
         const gntiDta = async () =>{
             try {
                 setIsLoading(true);
+                console.log(dataSementara)
                 let data1 = {
                     material : dataSementara.material,
                     qty : dataSementara.qty,
@@ -255,7 +256,9 @@ export const CreatePo = () => {
                     itemNo : dataSementara.itemNo,
                     pajak : "",
                     spesifikasi : dataSementara.spesifikasi,
-                    divisi : dataSementara.mesin,
+                    divisi : dataSementara.divisi,
+                    brandMaterial : dataSementara.brandMaterial,
+                    tipeMaterial : dataSementara.tipeMaterial,
                     terima  : "",
                     tutup : "",
                     id_Pengadaan : dataSementara.id_Pengadaan,
@@ -273,6 +276,7 @@ export const CreatePo = () => {
                         
                     
                 }
+                console.log(data1)
                 if(dataPo.length < 1){
                     if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
                 }
@@ -433,7 +437,11 @@ export const CreatePo = () => {
             qty : i.qty,
             satuan : e.qty_pengadaan[0].satuan,
             spesifikasi : e.spesifikasi,
-            boll : val
+            boll : val,
+            divisi : e.mesin,
+            tipeMaterial : e.tipeMaterial,
+            brandMaterial : e.brandMaterial
+ 
         }
         setDataSementara(data1)
         setDataReady(true)
@@ -445,9 +453,11 @@ export const CreatePo = () => {
             Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
         }
         else{
+            console.log(dataPo)
             let plan = String(userData.uplan).toUpperCase();
             let data = [];
             for(let x = 0; x< dataPo.length; x++){
+                console.log(dataPo[x])
                 let file = {
                     material : dataPo[x].material,
                     qty : parseFloat(dataPo[x].qty).toFixed(2),
@@ -468,6 +478,8 @@ export const CreatePo = () => {
                     po : dataPo[x].po,
                     qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
                     parsialAwal: [dataPo[x].parsialAwal],
+                    brandMaterial : dataPo[x].brandMaterial,
+                    tipeMaterial : dataPo[x].tipeMaterial
                 }
                 if(data.length === 0){
                     data.push(file)
@@ -490,6 +502,8 @@ export const CreatePo = () => {
                     
                 }
             }
+
+            console.log(data)
             setRowData(data)
             setShow(false)
         }
@@ -590,13 +604,13 @@ export const CreatePo = () => {
     }
 
     const handleEprov = (value) =>{
-
         setTax1name(value.tax1name);
         setTax2name(value.tax2name);
         setExpro(value)
         let modifiedArr = rowData.map((e)=>{
             let pjk = "";
             if(value?.pajak === "DD" || value?.pajak ==="D"){pjk = ""}else{pjk = value?.pajak}
+            console.log(e)
             return {
                 material : e.material,
                 qty : parseFloat(e.qty).toFixed(2),
@@ -616,7 +630,9 @@ export const CreatePo = () => {
                 tipe : e.tipe,
                 parsial: e.parsial,
                 parsialAwal : e.parsialAwal,
-                po : e.po,                                      
+                po : e.po,  
+                brandMaterial : e.brandMaterial,
+                tipeMaterial : e.tipeMaterial                                    
             }
         })
         const pjk = modifiedArr[0]?.pajak;
@@ -678,7 +694,9 @@ export const CreatePo = () => {
                 tipe : e.tipe,
                 parsial: e.parsial,
                 parsialAwal : e.parsialAwal,
-                po : e.po,                                      
+                po : e.po,  
+                brandMaterial : e.brandMaterial,
+                tipeMaterial : e.tipeMaterial                                    
             }
         })
         setRowData(modifiedArr)

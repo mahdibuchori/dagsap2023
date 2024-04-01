@@ -17,7 +17,7 @@ import {
 
 import lgDg from '../../assets/img/dee.png'
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
-import useAuthStore, { selectUser } from '../../store/DataUser';
+// import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
 
 const styles = StyleSheet.create({
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 export const PrintPo = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const userData = useAuthStore(selectUser);
+    // const userData = useAuthStore(selectUser);
     const provider = useDataProvider(selectProvider);
     const onProvider = useDataProvider(selectFetchProvider);
     const providerReady = useDataProvider(selectProviderReady);
@@ -141,7 +141,7 @@ export const PrintPo = () => {
     useEffect(() => {
         setIsLoading(true);
         if(location.state === null) {
-            navigate(`/main/${userData.user_divisi}/Pengadaan`);
+            navigate(`/form/pengadaan`);
             Swal.fire('Info','Harap kembali ke halaman permintaan data tidak lengkap', 'info')
         }
         else{

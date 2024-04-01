@@ -62,7 +62,7 @@ const MenuDevelop = () => {
                     </div>
                 </Link>
                 {/* OKP */}
-                <Link to={"/"} className='link'>
+                <Link to={"/form/okp"} className='link'>
                     <div className="card text-center bg-white">
                         <span className='icon'><i className="bi bi-file-earmark-ruled"></i></span>
                         <div class="card-body">

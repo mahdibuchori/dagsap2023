@@ -25,6 +25,8 @@ import { InputKaryawan } from './Forms/karyawan/InputKaryawan';
 import { EditPo } from './Forms/PurchasingOrder/EditPo';
 import { UpdatePrevPengada } from './Forms/PengadaanBarang/UpdatePrevPengada';
 import { CetakPengadaan } from './Forms/PengadaanBarang/CetakPengadaan';
+import { Okp } from './Forms/okp/Okp';
+import { CetakOkp } from './Forms/okp/CetakOkp';
 
 function App() {
   return (
@@ -53,6 +55,8 @@ function App() {
         <Route path="/form/Kedatangan/labelbarang" element={<LabelPrint />} /> 
         <Route path="/form/karyawan" element={<Karyawan />} /> 
         <Route path="/form/karyawan/create" element={<InputKaryawan />} /> 
+        <Route path="/form/okp" element={<Okp />} /> 
+        <Route path="/form/okp/printview" element={<CetakOkp />} /> 
         </Route>
         <Route path='/login' element={<Portofolio />}></Route>
       </Routes>
