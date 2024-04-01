@@ -340,6 +340,103 @@ export const VerifyPengadaan = () => {
                     </div>
                     </Card.Body>
                   </Card>
+
+                  <Accordion defaultActiveKey="0">
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header>Kelengkapan Dokumen</Accordion.Header>
+                      <Accordion.Body>
+                        <div className="row  g-2">
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                          <Form.Check
+                              inline
+                              label="COA"
+                              name="COA"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={coa}
+                              disabled
+                            />
+                          </div>
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            <Form.Check
+                              inline
+                              label="Halal"
+                              name="Halal"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={halal}
+                              disabled
+                            />
+                          </div>
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            <Form.Check
+                              inline
+                              label="MSDS"
+                              name="MSDS"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={msds}
+                              disabled
+                            />
+                          </div>
+                        </div>
+                        <div className="row  g-2">
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            <Form.Check
+                              inline
+                              label="Copy PO"
+                              name="Copy PO"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={copyPO}
+                              disabled
+                            />
+                          </div>
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            <Form.Check
+                              inline
+                              label="Health Certificate"
+                              name="Health Certificate"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={health}
+                              disabled
+                            />
+                          </div>
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            <Form.Check
+                              inline
+                              label="KH"
+                              name="KH"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={kh}
+                              disabled
+                            />
+                          </div>
+                        </div> 
+                        <div className="row  g-2">
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            <Form.Check
+                              inline
+                              label="Ket Food Grade"
+                              name="Ket Food Grade"
+                              type='checkbox'
+                              id={`inline-checkbox-1`}
+                              checked={foodGra}
+                              disabled
+                            />
+                          </div>
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            
+                          </div>
+                          <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                            
+                          </div>
+                        </div>      
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
   
                   <Accordion defaultActiveKey="0">
                       <Accordion.Item eventKey="0">
@@ -400,103 +497,6 @@ export const VerifyPengadaan = () => {
                       </Accordion.Item>
                   </Accordion>
                 </div>
-
-                <Accordion defaultActiveKey="0">
-                <Accordion.Item eventKey="0">
-                  <Accordion.Header>Kelengkapan Dokumen</Accordion.Header>
-                  <Accordion.Body>
-                    <div className="row  g-2">
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                      <Form.Check
-                          inline
-                          label="COA"
-                          name="COA"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={coa}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Check
-                          inline
-                          label="Halal"
-                          name="Halal"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={halal}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Check
-                          inline
-                          label="MSDS"
-                          name="MSDS"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={msds}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                    <div className="row  g-2">
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Check
-                          inline
-                          label="Copy PO"
-                          name="Copy PO"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={copyPO}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Check
-                          inline
-                          label="Health Certificate"
-                          name="Health Certificate"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={health}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Check
-                          inline
-                          label="KH"
-                          name="KH"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={kh}
-                          disabled
-                        />
-                      </div>
-                    </div> 
-                    <div className="row  g-2">
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Check
-                          inline
-                          label="Ket Food Grade"
-                          name="Ket Food Grade"
-                          type='checkbox'
-                          id={`inline-checkbox-1`}
-                          checked={foodGra}
-                          disabled
-                        />
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        
-                      </div>
-                    </div>      
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
 
                 <div className='col-sm-12	col-md-12	col-lg-2	col-xl-2 mb-5'>
                   <div className='d-flex align-items-end flex-column'>
