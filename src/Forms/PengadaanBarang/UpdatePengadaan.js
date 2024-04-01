@@ -45,6 +45,15 @@ export const UpdatePengadaan = () => {
   const [munculs, setMunculs] = useState(true);
   const [kontak, setKontak] = useState(false);
 
+
+  const [coa, setCoa] = useState(false);
+  const [msds, setMsds] = useState(false);
+  const [halal, setHalal] = useState(false);
+  const [copyPO, setCopyPO] = useState(false);
+  const [health, setHealth] = useState(false);
+  const [kh, setKh] = useState(false);
+  const [foodGra, setFoodGra] = useState(false);
+
   const [hilangs, setHilangs] = useState('flex');
   const [hilang, setHilang] = useState('none');
   const [nmButton, setnmButton] = useState('View Data');
@@ -126,6 +135,14 @@ export const UpdatePengadaan = () => {
       }
       else{
           cekData();
+          const data = location.state.data;
+          if(data?.coa === 1){setCoa(true)}
+          if(data?.halal === 1){setHalal(true)}
+          if(data?.msds === 1){setMsds(true)}
+          if(data?.copypo === 1){setCopyPO(true)}
+          if(data?.health === 1){setHealth(true)}
+          if(data?.kh === 1){setKh(true)}
+          if(data?.foodgrade === 1){setFoodGra(true)}
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -162,6 +179,7 @@ export const UpdatePengadaan = () => {
     setBrand(data?.brandMaterial)
     setMesin(data?.mesin)
     setTipeMaterial(data?.tipeMaterial)
+
     console.log(data)
     console.log(data?.user[0].plan)
     if(String(data?.status).toUpperCase() === "PENGAJUAN" || String(data?.status).toUpperCase() === "REVISI"){
@@ -344,7 +362,14 @@ export const UpdatePengadaan = () => {
           filter_bulan : filt,
           tipeMaterial : tipeMaterial,
           brandMaterial : brand,
-          mesin : mesin
+          mesin : mesin,
+          coa : coa,
+          halal : halal,
+          msds : msds,
+          copypo : copyPO,
+          health : health,
+          kh : kh,
+          foodgrade : foodGra,
       });
       
       Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
@@ -561,7 +586,7 @@ export const UpdatePengadaan = () => {
                       </div>
                       <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                         <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Mesin</Form.Label>
+                          <Form.Label>Kegunaan</Form.Label>
                           <Form.Control 
                             as="textarea" 
                             aria-label="With textarea" 
@@ -598,6 +623,105 @@ export const UpdatePengadaan = () => {
                 </div>
                 </Card.Body>
               </Card>
+
+              <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Kelengkapan Dokumen</Accordion.Header>
+                  <Accordion.Body>
+                    <div className="row  g-2">
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Check
+                          inline
+                          label="COA"
+                          name="COA"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={coa}
+                          onClick={(e)=>setCoa(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Halal"
+                          name="Halal"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={halal}
+                          onClick={(e)=>setHalal(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="MSDS"
+                          name="MSDS"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={msds}
+                          onClick={(e)=>setMsds(e.target.checked)}
+                        />
+                      </div>
+                    </div>
+                    <div className="row  g-2">
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Copy PO"
+                          name="Copy PO"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={copyPO}
+                          onClick={(e)=>setCopyPO(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Health Certificate"
+                          name="Health Certificate"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={health}
+                          onClick={(e)=>setHealth(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="KH"
+                          name="KH"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={kh}
+                          onClick={(e)=>setKh(e.target.checked)}
+                        />
+                      </div>
+                    </div> 
+                    <div className="row  g-2">
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Ket Food Grade"
+                          name="Ket Food Grade"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          checked={foodGra}
+                          onClick={(e)=>setFoodGra(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        
+                      </div>
+                    </div>      
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+
+
               {hilang === 'none' ? 
               <Accordion defaultActiveKey="0">
                   <Accordion.Item eventKey="0">

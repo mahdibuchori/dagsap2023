@@ -45,6 +45,15 @@ export const CreatePengadaan = () => {
   const [kontak, setKontak] = useState(false);
   const [hilang, setHilang] = useState('flex');
 
+
+  const [coa, setCoa] = useState(false);
+  const [msds, setMsds] = useState(false);
+  const [halal, setHalal] = useState(false);
+  const [copyPO, setCopyPO] = useState(false);
+  const [health, setHealth] = useState(false);
+  const [kh, setKh] = useState(false);
+  const [foodGra, setFoodGra] = useState(false);
+
   const [selectedValue, setSelectedValue] = useState();
 
   useEffect(() => {
@@ -288,7 +297,7 @@ export const CreatePengadaan = () => {
             )
           }
         });
-
+        
         if(ndata.length === inputList.length){
             const cSta = []
             console.log(dataPO)
@@ -388,9 +397,25 @@ export const CreatePengadaan = () => {
         filter_bulan : `${yy}-${bulan}`,
         tipeMaterial : tipeMaterial,
         brandMaterial : brand,
-        mesin : mesin
+        mesin : mesin,
+        coa : coa,
+        halal : halal,
+        msds : msds,
+        copypo : copyPO,
+        health : health,
+        kh : kh,
+        foodgrade : foodGra,
       });
     
+      console.log({
+        coa : coa,
+        halal : halal,
+        msds : msds,
+        copyPO : copyPO,
+        foodGra : foodGra,
+        health : health,
+        kh : kh
+      })
       Swal.fire(`${next.data.success}`, navigate(`/form/Pengadaan`), 'success');
       setIsLoading(false)
     } catch (error) {
@@ -573,7 +598,7 @@ export const CreatePengadaan = () => {
                     </div>
                     <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                       <Form.Group as={Col} controlId="validationCustom01">
-                        <Form.Label>Mesin</Form.Label>
+                        <Form.Label>Kegunaan</Form.Label>
                         <Form.Control 
                           as="textarea" 
                           aria-label="With textarea" 
@@ -608,6 +633,103 @@ export const CreatePengadaan = () => {
                   </div>
                 </Card.Body>
               </Card>
+
+              <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Kelengkapan Dokumen</Accordion.Header>
+                  <Accordion.Body>
+                    <div className="row  g-2">
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Check
+                          inline
+                          label="COA"
+                          name="COA"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={coa}
+                          onClick={(e)=>setCoa(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Halal"
+                          name="Halal"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={halal}
+                          onClick={(e)=>setHalal(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="MSDS"
+                          name="MSDS"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={msds}
+                          onClick={(e)=>setMsds(e.target.checked)}
+                        />
+                      </div>
+                    </div>
+                    <div className="row  g-2">
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Copy PO"
+                          name="Copy PO"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={copyPO}
+                          onClick={(e)=>setCopyPO(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Health Certificate"
+                          name="Health Certificate"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={health}
+                          onClick={(e)=>setHealth(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="KH"
+                          name="KH"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={kh}
+                          onClick={(e)=>setKh(e.target.checked)}
+                        />
+                      </div>
+                    </div> 
+                    <div className="row  g-2">
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Check
+                          inline
+                          label="Ket Food Grade"
+                          name="Ket Food Grade"
+                          type='checkbox'
+                          id={`inline-checkbox-1`}
+                          value={foodGra}
+                          onClick={(e)=>setFoodGra(e.target.checked)}
+                        />
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        
+                      </div>
+                    </div>      
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
 
               <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">

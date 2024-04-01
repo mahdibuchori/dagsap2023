@@ -18,6 +18,13 @@ export const UpdatePrevPengada = () => {
     const [nparsial, setNparsial] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [validated, setValidated] = useState(false);
+    const [coa, setCoa] = useState(false);
+    const [msds, setMsds] = useState(false);
+    const [halal, setHalal] = useState(false);
+    const [copyPO, setCopyPO] = useState(false);
+    const [health, setHealth] = useState(false);
+    const [kh, setKh] = useState(false);
+    const [foodGra, setFoodGra] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -29,6 +36,14 @@ export const UpdatePrevPengada = () => {
         }
         else{
             cekData();
+            const data = location.state.data;
+            if(data?.coa === 1){setCoa(true)}
+            if(data?.halal === 1){setHalal(true)}
+            if(data?.msds === 1){setMsds(true)}
+            if(data?.copypo === 1){setCopyPO(true)}
+            if(data?.health === 1){setHealth(true)}
+            if(data?.kh === 1){setKh(true)}
+            if(data?.foodgrade === 1){setFoodGra(true)}
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -407,6 +422,102 @@ export const UpdatePrevPengada = () => {
                                     </div>
                                 </Card.Body>
                             </Card>
+                            <Accordion defaultActiveKey="0">
+                                <Accordion.Item eventKey="0">
+                                <Accordion.Header>Kelengkapan Dokumen</Accordion.Header>
+                                <Accordion.Body>
+                                    <div className="row  g-2">
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                    <Form.Check
+                                        inline
+                                        label="COA"
+                                        name="COA"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={coa}
+                                        disabled
+                                        />
+                                    </div>
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        <Form.Check
+                                        inline
+                                        label="Halal"
+                                        name="Halal"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={halal}
+                                        disabled
+                                        />
+                                    </div>
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        <Form.Check
+                                        inline
+                                        label="MSDS"
+                                        name="MSDS"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={msds}
+                                        disabled
+                                        />
+                                    </div>
+                                    </div>
+                                    <div className="row  g-2">
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        <Form.Check
+                                        inline
+                                        label="Copy PO"
+                                        name="Copy PO"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={copyPO}
+                                        disabled
+                                        />
+                                    </div>
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        <Form.Check
+                                        inline
+                                        label="Health Certificate"
+                                        name="Health Certificate"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={health}
+                                        disabled
+                                        />
+                                    </div>
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        <Form.Check
+                                        inline
+                                        label="KH"
+                                        name="KH"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={kh}
+                                        disabled
+                                        />
+                                    </div>
+                                    </div> 
+                                    <div className="row  g-2">
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        <Form.Check
+                                        inline
+                                        label="Ket Food Grade"
+                                        name="Ket Food Grade"
+                                        type='checkbox'
+                                        id={`inline-checkbox-1`}
+                                        checked={foodGra}
+                                        disabled
+                                        />
+                                    </div>
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        
+                                    </div>
+                                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                                        
+                                    </div>
+                                    </div>      
+                                </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
                             <Accordion defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
                                 <Accordion.Header>Parsial Data Kedatangan & Qty Material</Accordion.Header>
