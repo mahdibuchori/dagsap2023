@@ -107,7 +107,7 @@ export const CreatePengadaan = () => {
           setKontak(false)
           setBrand(" ")
           setTipeMaterial(" ")
-          setMesin("")
+          setMesin(" ")
         }
         const newFileNab = material.material?.filter(x => x.kategori === tibar.value);
         console.log(newFileNab);
@@ -274,9 +274,9 @@ export const CreatePengadaan = () => {
       Swal.fire('Info','Harap isikan nama material','warning');
     }
     else if (form.checkValidity() === false) {
-      e.preventDefault();
       e.stopPropagation();
       setValidated(true);
+      console.log('test')
     }
     else{
       if(inputList.length === 0){
@@ -359,15 +359,6 @@ export const CreatePengadaan = () => {
   const handleSave = async () =>{
     setIsLoading(true)
     try {
-      console.log({
-        coa : coa,
-        halal : halal,
-        msds : msds,
-        copyPO : copyPO,
-        foodGra : foodGra,
-        health : health,
-        kh : kh
-      })
       const date = new Date();
       let mm = parseInt(date.getMonth()) + 1;
       let yy = date.getFullYear();
@@ -436,7 +427,6 @@ export const CreatePengadaan = () => {
 
       <Container fluid>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-
           <div className='row  g-2  mb-1'>
             <div className='col-sm-4	col-md-4	col-lg-2	col-xl-2 mb-1'>
               <Card className='mb-2' bg='white'>
@@ -556,9 +546,6 @@ export const CreatePengadaan = () => {
                           disabled={kontak}
                           required
                         />
-                        <Form.Control.Feedback type="invalid">
-                          Harap Masukan Nama Item
-                        </Form.Control.Feedback>
                       </Form.Group>
                     </div>
                   </div>
@@ -806,7 +793,7 @@ export const CreatePengadaan = () => {
               </div>
             </div>
           </div>
-        </Form>
+        </Form>  
       </Container>
      
     </div>
