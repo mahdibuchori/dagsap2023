@@ -359,6 +359,15 @@ export const CreatePengadaan = () => {
   const handleSave = async () =>{
     setIsLoading(true)
     try {
+      console.log({
+        coa : coa,
+        halal : halal,
+        msds : msds,
+        copyPO : copyPO,
+        foodGra : foodGra,
+        health : health,
+        kh : kh
+      })
       const date = new Date();
       let mm = parseInt(date.getMonth()) + 1;
       let yy = date.getFullYear();
@@ -406,16 +415,7 @@ export const CreatePengadaan = () => {
         kh : kh,
         foodgrade : foodGra,
       });
-    
-      console.log({
-        coa : coa,
-        halal : halal,
-        msds : msds,
-        copyPO : copyPO,
-        foodGra : foodGra,
-        health : health,
-        kh : kh
-      })
+
       Swal.fire(`${next.data.success}`, navigate(`/form/Pengadaan`), 'success');
       setIsLoading(false)
     } catch (error) {
