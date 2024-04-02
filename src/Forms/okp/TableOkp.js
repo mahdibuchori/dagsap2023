@@ -17,7 +17,6 @@ export const TableOkp = ({columns,columnsNo}) => {
     const gridRef = useRef();
     const userData = useAuthStore(selectUser);
     
-    
     const onOkp = useOkpStore(selectFetchOkp);
     const dataOkp = useOkpStore(selectOkp);
     const okpReady = useOkpStore(selectOkpReady);
@@ -244,6 +243,7 @@ export const TableOkp = ({columns,columnsNo}) => {
         noOkpFalse();
         dataNoOkp(e,"getNoOKP","");
         console.log(noOkpReady);
+        console.log(userData.name)
     }
 
     const cekDataOK = () =>{
@@ -340,7 +340,7 @@ export const TableOkp = ({columns,columnsNo}) => {
     }
 
     const cetakOKP = (e) =>{
-        navigate(e, {state:{data: dataOkp}})
+        navigate(`/form/okp/printview`, {state:{data: dataOkp}})
     }
 
   return (
@@ -363,7 +363,7 @@ export const TableOkp = ({columns,columnsNo}) => {
                     <Dropdown.Menu variant="dark">
                         <Dropdown.Item onClick={(e) => console.log('create okp')}><i class="bi bi-pencil"></i> Create</Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item onClick={() => cetakOKP(`/main/${userData.user_divisi}/OKP/Preview`)}><i className="bi bi-printer"></i> Print</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => cetakOKP()}><i className="bi bi-printer"></i> Print</Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item onClick={handleShow}><i className="bi bi-arrow-clockwise"></i> Refresh</Dropdown.Item>
                         

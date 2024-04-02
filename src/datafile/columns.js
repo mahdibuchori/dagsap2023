@@ -34,13 +34,16 @@ export const COLUMNS_PENGADAAN =[
         maxWidth:115,
     },
     {
-        field : 'material',
-        valueGetter: params => {
-            let nilai  = params.data.material[0].material;
-            return nilai;
-        },
-        width: 200,
-        maxWidth:505,
+        headerName: 'Nama Barang',
+        field : 'tipeMaterial',
+        width:150,
+        maxWidth: 550
+    },
+    {
+        headerName: 'Merk',
+        field : 'brandMaterial',
+        width:150,
+        maxWidth: 550
     },
     {
         field : 'order',
@@ -90,16 +93,14 @@ export const COLUMNS_PENGADAAN =[
         }
     },
     {
-        headerName: 'Tipe',
-        field : 'tipeMaterial',
-        width:150,
-        maxWidth: 550
-    },
-    {
-        headerName: 'Merk',
-        field : 'brandMaterial',
-        width:150,
-        maxWidth: 550
+        headerName: 'Item',
+        field : 'material',
+        valueGetter: params => {
+            let nilai  = params.data.material[0].material;
+            return nilai;
+        },
+        width: 200,
+        maxWidth:505,
     },
     {
         headerName: 'Spesifikasi',
@@ -933,6 +934,7 @@ export const COLUMNS_DATAPO =[
         width: 150,
         maxWidth:405,
         editable: true,
+        pinned: 'left'
     },
     { 
         headerName: 'Jumlah',
