@@ -99,7 +99,7 @@ export const TableOkp = ({columns,columnsNo}) => {
         setSheetRev([]);
         setShowNew(false)
     };
-    /* const handleShowNew = () =>{
+    const handleShowNew = () =>{
         noOkpFalse();
         setTglOKP('');
         setTglProd('');
@@ -107,7 +107,7 @@ export const TableOkp = ({columns,columnsNo}) => {
         setNosOKP('');
         setSheetRev([]);
         setShowNew(true);
-    }; */
+    };
 
     useEffect(() => { 
         setIsLoading(true);
@@ -159,7 +159,6 @@ export const TableOkp = ({columns,columnsNo}) => {
 
     const onGridReady = () =>{
         try {
-            console.log(dataOkp);
             const total = dataOkp.okp[0]?.jumBarang;
             const pinnedBottomRowData =  [{no: "Total", kodeOKP: '', produk: '', batch: total , varian: null, revisi : ""}];
             setRowData(dataOkp.dOKP);
@@ -183,7 +182,7 @@ export const TableOkp = ({columns,columnsNo}) => {
           }
     }
 
-    /* const toInput = (e) =>{
+    const toInput = (e) =>{
         okpFalse();
         setRowData();
         setSelectTgl();
@@ -200,43 +199,39 @@ export const TableOkp = ({columns,columnsNo}) => {
             revisiOK : revisiOK,
             tglRevisi : dataOkp.okp[0]?.tangRev, 
         }});
-    } */
+    }
 
-    /* const createOKP = (e) =>{
-        if(userData.user_divisi === "Develop" || userData.user_divisi === "Develop"){
-            if(userData.user_level === "Level1" || userData.user_level === "Level2"){
-                Swal.fire({
-                    title: 'Silahkan pilih option di bawah ini ?',
-                    icon:'info',
-                    showDenyButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: 'Buat OKP baru',
-                    denyButtonText: `Add data OKP`,
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                        handleShowNew()
-                    } else if (result.isDenied) {
-                        console.log("okp :"+okp)
-                        if(okp === "" || okp === undefined){
-                            Swal.fire('Harap Cek Tanggal OKP',"","info")
-                            handleShow()
-                        }
-                        else{
-                            toInput(`/main/${userData.user_divisi}/OKP/Input`)
-                        }
-                    // <InputOkp/>
+    const createOKP = (e) =>{
+        console.log(userData)
+        if(userData.udivisi === "Develop"){
+            Swal.fire({
+                title: 'Silahkan pilih option di bawah ini ?',
+                icon:'info',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Buat OKP baru',
+                denyButtonText: `Add data OKP`,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    handleShowNew()
+                } else if (result.isDenied) {
+                    console.log("okp :"+okp)
+                    if(okp === "" || okp === undefined){
+                        Swal.fire('Harap Cek Tanggal OKP',"","info")
+                        handleShow()
                     }
-                  })
-            }
-            else{
-                Swal.fire("Info","Anda tidak memiliki akses",'info')
-            }
+                    else{
+                        toInput(`/main/${userData.user_divisi}/OKP/Input`)
+                    }
+                // <InputOkp/>
+                }
+              })
         }
         else{
             Swal.fire("Info","Anda tidak memiliki akses",'info')
         }
 
-    } */
+    }
 
     const cekNoOKP = (e) =>{
         setIsLoading(true);
@@ -361,7 +356,7 @@ export const TableOkp = ({columns,columnsNo}) => {
                     Menu
                     </Dropdown.Toggle>
                     <Dropdown.Menu variant="dark">
-                        <Dropdown.Item onClick={(e) => console.log('create okp')}><i class="bi bi-pencil"></i> Create</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => createOKP()}><i class="bi bi-pencil"></i> Create</Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item onClick={(e) => cetakOKP()}><i className="bi bi-printer"></i> Print</Dropdown.Item>
                         <Dropdown.Divider />

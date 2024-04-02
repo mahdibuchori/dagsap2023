@@ -33,10 +33,7 @@ const useOkpStore = create(
             deleNotReady : false,
             fetchOkp : async (id,tipe,sheet) => {
                 try {
-                    console.log(id+" "+tipe+" "+sheet)
-                    console.log(`exec?tipe=${tipe}&date=${id}&sheet=${sheet}`)
                     const { data } = await API_GSHEET.get(`exec?tipe=${tipe}&date=${id}&sheet=${sheet}`);
-                    console.log(data)
                     set(produce((state) => {
                         state.okp = data;
                         state.okpReady = true;

@@ -62,6 +62,10 @@ export const CetakOkp = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [listOkp, setListOkp] = useState([]);
+    const [listNote, setListNote] = useState([]);
+    const [pnote, setPnote] = useState(0);
+
     const dataOKP = location.state.data;
     const tHeigt = parseInt(window.innerHeight);
     let tWidth = 0;
@@ -103,9 +107,15 @@ export const CetakOkp = () => {
             Swal.fire('Info','Harap kembali ke halaman permintaan data tidak lengkap', 'info')
         }
         else{
-            console.log(dataOKP)
-            console.log(dataOKP.okp)
-            setIsLoading(false);
+          const data = location.state.data
+          setListOkp(data.dOKP);
+          setListNote(data.dNote);
+          const mt = data.dNote.length * 5;
+          setPnote(mt)
+          console.log(dataOKP)
+          console.log(dataOKP.okp)
+          console.log(data.dNote.length)
+          setIsLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
@@ -119,8 +129,8 @@ export const CetakOkp = () => {
               <div>
                   <Breadcrumb>
                       <Breadcrumb.Item onClick={() =>navigate(`/form`)}>Form</Breadcrumb.Item>
-                      <Breadcrumb.Item onClick={() =>navigate('/form/purchaseorder')}>Purchase Order</Breadcrumb.Item>
-                      <Breadcrumb.Item active>Print View PO</Breadcrumb.Item>
+                      <Breadcrumb.Item onClick={() =>navigate('/form/okp')}>Table OKP</Breadcrumb.Item>
+                      <Breadcrumb.Item active>Print View OKP</Breadcrumb.Item>
                   </Breadcrumb>
               </div>
               </div>
@@ -229,7 +239,127 @@ export const CetakOkp = () => {
                       </View>
                     </View>
 
-
+                    <Text style={{fontSize: "8px"}}> </Text>
+                    {/* Header table Data OKP */}
+                    <View style={styles.row}>
+                      <View style={[styles.border,{ width: '15mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                          No
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '40mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                          KODE OKP
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '50mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                          Nama Produk
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '30mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                          Jumlah (batch)
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '30mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                          Varian Packing
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '35mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                          REVISI
+                        </Text>
+                      </View>
+                    </View>
+                    
+                    {/* Tabel Data OKP */}
+                    {listOkp.map((row, i) => {
+                      return(
+                      <View style={styles.row}>
+                        <View style={[styles.border,{ width: '15mm',padding: 0}]}>
+                          <Text style={[styles.fontBold,{textAlign: 'right',padding:2, fontSize: "7px"}]}>
+                            {i + 1}
+                          </Text>
+                        </View>
+                        <View style={[styles.border,{ width: '40mm',padding: 0}]}>
+                          <Text style={[styles.fontBold,{textAlign: 'left',padding:2, fontSize: "7px"}]}>
+                            {row.kodeOKP}
+                          </Text>
+                        </View>
+                        <View style={[styles.border,{ width: '50mm',padding: 0}]}>
+                          <Text style={[styles.fontBold,{textAlign: 'left',padding:2, fontSize: "7px"}]}>
+                            {row.produk}
+                          </Text>
+                        </View>
+                        <View style={[styles.border,{ width: '30mm',padding: 0}]}>
+                          <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "7px"}]}>
+                           {row.batch}
+                          </Text>
+                        </View>
+                        <View style={[styles.border,{ width: '30mm',padding: 0}]}>
+                          <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                            {row.varian}
+                          </Text>
+                        </View>
+                        <View style={[styles.border,{ width: '35mm',padding: 0}]}>
+                          <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                            {row.revisi}
+                          </Text>
+                        </View>
+                      </View>
+                    )})}
+                    {/* JUmlah total OKP */}
+                    <View style={styles.row}>
+                      <View style={[styles.border,{ width: '55mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'right',padding:2, fontSize: "7px"}]}>
+                          Jumlah
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '50mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'left',padding:2, fontSize: "7px"}]}></Text>
+                      </View>
+                      <View style={[styles.border,{ width: '30mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "7px"}]}>
+                          {location.state.data.okp[0].jumBarang}
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '30mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                        </Text>
+                      </View>
+                      <View style={[styles.border,{ width: '35mm',padding: 0}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:2, fontSize: "9px"}]}>
+                        </Text>
+                      </View>
+                    </View>
+                    {/* note okp */}
+                    <View style={styles.row}>
+                      <View style={[styles.border,{ width: '15mm',padding: 0, height: `${pnote}mm`}]}>
+                        <Text style={[styles.fontBold,{textAlign: 'center',padding:0, fontSize: "7px"}]}>
+                          NOTE
+                        </Text>
+                      </View>
+                      <View style={[{ width: '185mm',padding: 0}]}>
+                      {listNote.map((row,i)=>{
+                        return(
+                          <View style={styles.row}>
+                            <View style={[styles.border,{ width: '38mm',padding: 0}]}>
+                              <Text style={[styles.fontBold,{textAlign: 'left',padding:2, fontSize: "7px"}]}>
+                                {row.no}
+                              </Text>
+                            </View>
+                            <View style={[styles.border,{ width: '137mm',padding: 0}]}>
+                              <Text style={[styles.fontBold,{textAlign: 'left',padding:2, fontSize: "7px"}]}>
+                                {row.note}
+                              </Text>
+                            </View>
+                          </View>
+                        )
+                      })}
+                      </View>
+                    </View>
                   </View>
                 </Page>
               </Document>

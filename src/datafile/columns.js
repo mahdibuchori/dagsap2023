@@ -109,6 +109,27 @@ export const COLUMNS_PENGADAAN =[
         maxWidth: 550
     },
     {
+        headerName: 'NO PO',
+        field : 'material',
+        valueGetter: params => {
+            const data = params.data.parsial_data
+            
+            let file = [];
+            for(let x =0; x < data.length; x++){
+                if(data[x] !== ""){
+                    file.push(data[x].po)
+                }
+            }
+            let unique = [...new Set(file)];
+            var filtered = unique.filter(function (el) {
+                return el !== '';
+              });
+            return filtered;
+        },
+        width: 200,
+        maxWidth:505,
+    },
+    {
         field : 'Action',
         headerName: 'Action',
         cellRenderer: BtnPengadaan,

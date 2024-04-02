@@ -322,7 +322,6 @@ export const Tablepengadaan = ({columns}) => {
   const onGridReady =async () =>{
     try {
       setDataPo([])
-      console.log(newPengadaan)
       const fg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FG");
       const hrga =newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "HR-GA");
       const maintenance = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "MAINTENANCE");
@@ -395,6 +394,8 @@ export const Tablepengadaan = ({columns}) => {
         const dateB = new Date(b.t_pengadaan);
         return dateB - dateA;
       });
+
+      console.log(rowPpic)
       
       setRowFg(fg); 
       setRowHrga(hrga);
