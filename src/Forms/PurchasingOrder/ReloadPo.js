@@ -19,7 +19,7 @@ import lgDg from '../../assets/img/dee.png'
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
-import { API_FINASEND, API_AUTH } from '../../apis/apisData';
+import { API_GSHEET, API_AUTH } from '../../apis/apisData';
 
 const styles = StyleSheet.create({
     body: {
@@ -418,11 +418,10 @@ export const ReloadPo = () => {
         try {
             setIsLoading(true);
             console.log(uri)
-            const saveData = await API_FINASEND.get(`/${uri}`);
+            const saveData = await API_GSHEET.get(`exec?tipe=sendDataFina&file=${uri}`);
             console.log(saveData)
-            Swal.fire(`${saveData.data.result}`,'','success')
 
-            if(saveData.data.result[0] === "Current data already exists." || saveData.data.result[0] === ""){
+            if(saveData.data === "Current data already exists." || saveData.data === ""){
                 handleSave('Done','')
             }
             else{
