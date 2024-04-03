@@ -190,7 +190,7 @@ export const TableOkp = ({columns,columnsNo}) => {
         setRevisiOK()
         setRowNote();
         setProduksi();
-        navigate(e,{state:{
+        navigate(`/form/okp/create`,{state:{
             nomer : dataOkp.okp[0].noUrut,
             noteLength : dataOkp.dNote.length,
             okp : okp,
@@ -215,13 +215,12 @@ export const TableOkp = ({columns,columnsNo}) => {
                 if (result.isConfirmed) {
                     handleShowNew()
                 } else if (result.isDenied) {
-                    console.log("okp :"+okp)
                     if(okp === "" || okp === undefined){
                         Swal.fire('Harap Cek Tanggal OKP',"","info")
                         handleShow()
                     }
                     else{
-                        toInput(`/main/${userData.user_divisi}/OKP/Input`)
+                        toInput()
                     }
                 // <InputOkp/>
                 }

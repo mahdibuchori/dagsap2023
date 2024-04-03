@@ -29,6 +29,10 @@ export const VerifyPengadaan = () => {
 
   const [ satuan, setSatuan ] = useState('');
   const [ spesifikasi, setSpesifikasi ] = useState('');
+
+  const [tipeMaterial, setTipeMaterial] = useState('');
+  const [brand, setBrand] = useState('');
+  const [mesin, setMesin] = useState('');
   
   const [fileNab, setFileNab] = useState(FileBarang);
   const [fileBar, setFileBar] = useState(FileBarang);
@@ -111,6 +115,9 @@ export const VerifyPengadaan = () => {
     setTibar({value: filTipe[0]?.value, label: filTipe[0]?.label, kategori: filTipe[0]?.kategori, labelId: filTipe[0]?.labelId});
     setSatuan(data?.qty_pengadaan[0].satuan);
     setTgl(data?.t_pengadaan)
+    setBrand(data?.brandMaterial)
+    setMesin(data?.mesin)
+    setTipeMaterial(data?.tipeMaterial)
     setIsLoading(false);
   }
 
@@ -302,7 +309,7 @@ export const VerifyPengadaan = () => {
                           </Form.Group>
                         </div>
                       </div>
-  
+
                       <div className="row  g-2 ">
                         <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12'>
                           <Form.Group as={Col} controlId="formGridArea">
@@ -321,6 +328,56 @@ export const VerifyPengadaan = () => {
                           </Form.Group>
                         </div>
                       </div>
+
+                      <div className="row  g-2">
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Jenis Item</Form.Label>
+                        <Form.Control 
+                            as="textarea" 
+                            aria-label="With textarea" 
+                            rows={1}
+                            value = {tipeMaterial}
+                            onChange = {e => setTipeMaterial(e.target.value)}
+                            disabled
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Harap Masukan Nama Item
+                          </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Merk/ Brand Item</Form.Label>
+                        <Form.Control 
+                          as="textarea" 
+                          aria-label="With textarea" 
+                          rows={1}
+                          value = {brand}
+                          disabled
+                          
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Harap Masukan Nama Merk/Brand
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Kegunaan</Form.Label>
+                        <Form.Control 
+                          as="textarea" 
+                          aria-label="With textarea" 
+                          rows={1}
+                          value = {mesin}
+                          disabled
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Harap Masukan Nama Mesin
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                  </div>
   
                       <div className="row  g-2 ">
                         <Form.Group as={Col} controlId="formGridArea">

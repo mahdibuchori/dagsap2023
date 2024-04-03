@@ -254,6 +254,18 @@ export const Tablepengadaan = ({columns}) => {
             setUsSsd(false);
             setUsRnd(false);
         break;
+        case "BOD/BOC":
+            setKey("FG");
+            setUsFg(false);
+            setUsHrga(false);
+            setUsMaintenance(false);
+            setUsPpic(false);
+            setUsProduksi(false);
+            setUsPurchasing(false);
+            setUsQaqc(false);
+            setUsSsd(false);
+            setUsRnd(false);
+        break;
         default:
               setKey("");
               setUsFg(true);
@@ -394,8 +406,6 @@ export const Tablepengadaan = ({columns}) => {
         const dateB = new Date(b.t_pengadaan);
         return dateB - dateA;
       });
-
-      console.log(rowPpic)
       
       setRowFg(fg); 
       setRowHrga(hrga);

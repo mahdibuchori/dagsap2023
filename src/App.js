@@ -27,6 +27,9 @@ import { UpdatePrevPengada } from './Forms/PengadaanBarang/UpdatePrevPengada';
 import { CetakPengadaan } from './Forms/PengadaanBarang/CetakPengadaan';
 import { Okp } from './Forms/okp/Okp';
 import { CetakOkp } from './Forms/okp/CetakOkp';
+import { InputOkp } from './Forms/okp/InputOkp';
+import { VerifikasiPo } from './Forms/PurchasingOrder/VerifikasiPo';
+import { ReloadPo } from './Forms/PurchasingOrder/ReloadPo';
 
 function App() {
   return (
@@ -46,7 +49,9 @@ function App() {
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
         <Route path="/form/purchaseorder/update" element={<EditPo />} />  
-        <Route path="/form/purchaseorder/data" element={<ViewPo />} /> 
+        <Route path="/form/purchaseorder/data" element={<ViewPo />} />  
+        <Route path="/form/purchaseorder/verifikasi" element={<VerifikasiPo />} /> 
+        <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} /> 
         <Route path="/form/purchaseorder/printview" element={<PrintPo />} /> 
         <Route path="/form/Kedatangan" element={<KedatanganBarang />} /> 
         <Route path="/form/Kedatangan/terimaview" element={<ViewTerima />} /> 
@@ -56,6 +61,7 @@ function App() {
         <Route path="/form/karyawan" element={<Karyawan />} /> 
         <Route path="/form/karyawan/create" element={<InputKaryawan />} /> 
         <Route path="/form/okp" element={<Okp />} /> 
+        <Route path="/form/okp/create" element={<InputOkp />} /> 
         <Route path="/form/okp/printview" element={<CetakOkp />} /> 
         </Route>
         <Route path='/login' element={<Portofolio />}></Route>

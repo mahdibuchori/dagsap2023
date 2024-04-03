@@ -9,6 +9,7 @@ export const BtnPurchasing = (props) => {
     const [cekList, setCekList] = useState('none');
     const [cekPrint, setcekPrint] = useState('none');
     const [cekEdit, setCekEdit] = useState('block');
+    const [cekVerified, setCekVerified] = useState('block');
     let data = props.data.status;
     let fina = props.data.statusfina;
     
@@ -19,38 +20,47 @@ export const BtnPurchasing = (props) => {
             if (data ==='Pengajuan' && fina === "") {
                 setCekList('none');
                 setCekEdit('block');
+                setCekVerified('block');
             }
             else if (data ==='Pengajuan' && fina === "Upload") {
                 setCekList('none');
                 setCekEdit('block');
+                setCekVerified('block')
             }
             else if (data ==='Verifikasi' && fina === "") {
                 setCekList('none');
-                setCekEdit('block');
+                setCekEdit('none');
+                setCekVerified('block')
             }
             else if (data ==='Verifikasi' && fina === "Upload") {
                 setCekList('none');
-                setCekEdit('block');
+                setCekEdit('none');
+                setCekVerified('block');
             }
             else if (data ==='Selesai' && fina === "") {
                 setCekList('block');
-                setCekEdit('none');      
+                setCekEdit('none');  
+                setCekVerified('none')    
             }
             else if (data ==='Selesai' && fina === "Upload") {
                 setCekList('none');
-                setCekEdit('none');     
+                setCekEdit('none');   
+                setCekVerified('none')  
             }
             else if (data ==='Revisi' && fina === "") {
                 setCekList('none');
                 setCekEdit('block');
+                setCekVerified('none')
             }
             else if (data ==='Revisi' && fina === "Upload") {
                 setCekList('none');
                 setCekEdit('block');
+                setCekVerified('none')
             }
             else {
                 setCekList('none');
                 setCekEdit('block');
+                setCekVerified('none')
             }
 
             if(data === "Selesai" || data === "Verifikasi"){
@@ -81,6 +91,12 @@ export const BtnPurchasing = (props) => {
         </Tooltip>
     )
 
+    const renderVerified = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          Verifikasi PO
+        </Tooltip>
+    )
+
     const reloadPO = (props) => (
         <Tooltip id="button-tooltip" {...props}>
           Reload PO
@@ -107,6 +123,20 @@ export const BtnPurchasing = (props) => {
           data : data
       }});
     }
+
+    const buttonVerified = () =>{
+        const data = props.data;
+        navigate(`/form/purchaseorder/verifikasi`,{state:{
+            data : data
+        }});
+    }
+
+    const buttonReload = () =>{
+        const data = props.data;
+        navigate(`/form/purchaseorder/reloadpo`,{state:{
+            data : data
+        }});
+    }
   return (
         <span style={{display: 'flex'}}>
             <OverlayTrigger
@@ -116,7 +146,7 @@ export const BtnPurchasing = (props) => {
             >
                 <button
                     style={{ height: 30, lineHeight: 0.5, display: cekList }}
-                    // onClick={() => buttonClicked()}
+                    onClick={() => buttonReload()}
                     className="buttonCancel"
                 >
                 <i className="bi bi-arrow-clockwise"></i>
@@ -147,7 +177,7 @@ export const BtnPurchasing = (props) => {
                 overlay={renderEdit}
             >
                 <button
-                    style={{ height: 30, lineHeight: 0.5 }}
+                    style={{ height: 30, lineHeight: 0.5, display:'none' }}
                     // onClick={() => buttonClicked()}
                     className="buttonSet"
                 >
@@ -167,6 +197,20 @@ export const BtnPurchasing = (props) => {
                     className="buttonReset"
                 >
                 <i className="bi bi-pencil"></i>
+                </button>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 150, hide: 250 }}
+                overlay={renderVerified}
+            >
+                <button
+                    style={{ height: 30, lineHeight: 0.5, display: cekVerified}}
+                    onClick={() => buttonVerified()}
+                    className="buttonSet"
+                >
+                <i className="bi bi-check-lg"></i>
                 </button>
             </OverlayTrigger>
         </span>

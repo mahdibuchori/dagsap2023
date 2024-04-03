@@ -490,26 +490,26 @@ export const UpdatePengadaan = () => {
                 <Card.Body>
                   <div className="row  g-2 ">
                     <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                    <Form.Group as={Col} controlId="validationCustom01">
-                      <Form.Label>Tipe Material</Form.Label>
-                      <Select 
-                          required
-                          onChange={(value) => {
-                              setTibar(value)
-                              setFileBar([
-                                { value: '', label: '' }
-                              ])
-                              setFileMaterial([
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Tipe Material</Form.Label>
+                        <Select 
+                            required
+                            onChange={(value) => {
+                                setTibar(value)
+                                setFileBar([
                                   { value: '', label: '' }
-                              ])
-                              setDataReady(true)
-                          }}
-                          value={tibar}
-                          options = {fileNab}
-                          isSearchable = {false}
-                          isDisabled={muncul}
-                      />
-                    </Form.Group>
+                                ])
+                                setFileMaterial([
+                                    { value: '', label: '' }
+                                ])
+                                setDataReady(true)
+                            }}
+                            value={tibar}
+                            options = {fileNab}
+                            isSearchable = {false}
+                            isDisabled={muncul}
+                        />
+                      </Form.Group>
                     </div>
                     <div className='col-sm-12 col-md-8 col-lg-8 col-xl-8'>
                       <Form.Group as={Col} controlId="validationCustom01">
@@ -552,55 +552,55 @@ export const UpdatePengadaan = () => {
                   </div>
 
                   <div className="row  g-2" style={{display: hilangs}}>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Jenis Item</Form.Label>
-                          <Form.Control 
-                              as="textarea" 
-                              aria-label="With textarea" 
-                              rows={1}
-                              value = {tipeMaterial}
-                              onChange = {e => setTipeMaterial(e.target.value)}
-                              required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                              Harap Masukan Nama Item
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Merk/ Brand Item</Form.Label>
-                          <Form.Control 
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Jenis Item</Form.Label>
+                        <Form.Control 
                             as="textarea" 
                             aria-label="With textarea" 
                             rows={1}
-                            value = {brand}
-                            onChange = {e => setBrand(e.target.value)}
+                            value = {tipeMaterial}
+                            onChange = {e => setTipeMaterial(e.target.value)}
                             required
                           />
                           <Form.Control.Feedback type="invalid">
-                            Harap Masukan Nama Merk/Brand
+                            Harap Masukan Nama Item
                           </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Kegunaan</Form.Label>
-                          <Form.Control 
-                            as="textarea" 
-                            aria-label="With textarea" 
-                            rows={1}
-                            value = {mesin}
-                            onChange = {e => setMateril(e.target.value)}
-                            required
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Harap Masukan Nama Mesin
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
+                      </Form.Group>
                     </div>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Merk/ Brand Item</Form.Label>
+                        <Form.Control 
+                          as="textarea" 
+                          aria-label="With textarea" 
+                          rows={1}
+                          value = {brand}
+                          onChange = {e => setBrand(e.target.value)}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Harap Masukan Nama Merk/Brand
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                    <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                      <Form.Group as={Col} controlId="validationCustom01">
+                        <Form.Label>Kegunaan</Form.Label>
+                        <Form.Control 
+                          as="textarea" 
+                          aria-label="With textarea" 
+                          rows={1}
+                          value = {mesin}
+                          onChange = {e => setMateril(e.target.value)}
+                          required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Harap Masukan Nama Mesin
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </div>
+                  </div>
 
                   <div className="row  g-2 ">
                     <Form.Group as={Col} controlId="formGridArea">

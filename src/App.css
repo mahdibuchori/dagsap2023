@@ -29,6 +29,15 @@ button {
   margin: 30px 10px 0 65px;
 }
 
+.nmTeks {
+  cursor: pointer;
+}
+
+.nmTeks:hover{
+  color: #0d0db1;
+  border-bottom: 1px solid #0d0db1;
+}
+
 /************ Navbar Css ************/
 nav.navbar {
   width: 100%;
