@@ -1142,7 +1142,7 @@ export const COLUMNS_DATAPO =[
     { 
         headerName: 'Spesifikasi',
         field : 'newSpek',
-        width: 110,
+        width: 200,
         editable: true,
     },
     { 
