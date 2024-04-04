@@ -272,7 +272,8 @@ export const CreatePo = () => {
                     parsialAwal: {
                         tgl: dataSementara.tgl_datang,
                         qty :dataSementara.qty,
-                    }
+                    },
+                    newSpek : `${dataSementara.tipeMaterial}, ${dataSementara.brandMaterial}, ${dataSementara.spesifikasi}`
                         
                     
                 }
@@ -440,8 +441,8 @@ export const CreatePo = () => {
             boll : val,
             divisi : e.mesin,
             tipeMaterial : e.tipeMaterial,
-            brandMaterial : e.brandMaterial
- 
+            brandMaterial : e.brandMaterial,
+            newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`
         }
         setDataSementara(data1)
         setDataReady(true)
@@ -479,7 +480,8 @@ export const CreatePo = () => {
                     qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
                     parsialAwal: [dataPo[x].parsialAwal],
                     brandMaterial : dataPo[x].brandMaterial,
-                    tipeMaterial : dataPo[x].tipeMaterial
+                    tipeMaterial : dataPo[x].tipeMaterial,
+                    newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`
                 }
                 if(data.length === 0){
                     data.push(file)
@@ -632,7 +634,8 @@ export const CreatePo = () => {
                 parsialAwal : e.parsialAwal,
                 po : e.po,  
                 brandMaterial : e.brandMaterial,
-                tipeMaterial : e.tipeMaterial                                    
+                tipeMaterial : e.tipeMaterial,
+                newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`                                   
             }
         })
         const pjk = modifiedArr[0]?.pajak;
@@ -696,7 +699,8 @@ export const CreatePo = () => {
                 parsialAwal : e.parsialAwal,
                 po : e.po,  
                 brandMaterial : e.brandMaterial,
-                tipeMaterial : e.tipeMaterial                                    
+                tipeMaterial : e.tipeMaterial,
+                newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`                                   
             }
         })
         setRowData(modifiedArr)
@@ -704,11 +708,13 @@ export const CreatePo = () => {
     }
 
     const onCellClicked = (e) => {
+        // console.log(e)
         onCellValueChanged(e)
     }
 
     const onCellValueChanged = (e) => {
         const data = rowData[e.rowIndex];
+        console.log(data)
         let jmlh = 0;
         let hSatuan = 0;
         let diskon = 0;

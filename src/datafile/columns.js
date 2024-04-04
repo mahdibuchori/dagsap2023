@@ -1141,17 +1141,9 @@ export const COLUMNS_DATAPO =[
     },
     { 
         headerName: 'Spesifikasi',
-        field : 'spesifikasi',
+        field : 'newSpek',
         width: 110,
         editable: true,
-        cellRenderer: params => {
-            let data = params.data;
-            console.log(data)
-            let item = `${data.tipeMaterial} ${data.brandMaterial} ${data.spesifikasi}`;
-            
-            console.log(item)
-            return item
-        }
     },
     { 
         headerName: 'Divisi',
