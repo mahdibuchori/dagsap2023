@@ -392,7 +392,7 @@ export const ReloadPo = () => {
             .replace(/%2C/g, ',')
             .replace(/%5D/g, ']');
             handleSendFina(newStr);
-            setIsLoading(false);
+            setIsLoading(true);
         }
         else{
             let files = inputList.map((x, i) => {
