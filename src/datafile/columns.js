@@ -106,7 +106,7 @@ export const COLUMNS_PENGADAAN =[
         headerName: 'Spesifikasi',
         field : 'spesifikasi',
         width:400,
-        maxWidth: 550
+        maxWidth: 850
     },
     {
         headerName: 'NO PO',

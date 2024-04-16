@@ -118,7 +118,6 @@ export const BtnPurchasing = (props) => {
 
     const buttonPrint = () =>{
         const data = props.data;
-        console.log(data)
         navigate(`/form/purchaseorder/printview`,{state:{
           data : data
       }});

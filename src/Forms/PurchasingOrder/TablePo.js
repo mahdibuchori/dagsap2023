@@ -8,6 +8,7 @@ import { Breadcrumb, Card, Dropdown, Form, InputGroup, Stack } from 'react-boots
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataPo, { selectDataPo, selectPoReady,selectFetchPo, selectFalsePo } from '../../store/DataPo';
+import Swal from 'sweetalert2';
 
 export const TablePo = ({columns}) => {
     let navigate = useNavigate();
@@ -82,26 +83,29 @@ export const TablePo = ({columns}) => {
       }, [poReady]);
 
     const onGridReady =async () =>{
-        console.log(dataPo.data)
         const data =dataPo.data;
-        
-        const pp = data.filter(x=> x.status === "Pengajuan");
-        const pv = data.filter(x=> x.status === "Verifikasi");
-        const ps = data.filter(x=> x.status === "Selesai");
-        const pr = data.filter(x=> x.status === "Revisi");
-        setRowData(dataPo.data);
-        setTotalPo(data.length);
-        setPengajuanPo(pp.length);
-        setVerifikasiPo(pv.length);
-        setSelesaiPo(ps.length);
-        setRevisiPo(pr.length);
-
-        try {
-            await poFalse();
-        } catch (error) {
-            console.log(error)
+        if(data === undefined){
+            Swal.fire('Oppss','Proses pengambilan PO gagal harap refresh page','info')
         }
-        setIsLoading(false);
+        else{
+            const pp = data.filter(x=> x.status === "Pengajuan");
+            const pv = data.filter(x=> x.status === "Verifikasi");
+            const ps = data.filter(x=> x.status === "Selesai");
+            const pr = data.filter(x=> x.status === "Revisi");
+            setRowData(dataPo.data);
+            setTotalPo(data.length);
+            setPengajuanPo(pp.length);
+            setVerifikasiPo(pv.length);
+            setSelesaiPo(ps.length);
+            setRevisiPo(pr.length);
+
+            try {
+                await poFalse();
+            } catch (error) {
+                console.log(error)
+            }
+            setIsLoading(false);
+        }
     }
 
     const onSetDate =async (event) => {
