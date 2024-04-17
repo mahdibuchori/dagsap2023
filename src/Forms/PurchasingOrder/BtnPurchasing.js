@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import useAuthStore, { selectUser } from '../../store/DataUser';
+import { API_AUTH } from '../../apis/apisData';
 
 export const BtnPurchasing = (props) => {
     const navigate = useNavigate();
@@ -12,6 +13,20 @@ export const BtnPurchasing = (props) => {
     const [cekVerified, setCekVerified] = useState('block');
     let data = props.data.status;
     let fina = props.data.statusfina;
+
+    useEffect(() => {
+        const handleLogout =async (e) =>{
+            try {
+                await API_AUTH.delete("/logout");
+                navigate('/login');
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        handleLogout()
+        
+       // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     
 
