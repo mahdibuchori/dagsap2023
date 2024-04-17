@@ -17,8 +17,10 @@ export const BtnPurchasing = (props) => {
     useEffect(() => {
         const handleLogout =async (e) =>{
             try {
-                await API_AUTH.delete("/logout");
-                navigate('/login');
+                if(userData === undefined){
+                    await API_AUTH.delete("/logout");
+                    navigate('/login');
+                }
             } catch (error) {
                 console.log(error)
             }
