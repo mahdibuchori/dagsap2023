@@ -150,6 +150,10 @@ export const TablePo = ({columns}) => {
         }
          
     }
+
+    const refreshPage = () => {
+        window.location.reload(false);
+    }
     
     return (
         <>
@@ -186,7 +190,7 @@ export const TablePo = ({columns}) => {
                         <Dropdown.Divider />
                         <Dropdown.Item><i className="bi bi-printer"></i> Print</Dropdown.Item>
                         <Dropdown.Divider />
-                        <Dropdown.Item onClick={onGridReady}><i className="bi bi-arrow-clockwise"></i> Refresh</Dropdown.Item>
+                        <Dropdown.Item onClick={refreshPage}><i className="bi bi-arrow-clockwise"></i> Refresh</Dropdown.Item>
                         
                     </Dropdown.Menu>
                     </Dropdown>
