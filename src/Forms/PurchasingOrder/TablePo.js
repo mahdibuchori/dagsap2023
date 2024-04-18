@@ -92,7 +92,12 @@ export const TablePo = ({columns}) => {
             const pv = data.filter(x=> x.status === "Verifikasi");
             const ps = data.filter(x=> x.status === "Selesai");
             const pr = data.filter(x=> x.status === "Revisi");
-            setRowData(dataPo.data);
+            /* let array = data.slice().slice().sort(function(a, b) {
+                const dateA = new Date(a.tgl_po);
+                const dateB = new Date(b.tgl_po);
+                return dateB - dateA;
+            }); */
+            setRowData(data);
             setTotalPo(data.length);
             setPengajuanPo(pp.length);
             setVerifikasiPo(pv.length);

@@ -4,6 +4,11 @@ import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
 import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
 import { BtnKaryawan } from '../Forms/karyawan/BtnKaryawan';
 
+
+const departement = ["", "GW-LAMPUNG", "GW-PUSAT", "GW-SERANG", "JABAR-BANDUNG", "JABAR-SUBANG", "JATENG-BANTUL", "JATENG-SEMARANG", "JATIM-BANJARMASIN", "JATIM-JEMBER", "JATIM-MADIUN", "JATIM-SURABAYA", "PABRIK SENTUL", "PABRIK YOGYA", "RPA" ];
+
+
+
 export const COLUMNS_PENGADAAN =[
     {
         headerName: 'ID',
@@ -1114,7 +1119,11 @@ export const COLUMNS_DATAPO =[
         headerName: 'Departemen',
         field : 'departement',
         width: 120,
-        editable: false,
+        editable: true,
+        cellEditor: "agSelectCellEditor",
+        cellEditorParams: {
+            values: departement,
+        },
     },
     { 
         headerName: 'Barang',

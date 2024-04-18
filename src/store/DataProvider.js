@@ -43,7 +43,12 @@ const useDataProvider = create(
                         })
                     }
                     jo.provider = data; */
-                    const { data } = await API_GSHEET.get(`exec?tipe=dataProv`);
+                    const { data } = await API_GSHEET.get(`exec?tipe=dataProv`,{
+                        headers: {
+                           "Access-Control-Allow-Origin": "*",
+                           "Access-Control-Allow-Methods": "GET, POST, OPTION",
+                           "Content-Type": "application/json"
+                        }});
                     set(produce((state) => {
                         state.provider = data;
                         state.providerReady = true;

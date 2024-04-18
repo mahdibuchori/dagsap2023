@@ -536,7 +536,13 @@ export const CreatePo = () => {
                 Swal.fire('Oppsss','Harap nilai total','info');
             }
             else {
-                savePengadaan()
+                const cekDep = rowData.filter(x => x.departement === "");
+                if(cekDep.length > 0){
+                    Swal.fire('Oppsss', 'Harap Cek Kembali Kolom Departemen (Kolom Tidak Boleh Kosong)', 'info')
+                }
+                else{
+                    savePengadaan()
+                }
             }
         } catch (error) {
             console.log(error)
@@ -548,30 +554,6 @@ export const CreatePo = () => {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
             setIsLoading(true)
-            /* console.log({
-                id_po : nopo,
-                po_no: '',
-                tgl_po: tgl,
-                tgl_kirim : tglKrm,
-                filter_bulan: `${tahu}-${bln}`,
-                pembayaran: termName,
-                tukar : currencyName,
-                idexpro	: expro?.id,
-                expro : expro?.value,
-                status : 'Pengajuan',
-                statusfina : '',
-                dataPO : rowData,
-                keterangan : spesifikasi,
-                totalSub : totalSub,
-                diskon : parseFloat(diskon).toFixed(2),
-                ppn : ppn,
-                pph : pph,
-                bAntar : parseFloat(bantar).toFixed(2),
-                total : total,
-                tgl_verify : '',
-                tgl_approve : '',
-                plan : userData.uplan
-            }) */
             const next = await API_AUTH.post(`/createpo`, {
                 id_po : nopo,
                 po_no: '',

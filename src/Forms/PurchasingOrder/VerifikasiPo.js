@@ -20,7 +20,7 @@ import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataMaterial, { selectMaterial } from '../../store/DataMaterial';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
-import { API_FINASEND, API_AUTH } from '../../apis/apisData';
+import { API_AUTH } from '../../apis/apisData';
 
 const styles = StyleSheet.create({
     body: {
@@ -470,7 +470,10 @@ export const VerifikasiPo = () => {
     try {
         setIsLoading(true);
         console.log(uri)
-        const saveData = await API_FINASEND.get(`/${uri}`);
+        // const saveData = await API_FINASEND.get(`/${uri}`);
+        const saveData = await API_AUTH.post(`/`, {
+            data : uri
+        });
         console.log(saveData)
         Swal.fire(`${saveData.data.result}`,'','success')
 

@@ -29,7 +29,12 @@ const useDataMaterial = create(
                         available_stok : dataRow[8], 
                         })
                     } */
-                    const { data } = await API_GSHEET.get(`exec?tipe=dataMaterial`);
+                    const { data } = await API_GSHEET.get(`exec?tipe=dataMaterial`,{
+                        headers: {
+                           "Access-Control-Allow-Origin": "*",
+                           "Access-Control-Allow-Methods": "GET, POST, OPTION",
+                           "Content-Type": "application/json"
+                        }});
                     // jo.material = data;
                     set(produce((state) => {
                         state.material = data;
