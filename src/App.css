@@ -187,3 +187,60 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active {
   margin: 30px 10px 0 65px;
 }
 */
+
+.tippy-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: absolute;
+  z-index: 1000;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  font-size: 1rem;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.tippy-item:hover {
+  cursor: pointer;
+  background: rgb(240, 240, 240);
+}
+
+.tippy-item.active {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+.tippy-item {
+  display: block;
+  padding: 0.25rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 0;
+}
+
+.btntippy {
+  color: #000000;
+  background-color: #ffffff00;
+  border-color: #ffffff00;
+  display: inline-block;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  padding: 0;
+  text-align: left;
+}

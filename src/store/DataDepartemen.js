@@ -1,7 +1,8 @@
 import produce from 'immer';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { API_GSHEET } from '../apis/apisData';
+// import { API_GSHEET } from '../apis/apisData';
+import axios from 'axios';
 const initialDepartemen = [];
 const useDataDepartemen = create(
     persist(
@@ -12,12 +13,7 @@ const useDataDepartemen = create(
                 /* let jo = {};
                 let data = []; */
                 try {
-                    const { data } = await API_GSHEET.get(`exec?tipe=dataDepa`,{
-                        headers: {
-                           "Access-Control-Allow-Origin": "*",
-                           "Access-Control-Allow-Methods": "GET, POST, OPTION",
-                           "Content-Type": "application/json"
-                        }});
+                    // const { data } = await API_GSHEET.get(`exec?tipe=dataDepa`);
                     /* const response = await API_FINA.get('select%20D.DEPTID,%20D.DEPTNO,%20D.DEPTNAME%20,D.SUBDEPTID%20,(select%20dp.deptno%20from%20DEPARTMENT%20dp%20where%20dp.DEPTID=d.SUBDEPTID)parentname%20from%20DEPARTMENT%20D%20where%20D.SUSPENDED=0/1');
 
                     let file = response.data.result[0].data;
@@ -32,6 +28,7 @@ const useDataDepartemen = create(
                         })
                     }
                     jo.departemen = data; */
+                    const { data }  = await axios.get(`${process.env.REACT_APP_API_KEY_RAIL}/departement`);
                     set(produce((state) => {
                         state.departemen = data;
                         state.departemenReady = true;

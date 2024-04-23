@@ -3,6 +3,7 @@ import { BtnPurchasing } from '../Forms/PurchasingOrder/BtnPurchasing';
 import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
 import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
 import { BtnKaryawan } from '../Forms/karyawan/BtnKaryawan';
+import { PopupCellRenderer } from '../Forms/PurchasingOrder/PopupCellRenderer';
 
 
 const departement = ["", "GW-LAMPUNG", "GW-PUSAT", "GW-SERANG", "JABAR-BANDUNG", "JABAR-SUBANG", "JATENG-BANTUL", "JATENG-SEMARANG", "JATIM-BANJARMASIN", "JATIM-JEMBER", "JATIM-MADIUN", "JATIM-SURABAYA", "PABRIK SENTUL", "PABRIK YOGYA", "RPA" ];
@@ -963,6 +964,20 @@ export const COLUMNS_DATAPO =[
         pinned: 'left'
     },
     { 
+        headerName: 'Nama Barang',
+        field : 'newMaterial',
+        width: 150,
+        maxWidth:405, 
+        hide : true
+    },
+    { 
+        headerName: 'Tipe',
+        field : 'tipe',
+        width: 150,
+        maxWidth:405,
+        hide : true
+    },
+    { 
         headerName: 'Jumlah',
         field : 'qty',
         width: 110,
@@ -1129,7 +1144,14 @@ export const COLUMNS_DATAPO =[
         headerName: 'Barang',
         field : 'itemNo',
         width: 110,
+    },
+    { 
+        headerName: '',
+        colId: 'action',
         editable: false,
+        maxWidth: 15,
+        cellStyle: {padding: 0},
+        cellRenderer: PopupCellRenderer,
     },
     { 
         headerName: 'Pajak',

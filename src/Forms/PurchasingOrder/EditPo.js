@@ -8,7 +8,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import { NumericFormat } from 'react-number-format';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Breadcrumb, Button, Card, Col, Container, Form } from 'react-bootstrap';
+import { Breadcrumb, Button, Col, Container, Form, Modal } from 'react-bootstrap';
 
 import { COLUMNS_DATAPO } from '../../datafile/columns';
 import { FileBarang } from '../../datafile/FileSelect';
@@ -63,105 +63,123 @@ export const EditPo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isReady, setisReady] = useState(false);
 
-  const tHeigt = parseInt(window.innerHeight) - 500;
-  let tWidth = 0;
-  if(parseInt(window.innerWidth) >= 1700){
-      tWidth = parseInt(window.innerWidth) - 580;
-  }
-  else if(parseInt(window.innerWidth) >= 1500){
-      tWidth = parseInt(window.innerWidth) - 550;
-  }
-  else if(parseInt(window.innerWidth) >= 1300){
-  tWidth = parseInt(window.innerWidth) - 500;
-  }
-  else if(parseInt(window.innerWidth) >= 1200){
-  tWidth = parseInt(window.innerWidth) - 480;
-  }
-  else if(parseInt(window.innerWidth) >= 1020){
-  tWidth = parseInt(window.innerWidth) - 450;
-  }
-  else if(parseInt(window.innerWidth) >= 992){
-  tWidth = parseInt(window.innerWidth) - 350;
-  }
-  else if(parseInt(window.innerWidth) >= 882){
-  tWidth = parseInt(window.innerWidth) - 350;
-  }
-  else if(parseInt(window.innerWidth) >= 768){
-  tWidth = parseInt(window.innerWidth) - 300;
-  }
-  else if(parseInt(window.innerWidth) >= 676){
-  tWidth = parseInt(window.innerWidth) - 280;
-  }
-  else if(parseInt(window.innerWidth) >= 600){
-  tWidth = parseInt(window.innerWidth) - 260;
-  }
-  else if(parseInt(window.innerWidth) >= 576){
-  tWidth = parseInt(window.innerWidth) - 240;
-  }
-  else{
-  tWidth = parseInt(window.innerWidth) - 50
-  }
+  const tHeigt = parseInt(window.innerHeight) - 450;
+    let tWidth = 0;
+    if(parseInt(window.innerWidth) >= 1700){
+        tWidth = parseInt(window.innerWidth) - 280;
+    }
+    else if(parseInt(window.innerWidth) >= 1500){
+    tWidth = parseInt(window.innerWidth) - 250;
+    }
+    else if(parseInt(window.innerWidth) >= 1400){
+    tWidth = parseInt(window.innerWidth) - 240;
+    }
+    else if(parseInt(window.innerWidth) >= 1300){
+    tWidth = parseInt(window.innerWidth) - 240;
+    }
+    else if(parseInt(window.innerWidth) >= 1200){
+    tWidth = parseInt(window.innerWidth) - 230;
+    }
+    else if(parseInt(window.innerWidth) >= 1100){
+    tWidth = parseInt(window.innerWidth) - 320;
+    }
+    else if(parseInt(window.innerWidth) >= 1020){
+    tWidth = parseInt(window.innerWidth) - 300;
+    }
+    else if(parseInt(window.innerWidth) >= 992){
+    tWidth = parseInt(window.innerWidth) - 230;
+    }
+    else if(parseInt(window.innerWidth) >= 882){
+    tWidth = parseInt(window.innerWidth) - 80;
+    }
+    else if(parseInt(window.innerWidth) >= 768){
+    tWidth = parseInt(window.innerWidth) - 60;
+    }
+    else if(parseInt(window.innerWidth) >= 676){
+    tWidth = parseInt(window.innerWidth) - 60;
+    }
+    else if(parseInt(window.innerWidth) >= 600){
+    tWidth = parseInt(window.innerWidth) - 60;
+    }
+    else if(parseInt(window.innerWidth) >= 576){
+    tWidth = parseInt(window.innerWidth) - 60;
+    }
+    else{
+    tWidth = parseInt(window.innerWidth)- 50
+    }
 
   const [screenWidth, setScreenWidth] = useState(tWidth);
   const [screenHeight, setScreenHeight] = useState(tHeigt);
 
   const columns = useMemo(() => COLUMNS_DATAPO, []);
   const [rowData, setRowData] = useState();
+  const [show, setShow] = useState(false);
+  const [staRev, setStaRev] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
-      const handleResize = () => {
-        let total = 0;
-        let tinggi = parseInt(window.innerHeight) - 500
-        if(parseInt(window.innerWidth) >= 1700){
-          total = parseInt(window.innerWidth) - 580;
-        }
-        else if(parseInt(window.innerWidth) >= 1500){
-          total = parseInt(window.innerWidth) - 550;
-        }
-        else if(parseInt(window.innerWidth) >= 1300){
-          total = parseInt(window.innerWidth) - 500;
-        }
-        else if(parseInt(window.innerWidth) >= 1200){
-          total = parseInt(window.innerWidth) - 480;
-        }
-        else if(parseInt(window.innerWidth) >= 1020){
-          total = parseInt(window.innerWidth) - 450;
-        }
-        else if(parseInt(window.innerWidth) >= 992){
-          total = parseInt(window.innerWidth) - 350;
-        }
-        else if(parseInt(window.innerWidth) >= 882){
-          total = parseInt(window.innerWidth) - 350;
-        }
-        else if(parseInt(window.innerWidth) >= 768){
-          total = parseInt(window.innerWidth) - 300;
-        }
-        else if(parseInt(window.innerWidth) >= 676){
-          total = parseInt(window.innerWidth) - 280;
-        }
-        else if(parseInt(window.innerWidth) >= 600){
-          total = parseInt(window.innerWidth) - 260;
-        }
-        else if(parseInt(window.innerWidth) >= 576){
-          total = parseInt(window.innerWidth) - 240;
-        }
-        else{
-          total = parseInt(window.innerWidth)- 50
-        }
-        setScreenWidth(total);
-        setScreenHeight(tinggi);
-      };
-  
-      window.addEventListener('resize', handleResize);
-  
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
+    const handleResize = () => {
+      let total = 0;
+      let tinggi = parseInt(window.innerHeight) - 450
+      if(parseInt(window.innerWidth) >= 1700){
+        total = parseInt(window.innerWidth) - 280;
+      }
+      else if(parseInt(window.innerWidth) >= 1500){
+        total = parseInt(window.innerWidth) - 250;
+      }
+      else if(parseInt(window.innerWidth) >= 1400){
+        total = parseInt(window.innerWidth) - 240;
+      }
+      else if(parseInt(window.innerWidth) >= 1300){
+        total = parseInt(window.innerWidth) - 240;
+      }
+      else if(parseInt(window.innerWidth) >= 1200){
+        total = parseInt(window.innerWidth) - 230;
+      }
+      else if(parseInt(window.innerWidth) >= 1100){
+        total = parseInt(window.innerWidth) - 320;
+      }
+      else if(parseInt(window.innerWidth) >= 1020){
+        total = parseInt(window.innerWidth) - 300;
+      }
+      else if(parseInt(window.innerWidth) >= 992){
+        total = parseInt(window.innerWidth) - 230;
+      }
+      else if(parseInt(window.innerWidth) >= 882){
+        total = parseInt(window.innerWidth) - 80;
+      }
+      else if(parseInt(window.innerWidth) >= 768){
+        total = parseInt(window.innerWidth) - 60;
+      }
+      else if(parseInt(window.innerWidth) >= 676){
+        total = parseInt(window.innerWidth) - 60;
+      }
+      else if(parseInt(window.innerWidth) >= 600){
+        total = parseInt(window.innerWidth) - 60;
+      }
+      else if(parseInt(window.innerWidth) >= 576){
+        total = parseInt(window.innerWidth) - 60;
+      }
+      else{
+        total = parseInt(window.innerWidth)- 50
+      }
+      setScreenWidth(total);
+      setScreenHeight(tinggi);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
     let data = location.state.data
+    console.log(data)
     if(location.state === null || data.length === 0) {
       navigate(`/form/purchaseorder`);
       Swal.fire('Info','Data purchase order tidak lengkap', 'info');
@@ -173,6 +191,7 @@ export const EditPo = () => {
       setTgl(location.state.data.tgl_po);
       setTglKrm(location.state.data.tgl_kirim);
       setRowData(location.state.data.dataPO);
+      setStaRev(true)
       // const next = data.filter((e)=> e.status === "Pengajuan")
       // console.log(next.length)
       // setInputList(location.state.data);
@@ -306,6 +325,7 @@ export const EditPo = () => {
       }
     });
     setFileDep(result);
+    console.log(fileDep)
   }
 
   const handleEprov = (value) =>{
@@ -376,7 +396,7 @@ export const EditPo = () => {
     setisReady(true)
   }
 
-  const hanldeDept = (value) =>{
+  /* const hanldeDept = (value) =>{
     let modifiedArr = rowData.map((e)=>{
       return {
         material : e.material,
@@ -401,7 +421,7 @@ export const EditPo = () => {
     })
     setRowData(modifiedArr)
     setisReady(true)
-  }
+  } */
 
   const noPoRead =async () =>{
     try {
@@ -655,112 +675,101 @@ export const EditPo = () => {
             <Breadcrumb.Item onClick={() =>navigate(`/form`)}>Form</Breadcrumb.Item>
             <Breadcrumb.Item onClick={() => navigate(`/form/Pengadaan`)}>Pengadaan</Breadcrumb.Item>
             <Breadcrumb.Item onClick={() => navigate(`/form/purchaseorder`)}>Purchase Order</Breadcrumb.Item>
-            <Breadcrumb.Item active>Edit</Breadcrumb.Item>
+            <Breadcrumb.Item active>
+              Edit &nbsp;
+              {staRev ? 
+                <span style={{visibility:'visible', color:'red'}} onClick={(e) =>handleShow()}><i className="bi bi-bell"></i></span> 
+                : 
+                <span style={{visibility:'hidden'}}onClick={(e) =>handleShow()}><i className="bi bi-bell"></i></span>
+              }
+              
+            </Breadcrumb.Item>
         </Breadcrumb>
         <Container fluid>
             <Form onSubmit={handleSubmit}>
                 <div className='row g-2 mb-1 mt-1'>
-                    <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-1'>
-                        
+                  <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
+                    <div className='row g-2 mb-1'>
+                      <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                      <h6>Eksternal Provider</h6>
+                      <Select 
+                          required
+                          options = {fileNab}
+                          onChange={(value) => {
+                              handleEprov(value)
+                              setTermName(value.termname)
+                              setCurrencyName(value.currencyname)
+                          }}
+                          isSearchable = {true}
+                      />
+                      </div>
+                      <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                      <h6>Syrt Pembayaran</h6>
+                      <Form.Control
+                          required
+                          type="text"
+                          value={termName}
+                          disabled
+                          />
+                      </div>
+                      <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                      <h6>Nilai Tukar</h6>
+                      <Form.Control
+                          required
+                          type="text"
+                          value={currencyName}
+                          disabled
+                          />
+                      </div>
                     </div>
+                  </div>
 
-                    <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-1'>
-                        <div className='row g-2 mb-1'>
-                            <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                            <h6>No. PO</h6>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="No PO"
-                                value={nopo}
-                                onChange={(e)=>{
-                                    setNopo(e.target.value)
-                                }}
-                                disabled = {false}
-                            />
-                            </div>
-                            <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                            <h6>Tgl PO</h6>
-                            <Form.Control
-                                required
-                                type="date"
-                                value={tgl}
-                                onChange={(e)=>{
-                                    setTgl(e.target.value)
-                                }}
-                                disabled = {false}
-                            />
-                            </div>
-                            <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                            <h6>Tgl Kirim</h6>
-                            <Form.Control
-                                required
-                                type="date"
-                                value={tglKrm}
-                                onChange={(e)=>{
-                                    setTglKrm(e.target.value)
-                                }}
-                                disabled = {false}
-                            />
-                            </div>
-                            
-                        </div>
-                    </div>
+                  <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
+                      <div className='row g-2 mb-1'>
+                          <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                          <h6>No. PO</h6>
+                          <Form.Control
+                              required
+                              type="text"
+                              placeholder="No PO"
+                              value={nopo}
+                              onChange={(e)=>{
+                                  setNopo(e.target.value)
+                              }}
+                              disabled = {false}
+                          />
+                          </div>
+                          <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                          <h6>Tgl PO</h6>
+                          <Form.Control
+                              required
+                              type="date"
+                              value={tgl}
+                              onChange={(e)=>{
+                                  setTgl(e.target.value)
+                              }}
+                              disabled = {false}
+                          />
+                          </div>
+                          <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                          <h6>Tgl Kirim</h6>
+                          <Form.Control
+                              required
+                              type="date"
+                              value={tglKrm}
+                              onChange={(e)=>{
+                                  setTglKrm(e.target.value)
+                              }}
+                              disabled = {false}
+                          />
+                          </div>
+                          
+                      </div>
+                  </div>
                 </div>
 
-                <div className='row g-2 mb-1 mt-1'>
-                    <div className='col-sm-4 col-md-4 col-lg-2 col-xl-2 mb-1'>
-                      <Card bg='white'>
-                        <Card.Body>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Eksternal Provider</Form.Label>
-                            <Select 
-                                required
-                                options = {fileNab}
-                                onChange={(value) => {
-                                    handleEprov(value)
-                                    setTermName(value.termname)
-                                    setCurrencyName(value.currencyname)
-                                }}
-                                isSearchable = {true}
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Syrt Pembayaran</Form.Label>
-                            <Form.Control
-                            required
-                            type="text"
-                            value={termName}
-                            disabled
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Nilai Tukar</Form.Label>
-                            <Form.Control
-                            required
-                            type="text"
-                            value={currencyName}
-                            disabled
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Departemen</Form.Label>
-                            <Select 
-                                required
-                                options = {fileDep}
-                                onChange={(value) => {
-                                    hanldeDept(value)
-                                }}
-                                isSearchable = {true}
-                            />
-                        </Form.Group>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                    <div className='col-sm-8 col-md-8 col-lg-8 col-xl-8 mb-1'>
+                <div className='row g-2 mb-1'>
+                    <div className='col-sm-12 col-md-12 col-lg-10 col-xl-11 mb-1'>
                       <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
                         <AgGridReact
                           ref={gridRef}
@@ -879,7 +888,7 @@ export const EditPo = () => {
                         </div>
                       </div>
                     </div>
-                    <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2 mb-5'>
+                    <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1 mb-5'>
                       <div className='d-flex align-items-end flex-column'>
                         <div className='d-flex align-items-end flex-wrap'>
                           <div className='row p-2'>
@@ -895,6 +904,13 @@ export const EditPo = () => {
     </div>
 
     {isLoading ? <LoadingPage /> : ""}
+
+    <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Keterangan revisi</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{location.state.data.revisi}</Modal.Body>
+      </Modal>
     </>
   )
 }

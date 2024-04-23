@@ -4,6 +4,7 @@ const urlAuth = `${process.env.REACT_APP_API_KEY_YT}`;
 const urlGsheet = `${process.env.REACT_APP_API_KEY_GG}`;
 const urlFina = `${process.env.REACT_APP_API_KEY_FG}`;
 const urlFinaSend = `${process.env.REACT_APP_API_KEY_FS}`;
+const urlRailway = `${process.env.REACT_APP_API_KEY_RAIL}`; 
 
 export const API_AUTH = axios.create({
   baseURL: urlAuth,
@@ -20,4 +21,8 @@ export const API_FINA = axios.create({
   
 export const API_FINASEND = axios.create({
   baseURL: urlFinaSend,
+})
+
+export const API_RAIL = axios.create({
+  baseURL: urlRailway,
 })

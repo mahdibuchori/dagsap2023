@@ -8,7 +8,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import { NumericFormat } from 'react-number-format';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Accordion, Breadcrumb, Button, Card, Col, Container, Form, Modal, Stack } from 'react-bootstrap';
+import { Accordion, Breadcrumb, Button, Col, Container, Form, Modal, Stack } from 'react-bootstrap';
 
 import { COLUMNS_DATAPO } from '../../datafile/columns';
 import { FileBarang } from '../../datafile/FileSelect';
@@ -72,45 +72,52 @@ export const CreatePo = () => {
         setShow(false)
     };
 
-    const tHeigt = parseInt(window.innerHeight) - 500;
+    const tHeigt = parseInt(window.innerHeight) - 450;
     let tWidth = 0;
     if(parseInt(window.innerWidth) >= 1700){
-        tWidth = parseInt(window.innerWidth) - 580;
+        tWidth = parseInt(window.innerWidth) - 280;
     }
     else if(parseInt(window.innerWidth) >= 1500){
-        tWidth = parseInt(window.innerWidth) - 550;
+    tWidth = parseInt(window.innerWidth) - 250;
+    }
+    else if(parseInt(window.innerWidth) >= 1400){
+    tWidth = parseInt(window.innerWidth) - 240;
     }
     else if(parseInt(window.innerWidth) >= 1300){
-    tWidth = parseInt(window.innerWidth) - 500;
+    tWidth = parseInt(window.innerWidth) - 240;
     }
     else if(parseInt(window.innerWidth) >= 1200){
-    tWidth = parseInt(window.innerWidth) - 480;
+    tWidth = parseInt(window.innerWidth) - 230;
+    }
+    else if(parseInt(window.innerWidth) >= 1100){
+    tWidth = parseInt(window.innerWidth) - 320;
     }
     else if(parseInt(window.innerWidth) >= 1020){
-    tWidth = parseInt(window.innerWidth) - 450;
-    }
-    else if(parseInt(window.innerWidth) >= 992){
-    tWidth = parseInt(window.innerWidth) - 350;
-    }
-    else if(parseInt(window.innerWidth) >= 882){
-    tWidth = parseInt(window.innerWidth) - 350;
-    }
-    else if(parseInt(window.innerWidth) >= 768){
     tWidth = parseInt(window.innerWidth) - 300;
     }
+    else if(parseInt(window.innerWidth) >= 992){
+    tWidth = parseInt(window.innerWidth) - 230;
+    }
+    else if(parseInt(window.innerWidth) >= 882){
+    tWidth = parseInt(window.innerWidth) - 80;
+    }
+    else if(parseInt(window.innerWidth) >= 768){
+    tWidth = parseInt(window.innerWidth) - 60;
+    }
     else if(parseInt(window.innerWidth) >= 676){
-    tWidth = parseInt(window.innerWidth) - 280;
+    tWidth = parseInt(window.innerWidth) - 60;
     }
     else if(parseInt(window.innerWidth) >= 600){
-        tWidth = parseInt(window.innerWidth) - 260;
+    tWidth = parseInt(window.innerWidth) - 60;
     }
     else if(parseInt(window.innerWidth) >= 576){
-        tWidth = parseInt(window.innerWidth) - 240;
+    tWidth = parseInt(window.innerWidth) - 60;
     }
     else{
-        tWidth = parseInt(window.innerWidth) - 50
+    tWidth = parseInt(window.innerWidth)- 50
     }
 
+    
     const [screenWidth, setScreenWidth] = useState(tWidth);
     const [screenHeight, setScreenHeight] = useState(tHeigt);
 
@@ -120,39 +127,45 @@ export const CreatePo = () => {
     useEffect(() => {
         const handleResize = () => {
           let total = 0;
-          let tinggi = parseInt(window.innerHeight) - 500
+          let tinggi = parseInt(window.innerHeight) - 450
           if(parseInt(window.innerWidth) >= 1700){
-            total = parseInt(window.innerWidth) - 580;
-          }
-          else if(parseInt(window.innerWidth) >= 1500){
-            total = parseInt(window.innerWidth) - 550;
-          }
-          else if(parseInt(window.innerWidth) >= 1300){
-            total = parseInt(window.innerWidth) - 500;
-          }
-          else if(parseInt(window.innerWidth) >= 1200){
-            total = parseInt(window.innerWidth) - 480;
-          }
-          else if(parseInt(window.innerWidth) >= 1020){
-            total = parseInt(window.innerWidth) - 450;
-          }
-          else if(parseInt(window.innerWidth) >= 992){
-            total = parseInt(window.innerWidth) - 350;
-          }
-          else if(parseInt(window.innerWidth) >= 882){
-            total = parseInt(window.innerWidth) - 350;
-          }
-          else if(parseInt(window.innerWidth) >= 768){
-            total = parseInt(window.innerWidth) - 300;
-          }
-          else if(parseInt(window.innerWidth) >= 676){
             total = parseInt(window.innerWidth) - 280;
           }
+          else if(parseInt(window.innerWidth) >= 1500){
+            total = parseInt(window.innerWidth) - 250;
+          }
+          else if(parseInt(window.innerWidth) >= 1400){
+            total = parseInt(window.innerWidth) - 240;
+          }
+          else if(parseInt(window.innerWidth) >= 1300){
+            total = parseInt(window.innerWidth) - 240;
+          }
+          else if(parseInt(window.innerWidth) >= 1200){
+            total = parseInt(window.innerWidth) - 230;
+          }
+          else if(parseInt(window.innerWidth) >= 1100){
+            total = parseInt(window.innerWidth) - 320;
+          }
+          else if(parseInt(window.innerWidth) >= 1020){
+            total = parseInt(window.innerWidth) - 300;
+          }
+          else if(parseInt(window.innerWidth) >= 992){
+            total = parseInt(window.innerWidth) - 230;
+          }
+          else if(parseInt(window.innerWidth) >= 882){
+            total = parseInt(window.innerWidth) - 80;
+          }
+          else if(parseInt(window.innerWidth) >= 768){
+            total = parseInt(window.innerWidth) - 60;
+          }
+          else if(parseInt(window.innerWidth) >= 676){
+            total = parseInt(window.innerWidth) - 60;
+          }
           else if(parseInt(window.innerWidth) >= 600){
-            total = parseInt(window.innerWidth) - 260;
+            total = parseInt(window.innerWidth) - 60;
           }
           else if(parseInt(window.innerWidth) >= 576){
-            total = parseInt(window.innerWidth) - 240;
+            total = parseInt(window.innerWidth) - 60;
           }
           else{
             total = parseInt(window.innerWidth)- 50
@@ -273,8 +286,8 @@ export const CreatePo = () => {
                         tgl: dataSementara.tgl_datang,
                         qty :dataSementara.qty,
                     },
-                    newSpek : `${dataSementara.tipeMaterial}, ${dataSementara.brandMaterial}, ${dataSementara.spesifikasi}`
-                        
+                    newSpek : `${dataSementara.tipeMaterial}, ${dataSementara.brandMaterial}, ${dataSementara.spesifikasi}`,
+                    newMaterial : dataSementara.material,
                     
                 }
                 console.log(data1)
@@ -404,6 +417,7 @@ export const CreatePo = () => {
             }
         });
         setFileDep(result);
+        console.log(fileDep)
     }
 
     const noPoRead =async () =>{
@@ -481,7 +495,8 @@ export const CreatePo = () => {
                     parsialAwal: [dataPo[x].parsialAwal],
                     brandMaterial : dataPo[x].brandMaterial,
                     tipeMaterial : dataPo[x].tipeMaterial,
-                    newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`
+                    newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
+                    newMaterial : dataPo[x].newMaterial,
                 }
                 if(data.length === 0){
                     data.push(file)
@@ -554,6 +569,30 @@ export const CreatePo = () => {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
             setIsLoading(true)
+            console.log({
+                id_po : nopo,
+                po_no: '',
+                tgl_po: tgl,
+                tgl_kirim : tglKrm,
+                filter_bulan: `${tahu}-${bln}`,
+                pembayaran: termName,
+                tukar : currencyName,
+                idexpro	: expro?.id,
+                expro : expro?.value,
+                status : 'Pengajuan',
+                statusfina : '',
+                dataPO : rowData,
+                keterangan : spesifikasi,
+                totalSub : totalSub,
+                diskon : parseFloat(diskon).toFixed(2),
+                ppn : ppn,
+                pph : pph,
+                bAntar : parseFloat(bantar).toFixed(2),
+                total : total,
+                tgl_verify : '',
+                tgl_approve : '',
+                plan : userData.uplan
+            })
             const next = await API_AUTH.post(`/createpo`, {
                 id_po : nopo,
                 po_no: '',
@@ -617,7 +656,8 @@ export const CreatePo = () => {
                 po : e.po,  
                 brandMaterial : e.brandMaterial,
                 tipeMaterial : e.tipeMaterial,
-                newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`                                   
+                newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`,
+                newMaterial : e.newMaterial,                              
             }
         })
         const pjk = modifiedArr[0]?.pajak;
@@ -658,7 +698,7 @@ export const CreatePo = () => {
         setisReady(true)
     }
 
-    const hanldeDept = (value) =>{
+    /* const hanldeDept = (value) =>{
         let modifiedArr = rowData.map((e)=>{
             return {
                 material : e.material,
@@ -682,21 +722,20 @@ export const CreatePo = () => {
                 po : e.po,  
                 brandMaterial : e.brandMaterial,
                 tipeMaterial : e.tipeMaterial,
-                newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`                                   
+                newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`,
+                newMaterial : e.newMaterial,                                  
             }
         })
         setRowData(modifiedArr)
         setisReady(true)
-    }
+    } */
 
     const onCellClicked = (e) => {
-        // console.log(e)
         onCellValueChanged(e)
     }
 
     const onCellValueChanged = (e) => {
         const data = rowData[e.rowIndex];
-        console.log(data)
         let jmlh = 0;
         let hSatuan = 0;
         let diskon = 0;
@@ -919,11 +958,43 @@ export const CreatePo = () => {
         </Stack>
         <Container fluid>
             <Form onSubmit={handleSubmit}>
-                <div className='row g-2 mb-1 mt-1'>
-                    <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-1'>
-                        
+                <div className='row g-2 mt-1'>
+                    <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
+                        <div className='row g-2 mb-1'>
+                            <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                            <h6>Eksternal Provider</h6>
+                            <Select 
+                                required
+                                options = {fileNab}
+                                onChange={(value) => {
+                                    handleEprov(value)
+                                    setTermName(value.termname)
+                                    setCurrencyName(value.currencyname)
+                                }}
+                                isSearchable = {true}
+                            />
+                            </div>
+                            <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                            <h6>Syrt Pembayaran</h6>
+                            <Form.Control
+                                required
+                                type="text"
+                                value={termName}
+                                disabled
+                                />
+                            </div>
+                            <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                            <h6>Nilai Tukar</h6>
+                            <Form.Control
+                                required
+                                type="text"
+                                value={currencyName}
+                                disabled
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-1'>
+                    <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
                         <div className='row g-2 mb-1'>
                             <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
                             <h6>No. PO</h6>
@@ -966,60 +1037,9 @@ export const CreatePo = () => {
                     </div>
                 </div>
 
-                <div className='row g-2 mb-1 mt-1'>
-                    <div className='col-sm-4 col-md-4 col-lg-2 col-xl-2 mb-1'>
-                    <Card bg='white'>
-                        <Card.Body>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Eksternal Provider</Form.Label>
-                            <Select 
-                                required
-                                options = {fileNab}
-                                onChange={(value) => {
-                                    handleEprov(value)
-                                    setTermName(value.termname)
-                                    setCurrencyName(value.currencyname)
-                                }}
-                                isSearchable = {true}
-                            />
-                        </Form.Group>
-    
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Syrt Pembayaran</Form.Label>
-                            <Form.Control
-                            required
-                            type="text"
-                            value={termName}
-                            disabled
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Nilai Tukar</Form.Label>
-                            <Form.Control
-                            required
-                            type="text"
-                            value={currencyName}
-                            disabled
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} controlId="validationCustom01">
-                            <Form.Label>Departemen</Form.Label>
-                            <Select 
-                                required
-                                options = {fileDep}
-                                onChange={(value) => {
-                                    hanldeDept(value)
-                                }}
-                                isSearchable = {true}
-                            />
-                        </Form.Group>
-                        </Card.Body>
-                    </Card>
-                    </div>
-                    <div className='col-sm-8 col-md-8 col-lg-8 col-xl-8 mb-1'>
-                        <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                <div className='row g-2 mb-1'>
+                    <div className='col-sm-12 col-md-12 col-lg-10 col-xl-11 mb-1'>
+                        <div style={{height: screenHeight, width: screenWidth, padding: 5}} className="ag-theme-alpine">
                             <AgGridReact
                                 ref={gridRef}
                                 rowData={rowData}
@@ -1138,7 +1158,7 @@ export const CreatePo = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2 mb-5'>
+                    <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1 mb-5'>
                         <div className='d-flex align-items-end flex-column'>
                             <div className='d-flex align-items-end flex-wrap'>
                             <div className='row p-2'>

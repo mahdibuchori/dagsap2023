@@ -82,6 +82,7 @@ export const Login = ({handleClick}) => {
       id : idkar,
       password : pwd
     }
+    console.log(values)
     try {
       setIsLoading(true)
       const res = await API_AUTH.post('/login', values);

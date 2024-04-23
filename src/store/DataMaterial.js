@@ -1,7 +1,8 @@
 import produce from 'immer';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { API_GSHEET } from '../apis/apisData';
+// import { API_GSHEET } from '../apis/apisData';
+import axios from 'axios';
 const initialMaterial = [];
 const useDataMaterial = create(
     persist(
@@ -29,12 +30,8 @@ const useDataMaterial = create(
                         available_stok : dataRow[8], 
                         })
                     } */
-                    const { data } = await API_GSHEET.get(`exec?tipe=dataMaterial`,{
-                        headers: {
-                           "Access-Control-Allow-Origin": "*",
-                           "Access-Control-Allow-Methods": "GET, POST, OPTION",
-                           "Content-Type": "application/json"
-                        }});
+                    // const { data } = await API_GSHEET.get(`exec?tipe=dataMaterial`);
+                    const { data }  = await axios.get(`${process.env.REACT_APP_API_KEY_RAIL}/material`);
                     // jo.material = data;
                     set(produce((state) => {
                         state.material = data;
