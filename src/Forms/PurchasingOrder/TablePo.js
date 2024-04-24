@@ -23,6 +23,7 @@ export const TablePo = ({columns}) => {
     const [verifikasiPo, setVerifikasiPo] = useState(0);
     const [revisiPo, setRevisiPo] = useState(0);
     const [selesaiPo, setSelesaiPo] = useState(0);
+    const [uploadUn, setUploadUn] = useState(0);
 
     const [rowData, setRowData] = useState();
 
@@ -88,10 +89,13 @@ export const TablePo = ({columns}) => {
             Swal.fire('Oppss','Proses pengambilan PO gagal harap refresh page','info')
         }
         else{
+            
             const pp = data.filter(x=> x.status === "Pengajuan");
             const pv = data.filter(x=> x.status === "Verifikasi");
             const ps = data.filter(x=> x.status === "Selesai");
             const pr = data.filter(x=> x.status === "Revisi");
+            const upload = data.filter(x=> x.status === "Selesai" && x.statusfina === "");
+             
             /* let array = data.slice().slice().sort(function(a, b) {
                 const dateA = new Date(a.tgl_po);
                 const dateB = new Date(b.tgl_po);
@@ -103,6 +107,7 @@ export const TablePo = ({columns}) => {
             setVerifikasiPo(pv.length);
             setSelesaiPo(ps.length);
             setRevisiPo(pr.length);
+            setUploadUn(upload.length)
 
             try {
                 await poFalse();
@@ -137,6 +142,7 @@ export const TablePo = ({columns}) => {
         const pv = data.filter(x=> x.status === "Verifikasi");
         const ps = data.filter(x=> x.status === "Selesai");
         const pr = data.filter(x=> x.status === "Revisi");
+        const upload = data.filter(x=> x.status === "Selesai" && x.statusfina === "");
     
         if(e === 'pengajuan'){
             setRowData(pp)
@@ -149,6 +155,9 @@ export const TablePo = ({columns}) => {
         }
         else if(e === 'selesai'){
             setRowData(ps)
+        }
+        else if(e === 'upload'){
+            setRowData(upload)
         }
         else{
             setRowData(data)
@@ -246,6 +255,15 @@ export const TablePo = ({columns}) => {
                         <div className="radius-10 border-start border-0 border-3 border-success">
                             <Card.Body style={{height: "50px", padding: '8px'}}>
                                 <h6 onClick={(e)=> cekData('selesai')} className="nmTeks">Selesai ({selesaiPo} Item)</h6>
+                            </Card.Body>
+                        </div>
+                    </Card>
+                </div>
+                <div className="col-md-2">
+                    <Card className='mb-1'>
+                        <div className="radius-10 border-start border-0 border-3 border-secondary">
+                            <Card.Body style={{height: "50px", padding: '8px'}}>
+                                <h6 onClick={(e)=> cekData('upload')} className="nmTeks">Unuploaded ({uploadUn} Item)</h6>
                             </Card.Body>
                         </div>
                     </Card>

@@ -152,13 +152,14 @@ export const BtnPurchasing = (props) => {
         }});
     }
 
-    const buttonReload = () =>{
+    const buttonReload = (e) =>{
         const data = props.data;
         navigate(`/form/purchaseorder/reloadpo`,{state:{
             data : data
         }});
     }
   return (
+        <>
         <span style={{display: 'flex'}}>
             <OverlayTrigger
                 placement="bottom"
@@ -167,7 +168,7 @@ export const BtnPurchasing = (props) => {
             >
                 <button
                     style={{ height: 30, lineHeight: 0.5, display: cekList }}
-                    onClick={() => buttonReload()}
+                    onClick={(e) => buttonReload(e)}
                     className="buttonCancel"
                 >
                 <i className="bi bi-arrow-clockwise"></i>
@@ -235,6 +236,9 @@ export const BtnPurchasing = (props) => {
                 </button>
             </OverlayTrigger>
         </span>
+
+
+        </>
         
   )
 }

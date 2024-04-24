@@ -19,7 +19,8 @@ import lgDg from '../../assets/img/dee.png'
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
-import { API_GSHEET, API_AUTH } from '../../apis/apisData';
+import { API_AUTH } from '../../apis/apisData';
+import axios from 'axios';
 
 const styles = StyleSheet.create({
     body: {
@@ -407,7 +408,7 @@ export const ReloadPo = () => {
                         .replace(/%5B/g, '[')
                         .replace(/%2C/g, ',')
                         .replace(/%5D/g, ']');
-        
+                
         handleSendFina(newStr);
         setIsLoading(true);
         }
@@ -418,16 +419,21 @@ export const ReloadPo = () => {
         try {
             setIsLoading(true);
             console.log(uri)
-            const saveData = await API_GSHEET.get(`exec?tipe=sendDataFina&file=${uri}`);
-            console.log(saveData)
+            // const saveData = await API_GSHEET.get(`exec?tipe=sendDataFina&file=${uri}`);
+            
+            const saveData = await axios.post(`${process.env.REACT_APP_API_KEY_RAIL}/data`,{
+                data : uri
+            });
+            console.log(saveData.data.result[0])
 
-            if(saveData.data === "Current data already exists." || saveData.data === ""){
+            if(saveData.data.result[0] === "Current data already exists." || saveData.data.result[0] === ""){
                 handleSave('Done','')
             }
             else{
-            
+                Swal.fire('Info',`${saveData.data.result[0]}`,'warning')
+                setIsLoading(false)
             } 
-            setIsLoading(false)
+            
         } catch (error) {
             Swal.fire(`Oppss`,'','error')
             Swal.fire(`Kegagalan Dalam Proses Kirim Data Ke Fina`, navigate(`/form/purchaseorder`), 'error');
@@ -549,11 +555,11 @@ export const ReloadPo = () => {
                                 <Text style={[styles.border,{width: '7mm', fontSize: "8px", padding: 2}]}>No</Text>
                                 <Text style={[styles.border,{width: '63mm', fontSize: "8px", padding: 2}]}>Nama Barang</Text>
                                 <Text style={[styles.border,{width: '19mm', fontSize: "8px", padding: 2}]}>Jumlah</Text>
-                                <Text style={[styles.border,{width: '19mm', fontSize: "8px", padding: 2}]}>Satuan</Text>
+                                <Text style={[styles.border,{width: '15mm', fontSize: "8px", padding: 2}]}>Satuan</Text>
                                 <Text style={[styles.border,{width: '25mm', fontSize: "8px", padding: 2}]}>Harga Satuan</Text>
                                 <Text style={[styles.border,{width: '19mm', fontSize: "8px", padding: 2}]}>% Diskon</Text>
                                 <Text style={[styles.border,{width: '24mm', fontSize: "8px", padding: 2}]}>Jumlah Harga</Text>
-                                <Text style={[styles.border,{width: '14mm', fontSize: "8px", padding: 2}]}>Div</Text>
+                                <Text style={[styles.border,{width: '18mm', fontSize: "8px", padding: 2}]}>Div</Text>
                             </View>
                             {
                                 list.map((row, i) => {
@@ -564,11 +570,11 @@ export const ReloadPo = () => {
                                         <Text style={[styles.border,{width: '7mm', padding: 3}]}>{i+1}</Text>
                                         <Text style={[styles.border,{width: '63mm', padding: 2, textAlign: 'left'}]}>{row.material}</Text>
                                         <Text style={[styles.border,{width: '19mm', padding: 2,textAlign: 'right'}]}>{row.qty}</Text>
-                                        <Text style={[styles.border,{width: '19mm', padding: 2}]}>{row.satuan}</Text>
+                                        <Text style={[styles.border,{width: '15mm', padding: 2}]}>{row.satuan}</Text>
                                         <Text style={[styles.border,{width: '25mm', padding: 2,textAlign: 'right'}]}>{String(hargaSa).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
                                         <Text style={[styles.border,{width: '19mm', padding: 2}]}>{row.diskon}</Text>
                                         <Text style={[styles.border,{width: '24mm', padding: 2,textAlign: 'right'}]}>{String(hargaJm).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
-                                        <Text style={[styles.border,{width: '14mm', padding: 2,textAlign: 'left'}]}>{row.divisi
+                                        <Text style={[styles.border,{width: '18mm', padding: 2,textAlign: 'left'}]}>{row.divisi
                                         }</Text>
                                     </View>
                                     )

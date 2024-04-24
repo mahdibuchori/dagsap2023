@@ -21,6 +21,7 @@ import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataMaterial, { selectMaterial } from '../../store/DataMaterial';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
 import { API_AUTH } from '../../apis/apisData';
+import axios from 'axios';
 
 const styles = StyleSheet.create({
     body: {
@@ -471,7 +472,10 @@ export const VerifikasiPo = () => {
         setIsLoading(true);
         console.log(uri)
         // const saveData = await API_FINASEND.get(`/${uri}`);
-        const saveData = await API_AUTH.post(`/`, {
+        /* const saveData = await API_AUTH.post(`/`, {
+            data : uri
+        }); */
+        const saveData = await axios.post(`${process.env.REACT_APP_API_KEY_RAIL}/data`,{
             data : uri
         });
         console.log(saveData)
