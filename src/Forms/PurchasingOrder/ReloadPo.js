@@ -62,6 +62,12 @@ const styles = StyleSheet.create({
     pageNumber: {
         fontSize: '8px',
     },
+    textsize:{
+        width: '18mm',
+        padding: 2,
+        textAlign: 'left',
+        fontSize:'16px',
+    }
 });
 
 export const ReloadPo = () => {
@@ -574,7 +580,7 @@ export const ReloadPo = () => {
                                         <Text style={[styles.border,{width: '25mm', padding: 2,textAlign: 'right'}]}>{String(hargaSa).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
                                         <Text style={[styles.border,{width: '19mm', padding: 2}]}>{row.diskon}</Text>
                                         <Text style={[styles.border,{width: '24mm', padding: 2,textAlign: 'right'}]}>{String(hargaJm).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
-                                        <Text style={[styles.border,{width: '18mm', padding: 2,textAlign: 'left'}]}>{row.divisi
+                                        <Text style={[styles.border,styles.textsize,{fontSize: '1vw'}]}>{row.divisi
                                         }</Text>
                                     </View>
                                     )

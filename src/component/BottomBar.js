@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_AUTH } from '../apis/apisData';
+import { LoadingPage } from '../LoadingPage/LoadingPage';
 
 const BottomBar = ({menubar, data}) => {
     axios.defaults.withCredentials = true;
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const handleMenu = event => {
         menubar(event);
     };
     const handleLogout =async (e) =>{
         try {
+            setIsLoading(true);
             await API_AUTH.delete("/logout");
             navigate('/login');
+            setIsLoading(false);
         } catch (error) {
             console.log(error)
         }
     }
     
     return (
+        <>
         <div className='myBottom navbar navbar-dark navbar-expand d-md-none d-lg-none d-xl-none fixed-bottom' style={{height: '45px'}}>
             <ul className="navbar-nav nav-justified w-100">
                 <li 
@@ -78,6 +83,10 @@ const BottomBar = ({menubar, data}) => {
                 </li>
             </ul>
         </div>
+        
+        {isLoading ? <LoadingPage /> : ""}
+        </>
+        
         
     )
 }

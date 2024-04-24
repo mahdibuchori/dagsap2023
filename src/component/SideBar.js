@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import axios from 'axios';
 import { API_AUTH } from '../apis/apisData';
+import { LoadingPage } from '../LoadingPage/LoadingPage';
 export const SideBar = ({menubar, data}) => {
     axios.defaults.withCredentials = true;
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const renderProfil = (props) => (
         <Tooltip id="button-tooltip" {...props}>
@@ -38,8 +41,10 @@ export const SideBar = ({menubar, data}) => {
       
     const handleLogout =async (e) =>{
         try {
+            setIsLoading(true);
             await API_AUTH.delete("/logout");
             navigate('/login');
+            setIsLoading(false);
         } catch (error) {
             console.log(error)
         }
@@ -129,6 +134,8 @@ export const SideBar = ({menubar, data}) => {
                 </div>
             </div>
         </div>
+
+        {isLoading ? <LoadingPage /> : ""}
         </>
     
   )
