@@ -8,7 +8,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import { NumericFormat } from 'react-number-format';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Accordion, Breadcrumb, Button, Col, Container, Form, Modal, Stack } from 'react-bootstrap';
+import { Accordion, Breadcrumb, Button, Col, Container, Form, InputGroup, Modal, OverlayTrigger, Stack, Tooltip } from 'react-bootstrap';
 
 import { COLUMNS_DATAPO } from '../../datafile/columns';
 import { FileBarang } from '../../datafile/FileSelect';
@@ -16,7 +16,7 @@ import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
 import useDataDepartemen, { selectDepartemen, selectFetchDepartemen, selectDepartemenReady } from '../../store/DataDepartemen';
-import useDataPo, { selectFetchNoPo, selectFalseNoPo, selectNoPo, selectNopoReady } from '../../store/DataPo';
+import useDataPo, { selectFetchNoPo, selectFalseNoPo, selectNoPo, selectNopoReady, selectDataPo } from '../../store/DataPo';
 import { API_AUTH } from '../../apis/apisData';
 
 export const CreatePo = () => {
@@ -37,7 +37,7 @@ export const CreatePo = () => {
     const falseNopo = useDataPo(selectFalseNoPo);
     const numbPo = useDataPo(selectNoPo);
     const nopoReady = useDataPo(selectNopoReady);
-
+    const datamyPo = useDataPo(selectDataPo);
 
     const [kode, setKode] = useState('');
     const [nopo, setNopo] = useState('');
@@ -61,6 +61,8 @@ export const CreatePo = () => {
     const [pph, setPph] = useState(0);
     const [bantar, setBantar] = useState(0);
     const [total, setTotal] = useState(0);
+    const [nilaiPp, setNilaiPp] = useState('');
+    const [nilaiPh, setNilaiPh] = useState('');
     
     const [isLoading, setIsLoading] = useState(false);
     const [dataReady, setDataReady] = useState(false);
@@ -183,7 +185,9 @@ export const CreatePo = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        let data = location.state.data
+        let data = location.state.data;
+        let filePon = datamyPo.data;
+        console.log(filePon)
         if(location.state === null || data.length === 0) {
             navigate(`/form/pengadaan`);
             Swal.fire('Info','Harap lengkapi data permintaan barang', 'info');
@@ -194,7 +198,22 @@ export const CreatePo = () => {
             const next = data.filter((e)=> e.status === "Pengajuan")
             console.log(next.length)
             setInputList(location.state.data);
-            console.log(location.state.data);
+            let idPonew = filePon.map((e,i)=>{
+                let idA = e.id_po
+                let kepala = idA.substr(6, 1);
+                let p = idA.length;
+                let result = idA.substr(2,p);
+                return(
+                    {id_po :idA, id : kepala, nilai: parseInt(result)}
+                )
+            })
+            
+            const filterS = idPonew.filter(x => parseInt(x.id) < 5 );
+            const filterSo = idPonew.filter(x => parseInt(x.id) === 5 );
+            const ascP = filterS.sort((a, b) => b.nilai - a.nilai);
+            const ascS = filterSo.sort((a, b) => b.nilai - a.nilai);
+            setNilaiPp(ascP[0]?.id_po);
+            setNilaiPh(ascS[0]?.id_po);
             setIsLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -938,6 +957,15 @@ export const CreatePo = () => {
         navigate(e)
     }
 
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          <ul>
+            <li>No PO Terakhir PP : {nilaiPp}</li>
+            <li>No PO Terakhir Non PP : {nilaiPh}</li>
+          </ul>
+        </Tooltip>
+      );
+
     return (
     <>
     <div className='setContain'>
@@ -998,16 +1026,29 @@ export const CreatePo = () => {
                         <div className='row g-2 mb-1'>
                             <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
                             <h6>No. PO</h6>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="No PO"
-                                value={nopo}
-                                onChange={(e)=>{
-                                    setNopo(e.target.value)
-                                }}
-                                disabled = {false}
-                            />
+                            
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    placeholder="No PO"
+                                    value={nopo}
+                                    onChange={(e)=>{
+                                        setNopo(e.target.value)
+                                    }}
+                                    disabled = {false}
+                                />
+                                <InputGroup.Text id="basic-addon2" className='bg bg-primary text text-light'>
+                                    <OverlayTrigger
+                                    placement="bottom"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={renderTooltip}
+                                    >
+                                        <i class="bi bi-caret-down-fill"></i>
+                                    </OverlayTrigger>
+                                    
+                                </InputGroup.Text>
+                            </InputGroup>
                             </div>
                             <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
                             <h6>Tgl PO</h6>
