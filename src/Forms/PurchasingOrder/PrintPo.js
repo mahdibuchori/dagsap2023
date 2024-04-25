@@ -22,9 +22,9 @@ import useDataProvider, { selectProvider, selectFetchProvider,selectProviderRead
 
 const styles = StyleSheet.create({
     body: {
-        paddingTop: 25,
+        paddingTop: 35,
         paddingBottom: 35,
-        paddingHorizontal: 35,
+        paddingHorizontal: 30,
     },
     page: {
         flexDirection: 'row',
@@ -91,6 +91,8 @@ export const PrintPo = () => {
     const [dtPar, setDtPar] = useState(false);
     const [dtNote, setDtNote] = useState(false);
     const [show, setShow] = useState(false);
+
+    
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
@@ -318,7 +320,7 @@ export const PrintPo = () => {
                     <Page size="A4" style={styles.body}>
                         <View>
                             <View style={styles.header} fixed>
-                                <View style={[styles.row,{marginLeft: '185mm',marginBottom: '2mm'}]}>
+                                <View style={[styles.row,{marginLeft: '185mm',marginBottom: '5mm'}]}>
                                     <Image style={{width: '4mm', height:'4mm'}} src={lgDg}/> 
                                     <Text style={[styles.pageNumber,{marginLeft: '2mm'}]} render={({ pageNumber, totalPages }) => (
                                         `${pageNumber}`
