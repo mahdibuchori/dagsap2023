@@ -22,8 +22,8 @@ import useDataProvider, { selectProvider, selectFetchProvider,selectProviderRead
 
 const styles = StyleSheet.create({
     body: {
-        paddingTop: 35,
-        paddingBottom: 35,
+        paddingTop: 60,
+        paddingBottom: 60,
         paddingHorizontal: 30,
     },
     page: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 12,
-        marginBottom: 20,
+        marginBottom: 7,
         textAlign: 'center',
         color: 'black',
       },
@@ -320,7 +320,7 @@ export const PrintPo = () => {
                     <Page size="A4" style={styles.body}>
                         <View>
                             <View style={styles.header} fixed>
-                                <View style={[styles.row,{marginLeft: '185mm',marginBottom: '5mm'}]}>
+                                <View style={[styles.row,{marginLeft: '185mm',marginBottom: '2mm'}]}>
                                     <Image style={{width: '4mm', height:'4mm'}} src={lgDg}/> 
                                     <Text style={[styles.pageNumber,{marginLeft: '2mm'}]} render={({ pageNumber, totalPages }) => (
                                         `${pageNumber}`
@@ -346,8 +346,8 @@ export const PrintPo = () => {
                                         <Image style={{width: '24mm', height:'24mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=${location.state.data.id_po}`}/> 
                                     </View>
                                 </View>
-                                <Text style={{fontSize: "8px"}}> </Text>
-                                <View style={styles.row}>
+                                <Text style={{fontSize: "4px"}}> </Text>
+                                <View style={[styles.row]}>
                                     <View style={{ width: '65mm', height: "25mm",padding: 0}}>
                                         <Text style={[styles.fontBold,styles.border,{height: '5mm',textAlign: 'center',padding:2.5, fontSize: "8px"}]}>
                                             {exprovider}
@@ -433,7 +433,7 @@ export const PrintPo = () => {
                                     )
                                 })
                             }
-                            <Text style={{fontSize: "8px"}}> </Text>
+                            <Text style={{fontSize: "6px"}}> </Text>
                             <View style={[styles.row,{height: '45mm'}]}>
                                 <View style={[{width : '127mm'}]}>
                                     <View style={[styles.border,{height: '14mm', padding: "2mm", marginBottom: '1mm'}]}>
@@ -445,7 +445,7 @@ export const PrintPo = () => {
                                         <View style={[styles.row,{width: '60mm',height: '30mm', textAlign: 'center'}]}>
                                             <View style={[{width: '20mm', marginTop: '2mm'}]}>
                                                 <Text>Disiapkan Oleh</Text>
-                                                <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Endang W`}/> 
+                                                <Image style={{width: '18mm', height:'18mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Endang W`}/> 
                                                 <Text style={{marginTop: '2mm'}}>Endang W</Text>
                                             </View>
                                             <View style={[{width: '20mm', marginLeft : '1mm', marginTop: '2mm'}]}>
