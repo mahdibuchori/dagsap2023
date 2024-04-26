@@ -16,8 +16,9 @@ import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
 import useDataDepartemen, { selectDepartemen, selectFetchDepartemen, selectDepartemenReady } from '../../store/DataDepartemen';
-import useDataPo, { selectFetchNoPo, selectFalseNoPo, selectNoPo, selectNopoReady, selectDataPo } from '../../store/DataPo';
+import useDataPo, { selectFetchNoPo, selectFalseNoPo, selectNoPo, selectNopoReady, selectDataPo, selectPoReady, selectFetchPo } from '../../store/DataPo';
 import { API_AUTH } from '../../apis/apisData';
+import { TableAddRemove } from '../PengadaanBarang/TableAddRemove';
 
 export const CreatePo = () => {
     const navigate = useNavigate();
@@ -38,6 +39,8 @@ export const CreatePo = () => {
     const numbPo = useDataPo(selectNoPo);
     const nopoReady = useDataPo(selectNopoReady);
     const datamyPo = useDataPo(selectDataPo);
+    const fetchPo = useDataPo(selectFetchPo);
+    const poReady = useDataPo(selectPoReady);
 
     const [kode, setKode] = useState('');
     const [nopo, setNopo] = useState('');
@@ -68,6 +71,7 @@ export const CreatePo = () => {
     const [dataReady, setDataReady] = useState(false);
     const [isReady, setisReady] = useState(false);
     const [show, setShow] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     
     const handleClose = () => {
         navigate(`/form/Pengadaan`)
@@ -78,48 +82,29 @@ export const CreatePo = () => {
     let tWidth = 0;
     if(parseInt(window.innerWidth) >= 1700){
         tWidth = parseInt(window.innerWidth) - 280;
-    }
-    else if(parseInt(window.innerWidth) >= 1500){
-    tWidth = parseInt(window.innerWidth) - 250;
-    }
-    else if(parseInt(window.innerWidth) >= 1400){
-    tWidth = parseInt(window.innerWidth) - 240;
-    }
-    else if(parseInt(window.innerWidth) >= 1300){
-    tWidth = parseInt(window.innerWidth) - 240;
-    }
-    else if(parseInt(window.innerWidth) >= 1200){
-    tWidth = parseInt(window.innerWidth) - 230;
-    }
-    else if(parseInt(window.innerWidth) >= 1100){
-    tWidth = parseInt(window.innerWidth) - 320;
-    }
-    else if(parseInt(window.innerWidth) >= 1020){
-    tWidth = parseInt(window.innerWidth) - 300;
-    }
-    else if(parseInt(window.innerWidth) >= 992){
-    tWidth = parseInt(window.innerWidth) - 230;
-    }
-    else if(parseInt(window.innerWidth) >= 882){
-    tWidth = parseInt(window.innerWidth) - 80;
-    }
-    else if(parseInt(window.innerWidth) >= 768){
-    tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else if(parseInt(window.innerWidth) >= 676){
-    tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else if(parseInt(window.innerWidth) >= 600){
-    tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else if(parseInt(window.innerWidth) >= 576){
-    tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else{
-    tWidth = parseInt(window.innerWidth)- 50
-    }
+      }
+      else if(parseInt(window.innerWidth) >= 1200){
+        tWidth = parseInt(window.innerWidth) - 270;
+      }
+      else if(parseInt(window.innerWidth) >= 1100){
+        tWidth = parseInt(window.innerWidth) - 300;
+      }
+      else if(parseInt(window.innerWidth) >= 1020){
+        tWidth = parseInt(window.innerWidth) - 280;
+      }
+      else if(parseInt(window.innerWidth) >= 992){
+        tWidth = parseInt(window.innerWidth) - 230;
+      }
+      else if(parseInt(window.innerWidth) >= 882){
+        tWidth = parseInt(window.innerWidth) - 80;
+      }
+      else if(parseInt(window.innerWidth) >= 576){
+        tWidth = parseInt(window.innerWidth) - 60;
+      }
+      else{
+        tWidth = parseInt(window.innerWidth)- 50
+      }
 
-    
     const [screenWidth, setScreenWidth] = useState(tWidth);
     const [screenHeight, setScreenHeight] = useState(tHeigt);
 
@@ -133,38 +118,20 @@ export const CreatePo = () => {
           if(parseInt(window.innerWidth) >= 1700){
             total = parseInt(window.innerWidth) - 280;
           }
-          else if(parseInt(window.innerWidth) >= 1500){
-            total = parseInt(window.innerWidth) - 250;
-          }
-          else if(parseInt(window.innerWidth) >= 1400){
-            total = parseInt(window.innerWidth) - 240;
-          }
-          else if(parseInt(window.innerWidth) >= 1300){
-            total = parseInt(window.innerWidth) - 240;
-          }
           else if(parseInt(window.innerWidth) >= 1200){
-            total = parseInt(window.innerWidth) - 230;
+            total = parseInt(window.innerWidth) - 270;
           }
           else if(parseInt(window.innerWidth) >= 1100){
-            total = parseInt(window.innerWidth) - 320;
+            total = parseInt(window.innerWidth) - 300;
           }
           else if(parseInt(window.innerWidth) >= 1020){
-            total = parseInt(window.innerWidth) - 300;
+            total = parseInt(window.innerWidth) - 280;
           }
           else if(parseInt(window.innerWidth) >= 992){
             total = parseInt(window.innerWidth) - 230;
           }
           else if(parseInt(window.innerWidth) >= 882){
             total = parseInt(window.innerWidth) - 80;
-          }
-          else if(parseInt(window.innerWidth) >= 768){
-            total = parseInt(window.innerWidth) - 60;
-          }
-          else if(parseInt(window.innerWidth) >= 676){
-            total = parseInt(window.innerWidth) - 60;
-          }
-          else if(parseInt(window.innerWidth) >= 600){
-            total = parseInt(window.innerWidth) - 60;
           }
           else if(parseInt(window.innerWidth) >= 576){
             total = parseInt(window.innerWidth) - 60;
@@ -183,6 +150,23 @@ export const CreatePo = () => {
         };
     }, []);
 
+    useEffect(() => { 
+        setIsLoading(true);
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        let bb = String(month).padStart(2, '0');
+        fetchPo(`${year}-${bb}`, userData.uplan);
+        setIsLoading(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        setIsLoading(true);
+        if (!poReady) return;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [poReady]);
+
     useEffect(() => {
         setIsLoading(true);
         let data = location.state.data;
@@ -198,22 +182,27 @@ export const CreatePo = () => {
             const next = data.filter((e)=> e.status === "Pengajuan")
             console.log(next.length)
             setInputList(location.state.data);
-            let idPonew = filePon.map((e,i)=>{
-                let idA = e.id_po
-                let kepala = idA.substr(6, 1);
-                let p = idA.length;
-                let result = idA.substr(2,p);
-                return(
-                    {id_po :idA, id : kepala, nilai: parseInt(result)}
-                )
-            })
-            
-            const filterS = idPonew.filter(x => parseInt(x.id) < 5 );
-            const filterSo = idPonew.filter(x => parseInt(x.id) === 5 );
-            const ascP = filterS.sort((a, b) => b.nilai - a.nilai);
-            const ascS = filterSo.sort((a, b) => b.nilai - a.nilai);
-            setNilaiPp(ascP[0]?.id_po);
-            setNilaiPh(ascS[0]?.id_po);
+            if(filePon === undefined){
+                Swal.fire('Oppss..','Data No. Po tidak ditemukan', 'warning');
+            }
+            else{
+                let idPonew = filePon?.map((e,i)=>{
+                    let idA = e.id_po
+                    let kepala = idA.substr(6, 1);
+                    let p = idA.length;
+                    let result = idA.substr(2,p);
+                    return(
+                        {id_po :idA, id : kepala, nilai: parseInt(result)}
+                    )
+                })
+                
+                const filterS = idPonew.filter(x => parseInt(x.id) < 5 );
+                const filterSo = idPonew.filter(x => parseInt(x.id) === 5 );
+                const ascP = filterS.sort((a, b) => b.nilai - a.nilai);
+                const ascS = filterSo.sort((a, b) => b.nilai - a.nilai);
+                setNilaiPp(ascP[0]?.id_po);
+                setNilaiPh(ascS[0]?.id_po);
+            }
             setIsLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1203,8 +1192,31 @@ export const CreatePo = () => {
                         <div className='d-flex align-items-end flex-column'>
                             <div className='d-flex align-items-end flex-wrap'>
                             <div className='row p-2'>
-                                <Button type="submit" variant="outline-primary m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12'>Simpan</Button>
-                                <Button variant="outline-danger m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12'>Batal</Button>
+                                <Button 
+                                    type="submit" 
+                                    variant="outline-primary m-2"
+                                    className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
+                                >
+                                    <i className="bi bi-floppy2-fill"></i>&nbsp;
+                                    Simpan
+                                </Button>
+                                <Button 
+                                    type="submit" 
+                                    variant="outline-secondary m-2"
+                                    className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
+                                    onClick={() => setShowModal(true)}
+                                >
+                                    <i className="bi bi-file-earmark"></i>&nbsp;
+                                    Tambah/Hapus
+                                </Button>
+                                <Button 
+                                    variant="outline-danger m-2" 
+                                    className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
+                                    onClick={() => navigate(`/form/Pengadaan`)}
+                                >   
+                                    <i className="bi bi-x-octagon-fill"></i>&nbsp;
+                                    Batal
+                                </Button>
                             </div>
                             </div>
                         </div>
@@ -1216,6 +1228,7 @@ export const CreatePo = () => {
         </Container>
     </div>
 
+    <TableAddRemove  show={showModal} close={() => setShowModal(false)} data={location.state.data}/>
     <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Body>
             <Accordion defaultActiveKey="0">
@@ -1278,6 +1291,8 @@ export const CreatePo = () => {
           </Button>
         </Modal.Footer>
     </Modal>
+
+    
 
     {isLoading ? <LoadingPage /> : ""}
     </>

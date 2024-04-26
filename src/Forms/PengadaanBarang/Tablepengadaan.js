@@ -656,7 +656,6 @@ export const Tablepengadaan = ({columns}) => {
     window.location.reload(false);
   }
   return (
-    
     <>
       <div>
         <Stack direction="horizontal" gap={3} style={{padding: "0px 10px 0px 10px"}}>

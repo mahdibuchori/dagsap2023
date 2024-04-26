@@ -148,6 +148,133 @@ export const COLUMNS_PENGADAAN =[
         pinned: 'right'
     }
 ]
+export const COLUMNS_PENGADAAN1 =[
+    {
+        headerName: 'ID',
+        field : 'id_Pengadaan',
+        width: 120,
+        maxWidth:155,
+        suppressSizeToFit: true,
+        pinned: 'left',
+        filter: 'agTextColumnFilter',
+        headerCheckboxSelection: true,
+        checkboxSelection: true,
+        showDisabledCheckboxes: true,
+    },
+    {
+        field : 'pemohon',
+        valueGetter: params => {
+            let nilai  = params.data.user[0].pemohon;
+            return nilai;
+        },
+        width: 105,
+        maxWidth:155,
+        pinned: 'left'
+    },
+    {
+        headerName: 'Tanggal',
+        field : 't_pengadaan',
+        width: 110,
+        maxWidth:115,
+    },
+    {
+        headerName: 'Nama Barang',
+        field : 'tipeMaterial',
+        width:150,
+        maxWidth: 550
+    },
+    {
+        headerName: 'Merk',
+        field : 'brandMaterial',
+        width:150,
+        maxWidth: 550
+    },
+    {
+        field : 'order',
+        valueGetter: params => {
+            let nilai  = params.data.qty_pengadaan[0].order;
+            return nilai;
+        },
+        width: 90,
+        maxWidth:105,
+    },
+    {
+        headerName: 'Unit',
+        field : 'satuan',
+        valueGetter: params => {
+            let nilai  = params.data.qty_pengadaan[0].satuan;
+            return nilai;
+        },
+        width: 80,
+        maxWidth:95,
+    },
+    {
+        field : 'status',
+        width: 110,
+        maxWidth:125,
+        cellClassRules: {
+            "rag-green": "x < 20",
+            "rag-amber": "x >= 20 && x < 25",
+            "rag-red": "x >= 25"
+        },
+        cellStyle: function(params) {
+            if (params.value ==='Pengajuan') {
+                return {color: '#800000', backgroundColor: '#d07979a7', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center'};
+                
+            }
+            else if (params.value ==='Verifikasi') {
+                return {color: '#120cce', backgroundColor: '#120cce60', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
+            }
+            else if (params.value ==='Selesai') {
+                return {color: '#008011', backgroundColor: '#38cc4c73', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
+            }
+            else if (params.value ==='Revisi') {
+                return {color: '#7a0080', backgroundColor: '#a35ea6c4', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
+            }
+            else {
+                return null;
+            }
+        }
+    },
+    {
+        headerName: 'Item',
+        field : 'material',
+        valueGetter: params => {
+            let nilai  = params.data.material[0].material;
+            return nilai;
+        },
+        width: 200,
+        maxWidth:505,
+    },
+    {
+        headerName: 'Spesifikasi',
+        field : 'spesifikasi',
+        width:400,
+        maxWidth: 850
+    },
+    {
+        headerName: 'NO PO',
+        field : 'material',
+        valueGetter: params => {
+            const data = params.data.parsial_data
+            
+            let file = [];
+            for(let x =0; x < data.length; x++){
+                if(data[x] !== ""){
+                    file.push(data[x].po)
+                }
+            }
+            let unique = [...new Set(file)];
+            var filtered = unique.filter(function (el) {
+                return el !== '';
+              });
+            return filtered;
+        },
+        width: 120,
+        maxWidth:505,
+        pinned: 'right'
+    }
+]
 
 export const COLUMNS_KARYAWAN =[
     {

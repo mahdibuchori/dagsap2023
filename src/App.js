@@ -30,6 +30,7 @@ import { CetakOkp } from './Forms/okp/CetakOkp';
 import { InputOkp } from './Forms/okp/InputOkp';
 import { VerifikasiPo } from './Forms/PurchasingOrder/VerifikasiPo';
 import { ReloadPo } from './Forms/PurchasingOrder/ReloadPo';
+import { TableAddRemove } from './Forms/PengadaanBarang/TableAddRemove';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/form/pengadaan/update" element={<UpdatePrevPengada />} /> 
         <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} /> 
         <Route path="/form/pengadaan/printview" element={<CetakPengadaan />} /> 
+        <Route path="/form/pengadaan/tableadd" element={<TableAddRemove />} /> 
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
         <Route path="/form/purchaseorder/update" element={<EditPo />} />  
