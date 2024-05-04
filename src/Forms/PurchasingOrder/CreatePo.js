@@ -781,10 +781,11 @@ export const CreatePo = () => {
         let ntotal = 0;
         let nDiskon = 0;
         let nBantar = 0;
+        let dpp = [];
         if(diskon === ""){nDiskon = 0} else{nDiskon = diskon}
         if(bantar === ""){nBantar = 0} else{nBantar = bantar}
         // console.log(tax1id+""+tax2id)
-        rowData.map((e)=>{
+        /* rowData.map((e)=>{
             if(e.jmlhHarga === "" || e.jmlhHarga === 0 ){ntotalSub += 0}
             else{ntotalSub += parseFloat(e.jmlhHarga)}
             const pjk = e.pajak;
@@ -876,7 +877,118 @@ export const CreatePo = () => {
 
         setPpn(nppn.toFixed(2));
         setPph(npph.toFixed(2));
-        ntotal = ntotalSub + nppn - npph + parseFloat(nBantar)
+        ntotal = ntotalSub - nDiskon + nppn - npph + parseFloat(nBantar)
+        setTotal(parseFloat(ntotal).toFixed(2))
+        setisReady(false) */
+        rowData.map((e,i)=>{
+            if(e.jmlhHarga === "" || e.jmlhHarga === 0 ){ntotalSub += 0}
+            else{ntotalSub += parseFloat(e.jmlhHarga)}
+            return(
+                setTotalSub(ntotalSub.toFixed(2))
+            )
+        })
+      
+        rowData.map((e,i)=>{
+        const pjk = e.pajak;
+        let pjk1 = "";
+        let pjk2 = "";
+        if(pjk.length === 2){
+            pjk1 = pjk[0];
+            pjk2 = pjk[1];
+        }
+        else if (pjk.length === 1){
+            pjk1 = pjk[0];
+            pjk2 = "" 
+        }
+        else{
+            pjk1 = "";
+            pjk2 = "" 
+        }
+        dpp.push(pjk1)
+        if(pjk1.toUpperCase() === "A"){
+            nppn += 0;
+            npph += ((parseFloat(e.ntotalSub)) * 2.5) / 100;
+        }
+        else if(pjk1.toUpperCase() === "B"){
+            nppn += 0;
+            npph += ((parseFloat(e.ntotalSub)) * 3) / 100;
+        }
+        else if(pjk1.toUpperCase() === "E"){
+            nppn += 0;
+            npph += ((parseFloat(e.ntotalSub)) * 10) / 100;
+        }
+        else if(pjk1.toUpperCase() === "G"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
+        }
+        else if(pjk1.toUpperCase() === "R"){
+            nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+            npph += 0;
+        }
+        else if(pjk1.toUpperCase() === "S"){
+            nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
+            npph += 0;
+        }
+        else if(pjk1.toUpperCase() === "T"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+        }
+        else{
+            nppn += 0;
+            npph += 0;
+        }
+    
+        if(pjk2.toUpperCase() === "A"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
+        }
+        else if(pjk2.toUpperCase() === "B"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
+        }
+        else if(pjk2.toUpperCase() === "E"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
+        }
+        else if(pjk2.toUpperCase() === "G"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
+        }
+        else if(pjk2.toUpperCase() === "R"){
+            nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+            npph += 0;
+        }
+        else if(pjk2.toUpperCase() === "S"){
+            nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
+            npph += 0;
+        }
+        else if(pjk2.toUpperCase() === "T"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+        }
+        else{
+            nppn += 0;
+            npph += 0;
+        }
+    
+        return(
+            setTotalSub(ntotalSub.toFixed(2))
+        )
+        })
+        let unique = [...new Set(dpp)];
+        const filt = unique.filter(x=> x.toUpperCase() === "S");
+        console.log(filt.length)
+        if(filt.length > 0){
+            let jumd = (nDiskon * 11) / 100;
+            nppn -= jumd
+            setPpn(nppn.toFixed(2));
+        }
+        else{
+            setPpn(nppn.toFixed(2));
+        }
+          
+        setPph(npph.toFixed(2));
+        ntotal = ntotalSub  - parseFloat(nDiskon) + nppn - npph + parseFloat(nBantar)
         setTotal(parseFloat(ntotal).toFixed(2))
         setisReady(false)
     }
