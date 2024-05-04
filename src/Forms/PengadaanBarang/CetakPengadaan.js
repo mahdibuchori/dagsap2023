@@ -267,10 +267,18 @@ export const CetakPengadaan = () => {
                         t_terima.push(`${day} ${bln} ${tahu}`)
                         if(row.parsial_data[x].expro !== ""){suply.push(`${row.parsial_data[x].expro}`)}
                       }
+                      console.log(row)
+                      let nama = "";
+                      if(row.tipeMaterial === "" || row.tipeMaterial === undefined){
+                        nama = row.spesifikasi
+                      }
+                      else{
+                        nama = row.tipeMaterial
+                      }
                       return(
                         <View style={[styles.row,{textAlign: 'left'}]}>
                           <Text style={[styles.border,{width: '20mm', fontSize: "7.5px", padding: 2}]}>{row.id_Pengadaan}</Text>
-                          <Text style={[styles.border,{width: '45mm', fontSize: "7.5px", padding: 2}]}>{row.spesifikasi}</Text>
+                          <Text style={[styles.border,{width: '45mm', fontSize: "7.5px", padding: 2}]}>{nama}</Text>
                           <Text style={[styles.border,{width: '19mm', fontSize: "7.5px", padding: 2,textAlign: 'right'}]}>
                           {row.qty_pengadaan[0].order+' '+row.qty_pengadaan[0].satuan }
                           </Text>

@@ -64,49 +64,49 @@ export const EditPo = () => {
   const [isReady, setisReady] = useState(false);
 
   const tHeigt = parseInt(window.innerHeight) - 450;
-    let tWidth = 0;
-    if(parseInt(window.innerWidth) >= 1700){
-        tWidth = parseInt(window.innerWidth) - 280;
-    }
-    else if(parseInt(window.innerWidth) >= 1500){
+  let tWidth = 0;
+  if(parseInt(window.innerWidth) >= 1700){
+    tWidth = parseInt(window.innerWidth) - 280;
+  }
+  else if(parseInt(window.innerWidth) >= 1500){
     tWidth = parseInt(window.innerWidth) - 250;
-    }
-    else if(parseInt(window.innerWidth) >= 1400){
+  }
+  else if(parseInt(window.innerWidth) >= 1400){
     tWidth = parseInt(window.innerWidth) - 240;
-    }
-    else if(parseInt(window.innerWidth) >= 1300){
+  }
+  else if(parseInt(window.innerWidth) >= 1300){
     tWidth = parseInt(window.innerWidth) - 240;
-    }
-    else if(parseInt(window.innerWidth) >= 1200){
+  }
+  else if(parseInt(window.innerWidth) >= 1200){
     tWidth = parseInt(window.innerWidth) - 230;
-    }
-    else if(parseInt(window.innerWidth) >= 1100){
+  }
+  else if(parseInt(window.innerWidth) >= 1100){
     tWidth = parseInt(window.innerWidth) - 320;
-    }
-    else if(parseInt(window.innerWidth) >= 1020){
+  }
+  else if(parseInt(window.innerWidth) >= 1020){
     tWidth = parseInt(window.innerWidth) - 300;
-    }
-    else if(parseInt(window.innerWidth) >= 992){
+  }
+  else if(parseInt(window.innerWidth) >= 992){
     tWidth = parseInt(window.innerWidth) - 230;
-    }
-    else if(parseInt(window.innerWidth) >= 882){
+  }
+  else if(parseInt(window.innerWidth) >= 882){
     tWidth = parseInt(window.innerWidth) - 80;
-    }
-    else if(parseInt(window.innerWidth) >= 768){
+  }
+  else if(parseInt(window.innerWidth) >= 768){
     tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else if(parseInt(window.innerWidth) >= 676){
+  }
+  else if(parseInt(window.innerWidth) >= 676){
     tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else if(parseInt(window.innerWidth) >= 600){
+  }
+  else if(parseInt(window.innerWidth) >= 600){
     tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else if(parseInt(window.innerWidth) >= 576){
+  }
+  else if(parseInt(window.innerWidth) >= 576){
     tWidth = parseInt(window.innerWidth) - 60;
-    }
-    else{
+  }
+  else{
     tWidth = parseInt(window.innerWidth)- 50
-    }
+  }
 
   const [screenWidth, setScreenWidth] = useState(tWidth);
   const [screenHeight, setScreenHeight] = useState(tHeigt);
@@ -276,24 +276,24 @@ export const EditPo = () => {
     const data = provider.provider
     // console.log(data)
     let result = data?.map(function(e){
-    let pajak = "";
-    if(e.tax2code === ""){
-        pajak = e.tax1code
-    }
-    else{
-        pajak = e.tax1code+e.tax2code
-    }
-    let alamat = "";
-    if(e.addressline2 === ""){alamat = e.addressline1} else{alamat = `${e.addressline1}, ${e.addressline2}`}
-    let alamat1 = "";
-    if(e.city === ""){alamat1 = alamat}else{alamat1 = `${alamat}, ${e.city}`}
-    let alamat2 = "";
-    if(e.stateprov === ""){alamat2 = alamat1}else{alamat2 = `${alamat1}, ${e.stateprov}`}
-    let alamat3 = "";
-    if(e.zipcode === ""){alamat3 = alamat2}else{alamat3 = `${alamat2}, ${e.zipcode}`}
-    let alamat4 = "";
-    if(e.country === ""){alamat4 = alamat3}else{alamat4 = `${alamat3}, ${e.country}`}
-    return { 
+      let pajak = "";
+      if(e.tax2code === ""){
+          pajak = e.tax1code
+      }
+      else{
+          pajak = e.tax1code+e.tax2code
+      }
+      let alamat = "";
+      if(e.addressline2 === ""){alamat = e.addressline1} else{alamat = `${e.addressline1}, ${e.addressline2}`}
+      let alamat1 = "";
+      if(e.city === ""){alamat1 = alamat}else{alamat1 = `${alamat}, ${e.city}`}
+      let alamat2 = "";
+      if(e.stateprov === ""){alamat2 = alamat1}else{alamat2 = `${alamat1}, ${e.stateprov}`}
+      let alamat3 = "";
+      if(e.zipcode === ""){alamat3 = alamat2}else{alamat3 = `${alamat2}, ${e.zipcode}`}
+      let alamat4 = "";
+      if(e.country === ""){alamat4 = alamat3}else{alamat4 = `${alamat3}, ${e.country}`}
+      return { 
         value: e.name,
         label: e.name,
         id: e.id,
@@ -311,7 +311,7 @@ export const EditPo = () => {
         termid: e.termid,
         termname: e.termname,
         pajak: pajak
-    }
+      }
     });
     setFileNab(result);
   }
@@ -484,99 +484,118 @@ export const EditPo = () => {
     let ntotal = 0;
     let nDiskon = 0;
     let nBantar = 0;
+    let dpp = [];
     if(diskon === ""){nDiskon = 0} else{nDiskon = diskon}
     if(bantar === ""){nBantar = 0} else{nBantar = bantar}
     console.log(tax1id+""+tax2id)
-    rowData.map((e)=>{
-        if(e.jmlhHarga === "" || e.jmlhHarga === 0 ){ntotalSub += 0}
-        else{ntotalSub += parseFloat(e.jmlhHarga)}
-        const pjk = e.pajak;
-        let pjk1 = "";
-        let pjk2 = "";
-        if(pjk.length === 2){
-            pjk1 = pjk[0];
-            pjk2 = pjk[1];
-        }
-        else if (pjk.length === 1){
-            pjk1 = pjk[0];
-            pjk2 = "" 
-        }
-        else{
-            pjk1 = "";
-            pjk2 = "" 
-        }
 
-        if(pjk1.toUpperCase() === "A"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
-        }
-        else if(pjk1.toUpperCase() === "B"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
-        }
-        else if(pjk1.toUpperCase() === "E"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
-        }
-        else if(pjk1.toUpperCase() === "G"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
-        }
-        else if(pjk1.toUpperCase() === "R"){
-            nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
-            npph += 0;
-        }
-        else if(pjk1.toUpperCase() === "S"){
-            nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
-            npph += 0;
-        }
-        else if(pjk1.toUpperCase() === "T"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
-        }
-        else{
-            nppn += 0;
-            npph += 0;
-        }
-
-        if(pjk2.toUpperCase() === "A"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
-        }
-        else if(pjk2.toUpperCase() === "B"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
-        }
-        else if(pjk2.toUpperCase() === "E"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
-        }
-        else if(pjk2.toUpperCase() === "G"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
-        }
-        else if(pjk2.toUpperCase() === "R"){
-            nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
-            npph += 0;
-        }
-        else if(pjk2.toUpperCase() === "S"){
-            nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
-            npph += 0;
-        }
-        else if(pjk2.toUpperCase() === "T"){
-            nppn += 0;
-            npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
-        }
-        else{
-            nppn += 0;
-            npph += 0;
-        }
-        return(
-            setTotalSub(ntotalSub.toFixed(2))
-        )
+    rowData.map((e,i)=>{
+      if(e.jmlhHarga === "" || e.jmlhHarga === 0 ){ntotalSub += 0}
+      else{ntotalSub += parseFloat(e.jmlhHarga)}
+      return(
+          setTotalSub(ntotalSub.toFixed(2))
+      )
     })
 
-    setPpn(nppn.toFixed(2));
+    rowData.map((e,i)=>{
+      const pjk = e.pajak;
+      let pjk1 = "";
+      let pjk2 = "";
+      if(pjk.length === 2){
+          pjk1 = pjk[0];
+          pjk2 = pjk[1];
+      }
+      else if (pjk.length === 1){
+          pjk1 = pjk[0];
+          pjk2 = "" 
+      }
+      else{
+          pjk1 = "";
+          pjk2 = "" 
+      }
+      dpp.push(pjk1)
+      if(pjk1.toUpperCase() === "A"){
+          nppn += 0;
+          npph += ((parseFloat(e.ntotalSub)) * 2.5) / 100;
+      }
+      else if(pjk1.toUpperCase() === "B"){
+          nppn += 0;
+          npph += ((parseFloat(e.ntotalSub)) * 3) / 100;
+      }
+      else if(pjk1.toUpperCase() === "E"){
+          nppn += 0;
+          npph += ((parseFloat(e.ntotalSub)) * 10) / 100;
+      }
+      else if(pjk1.toUpperCase() === "G"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
+      }
+      else if(pjk1.toUpperCase() === "R"){
+          nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+          npph += 0;
+      }
+      else if(pjk1.toUpperCase() === "S"){
+          nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
+          npph += 0;
+      }
+      else if(pjk1.toUpperCase() === "T"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+      }
+      else{
+          nppn += 0;
+          npph += 0;
+      }
+
+      if(pjk2.toUpperCase() === "A"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
+      }
+      else if(pjk2.toUpperCase() === "B"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
+      }
+      else if(pjk2.toUpperCase() === "E"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
+      }
+      else if(pjk2.toUpperCase() === "G"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
+      }
+      else if(pjk2.toUpperCase() === "R"){
+          nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+          npph += 0;
+      }
+      else if(pjk2.toUpperCase() === "S"){
+          nppn += ((parseFloat(e.jmlhHarga)) * 11) / 100;
+          npph += 0;
+      }
+      else if(pjk2.toUpperCase() === "T"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+      }
+      else{
+          nppn += 0;
+          npph += 0;
+      }
+
+      return(
+        setTotalSub(ntotalSub.toFixed(2))
+      )
+    })
+    let unique = [...new Set(dpp)];
+    const filt = unique.filter(x=> x.toUpperCase() === "S");
+    console.log(filt.length)
+    if(filt.length > 0){
+      let jumd = (nDiskon * 11) / 100;
+      nppn -= jumd
+      setPpn(nppn.toFixed(2));
+    }
+    else{
+      setPpn(nppn.toFixed(2));
+    }
+    
     setPph(npph.toFixed(2));
     ntotal = ntotalSub  - parseFloat(nDiskon) + nppn - npph + parseFloat(nBantar)
     setTotal(parseFloat(ntotal).toFixed(2))
@@ -671,246 +690,246 @@ export const EditPo = () => {
   return (
     <>
     <div className='setContain'>
-        <Breadcrumb className='bg-body'>
-            <Breadcrumb.Item onClick={() =>navigate(`/form`)}>Form</Breadcrumb.Item>
-            <Breadcrumb.Item onClick={() => navigate(`/form/Pengadaan`)}>Pengadaan</Breadcrumb.Item>
-            <Breadcrumb.Item onClick={() => navigate(`/form/purchaseorder`)}>Purchase Order</Breadcrumb.Item>
-            <Breadcrumb.Item active>
-              Edit &nbsp;
-              {staRev ? 
-                <span style={{visibility:'visible', color:'red'}} onClick={(e) =>handleShow()}><i className="bi bi-bell"></i></span> 
-                : 
-                <span style={{visibility:'hidden'}}onClick={(e) =>handleShow()}><i className="bi bi-bell"></i></span>
-              }
-              
-            </Breadcrumb.Item>
-        </Breadcrumb>
-        <Container fluid>
-            <Form onSubmit={handleSubmit}>
-                <div className='row g-2 mb-1 mt-1'>
-                  <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
-                    <div className='row g-2 mb-1'>
+      <Breadcrumb className='bg-body'>
+        <Breadcrumb.Item onClick={() =>navigate(`/form`)}>Form</Breadcrumb.Item>
+        <Breadcrumb.Item onClick={() => navigate(`/form/Pengadaan`)}>Pengadaan</Breadcrumb.Item>
+        <Breadcrumb.Item onClick={() => navigate(`/form/purchaseorder`)}>Purchase Order</Breadcrumb.Item>
+        <Breadcrumb.Item active>
+          Edit &nbsp;
+          {staRev ? 
+            <span style={{visibility:'visible', color:'red'}} onClick={(e) =>handleShow()}><i className="bi bi-bell"></i></span> 
+            : 
+            <span style={{visibility:'hidden'}}onClick={(e) =>handleShow()}><i className="bi bi-bell"></i></span>
+          }
+          
+        </Breadcrumb.Item>
+      </Breadcrumb>
+      <Container fluid>
+        <Form onSubmit={handleSubmit}>
+            <div className='row g-2 mb-1 mt-1'>
+              <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
+                <div className='row g-2 mb-1'>
+                  <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                  <h6>Eksternal Provider</h6>
+                  <Select 
+                      required
+                      options = {fileNab}
+                      onChange={(value) => {
+                          handleEprov(value)
+                          setTermName(value.termname)
+                          setCurrencyName(value.currencyname)
+                      }}
+                      isSearchable = {true}
+                  />
+                  </div>
+                  <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                  <h6>Syrt Pembayaran</h6>
+                  <Form.Control
+                      required
+                      type="text"
+                      value={termName}
+                      disabled
+                      />
+                  </div>
+                  <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
+                  <h6>Nilai Tukar</h6>
+                  <Form.Control
+                      required
+                      type="text"
+                      value={currencyName}
+                      disabled
+                      />
+                  </div>
+                </div>
+              </div>
+
+              <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
+                  <div className='row g-2 mb-1'>
                       <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                      <h6>Eksternal Provider</h6>
-                      <Select 
+                      <h6>No. PO</h6>
+                      <Form.Control
                           required
-                          options = {fileNab}
-                          onChange={(value) => {
-                              handleEprov(value)
-                              setTermName(value.termname)
-                              setCurrencyName(value.currencyname)
+                          type="text"
+                          placeholder="No PO"
+                          value={nopo}
+                          onChange={(e)=>{
+                              setNopo(e.target.value)
                           }}
-                          isSearchable = {true}
+                          disabled = {false}
                       />
                       </div>
                       <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                      <h6>Syrt Pembayaran</h6>
+                      <h6>Tgl PO</h6>
                       <Form.Control
                           required
-                          type="text"
-                          value={termName}
-                          disabled
-                          />
+                          type="date"
+                          value={tgl}
+                          onChange={(e)=>{
+                              setTgl(e.target.value)
+                          }}
+                          disabled = {false}
+                      />
                       </div>
                       <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                      <h6>Nilai Tukar</h6>
+                      <h6>Tgl Kirim</h6>
                       <Form.Control
                           required
-                          type="text"
-                          value={currencyName}
-                          disabled
-                          />
+                          type="date"
+                          value={tglKrm}
+                          onChange={(e)=>{
+                              setTglKrm(e.target.value)
+                          }}
+                          disabled = {false}
+                      />
                       </div>
-                    </div>
+                      
                   </div>
+              </div>
+            </div>
 
-                  <div className='col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-1'>
-                      <div className='row g-2 mb-1'>
-                          <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                          <h6>No. PO</h6>
-                          <Form.Control
-                              required
-                              type="text"
-                              placeholder="No PO"
-                              value={nopo}
-                              onChange={(e)=>{
-                                  setNopo(e.target.value)
-                              }}
-                              disabled = {false}
-                          />
-                          </div>
-                          <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                          <h6>Tgl PO</h6>
-                          <Form.Control
-                              required
-                              type="date"
-                              value={tgl}
-                              onChange={(e)=>{
-                                  setTgl(e.target.value)
-                              }}
-                              disabled = {false}
-                          />
-                          </div>
-                          <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
-                          <h6>Tgl Kirim</h6>
-                          <Form.Control
-                              required
-                              type="date"
-                              value={tglKrm}
-                              onChange={(e)=>{
-                                  setTglKrm(e.target.value)
-                              }}
-                              disabled = {false}
-                          />
-                          </div>
-                          
-                      </div>
+            <div className='row g-2 mb-1'>
+                <div className='col-sm-12 col-md-12 col-lg-10 col-xl-11 mb-1'>
+                  <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                    <AgGridReact
+                      ref={gridRef}
+                      rowData={rowData}
+                      columnDefs={columns}
+                      defaultColDef={defaultColDef}
+                      singleClickEdit={true}
+                      onCellClicked={onCellClicked}
+                      onCellValueChanged={onCellValueChanged}
+                    />
                   </div>
-                </div>
-
-                <div className='row g-2 mb-1'>
-                    <div className='col-sm-12 col-md-12 col-lg-10 col-xl-11 mb-1'>
-                      <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
-                        <AgGridReact
-                          ref={gridRef}
-                          rowData={rowData}
-                          columnDefs={columns}
-                          defaultColDef={defaultColDef}
-                          singleClickEdit={true}
-                          onCellClicked={onCellClicked}
-                          onCellValueChanged={onCellValueChanged}
+                  <div className='row g-2 mb-1'>
+                    <div className='col-sm-8 col-md-8 col-lg-8 col-xl-8 mb-1'>
+                      <Form.Group as={Col} controlId="formGridArea">
+                        <Form.Label>Keterangan</Form.Label>
+                        <Form.Control 
+                          as="textarea" 
+                          aria-label="With textarea" 
+                          value={spesifikasi}
+                          onChange={(e) => {
+                              setSpesifikasi(e.target.value)
+                          }}
+                            
                         />
+                      </Form.Group>
+                    </div>
+                    <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-1'>
+                      <div className='row g-2 mb-1'>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <h6 style={{justifyContent: "center", alignItems: 'center'}}>Total Sub</h6>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <NumericFormat 
+                            customInput={Form.Control}
+                            thousandSeparator={true}
+                            value={totalSub}
+                            style={{ textAlign: 'right' }}
+                            disabled
+                          />
+                        </div>
                       </div>
                       <div className='row g-2 mb-1'>
-                        <div className='col-sm-8 col-md-8 col-lg-8 col-xl-8 mb-1'>
-                          <Form.Group as={Col} controlId="formGridArea">
-                            <Form.Label>Keterangan</Form.Label>
-                            <Form.Control 
-                              as="textarea" 
-                              aria-label="With textarea" 
-                              value={spesifikasi}
-                              onChange={(e) => {
-                                  setSpesifikasi(e.target.value)
-                              }}
-                                
-                            />
-                          </Form.Group>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <h6>Diskon</h6>
                         </div>
-                        <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-1'>
-                          <div className='row g-2 mb-1'>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <h6 style={{justifyContent: "center", alignItems: 'center'}}>Total Sub</h6>
-                            </div>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <NumericFormat 
-                                customInput={Form.Control}
-                                thousandSeparator={true}
-                                value={totalSub}
-                                style={{ textAlign: 'right' }}
-                                disabled
-                              />
-                            </div>
-                          </div>
-                          <div className='row g-2 mb-1'>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <h6>Diskon</h6>
-                            </div>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <NumericFormat 
-                                customInput={Form.Control}
-                                thousandSeparator={true}
-                                onValueChange ={e => {
-                                  setDiskon(e.value)
-                                  setisReady(true)
-                                }}
-                                style={{ textAlign: 'right' }}
-                              />
-                            </div>
-                          </div>
-                          <div className='row g-2 mb-1'>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <h6>{tax1name}</h6>
-                            </div>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <NumericFormat 
-                                customInput={Form.Control}
-                                thousandSeparator={true}
-                                value={ppn}
-                                style={{ textAlign: 'right' }}
-                                disabled
-                              />
-                            </div>
-                          </div>
-                          <div className='row g-2 mb-1'>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <h6>{tax2name}</h6>
-                            </div>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <NumericFormat 
-                                customInput={Form.Control}
-                                thousandSeparator={true}
-                                value={pph}
-                                style={{ textAlign: 'right' }}
-                                disabled
-                              />
-                            </div>
-                          </div>
-                          <div className='row g-2 mb-1'>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <h6>B.Antar</h6>
-                            </div>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <NumericFormat 
-                                customInput={Form.Control}
-                                thousandSeparator={true}
-                                onValueChange ={e => {
-                                  setBantar(e.value)
-                                  setisReady(true)
-                                }}
-                                style={{ textAlign: 'right' }}
-                              />
-                            </div>
-                          </div>
-                          <div className='row g-2 mb-1'>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <h6>Total</h6>
-                            </div>
-                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                              <NumericFormat 
-                                customInput={Form.Control}
-                                thousandSeparator={true}
-                                value={total}
-                                style={{ textAlign: 'right' }}
-                                disabled
-                              />
-                            </div>
-                          </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <NumericFormat 
+                            customInput={Form.Control}
+                            thousandSeparator={true}
+                            onValueChange ={e => {
+                              setDiskon(e.value)
+                              setisReady(true)
+                            }}
+                            style={{ textAlign: 'right' }}
+                          />
+                        </div>
+                      </div>
+                      <div className='row g-2 mb-1'>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <h6>{tax1name}</h6>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <NumericFormat 
+                            customInput={Form.Control}
+                            thousandSeparator={true}
+                            value={ppn}
+                            style={{ textAlign: 'right' }}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className='row g-2 mb-1'>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <h6>{tax2name}</h6>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <NumericFormat 
+                            customInput={Form.Control}
+                            thousandSeparator={true}
+                            value={pph}
+                            style={{ textAlign: 'right' }}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className='row g-2 mb-1'>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <h6>B.Antar</h6>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <NumericFormat 
+                            customInput={Form.Control}
+                            thousandSeparator={true}
+                            onValueChange ={e => {
+                              setBantar(e.value)
+                              setisReady(true)
+                            }}
+                            style={{ textAlign: 'right' }}
+                          />
+                        </div>
+                      </div>
+                      <div className='row g-2 mb-1'>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <h6>Total</h6>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
+                          <NumericFormat 
+                            customInput={Form.Control}
+                            thousandSeparator={true}
+                            value={total}
+                            style={{ textAlign: 'right' }}
+                            disabled
+                          />
                         </div>
                       </div>
                     </div>
-                    <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1 mb-5'>
-                      <div className='d-flex align-items-end flex-column'>
-                        <div className='d-flex align-items-end flex-wrap'>
-                          <div className='row p-2'>
-                            <Button type="submit" variant="outline-primary m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12'>Simpan</Button>
-                            <Button variant="outline-danger m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12'>Batal</Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  </div>
                 </div>
-            </Form>
-        </Container>
+                <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1 mb-5'>
+                  <div className='d-flex align-items-end flex-column'>
+                    <div className='d-flex align-items-end flex-wrap'>
+                      <div className='row p-2'>
+                        <Button type="submit" variant="outline-primary m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12'>Simpan</Button>
+                        <Button variant="outline-danger m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12'>Batal</Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </Form>
+      </Container>
     </div>
 
     {isLoading ? <LoadingPage /> : ""}
 
     <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Keterangan revisi</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{location.state.data.revisi}</Modal.Body>
-      </Modal>
+      <Modal.Header closeButton>
+        <Modal.Title>Keterangan revisi</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{location.state.data.revisi}</Modal.Body>
+    </Modal>
     </>
   )
 }

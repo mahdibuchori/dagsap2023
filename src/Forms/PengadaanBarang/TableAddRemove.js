@@ -440,8 +440,10 @@ export const TableAddRemove = (props) => {
     const onFirstDataRendered = useCallback((params) => {
         const nodesToSelect = [];
         let data = props.data;
+        console.log(data)
         params.api.forEachNode((node) => {
             for(let x =0; x < data.length; x++){
+                console.log(data[x].id_Pengadaan)
                 if (node.data && node.data.id_Pengadaan === data[x].id_Pengadaan) {
                     console.log(node)
                     nodesToSelect.push(node);
@@ -466,8 +468,10 @@ export const TableAddRemove = (props) => {
           let fData = next.filter((i)=>i.status !== "Verifikasi");
           if(fData.length === 0){
             let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
-            console.log(newArray)
-              
+            // console.log(newArray);
+            // props.onAddGoal(newArray);
+            props.onAddGoal(newArray)
+            props.close();
           }
           else{
             Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
@@ -702,7 +706,10 @@ export const TableAddRemove = (props) => {
             <Button variant="secondary" onClick={handleClose}>
                 Close
             </Button>
-            <Button variant="primary" onClick={createPurchase}>
+            <Button 
+                variant="primary"
+                onClick={createPurchase}
+            >
                 Save Changes
             </Button>
             </Modal.Footer>

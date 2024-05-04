@@ -229,7 +229,7 @@ export const ListMounthly = () => {
         const year = date.getFullYear();
         let bb = String(month).padStart(2, '0');
         const data = dataDashboard.data;
-
+        console.log(data)
         const postIds = data.map((post) => {
             let file = {};
             if(parseInt(bb) === 1){
@@ -558,6 +558,7 @@ export const ListMounthly = () => {
         const year = date.getFullYear();
         let bb = String(months).padStart(2, '0');
         const data = dataDashboard.data;
+        console.log(data)
         const postIds = data.map((post) => {
             let file = {};
             if(parseInt(bb) === 1){
@@ -640,6 +641,7 @@ export const ListMounthly = () => {
                 {item: post.item, th24 : n24, th23 : n23, th22 : n22, th21 : n21, qth24 : q24, qth23 : q23, qth22 : q22, qth21 : q21, total21 : total21, total22 : total22, total23 : total23, total24 : total24, satuan : post.satuan, tipe : post.tipe, persentase24: persentase24.toFixed(2), persentase23: persentase23.toFixed(2), persentase22 : persentase22.toFixed(2), persentase21: "0" }
             )
         });
+        
 
         let listData = {};
         if(e === ""){
@@ -747,7 +749,7 @@ export const ListMounthly = () => {
             }
             
         }
-        
+        console.log(datas)
         setFileName(datas);
     }
 
@@ -991,91 +993,91 @@ export const ListMounthly = () => {
         </Stack>
         
         <div className="d-flex flex-row flex-nowrap overflow-auto  m-1" >
-        {fileName.map((e, i) =>{
-            let nilai = 0;
-            // let ns = ''
-            if(keys === 'jumlah'){
-                nilai = e.total;
-            }
-            else if(keys === 'harga'){
-                nilai = e.harga;
-            }
-            else{
-                nilai = e.qty;
-                // ns = `${e.satuan}`
-            }
-            const date = new Date(month)
-            const yy = date.getFullYear(date)
-            let presentase = 0;
-            let warna = 'secondary';
-            let icon = '';
-            if(yy === 2024){
-                if(e.persentase24 === Infinity || e.persentase24 === 'Infinity'){
-                    presentase = 0
-                }else{
-                    presentase = parseFloat(e.persentase24);
+            {fileName.map((e, i) =>{
+                let nilai = 0;
+                // let ns = ''
+                if(keys === 'jumlah'){
+                    nilai = e.total;
                 }
-                
-            }
-            else if(yy === 2023){
-                if(e.persentase23 === Infinity || e.persentase23 === 'Infinity'){
-                    presentase = 0
-                }else{
-                    presentase = parseFloat(e.persentase23);
-                }
-                
-            }
-            else if(yy === 2022){
-                if(e.persentase22 === Infinity || e.persentase22 === 'Infinity'){
-                    presentase = 0
-                }else{
-                    presentase = parseFloat(e.persentase22)
-                }
-            }
-            else{
-                presentase = 0
-            }
-            if(presentase === 0){
-                warna = 'secondary'
-                icon ='bi bi-dash'
-            }
-            else{
-                if(presentase < 0){ 
-                    warna = 'danger'
-                    icon = 'bi bi-chevron-double-down'
+                else if(keys === 'harga'){
+                    nilai = e.harga;
                 }
                 else{
-                    warna='success'
-                    icon = 'bi bi-chevron-double-up'
+                    nilai = e.qty;
+                    // ns = `${e.satuan}`
                 }
-            }
-            return(
-                <div className="card bg-white p-2 m-2" style={{minWidth: '300px', minHeight: '70px'}}>
-                    <Button 
-                        variant="primary" 
-                        size="sm" 
-                        className='mb-1' 
-                        style={{width: '30px'}} 
-                        onClick={(x)=>{
-                            setNabar(e.item)
-                            handleShow(e.item)
-                        }}
-                    >
-                        <i className="bi bi-graph-up"></i>
-                    </Button>
-                    <h6 style={{textAlign: 'center'}}>{e.item}</h6>
-                    <h5 style={{textAlign: 'center',marginBottom: '10px'}}><NumericFormat value={nilai} displayType={'text'} thousandSeparator={true} prefix={kurs} /></h5>
-                    <div className="position-absolute bottom-0 end-0 px-2 p-2 mt-5">
-                        
-                        <Badge bg={warna}>
-                            <i className={icon}></i>
-                            {presentase}&nbsp;%
-                        </Badge>
-                    </div>
-                
-                </div> 
+                const date = new Date(month)
+                const yy = date.getFullYear(date)
+                let presentase = 0;
+                let warna = 'secondary';
+                let icon = '';
+                if(yy === 2024){
+                    if(e.persentase24 === Infinity || e.persentase24 === 'Infinity'){
+                        presentase = 0
+                    }else{
+                        presentase = parseFloat(e.persentase24);
+                    }
+                    
+                }
+                else if(yy === 2023){
+                    if(e.persentase23 === Infinity || e.persentase23 === 'Infinity'){
+                        presentase = 0
+                    }else{
+                        presentase = parseFloat(e.persentase23);
+                    }
+                    
+                }
+                else if(yy === 2022){
+                    if(e.persentase22 === Infinity || e.persentase22 === 'Infinity'){
+                        presentase = 0
+                    }else{
+                        presentase = parseFloat(e.persentase22)
+                    }
+                }
+                else{
+                    presentase = 0
+                }
+                if(presentase === 0){
+                    warna = 'secondary'
+                    icon ='bi bi-dash'
+                }
+                else{
+                    if(presentase < 0){ 
+                        warna = 'danger'
+                        icon = 'bi bi-chevron-double-down'
+                    }
+                    else{
+                        warna='success'
+                        icon = 'bi bi-chevron-double-up'
+                    }
+                }
+                return(
+                    <div className="card bg-white p-2 m-2" style={{minWidth: '300px', minHeight: '70px'}}>
+                        <Button 
+                            variant="primary" 
+                            size="sm" 
+                            className='mb-1' 
+                            style={{width: '30px'}} 
+                            onClick={(x)=>{
+                                setNabar(e.item)
+                                handleShow(e.item)
+                            }}
+                        >
+                            <i className="bi bi-graph-up"></i>
+                        </Button>
+                        <h6 style={{textAlign: 'center'}}>{e.item}</h6>
+                        <h5 style={{textAlign: 'center',marginBottom: '10px'}}><NumericFormat value={nilai} displayType={'text'} thousandSeparator={true} prefix={kurs} /></h5>
+                        <div className="position-absolute bottom-0 end-0 px-2 p-2 mt-5">
+                            
+                            <Badge bg={warna}>
+                                <i className={icon}></i>
+                                {presentase}&nbsp;%
+                            </Badge>
+                        </div>
+                    
+                    </div> 
+                )}
             )}
-        )}
                        
         </div>
     </div>
