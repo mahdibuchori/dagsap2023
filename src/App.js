@@ -50,7 +50,7 @@ function App() {
         <Route path="/form/pengadaan/tableadd" element={<TableAddRemove />} /> 
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
-        <Route path="/form/purchaseorder/update" element={<EditPo />} />  
+        <Route path="/form/purchaseorder/update" element={<EditPo />} />
         <Route path="/form/purchaseorder/data" element={<ViewPo />} />  
         <Route path="/form/purchaseorder/verifikasi" element={<VerifikasiPo />} /> 
         <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} /> 

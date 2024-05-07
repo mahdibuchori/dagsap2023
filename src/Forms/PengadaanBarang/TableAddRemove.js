@@ -471,6 +471,7 @@ export const TableAddRemove = (props) => {
             // console.log(newArray);
             // props.onAddGoal(newArray);
             props.onAddGoal(newArray)
+            props.coba(newArray)
             props.close();
           }
           else{
@@ -495,7 +496,7 @@ export const TableAddRemove = (props) => {
             fullscreen={true}
             centered
         >
-            <Modal.Header closeButton>
+            <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">Tabel Pengadaan</Modal.Title>
             </Modal.Header>
             <Modal.Body>

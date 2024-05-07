@@ -28,7 +28,7 @@ export const FileTahun = [
 export const FileDivisi = [
   { value: 'All', label: 'All', subDiv :[{lab: 'All', valu: 'All'}]},
   { value: 'BOD/BOC', label: 'BOD/BOC', subDiv :[{lab: 'BOD/BOC', valu: 'BOD/BOC'}]},
-  { value: 'FAT', label: 'FAT', subDiv :[{lab: 'FAT', valu: 'FAT'},{lab: 'Budgeting', valu: 'Budgeting'}]},
+  { value: 'FAT', label: 'FAT', subDiv :[{lab: 'FAT', valu: 'FAT'},{lab: 'Budgeting', valu: 'Budgeting'},{lab: 'FAT & Budgeting', valu: 'FAT & Budgeting'}]},
   { value: 'HR-GA', label: 'HR-GA', subDiv :[{lab: 'HR-GA', valu: 'HR-GA'}]},
   { value: 'Maintenance', label: 'Maintenance', subDiv :[{lab: 'Maintenance', valu: 'Maintenance'}]},
   { value: 'PPIC-Purchasing', label: 'PPIC-Purchasing', subDiv :[{lab: 'PPIC-WH', valu: 'PPIC-WH'},{lab: 'Purchasing', valu: 'Purchasing'},{lab: 'WIP', valu: 'WIP'},{lab: 'FG', valu: 'FG'},{lab: 'Koperasi', valu: 'Koperasi'}]},

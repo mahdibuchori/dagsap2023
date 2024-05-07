@@ -48,6 +48,8 @@ export const Tablepengadaan = ({columns}) => {
   const [usQaqc, setUsQaqc] = useState(true);
   const [usSsd, setUsSsd] = useState(true);
   const [usRnd, setUsRnd] = useState(true);
+  const [usFat, setUsFat] = useState(true);
+  const [usBudg, setUsBudg] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [dataReady, setDataReady] = useState(false);
 
@@ -120,7 +122,6 @@ export const Tablepengadaan = ({columns}) => {
         meme = userData.usubdiv;
       }
       // const meme = userData.usubdiv;
-
       switch (meme) {
         case "FG":
             setKey("FG");
@@ -133,6 +134,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(true);
             setUsSsd(true);
             setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "HR-GA":
             setKey("HR-GA");
@@ -144,6 +147,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsPurchasing(true);
             setUsQaqc(true);
             setUsSsd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "Maintenance":
             setKey("Maintenance");
@@ -156,6 +161,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(true);
             setUsSsd(true);
             setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "PPIC-WH":
             setKey("PPIC-WH");
@@ -168,6 +175,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(true);
             setUsSsd(true);
             setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "Produksi":
             setKey("Produksi");
@@ -180,6 +189,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(true);
             setUsSsd(true);
             setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "Purchasing":
             setKey("Purchasing");
@@ -192,6 +203,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(false);
             setUsSsd(false);
             setUsRnd(false);
+            setUsBudg(false);
+            setUsFat(false);
         break;
         case "QAQC":
             setKey("QAQC");
@@ -204,6 +217,50 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(false);
             setUsSsd(true);
             setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(true);
+        break;
+        case "Budgeting":
+            setKey("Budgeting");
+            setUsFg(true);
+            setUsHrga(true);
+            setUsMaintenance(true);
+            setUsPpic(true);
+            setUsProduksi(true);
+            setUsPurchasing(true);
+            setUsQaqc(true);
+            setUsSsd(true);
+            setUsRnd(true);
+            setUsBudg(false);
+            setUsFat(true);
+        break;
+        case "FAT":
+            setKey("FAT");
+            setUsFg(true);
+            setUsHrga(true);
+            setUsMaintenance(true);
+            setUsPpic(true);
+            setUsProduksi(true);
+            setUsPurchasing(true);
+            setUsQaqc(true);
+            setUsSsd(true);
+            setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(false);
+        break;
+        case "FAT & Budgeting":
+            setKey("FAT");
+            setUsFg(true);
+            setUsHrga(true);
+            setUsMaintenance(true);
+            setUsPpic(true);
+            setUsProduksi(true);
+            setUsPurchasing(true);
+            setUsQaqc(true);
+            setUsSsd(true);
+            setUsRnd(true);
+            setUsBudg(false);
+            setUsFat(false);
         break;
         case "RnD":
             setKey("RnD");
@@ -217,6 +274,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(true);
             setUsRnd(false);
             setUsSsd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "SSD":
             setKey("SSD");
@@ -229,6 +288,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(true);
             setUsSsd(false);
             setUsRnd(true);
+            setUsBudg(true);
+            setUsFat(true);
         break;
         case "PPIC-Purchasing":
             setKey("FG");
@@ -241,6 +302,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(false);
             setUsSsd(false);
             setUsRnd(false);
+            setUsBudg(false);
+            setUsFat(false);
         break;
         case "Develop":
             setKey("FG");
@@ -253,6 +316,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(false);
             setUsSsd(false);
             setUsRnd(false);
+            setUsBudg(false);
+            setUsFat(false);
         break;
         case "BOD/BOC":
             setKey("FG");
@@ -265,6 +330,8 @@ export const Tablepengadaan = ({columns}) => {
             setUsQaqc(false);
             setUsSsd(false);
             setUsRnd(false);
+            setUsBudg(false);
+            setUsFat(false);
         break;
         default:
               setKey("");
@@ -276,6 +343,8 @@ export const Tablepengadaan = ({columns}) => {
               setUsPurchasing(true);
               setUsQaqc(true);
               setUsSsd(true);
+              setUsBudg(true);
+              setUsFat(true);
       }
     }
     cekList();
@@ -982,7 +1051,7 @@ export const Tablepengadaan = ({columns}) => {
                   ></AgGridReact>
                 </div>
             </Tab>
-            <Tab eventKey="FAT" title="FAT" disabled={usSsd}>
+            <Tab eventKey="FAT" title="FAT" disabled={usFat}>
                 <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
                   <AgGridReact
                     ref={gridRef}
@@ -996,7 +1065,7 @@ export const Tablepengadaan = ({columns}) => {
                   ></AgGridReact>
                 </div>
             </Tab>
-            <Tab eventKey="Budgeting" title="Budgeting" disabled={usSsd}>
+            <Tab eventKey="Budgeting" title="Budgeting" disabled={usBudg}>
                 <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
                   <AgGridReact
                     ref={gridRef}

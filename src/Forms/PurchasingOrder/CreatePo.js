@@ -977,7 +977,7 @@ export const CreatePo = () => {
         })
         let unique = [...new Set(dpp)];
         const filt = unique.filter(x=> x.toUpperCase() === "S");
-        console.log(filt.length)
+        // console.log(filt.length)
         if(filt.length > 0){
             let jumd = (nDiskon * 11) / 100;
             nppn -= jumd
@@ -1017,7 +1017,7 @@ export const CreatePo = () => {
         console.log(s);
         const mergedArray = [ ...location.state.data, ...s ]
         console.log(mergedArray) */
-        setInputList(newGoal)
+        // setInputList(newGoal)
         setDataPo([])
         setShow(true)
     }
@@ -1028,8 +1028,75 @@ export const CreatePo = () => {
             Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
         }
         else{
-            console.log(dataPo)
-
+            let file = rowData;
+            setRowData([])
+            let plan = String(userData.uplan).toUpperCase();
+            let data = [];
+            for(let x = 0; x< dataPo.length; x++){
+                let file = {
+                    material : dataPo[x].material,
+                    qty : parseFloat(dataPo[x].qty).toFixed(2),
+                    satuan : dataPo[x].satuan,
+                    hargasatuan : "",
+                    diskon : "",
+                    jmlhHarga : "",
+                    departement : `PABRIK ${plan}`,
+                    itemNo : dataPo[x].itemNo,
+                    pajak : "",
+                    spesifikasi : dataPo[x].spesifikasi,
+                    divisi : dataPo[x].divisi,
+                    terima  : "",
+                    tutup : "",
+                    id_Pengadaan : dataPo[x].id_Pengadaan,
+                    tipe : dataPo[x].tipe,
+                    parsial: [dataPo[x].parsial],
+                    po : dataPo[x].po,
+                    qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
+                    parsialAwal: [dataPo[x].parsialAwal],
+                    brandMaterial : dataPo[x].brandMaterial,
+                    tipeMaterial : dataPo[x].tipeMaterial,
+                    newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
+                    newMaterial : dataPo[x].newMaterial,
+                }
+                if(data.length === 0){
+                    data.push(file)
+                }
+                else{
+                    let foundIndex = data.findIndex(i => i.id_Pengadaan === dataPo[x].id_Pengadaan);
+                    if(foundIndex >= 0){
+                        data[foundIndex].qty = (parseFloat(data[foundIndex].qty) + parseFloat(dataPo[x].qty)).toFixed(2);
+                        data[foundIndex].qtyAwal = (parseFloat(data[foundIndex].qtyAwal) + parseFloat(dataPo[x].qtyAwal)).toFixed(2);
+                        let parsil = data[foundIndex].parsial;
+                        let parsilA = data[foundIndex].parsialAwal;
+                        parsil.push(dataPo[x].parsial)
+                        parsilA.push(dataPo[x].parsialAwal)
+                        data[foundIndex].parsial = parsil;
+                        data[foundIndex].parsialAwal = parsilA;
+                    }
+                    else{
+                        data.push(file)
+                    }
+                    
+                }
+            }
+            console.log(data)
+            for(let x = 0; x < file.length; x++){
+                let n = file[x];
+                let foundIndex = dataPo.findIndex(a => a.id_Pengadaan === n.id_Pengadaan);
+                if(foundIndex >= 0){
+                    data[foundIndex]["hargasatuan"] = n.hargasatuan;
+                    data[foundIndex]["material"] = n.material;
+                    data[foundIndex]["pajak"] = n.pajak;
+                }
+                else{
+                    console.log(foundIndex)
+                }
+            }
+            // const r = data.filter((elem) => rowData.find(({ id_Pengadaan }) => elem.id_Pengadaan === id_Pengadaan));
+            console.log(rowData);
+            console.log(data)
+            console.log(inputList)
+            setRowData(data)
             setShow(false)
         }
         /* 
@@ -1366,7 +1433,17 @@ export const CreatePo = () => {
         
         </Container>
     </div>
-    {inputList.length && <TableAddRemove  show={showModal} close={() => setShowModal(false)} data={inputList} onAddGoal={onAddGoalHandler} />}
+    {
+        inputList.length 
+        &&
+        <TableAddRemove
+            show={showModal}
+            close={() => setShowModal(false)}
+            data={inputList}
+            onAddGoal={onAddGoalHandler}
+            coba ={setInputList}
+        />
+    }
     
     <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Body>

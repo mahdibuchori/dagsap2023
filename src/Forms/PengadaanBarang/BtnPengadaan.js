@@ -74,10 +74,13 @@ export const BtnPengadaan = (props) => {
                   if(divPengadaan.toUpperCase() === "PPIC-WH" ||divPengadaan.toUpperCase() === "PURCHASING" ||divPengadaan.toUpperCase() === "FG"){
                     myDivisi = "PPIC-PURCHASING";
                   }
+                  else if(divPengadaan.toUpperCase() === "FAT" ||divPengadaan.toUpperCase() === "BUDGETING" ||divPengadaan.toUpperCase() === "FAT & BUDGETING"){
+                    myDivisi = "FAT";
+                  }
                   else{
                     myDivisi = divPengadaan.toUpperCase();
                   }
-                  console.log(myDivisi)
+                  
                   if(plan === "Sentul"){
                       if(myDivisi === divisi){
                           switch (divisi) {
@@ -142,6 +145,16 @@ export const BtnPengadaan = (props) => {
                             }
                           break;
                           case "SSD":
+                            if(level === 3){
+                              navigate(`/form/pengadaan/verfikasi`,{state:{
+                                  data : props.data
+                              }});
+                            }
+                            else{
+                              Swal.fire('Info','Tidak memiliki akses','warning');
+                            }
+                          break;
+                          case "FAT":
                             if(level === 3){
                               navigate(`/form/pengadaan/verfikasi`,{state:{
                                   data : props.data

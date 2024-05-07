@@ -11,6 +11,7 @@ import { MenuProduksi } from './MenuProduksi';
 import { MenuQaqc } from './MenuQaqc';
 import { MenuFg } from './MenuFg';
 import { MenuMtc } from './MenuMtc';
+import { MenuFat } from './MenuFat';
 
 
 const MenuCenter = () => {
@@ -102,6 +103,13 @@ const MenuCenter = () => {
     return (
       <div className='setContain'>
         <MenuMtc />
+      </div>
+    )
+  }
+  else if(userData?.udivisi === "FAT" ){
+    return (
+      <div className='setContain'>
+        <MenuFat />
       </div>
     )
   }
