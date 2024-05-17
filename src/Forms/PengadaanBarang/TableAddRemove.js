@@ -33,6 +33,7 @@ export const TableAddRemove = (props) => {
     const [rowBudget, setRowBudget] = useState();
     const [dataPo, setDataPo] = useState([]);
     const [fileBox, setFileBox] = useState([]);
+    const [dataPos, setdataPos] = useState();
 
     const [usFg, setUsFg] = useState(true);
     const [usHrga, setUsHrga] = useState(true);
@@ -45,6 +46,9 @@ export const TableAddRemove = (props) => {
     const [usRnd, setUsRnd] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [dataReady, setDataReady] = useState(false);
+    const [fileReady, setFileReady] = useState(false);
+    // const [cekReady, setCekReady] = useState(false);
+    const [cekUbah, setCekUbah] = useState(false);
 
     const tHeigt = parseInt(window.innerHeight) - 300;
     let tWidth = 0;
@@ -97,6 +101,11 @@ export const TableAddRemove = (props) => {
         onGridReady()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pengadaanReady]);
+
+    useEffect(() => {
+        setdataPos(props.data)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
 
     useEffect(()=>{
         const cekList = () => {
@@ -305,11 +314,158 @@ export const TableAddRemove = (props) => {
             })
             }
             setDataReady(false);
+            setFileReady(true)
         } 
 
         gntiDta();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[dataReady]);
+
+    useEffect (() => {
+        if(!fileReady) return;
+        const gntiDta = async () =>{
+          try {
+            setIsLoading(true);
+            let uniqueChars = [...new Set(dataPo)];
+            let next = uniqueChars.map((e)=>{
+              let cekData = newPengadaan.filter((i)=>i.id_Pengadaan === e);
+              return(
+                {status : cekData[0].status}
+              )  
+            });
+            let fData = next.filter((i)=>i.status !== "Verifikasi");
+            if(fData.length === 0){
+              let posCek = dataPos;
+              let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+              if(posCek.length === 0){
+                setdataPos(newArray)
+              }
+              else{
+                if(newArray.length > 0){
+                  let isi = [...dataPos, ...newArray]
+                  const same = dataPos.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                      t.id_Pengadaan === item.id_Pengadaan
+                    ))
+                  );
+                  const dataAda = same.filter((item) => item.filter_bulan === bulan)
+                  const datatdk = same.filter((item) => item.filter_bulan !== bulan)
+                  if(dataAda.length > 0 && datatdk.length === 0){
+                    if(dataAda.length < newArray.length){
+                      setdataPos(newArray)
+                    }
+                    else if(dataAda.length > newArray.length){
+                      setdataPos(newArray)
+                    }
+                    else{}
+                  }
+                  else if(dataAda.length === 0 && datatdk.length > 0){
+                    if(dataAda.length < newArray.length){
+                      // let isi = [...dataSementara, ...newArray]
+                      setdataPos(isi)
+                    }
+                    else if(dataAda.length > newArray.length){
+                        setdataPos(isi)
+                    }
+                    else{}
+                  }
+                  else if(dataAda.length > 0 && datatdk.length > 0){
+                    if(dataAda.length < newArray.length){
+                      let isi = [...dataPos, ...newArray]
+                      const same = isi.filter((item, index, self) =>
+                        index === self.findIndex((t) => (
+                          t.id_Pengadaan === item.id_Pengadaan
+                        ))
+                      );
+                      setdataPos(same)
+                    }
+                    else if(dataAda.length > newArray.length){
+                        setdataPos([...datatdk, ...newArray])
+                    }
+                    else{}
+                  }
+                  else{
+                    console.log("test data")
+                  }
+                  // setDataSementara(isi)
+                }
+                else{
+                  const same = dataPos.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                      t.id_Pengadaan === item.id_Pengadaan
+                    ))
+                  );
+                  const dataAda = same.filter((item) => item.filter_bulan === bulan);
+                  const datatdk = same.filter((item) => item.filter_bulan !== bulan);
+                  if(dataAda.length > 0 && datatdk.length === 0){
+                    setdataPos([])
+                  }
+                  else if(dataAda.length === 0 && datatdk.length > 0){
+                    setdataPos(datatdk)
+                  }
+                  else if(dataAda.length > 0 && datatdk.length > 0){
+                    if(cekUbah === true){
+                        setdataPos([...dataAda, ...datatdk])
+                    }
+                    else{
+                        setdataPos(datatdk)
+                    }
+                    
+                  }
+                  else{}
+                  setCekUbah(false);
+                  setDataReady(false);
+                  setFileReady(false);
+                //   setCekReady(false);
+                }
+                
+              }
+            }
+            else{
+            //   console.log(dataPos)
+              Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
+            }
+            setIsLoading(false);
+          } catch (error) {
+              setIsLoading(false);
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Pengambilan Data Pengadaan Gagal!2',
+              footer: error
+            })
+          }
+          setFileReady(false);
+        //   setCekReady(true)
+        } 
+    
+        gntiDta();
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[fileReady]);
+    
+      /* useEffect (() => {
+        if(!cekReady) return;
+        const gntiDta = async () =>{
+          try {
+            setIsLoading(true);
+            console.log(dataPos)
+            setIsLoading(false);
+          } catch (error) {
+              setIsLoading(false);
+              Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Pengambilan Data Pengadaan Gagal!3',
+              footer: error
+            })
+          }
+          setCekReady(false);
+        } 
+    
+        gntiDta();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[cekReady]); */
 
     const onGridReady =async () =>{
         try {
@@ -409,13 +565,23 @@ export const TableAddRemove = (props) => {
             setIsLoading(false);
         }
     }
+
+    /* const cek =()=>{
+        setdataPos(props.data)
+    } */
     
     const onSetDate =async (event) => {
         setIsLoading(true)
         pengadaanFalse();
         setBulan(event.target.value);
+        setDataReady(false);
+        setFileReady(false);
+        // setCekReady(false);
+        setCekUbah(true)
         await fetchPengadaan(event.target.value, userData.uplan);
     }
+
+    const columns = useMemo(() => COLUMNS_PENGADAAN1, []);
 
     const defaultColDef = useMemo(() => {
         return {
@@ -435,43 +601,25 @@ export const TableAddRemove = (props) => {
         setDataReady(true)
     }, []);
 
-    const columns = useMemo(() => COLUMNS_PENGADAAN1, []);
-
-    const onFirstDataRendered = useCallback((params) => {
+    const onRowDataUpdated = useCallback((params) => {
         const nodesToSelect = [];
-        let data = props.data;
-        console.log(data)
         params.api.forEachNode((node) => {
-            for(let x =0; x < data.length; x++){
-                console.log(data[x].id_Pengadaan)
-                if (node.data && node.data.id_Pengadaan === data[x].id_Pengadaan) {
-                    console.log(node)
-                    nodesToSelect.push(node);
-                }
+          if(dataPos.length > 0){
+            for(let x =0; x < dataPos.length; x++){
+              if (node.data && node.data.id_Pengadaan === dataPos[x].id_Pengadaan){
+                nodesToSelect.push(node);
+              }
             }
-            
+          }
         });
         params.api.setNodesSelected({ nodes: nodesToSelect, newValue: true });
-        // eslint-disable-next-line
-    }, []);
+    }, [dataPos]);
 
     const createPurchase = () =>{
         if(userData.usubdiv === "Purchasing"){
-          let uniqueChars = [...new Set(dataPo)];
-          let next = uniqueChars.map((e)=>{
-              let cekData = newPengadaan.filter((i)=>i.id_Pengadaan === e);
-              return(
-                {status : cekData[0].status}
-              )
-              
-          })
-          let fData = next.filter((i)=>i.status !== "Verifikasi");
+          let fData = dataPos.filter((i)=>i.status !== "Verifikasi");
           if(fData.length === 0){
-            let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
-            // console.log(newArray);
-            // props.onAddGoal(newArray);
-            props.onAddGoal(newArray)
-            props.coba(newArray)
+            props.onAddGoal(dataPos);
             props.close();
           }
           else{
@@ -540,7 +688,7 @@ export const TableAddRemove = (props) => {
                                     pagination={false}
                                     cacheQuickFilter={true}
                                     rowSelection={'multiple'}
-                                    onFirstDataRendered={onFirstDataRendered}
+                                    onRowDataUpdated={onRowDataUpdated}
                                     onSelectionChanged={onSelectionChanged}
                                 ></AgGridReact>
                             </div>
@@ -555,7 +703,7 @@ export const TableAddRemove = (props) => {
                                 rowSelection={'multiple'}
                                 onSelectionChanged={onSelectionChanged}
                                 pagination={false}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 cacheQuickFilter={true}
                                 ></AgGridReact>
                             </div>
@@ -571,7 +719,7 @@ export const TableAddRemove = (props) => {
                                 cacheQuickFilter={true}
                                 rowSelection={'multiple'}
                                 onSelectionChanged={onSelectionChanged}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 ></AgGridReact>
                             </div>
                         </Tab>
@@ -585,7 +733,7 @@ export const TableAddRemove = (props) => {
                                 defaultColDef={defaultColDef}
                                 rowSelection={'multiple'}
                                 onSelectionChanged={onSelectionChanged}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 pagination={false}
                                 cacheQuickFilter={true}
                                 ></AgGridReact>
@@ -602,7 +750,7 @@ export const TableAddRemove = (props) => {
                                 rowSelection={'multiple'}
                                 onSelectionChanged={onSelectionChanged}
                                 cacheQuickFilter={true}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 ></AgGridReact>
                             </div>
                         </Tab>
@@ -619,7 +767,7 @@ export const TableAddRemove = (props) => {
                                 rowMultiSelectWithClick={true}
                                 pagination={false}
                                 cacheQuickFilter={true}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 ></AgGridReact>
                             </div>
                         </Tab>
@@ -633,7 +781,7 @@ export const TableAddRemove = (props) => {
                                 pagination={false}
                                 cacheQuickFilter={true}
                                 rowSelection={'multiple'}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 onSelectionChanged={onSelectionChanged}
                                 ></AgGridReact>
                             </div>
@@ -648,7 +796,7 @@ export const TableAddRemove = (props) => {
                                 pagination={false}
                                 cacheQuickFilter={true}
                                 rowSelection={'multiple'}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 onSelectionChanged={onSelectionChanged}
                             ></AgGridReact>
                             </div>
@@ -663,7 +811,7 @@ export const TableAddRemove = (props) => {
                                 pagination={false}
                                 cacheQuickFilter={true}
                                 rowSelection={'multiple'}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 onSelectionChanged={onSelectionChanged}
                             ></AgGridReact>
                             </div>
@@ -678,7 +826,7 @@ export const TableAddRemove = (props) => {
                                 pagination={false}
                                 cacheQuickFilter={true}
                                 rowSelection={'multiple'}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 onSelectionChanged={onSelectionChanged}
                             ></AgGridReact>
                             </div>
@@ -693,7 +841,7 @@ export const TableAddRemove = (props) => {
                                 pagination={false}
                                 cacheQuickFilter={true}
                                 rowSelection={'multiple'}
-                                onFirstDataRendered={onFirstDataRendered}
+                                onRowDataUpdated={onRowDataUpdated}
                                 onSelectionChanged={onSelectionChanged}
                             ></AgGridReact>
                             </div>

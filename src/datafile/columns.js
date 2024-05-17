@@ -1199,6 +1199,12 @@ export const COLUMNS_DATAPO =[
         editable: false,
     },
     { 
+        headerName: 'Unit',
+        field : 'newSatuan',
+        width: 70,
+        editable: false,
+    },
+    { 
         headerName: 'Harga Satuan',
         field : 'hargasatuan',
         width: 110,

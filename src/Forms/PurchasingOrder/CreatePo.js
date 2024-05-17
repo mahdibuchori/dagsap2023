@@ -264,7 +264,7 @@ export const CreatePo = () => {
         const gntiDta = async () =>{
             try {
                 setIsLoading(true);
-                console.log(dataSementara)
+                // console.log(dataSementara)
                 let data1 = {
                     material : dataSementara.material,
                     qty : dataSementara.qty,
@@ -296,9 +296,10 @@ export const CreatePo = () => {
                     },
                     newSpek : `${dataSementara.tipeMaterial}, ${dataSementara.brandMaterial}, ${dataSementara.spesifikasi}`,
                     newMaterial : dataSementara.material,
+                    newSatuan : dataSementara.satuan,
                     
                 }
-                console.log(data1)
+                // console.log(data1)
                 if(dataPo.length < 1){
                     if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
                 }
@@ -354,7 +355,7 @@ export const CreatePo = () => {
           try {
             setIsLoading(true);
             handleTotal()
-            console.log('aktivitas')
+            // console.log('aktivitas')
             setisReady(false)
             setIsLoading(false);
           } catch (error) {
@@ -477,11 +478,11 @@ export const CreatePo = () => {
                 Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
             }
             else{
-                console.log(dataPo)
+                // console.log(dataPo)
                 let plan = String(userData.uplan).toUpperCase();
                 let data = [];
                 for(let x = 0; x< dataPo.length; x++){
-                    console.log(dataPo[x])
+                    // console.log(dataPo[x])
                     let file = {
                         material : dataPo[x].material,
                         qty : parseFloat(dataPo[x].qty).toFixed(2),
@@ -506,6 +507,7 @@ export const CreatePo = () => {
                         tipeMaterial : dataPo[x].tipeMaterial,
                         newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
                         newMaterial : dataPo[x].newMaterial,
+                        newSatuan : dataPo[x].newSatuan,
                     }
                     if(data.length === 0){
                         data.push(file)
@@ -529,7 +531,7 @@ export const CreatePo = () => {
                     }
                 }
 
-                console.log(data)
+                // console.log(data)
                 setRowData(data)
                 setShow(false)
             }
@@ -582,7 +584,7 @@ export const CreatePo = () => {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
             setIsLoading(true)
-            console.log({
+            /* console.log({
                 id_po : nopo,
                 po_no: '',
                 tgl_po: tgl,
@@ -605,7 +607,7 @@ export const CreatePo = () => {
                 tgl_verify : '',
                 tgl_approve : '',
                 plan : userData.uplan
-            })
+            }) */
             const next = await API_AUTH.post(`/createpo`, {
                 id_po : nopo,
                 po_no: '',
@@ -646,7 +648,7 @@ export const CreatePo = () => {
         let modifiedArr = rowData.map((e)=>{
             let pjk = "";
             if(value?.pajak === "DD" || value?.pajak ==="D"){pjk = ""}else{pjk = value?.pajak}
-            console.log(e)
+            // console.log(e)
             return {
                 material : e.material,
                 qty : parseFloat(e.qty).toFixed(2),
@@ -670,7 +672,8 @@ export const CreatePo = () => {
                 brandMaterial : e.brandMaterial,
                 tipeMaterial : e.tipeMaterial,
                 newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`,
-                newMaterial : e.newMaterial,                              
+                newMaterial : e.newMaterial,
+                newSatuan : e.newSatuan,                              
             }
         })
         const pjk = modifiedArr[0]?.pajak;
@@ -1007,17 +1010,7 @@ export const CreatePo = () => {
     );
 
     const onAddGoalHandler = (newGoal) =>{
-        /* console.log(location.state.data)
-        console.log(rowData)
-        console.log(newGoal)
-        setInputList([])
-        const s = newGoal.filter((elem) => !rowData.find(({ id_Pengadaan }) => elem.id_Pengadaan === id_Pengadaan));
-        // setInputList([...inputList, { tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }]);
-        
-        console.log(s);
-        const mergedArray = [ ...location.state.data, ...s ]
-        console.log(mergedArray) */
-        // setInputList(newGoal)
+        setInputList(newGoal)
         setDataPo([])
         setShow(true)
     }
@@ -1030,6 +1023,8 @@ export const CreatePo = () => {
         else{
             let file = rowData;
             setRowData([])
+            let uset = "";
+            if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
             let plan = String(userData.uplan).toUpperCase();
             let data = [];
             for(let x = 0; x< dataPo.length; x++){
@@ -1042,7 +1037,7 @@ export const CreatePo = () => {
                     jmlhHarga : "",
                     departement : `PABRIK ${plan}`,
                     itemNo : dataPo[x].itemNo,
-                    pajak : "",
+                    pajak : uset,
                     spesifikasi : dataPo[x].spesifikasi,
                     divisi : dataPo[x].divisi,
                     terima  : "",
@@ -1057,6 +1052,7 @@ export const CreatePo = () => {
                     tipeMaterial : dataPo[x].tipeMaterial,
                     newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
                     newMaterial : dataPo[x].newMaterial,
+                    newSatuan : dataPo[x].newSatuan,
                 }
                 if(data.length === 0){
                     data.push(file)
@@ -1079,7 +1075,7 @@ export const CreatePo = () => {
                     
                 }
             }
-            console.log(data)
+            
             for(let x = 0; x < file.length; x++){
                 let n = file[x];
                 let foundIndex = dataPo.findIndex(a => a.id_Pengadaan === n.id_Pengadaan);
@@ -1093,70 +1089,9 @@ export const CreatePo = () => {
                 }
             }
             // const r = data.filter((elem) => rowData.find(({ id_Pengadaan }) => elem.id_Pengadaan === id_Pengadaan));
-            console.log(rowData);
-            console.log(data)
-            console.log(inputList)
             setRowData(data)
             setShow(false)
         }
-        /* 
-        else{
-            let plan = String(userData.uplan).toUpperCase();
-            let data = [];
-            for(let x = 0; x< dataPo.length; x++){
-                let file = {
-                    material : dataPo[x].material,
-                    qty : parseFloat(dataPo[x].qty).toFixed(2),
-                    satuan : dataPo[x].satuan,
-                    hargasatuan : "",
-                    diskon : "",
-                    jmlhHarga : "",
-                    departement : `PABRIK ${plan}`,
-                    itemNo : dataPo[x].itemNo,
-                    pajak : "",
-                    spesifikasi : dataPo[x].spesifikasi,
-                    divisi : dataPo[x].divisi,
-                    terima  : "",
-                    tutup : "",
-                    id_Pengadaan : dataPo[x].id_Pengadaan,
-                    tipe : dataPo[x].tipe,
-                    parsial: [dataPo[x].parsial],
-                    po : dataPo[x].po,
-                    qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
-                    parsialAwal: [dataPo[x].parsialAwal],
-                    brandMaterial : dataPo[x].brandMaterial,
-                    tipeMaterial : dataPo[x].tipeMaterial,
-                    newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
-                    newMaterial : dataPo[x].newMaterial,
-                }
-                if(data.length === 0){
-                    data.push(file)
-                }
-                else{
-                    let foundIndex = data.findIndex(i => i.id_Pengadaan === dataPo[x].id_Pengadaan);
-                    if(foundIndex >= 0){
-                        data[foundIndex].qty = (parseFloat(data[foundIndex].qty) + parseFloat(dataPo[x].qty)).toFixed(2);
-                        data[foundIndex].qtyAwal = (parseFloat(data[foundIndex].qtyAwal) + parseFloat(dataPo[x].qtyAwal)).toFixed(2);
-                        let parsil = data[foundIndex].parsial;
-                        let parsilA = data[foundIndex].parsialAwal;
-                        parsil.push(dataPo[x].parsial)
-                        parsilA.push(dataPo[x].parsialAwal)
-                        data[foundIndex].parsial = parsil;
-                        data[foundIndex].parsialAwal = parsilA;
-                    }
-                    else{
-                        data.push(file)
-                    }
-                    
-                }
-            }
-            
-            const r = data.filter((elem) => rowData.find(({ id_Pengadaan }) => elem.id_Pengadaan === id_Pengadaan));
-            console.log(r);
-            console.log(data)
-            // setRowData(data)
-            
-        } */
     }
 
     return (
@@ -1405,7 +1340,6 @@ export const CreatePo = () => {
                                     Simpan
                                 </Button>
                                 <Button 
-                                    type="submit" 
                                     variant="outline-secondary m-2"
                                     className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
                                     onClick={() => {
@@ -1441,7 +1375,6 @@ export const CreatePo = () => {
             close={() => setShowModal(false)}
             data={inputList}
             onAddGoal={onAddGoalHandler}
-            coba ={setInputList}
         />
     }
     

@@ -12,7 +12,7 @@ import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaa
 
 export const Tablepengadaan = ({columns}) => {
     
-  const arrDiv = ['FG', 'HR-GA', 'Maintenance', 'PPIC-WH', 'Produksi', 'Purchasing', 'QAQC', 'RnD', 'SSD']
+  const arrDiv = ['FG', 'HR-GA', 'Maintenance', 'PPIC-WH', 'Produksi', 'Purchasing', 'QAQC', 'RnD', 'SSD', 'FAT', 'Budgeting']
   let navigate = useNavigate();
   const gridRef = useRef();
   const userData = useAuthStore(selectUser);
@@ -38,6 +38,7 @@ export const Tablepengadaan = ({columns}) => {
   const [rowBudget, setRowBudget] = useState();
   const [dataPo, setDataPo] = useState([]);
   const [fileBox, setFileBox] = useState([]);
+  const [dataSementara, setDataSementara] = useState([]);
 
   const [usFg, setUsFg] = useState(true);
   const [usHrga, setUsHrga] = useState(true);
@@ -52,7 +53,8 @@ export const Tablepengadaan = ({columns}) => {
   const [usBudg, setUsBudg] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [dataReady, setDataReady] = useState(false);
-
+  const [fileReady, setFileReady] = useState(false);
+  // const [cekReady, setCekReady] = useState(false);
 //   const toggleShow = () => setShow(p => !p);
 
   const tHeigt = parseInt(window.innerHeight) - 300;
@@ -106,10 +108,10 @@ export const Tablepengadaan = ({columns}) => {
   }, []);
 
   useEffect(() => {
-      // setIsLoading(true);
-      if (!pengadaanReady) return;
-      onGridReady()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // setIsLoading(true);
+    if (!pengadaanReady) return;
+    onGridReady()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pengadaanReady]);
 
   useEffect(()=>{
@@ -381,6 +383,7 @@ export const Tablepengadaan = ({columns}) => {
             }
           })
         }
+        
         // let uniqueChars = [...new Set(dataPo)]
         // setDataPo(uniqueChars)
         setIsLoading(false);
@@ -389,16 +392,157 @@ export const Tablepengadaan = ({columns}) => {
           Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Pengambilan Data Pengadaan Gagal!',
+          text: 'Pengambilan Data Pengadaan Gagal!1',
           footer: error
         })
       }
       setDataReady(false);
+      if(userData.usubdiv === "Purchasing"){setFileReady(true)}
+      else{}
     } 
 
     gntiDta();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dataReady]);
+
+  useEffect (() => {
+    if(!fileReady) return;
+    const gntiDta = async () =>{
+      try {
+        setIsLoading(true);
+        let uniqueChars = [...new Set(dataPo)];
+        let next = uniqueChars.map((e)=>{
+          let cekData = newPengadaan.filter((i)=>i.id_Pengadaan === e);
+          return(
+            {status : cekData[0].status}
+          )  
+        });
+        let fData = next.filter((i)=>i.status !== "Verifikasi");
+        if(fData.length === 0){
+          let posCek = dataSementara;
+          
+          let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+          if(posCek.length === 0){
+            setDataSementara(newArray)
+          }
+          else{
+            if(newArray.length > 0){
+              let isi = [...dataSementara, ...newArray]
+              const same = dataSementara.filter((item, index, self) =>
+                index === self.findIndex((t) => (
+                  t.id_Pengadaan === item.id_Pengadaan
+                ))
+              );
+              const dataAda = same.filter((item) => item.filter_bulan === bulan)
+              const datatdk = same.filter((item) => item.filter_bulan !== bulan)
+              if(dataAda.length > 0 && datatdk.length === 0){
+                if(dataAda.length < newArray.length){
+                  setDataSementara(newArray)
+                }
+                else if(dataAda.length > newArray.length){
+                  setDataSementara(newArray)
+                }
+                else{}
+              }
+              else if(dataAda.length === 0 && datatdk.length > 0){
+                if(dataAda.length < newArray.length){
+                  // let isi = [...dataSementara, ...newArray]
+                  setDataSementara(isi)
+                }
+                else if(dataAda.length > newArray.length){
+                  setDataSementara(isi)
+                }
+                else{}
+              }
+              else if(dataAda.length > 0 && datatdk.length > 0){
+                if(dataAda.length < newArray.length){
+                  let isi = [...dataSementara, ...newArray]
+                  const same = isi.filter((item, index, self) =>
+                    index === self.findIndex((t) => (
+                      t.id_Pengadaan === item.id_Pengadaan
+                    ))
+                  );
+                  setDataSementara(same)
+                }
+                else if(dataAda.length > newArray.length){
+                  setDataSementara([...datatdk, ...newArray])
+                }
+                else{}
+              }
+              else{
+                console.log("test data")
+              }
+              // setDataSementara(isi)
+            }
+            else{
+              // console.log(dataSementara)
+              const same = dataSementara.filter((item, index, self) =>
+                index === self.findIndex((t) => (
+                  t.id_Pengadaan === item.id_Pengadaan
+                ))
+              );
+              const dataAda = same.filter((item) => item.filter_bulan === bulan);
+              const datatdk = same.filter((item) => item.filter_bulan !== bulan);
+              if(dataAda.length > 0 && datatdk.length === 0){
+                setDataSementara([])
+              }
+              else if(dataAda.length > 0 && datatdk.length > 0){
+                setDataSementara(datatdk)
+              }
+              else{}
+              
+              setDataReady(false);
+              setFileReady(false);
+              // setCekReady(false)
+            }
+            
+          }
+        }
+        else{
+          Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
+        }
+        setIsLoading(false);
+      } catch (error) {
+          setIsLoading(false);
+          Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Pengambilan Data Pengadaan Gagal!2',
+          footer: error
+        })
+      }
+      setFileReady(false);
+      // setCekReady(true)
+    } 
+
+    gntiDta();
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[fileReady]);
+
+  /* useEffect (() => {
+    if(!cekReady) return;
+    const gntiDta = async () =>{
+      try {
+        setIsLoading(true);
+        console.log(dataSementara)
+        setIsLoading(false);
+      } catch (error) {
+          setIsLoading(false);
+          Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Pengambilan Data Pengadaan Gagal!3',
+          footer: error
+        })
+      }
+      setCekReady(false);
+    } 
+
+    gntiDta();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[cekReady]); */
+
 
   const onGridReady =async () =>{
     try {
@@ -501,7 +645,7 @@ export const Tablepengadaan = ({columns}) => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Pengambilan Data Pengadaan Gagal!',
+        text: 'Pengambilan Data Pengadaan Gagal!4',
         footer: error.message
       })
       setIsLoading(false);
@@ -512,6 +656,8 @@ export const Tablepengadaan = ({columns}) => {
     setIsLoading(true)
     pengadaanFalse();
     setBulan(event.target.value);
+    setDataReady(false);
+    setFileReady(false);
     await fetchPengadaan(event.target.value, userData.uplan);
     
   }
@@ -524,6 +670,29 @@ export const Tablepengadaan = ({columns}) => {
     resizable: true,
     };
   }, []);
+
+  const onSelectionChanged = useCallback((params) => {
+    const list = []
+    params.api.forEachNode((node,i) => {
+      list.push({name: node.data.id_Pengadaan, assigned: node.selected});
+    });
+    setFileBox(list)
+    setDataReady(true)
+  }, []);
+
+  const onRowDataUpdated = useCallback((params) => {
+    const nodesToSelect = [];
+    params.api.forEachNode((node) => {
+      if(dataSementara.length > 0){
+        for(let x =0; x < dataSementara.length; x++){
+          if (node.data && node.data.id_Pengadaan === dataSementara[x].id_Pengadaan){
+            nodesToSelect.push(node);
+          }
+        }
+      }
+    });
+    params.api.setNodesSelected({ nodes: nodesToSelect, newValue: true });
+  }, [dataSementara]);
 
   const handleDrop = (data,key) =>{
     const fg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FG" && x.status.toUpperCase() === data.toUpperCase());
@@ -667,7 +836,7 @@ export const Tablepengadaan = ({columns}) => {
       if(fData.length === 0){
         let newArray = newPengadaan.filter(
           (array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
-          console.log(newArray)
+          // console.log(newArray)
           navigate(`/form/pengadaan/printview`,{state:{
             data : newArray
           }
@@ -680,59 +849,46 @@ export const Tablepengadaan = ({columns}) => {
     
   }
 
-  const onSelectionChanged = useCallback((params) => {
-    const list = []
-    params.api.forEachNode((node,i) => {
-      list.push({name: node.data.id_Pengadaan, assigned: node.selected});
-    });
-    setFileBox(list)
-    setDataReady(true)
-  }, []);
-
   const createPurchase = () =>{
     if(userData.usubdiv === "Purchasing"){
-      let uniqueChars = [...new Set(dataPo)];
+      /* let uniqueChars = [...new Set(dataPo)];
       let next = uniqueChars.map((e)=>{
-          let cekData = newPengadaan.filter((i)=>i.id_Pengadaan === e);
-          return(
-            {status : cekData[0].status}
-          )
-          
-      })
-      let fData = next.filter((i)=>i.status !== "Verifikasi");
+        let cekData = newPengadaan.filter((i)=>i.id_Pengadaan === e);
+        return(
+          {status : cekData[0].status}
+        )  
+      }); */
+      let fData = dataSementara.filter((i)=>i.status !== "Verifikasi");
       if(fData.length === 0){
-        let newArray = newPengadaan.filter(
-          (array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
-          navigate(`/form/purchaseorder/create`,{state:{
-            data : newArray
+        // let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+        navigate(`/form/purchaseorder/create`,{
+          state:{
+            data : dataSementara
           }}
         );
       }
       else{
         Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
       }
-
     }
     else{
       Swal.fire('Oppss...','Anda tidak memilik akses','error')
     }
-
-    
-    
   }
 
   const refreshPage = () => {
     window.location.reload(false);
   }
+
   return (
     <>
       <div>
         <Stack direction="horizontal" gap={3} style={{padding: "0px 10px 0px 10px"}}>
           <div className="bg-body">
-              <Breadcrumb className="bg-body m-2">
-                  <Breadcrumb.Item onClick={() =>navigate('/form')}>Form</Breadcrumb.Item>
-                  <Breadcrumb.Item active>Pengadaan</Breadcrumb.Item>
-              </Breadcrumb>
+            <Breadcrumb className="bg-body m-2">
+              <Breadcrumb.Item onClick={() =>navigate('/form')}>Form</Breadcrumb.Item>
+              <Breadcrumb.Item active>Pengadaan</Breadcrumb.Item>
+            </Breadcrumb>
           </div>
           <div className="ms-auto">
             <div style={{marginRight: 10, display:'flex'}}>
@@ -750,7 +906,7 @@ export const Tablepengadaan = ({columns}) => {
           <div className="bg-body">
             <Dropdown>
               <Dropdown.Toggle variant="primary">
-              Menu
+               Menu
               </Dropdown.Toggle>
       
               <Dropdown.Menu variant="dark">
@@ -767,160 +923,158 @@ export const Tablepengadaan = ({columns}) => {
           </div>
         </Stack>
         <div className="row mb-1 mt-1" style={{padding: "0px 10px 0px 10px"}}>
-            <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-                <Card className='mb-1'>
-                    <div className="radius-10 border-start border-0 border-3 border-dark">
-                        <Card.Body style={{height: "50px", padding: '8px'}}>
-                            <Stack direction="horizontal" gap={3}>
-                                <div>
-                                    <h6>Pengajuan ({jmlPengajuan})</h6>
-                                </div>
-                                <div className="bg-light ms-auto">
-                                    <DropdownButton id="dropdown-basic-button" variant="outline-dark" size='sm'>
+          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+            <Card className='mb-1'>
+              <div className="radius-10 border-start border-0 border-3 border-dark">
+                <Card.Body style={{height: "50px", padding: '8px'}}>
+                  <Stack direction="horizontal" gap={3}>
+                    <div>
+                      <h6>Pengajuan ({jmlPengajuan})</h6>
+                    </div>
+                    <div className="bg-light ms-auto">
+                      <DropdownButton id="dropdown-basic-button" variant="outline-dark" size='sm'>
+                        {arrDiv.map((x, i) => {
+                          let index = arrDiv[i].toString();
+                          let index1 = '';
+                          let index2 = '';
+                          if(index === "Semua"){
+                            index1 = newPengadaan;
+                          }
+                          else{
+                            index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "PENGAJUAN");
+                          }
+                          
+                          index2 = `${index} (${index1.length})`
+                          
+                          return(
+                            <Dropdown.Item onClick={(e)=> handleDrop("PENGAJUAN",index)}>{index2}</Dropdown.Item>
+                          )
+                            
+                        })}
+                      </DropdownButton>
+                    </div>
+                  </Stack>
+                </Card.Body>
+              </div>
+            </Card>
+          </div>
+          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+            <Card className='mb-1'>
+              <div className="radius-10 border-start border-0 border-3 border-warning">
+                <Card.Body style={{height: "50px", padding: '8px'}}>
+                  <Stack direction="horizontal" gap={3}>
+                    <div>
+                      <h6>Revisi ({jmlRevisi})</h6>
+                    </div>
+                    <div className="bg-light ms-auto">
+                        <DropdownButton id="dropdown-basic-button" variant="outline-warning" size='sm'>
+                            {arrDiv.map((x, i) => {
+                                let index = arrDiv[i].toString();
+                                let index1 = '';
+                                let index2 = '';
+                                if(index === "Semua"){
+                                    index1 = newPengadaan;
+                                }
+                                else{
+                                    index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "REVISI");
+                                    
+                                }
+                                
+                                index2 = `${index} (${index1.length})`
+                                
+                                return(
+                                    <Dropdown.Item onClick={(e)=> handleDrop("REVISI",index)}>{index2}</Dropdown.Item>
+                                )
+                                
+                            })}
+                        </DropdownButton>
+                    </div>
+                  </Stack>
+                </Card.Body>
+              </div>
+            </Card>
+          </div>
+          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+              <Card className='mb-1'>
+                  <div className="radius-10 border-start border-0 border-3 border-primary">
+                      <Card.Body style={{height: "50px", padding: '8px'}}>
+                          <Stack direction="horizontal" gap={3}>
+                              <div>
+                                  <h6>Verifikasi ({jmlVerify})</h6>
+                              </div>
+                              <div className="bg-light ms-auto">
+                                  <DropdownButton id="order" variant="outline-primary" size='sm'>
                                       {arrDiv.map((x, i) => {
-                                        let index = arrDiv[i].toString();
-                                        let index1 = '';
-                                        let index2 = '';
-                                        if(index === "Semua"){
-                                          index1 = newPengadaan;
-                                        }
-                                        else{
-                                          index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "PENGAJUAN");
-                                        }
-                                        
-                                        index2 = `${index} (${index1.length})`
-                                        
-                                        return(
-                                          <Dropdown.Item onClick={(e)=> handleDrop("PENGAJUAN",index)}>{index2}</Dropdown.Item>
-                                        )
+                                          let index = arrDiv[i].toString();
+                                          let index1 = '';
+                                          let index2 = '';
+                                          if(index === "Semua"){
+                                              index1 = newPengadaan;
+                                          }
+                                          else{
+                                              index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "VERIFIKASI");
+                                              
+                                          }
+                                          
+                                          index2 = `${index} (${index1.length})`
+                                          
+                                          return(
+                                              <Dropdown.Item onClick={(e)=> handleDrop("VERIFIKASI",index)}>{index2}</Dropdown.Item>
+                                          )
                                           
                                       })}
-                                    </DropdownButton>
-                                </div>
-                            </Stack>
-                        </Card.Body>
-                    </div>
-                </Card>
-            </div>
-            <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-                <Card className='mb-1'>
-                    <div className="radius-10 border-start border-0 border-3 border-warning">
-                        <Card.Body style={{height: "50px", padding: '8px'}}>
-                            <Stack direction="horizontal" gap={3}>
-                                <div>
-                                    <h6>Revisi ({jmlRevisi})</h6>
-                                </div>
-                                <div className="bg-light ms-auto">
-                                    <DropdownButton id="dropdown-basic-button" variant="outline-warning" size='sm'>
-                                        {arrDiv.map((x, i) => {
-                                            let index = arrDiv[i].toString();
-                                            let index1 = '';
-                                            let index2 = '';
-                                            if(index === "Semua"){
-                                                index1 = newPengadaan;
-                                            }
-                                            else{
-                                                index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "REVISI");
-                                                
-                                            }
-                                            
-                                            index2 = `${index} (${index1.length})`
-                                            
-                                            return(
-                                                <Dropdown.Item onClick={(e)=> handleDrop("REVISI",index)}>{index2}</Dropdown.Item>
-                                            )
-                                            
-                                        })}
-                                    </DropdownButton>
-                                </div>
-                            </Stack>
-                        </Card.Body>
-                    </div>
-                </Card>
-            </div>
-            <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-                <Card className='mb-1'>
-                    <div className="radius-10 border-start border-0 border-3 border-primary">
-                        <Card.Body style={{height: "50px", padding: '8px'}}>
-                            <Stack direction="horizontal" gap={3}>
-                                <div>
-                                    <h6>Verifikasi ({jmlVerify})</h6>
-                                </div>
-                                <div className="bg-light ms-auto">
-                                    <DropdownButton id="order" variant="outline-primary" size='sm'>
-                                        {arrDiv.map((x, i) => {
-                                            let index = arrDiv[i].toString();
-                                            let index1 = '';
-                                            let index2 = '';
-                                            if(index === "Semua"){
-                                                index1 = newPengadaan;
-                                            }
-                                            else{
-                                                index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "VERIFIKASI");
-                                                
-                                            }
-                                            
-                                            index2 = `${index} (${index1.length})`
-                                            
-                                            return(
-                                                <Dropdown.Item onClick={(e)=> handleDrop("VERIFIKASI",index)}>{index2}</Dropdown.Item>
-                                            )
-                                            
-                                        })}
-                                    </DropdownButton>
-                                </div>
-                            </Stack>
-                        </Card.Body>
-                    </div>
-                </Card>
-            </div>
-            <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-                <Card className='mb-1'>
-                    <div className="radius-10 border-start border-0 border-3 border-success">
-                        <Card.Body style={{height: "50px", padding: '8px'}}>
-                            <Stack direction="horizontal" gap={3}>
-                                <div>
-                                    <h6>Selesai ({jmlSelesai})</h6>
-                                </div>
-                                <div className="bg-light ms-auto">
-                                    <DropdownButton id="dropdown-basic-button" variant="outline-success" size='sm'>
-                                        {arrDiv.map((x, i) => {
-                                            let index = arrDiv[i].toString();
-                                            let index1 = '';
-                                            let index2 = '';
-                                            if(index === "Semua"){
-                                                index1 = newPengadaan;
-                                            }
-                                            else{
-                                                index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "SELESAI");
-                                                
-                                            }
-                                            
-                                            index2 = `${index} (${index1.length})`
-                                            
-                                            return(
-                                                <Dropdown.Item onClick={(e)=> handleDrop("SELESAI",index)}>{index2}</Dropdown.Item>
-                                            )
-                                            
-                                        })}
-                                    </DropdownButton>
-                                </div>
-                                
-                            </Stack>
-                        </Card.Body>
-                    </div>
-                </Card>
-            </div>
+                                  </DropdownButton>
+                              </div>
+                          </Stack>
+                      </Card.Body>
+                  </div>
+              </Card>
+          </div>
+          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+              <Card className='mb-1'>
+                  <div className="radius-10 border-start border-0 border-3 border-success">
+                      <Card.Body style={{height: "50px", padding: '8px'}}>
+                          <Stack direction="horizontal" gap={3}>
+                              <div>
+                                  <h6>Selesai ({jmlSelesai})</h6>
+                              </div>
+                              <div className="bg-light ms-auto">
+                                  <DropdownButton id="dropdown-basic-button" variant="outline-success" size='sm'>
+                                      {arrDiv.map((x, i) => {
+                                          let index = arrDiv[i].toString();
+                                          let index1 = '';
+                                          let index2 = '';
+                                          if(index === "Semua"){
+                                              index1 = newPengadaan;
+                                          }
+                                          else{
+                                              index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "SELESAI");
+                                              
+                                          }
+                                          
+                                          index2 = `${index} (${index1.length})`
+                                          
+                                          return(
+                                              <Dropdown.Item onClick={(e)=> handleDrop("SELESAI",index)}>{index2}</Dropdown.Item>
+                                          )
+                                          
+                                      })}
+                                  </DropdownButton>
+                              </div>
+                              
+                          </Stack>
+                      </Card.Body>
+                  </div>
+              </Card>
+          </div>
         </div>
-
         <Tabs
-            id="controlled-tab-example"
-            activeKey={key}
-            onSelect={(k) => {
-                setKey(k);
-                // onGridReady();
-            }}
-            className="mb-1"
+          id="controlled-tab-example"
+          activeKey={key}
+          onSelect={(k) => {
+            setKey(k);
+          }}
+          className="mb-1"
         >
             <Tab eventKey="FG" title="FG" disabled={usFg}>
                 <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
@@ -933,6 +1087,7 @@ export const Tablepengadaan = ({columns}) => {
                         cacheQuickFilter={true}
                         rowSelection={'multiple'}
                         onSelectionChanged={onSelectionChanged}
+                        onRowDataUpdated={onRowDataUpdated}
                     ></AgGridReact>
                 </div>
             </Tab>
@@ -945,6 +1100,7 @@ export const Tablepengadaan = ({columns}) => {
                     defaultColDef={defaultColDef}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                     pagination={false}
                     cacheQuickFilter={true}
                     ></AgGridReact>
@@ -961,6 +1117,7 @@ export const Tablepengadaan = ({columns}) => {
                     cacheQuickFilter={true}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                     ></AgGridReact>
                 </div>
             </Tab>
@@ -974,6 +1131,7 @@ export const Tablepengadaan = ({columns}) => {
                     defaultColDef={defaultColDef}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                     pagination={false}
                     cacheQuickFilter={true}
                     ></AgGridReact>
@@ -989,6 +1147,7 @@ export const Tablepengadaan = ({columns}) => {
                     pagination={false}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                     cacheQuickFilter={true}
                     ></AgGridReact>
                 </div>
@@ -1003,6 +1162,7 @@ export const Tablepengadaan = ({columns}) => {
                     defaultColDef={defaultColDef}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                     rowMultiSelectWithClick={true}
                     pagination={false}
                     cacheQuickFilter={true}
@@ -1020,6 +1180,7 @@ export const Tablepengadaan = ({columns}) => {
                       cacheQuickFilter={true}
                       rowSelection={'multiple'}
                       onSelectionChanged={onSelectionChanged}
+                      onRowDataUpdated={onRowDataUpdated}
                     ></AgGridReact>
                 </div>
             </Tab>
@@ -1034,6 +1195,7 @@ export const Tablepengadaan = ({columns}) => {
                     cacheQuickFilter={true}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                   ></AgGridReact>
                 </div>
             </Tab>
@@ -1048,6 +1210,7 @@ export const Tablepengadaan = ({columns}) => {
                     cacheQuickFilter={true}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                   ></AgGridReact>
                 </div>
             </Tab>
@@ -1062,6 +1225,7 @@ export const Tablepengadaan = ({columns}) => {
                     cacheQuickFilter={true}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                   ></AgGridReact>
                 </div>
             </Tab>
@@ -1076,6 +1240,7 @@ export const Tablepengadaan = ({columns}) => {
                     cacheQuickFilter={true}
                     rowSelection={'multiple'}
                     onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
                   ></AgGridReact>
                 </div>
             </Tab>

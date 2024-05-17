@@ -379,11 +379,17 @@ export const ReloadPo = () => {
 
     const handleFina = () =>{
         const data = location.state.data;
+        console.log(data)
         let date = new Date(data.tgl_kirim);
         let bln = date.getMonth() + 1;
         let tahu = date.getFullYear();
         let day = date.getDate();
+        let date1 = new Date(data.tgl_po);
+        let bln1 = date1.getMonth() + 1;
+        let tahu1 = date1.getFullYear();
+        let day1 = date1.getDate();
         const nTang = `${bln}/${day}/${tahu}`;
+        const nTangPo = `${bln1}/${day1}/${tahu1}`;
         const inputList = data.dataPO;
         if(data.dataPO.length <2){
             let files = inputList.map((x, i) => {
@@ -392,7 +398,7 @@ export const ReloadPo = () => {
             )})
             let file = JSON.stringify(files)
             console.log(file)
-            const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+            const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
             const encoded = encodeURIComponent(uri);
             const newStr = encoded.replace(/%3A/g, ':')
             .replace(/%5B/g, '[')
@@ -408,7 +414,7 @@ export const ReloadPo = () => {
             )})
             console.log(files)
             let file = JSON.stringify(files);
-            const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+            const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
             const encoded = encodeURIComponent(uris)
             const newStr = encoded.replace(/%3A/g, ':')
                         .replace(/%5B/g, '[')
@@ -796,6 +802,12 @@ export const ReloadPo = () => {
         
 
         {isLoading ? <LoadingPage /> : ""}
+
+        {
+           /*  %7B%22PO%22:[%7B%22PONO%22:%22POARP-00001%22,%22PODate%22:%221%2F1%2F2024%22,%22VENDOR%22:%223791%22,%22EXPECTED%22:%221%2F6%2F2024%22,%22Description%22:%22TEST%20AJA%22,%22PO_Item%22:[%7B%22ITEMNO%22:%22ALKHX070%22,%22ITEMOVDESC%22:%22HD%20Tupai%20Los%2017%20H%20@%2075%20pak%22,%22ItemUnit%22:%22%22,%22QUANTITY%22:%2210%22,%22UNITPRICE%22:%225500%22,%20%22ITEMDISCPC%22:%22%22,%22TAXCODES%22:%22D%22,%22DEPTNO%22:%22GW-PUSAT%22%7D]%7D]%7D
+
+            {"PO":[{"PONO":"POARP-00001","PODate":"1/1/2024","VENDOR":"3791","EXPECTED":"1/6/2024","Description":"TEST AJA","PO_Item":[%7B%22ITEMNO%22:%22ALKHX070%22,%22ITEMOVDESC%22:%22HD%20Tupai%20Los%2017%20H%20@%2075%20pak%22,%22ItemUnit%22:%22%22,%22QUANTITY%22:%2210%22,%22UNITPRICE%22:%225500%22,%20%22ITEMDISCPC%22:%22%22,%22TAXCODES%22:%22D%22,%22DEPTNO%22:%22GW-PUSAT%22%7D]%7D]%7D */
+        }
     </>
   )
 }

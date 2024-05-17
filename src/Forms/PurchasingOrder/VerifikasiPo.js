@@ -429,7 +429,12 @@ export const VerifikasiPo = () => {
     let bln = date.getMonth() + 1;
     let tahu = date.getFullYear();
     let day = date.getDate();
+    let date1 = new Date(data.tgl_po);
+    let bln1 = date1.getMonth() + 1;
+    let tahu1 = date1.getFullYear();
+    let day1 = date1.getDate();
     const nTang = `${bln}/${day}/${tahu}`;
+    const nTangPo = `${bln1}/${day1}/${tahu1}`;
     const inputList = data.dataPO;
     if(data.dataPO.length <2){
         let files = inputList.map((x, i) => {
@@ -438,7 +443,7 @@ export const VerifikasiPo = () => {
         )})
         let file = JSON.stringify(files)
         console.log(file)
-        const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+        const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
         const encoded = encodeURIComponent(uri);
         const newStr = encoded.replace(/%3A/g, ':')
         .replace(/%5B/g, '[')
@@ -454,7 +459,7 @@ export const VerifikasiPo = () => {
         )})
         console.log(files)
         let file = JSON.stringify(files);
-        const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTang}","VENDOR":"${data.idexpro}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+        const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
         const encoded = encodeURIComponent(uris)
         const newStr = encoded.replace(/%3A/g, ':')
                     .replace(/%5B/g, '[')

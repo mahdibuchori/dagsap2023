@@ -25,7 +25,6 @@ const MenuCenter = () => {
     
     const getUsers =async () =>{
         setDivisi(userData?.udivisi)
-        console.log(userData)
     }
 
   

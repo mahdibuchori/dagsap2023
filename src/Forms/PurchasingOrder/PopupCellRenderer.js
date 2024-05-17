@@ -97,8 +97,7 @@ export const PopupCellRenderer = (props) => {
                 <div className="row  g-2 ">
                 <div className='col-sm-12 col-md-12 col-lg-12 col-xl-12'>
                 <h6>Tipe Material</h6>
-                <Select 
-                    required
+                <Select
                     onChange={(value) => {
                         setTibar(value)
                         setFileBar([
@@ -137,9 +136,12 @@ export const PopupCellRenderer = (props) => {
         hide();
         const itemsToUpdate = [];
         const data = props.data;
+        console.log(data)
+        console.log(option)
         data.newMaterial = option.item
         data.tipe = tibar.value
         data.itemNo = option.value 
+        data.newSatuan = option.satuan
         itemsToUpdate.push(data);
         props.api.applyTransaction({
             update: itemsToUpdate

@@ -64,7 +64,6 @@ export const Login = ({handleClick}) => {
     e.preventDefault()
     const v1 = ID_REGEX.test(idkar);
     const v2 = pwd;
-    console.log(v1, v2)
     if(!v1 || !v2){
       Swal.fire({
         icon: 'warning',
@@ -82,7 +81,6 @@ export const Login = ({handleClick}) => {
       id : idkar,
       password : pwd
     }
-    console.log(values)
     try {
       setIsLoading(true)
       const res = await API_AUTH.post('/login', values);
