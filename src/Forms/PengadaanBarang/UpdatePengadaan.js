@@ -75,13 +75,17 @@ export const UpdatePengadaan = () => {
   }, []);
 
   useEffect(() => {
-      const createUniq = () => {
-        let bul = format(new Date(), "MM", { locale: id });
-        let days = format(new Date(), "dd", { locale: id });
-        let yea = format(new Date(), "yyyy", { locale: id });
-        setTgl(`${yea}-${bul}-${days}`);
-      }
+    const createUniq = () => {
+      // console.log(location.state.data)
+      const date = new Date(location.state.data.t_pengadaan)
+      let bul = format(new Date(date), "MM", { locale: id });
+      let days = format(new Date(date), "dd", { locale: id });
+      let yea = format(new Date(date), "yyyy", { locale: id });
+      setTgl(`${yea}-${bul}-${days}`);
+      // setTgl(date)
+    }
     createUniq()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect (() => {
@@ -108,7 +112,7 @@ export const UpdatePengadaan = () => {
         let modifiedArr = newFileNab.map(function(element){
             return { value: element.itemno, label: `${element.itemno} - ${element.itemdescription}`, item: element.itemdescription , satuan: element.unit1 };
         });
-        console.log(modifiedArr)
+        // console.log(modifiedArr)
         setFileBar(modifiedArr);
         setIsLoading(false);
       } catch (error) {
@@ -331,7 +335,11 @@ export const UpdatePengadaan = () => {
       else{
         statusny = "Pengajuan";
         tglVerif = "";
-        tglPeng = tgl;
+        let bul = format(new Date(), "MM", { locale: id });
+        let days = format(new Date(), "dd", { locale: id });
+        let yea = format(new Date(), "yyyy", { locale: id });
+        tglPeng=`${yea}-${bul}-${days}`;
+        // tglPeng = tgl;
         filt = `${yy}-${bulan}`;
       }
 

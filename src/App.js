@@ -48,6 +48,7 @@ function App() {
         <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} /> 
         <Route path="/form/pengadaan/printview" element={<CetakPengadaan />} /> 
         <Route path="/form/pengadaan/tableadd" element={<TableAddRemove />} /> 
+
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
         <Route path="/form/purchaseorder/update" element={<EditPo />} />
@@ -55,13 +56,16 @@ function App() {
         <Route path="/form/purchaseorder/verifikasi" element={<VerifikasiPo />} /> 
         <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} /> 
         <Route path="/form/purchaseorder/printview" element={<PrintPo />} /> 
+
         <Route path="/form/Kedatangan" element={<KedatanganBarang />} /> 
         <Route path="/form/Kedatangan/terimaview" element={<ViewTerima />} /> 
         <Route path="/form/Kedatangan/logbook" element={<LogBook />} /> 
         <Route path="/form/Kedatangan/logbookview" element={<ViewLogbook />} /> 
-        <Route path="/form/Kedatangan/labelbarang" element={<LabelPrint />} /> 
+        <Route path="/form/Kedatangan/labelbarang" element={<LabelPrint />} />
+
         <Route path="/form/karyawan" element={<Karyawan />} /> 
         <Route path="/form/karyawan/create" element={<InputKaryawan />} /> 
+        
         <Route path="/form/okp" element={<Okp />} /> 
         <Route path="/form/okp/create" element={<InputOkp />} /> 
         <Route path="/form/okp/printview" element={<CetakOkp />} /> 
