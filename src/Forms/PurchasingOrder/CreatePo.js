@@ -910,15 +910,15 @@ export const CreatePo = () => {
         dpp.push(pjk1)
         if(pjk1.toUpperCase() === "A"){
             nppn += 0;
-            npph += ((parseFloat(e.ntotalSub)) * 2.5) / 100;
+            npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
         }
         else if(pjk1.toUpperCase() === "B"){
             nppn += 0;
-            npph += ((parseFloat(e.ntotalSub)) * 3) / 100;
+            npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
         }
         else if(pjk1.toUpperCase() === "E"){
             nppn += 0;
-            npph += ((parseFloat(e.ntotalSub)) * 10) / 100;
+            npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
         }
         else if(pjk1.toUpperCase() === "G"){
             nppn += 0;
@@ -989,7 +989,7 @@ export const CreatePo = () => {
         else{
             setPpn(nppn.toFixed(2));
         }
-          
+        console.log(npph)
         setPph(npph.toFixed(2));
         ntotal = ntotalSub  - parseFloat(nDiskon) + nppn - npph + parseFloat(nBantar)
         setTotal(parseFloat(ntotal).toFixed(2))
