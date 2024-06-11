@@ -86,7 +86,7 @@ export const TablePo = ({columns}) => {
     const onGridReady =async () =>{
         const data =dataPo.data;
         if(data === undefined){
-            Swal.fire('Oppss','Proses pengambilan PO gagal harap refresh page','info')
+            Swal.fire('','Harap refresh page apabila data tidak ditampilkan','info')
         }
         else{
             

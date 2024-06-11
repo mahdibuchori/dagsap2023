@@ -6,6 +6,7 @@ import { API_AUTH } from '../apis/apisData';
 const initialPengadaan = [];
 const pengadaanByID = [];
 const pengadaanID = [];
+const pengadaanArr = [];
 
 const usePengadaanStore = create(
     persist(
@@ -13,9 +14,11 @@ const usePengadaanStore = create(
             pengadaan: initialPengadaan,
             pengadaanById : pengadaanByID,
             pengadaanId : pengadaanID,
+            pengadaanArr : pengadaanArr,
             pengadaanReady: false,
             pengadaanIdReady: false,
             pengadaanIsReady: false,
+            pengadaanArrReady: false,
             fetchPengadaan: async (id,plan) => {
                 try {
                     const { data } =  await API_AUTH.get(`pengadaan/${id}/${plan}`);

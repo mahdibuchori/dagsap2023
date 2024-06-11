@@ -82,28 +82,28 @@ export const CreatePo = () => {
     let tWidth = 0;
     if(parseInt(window.innerWidth) >= 1700){
         tWidth = parseInt(window.innerWidth) - 280;
-      }
-      else if(parseInt(window.innerWidth) >= 1200){
+    }
+    else if(parseInt(window.innerWidth) >= 1200){
         tWidth = parseInt(window.innerWidth) - 270;
-      }
-      else if(parseInt(window.innerWidth) >= 1100){
+    }
+    else if(parseInt(window.innerWidth) >= 1100){
         tWidth = parseInt(window.innerWidth) - 300;
-      }
-      else if(parseInt(window.innerWidth) >= 1020){
+    }
+    else if(parseInt(window.innerWidth) >= 1020){
         tWidth = parseInt(window.innerWidth) - 280;
-      }
-      else if(parseInt(window.innerWidth) >= 992){
+    }
+    else if(parseInt(window.innerWidth) >= 992){
         tWidth = parseInt(window.innerWidth) - 230;
-      }
-      else if(parseInt(window.innerWidth) >= 882){
+    }
+    else if(parseInt(window.innerWidth) >= 882){
         tWidth = parseInt(window.innerWidth) - 80;
-      }
-      else if(parseInt(window.innerWidth) >= 576){
+    }
+    else if(parseInt(window.innerWidth) >= 576){
         tWidth = parseInt(window.innerWidth) - 60;
-      }
-      else{
+    }
+    else{
         tWidth = parseInt(window.innerWidth)- 50
-      }
+    }
 
     const [screenWidth, setScreenWidth] = useState(tWidth);
     const [screenHeight, setScreenHeight] = useState(tHeigt);
@@ -583,57 +583,69 @@ export const CreatePo = () => {
         try {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
-            setIsLoading(true)
-            /* console.log({
-                id_po : nopo,
-                po_no: '',
-                tgl_po: tgl,
-                tgl_kirim : tglKrm,
-                filter_bulan: `${tahu}-${bln}`,
-                pembayaran: termName,
-                tukar : currencyName,
-                idexpro	: expro?.id,
-                expro : expro?.value,
-                status : 'Pengajuan',
-                statusfina : '',
-                dataPO : rowData,
-                keterangan : spesifikasi,
-                totalSub : totalSub,
-                diskon : parseFloat(diskon).toFixed(2),
-                ppn : ppn,
-                pph : pph,
-                bAntar : parseFloat(bantar).toFixed(2),
-                total : total,
-                tgl_verify : '',
-                tgl_approve : '',
-                plan : userData.uplan
-            }) */
-            const next = await API_AUTH.post(`/createpo`, {
-                id_po : nopo,
-                po_no: '',
-                tgl_po: tgl,
-                tgl_kirim : tglKrm,
-                filter_bulan: `${tahu}-${bln}`,
-                pembayaran: termName,
-                tukar : currencyName,
-                idexpro	: expro?.id,
-                expro : expro?.value,
-                status : 'Pengajuan',
-                statusfina : '',
-                dataPO : rowData,
-                keterangan : spesifikasi,
-                totalSub : totalSub,
-                diskon : parseFloat(diskon).toFixed(2),
-                ppn : ppn,
-                pph : pph,
-                bAntar : parseFloat(bantar).toFixed(2),
-                total : total,
-                tgl_verify : '',
-                tgl_approve : '',
-                plan : userData.uplan
-            });
-            Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');
-            setIsLoading(false);
+            let nilai = ""
+            for(let x =0; x < rowData.length; x++){
+                if(rowData[x].hargasatuan === ""){
+                nilai = `Harga satuan pada material ${rowData[x].material} harap isikan nominal`;
+                break
+                }
+            }
+            if(nilai !== ""){
+                Swal.fire("Opps",nilai,'info')
+            }
+            else{
+                setIsLoading(true)
+                /* console.log({
+                    id_po : nopo,
+                    po_no: '',
+                    tgl_po: tgl,
+                    tgl_kirim : tglKrm,
+                    filter_bulan: `${tahu}-${bln}`,
+                    pembayaran: termName,
+                    tukar : currencyName,
+                    idexpro	: expro?.id,
+                    expro : expro?.value,
+                    status : 'Pengajuan',
+                    statusfina : '',
+                    dataPO : rowData,
+                    keterangan : spesifikasi,
+                    totalSub : totalSub,
+                    diskon : parseFloat(diskon).toFixed(2),
+                    ppn : ppn,
+                    pph : pph,
+                    bAntar : parseFloat(bantar).toFixed(2),
+                    total : total,
+                    tgl_verify : '',
+                    tgl_approve : '',
+                    plan : userData.uplan
+                }) */
+                const next = await API_AUTH.post(`/createpo`, {
+                    id_po : nopo,
+                    po_no: '',
+                    tgl_po: tgl,
+                    tgl_kirim : tglKrm,
+                    filter_bulan: `${tahu}-${bln}`,
+                    pembayaran: termName,
+                    tukar : currencyName,
+                    idexpro	: expro?.id,
+                    expro : expro?.value,
+                    status : 'Pengajuan',
+                    statusfina : '',
+                    dataPO : rowData,
+                    keterangan : spesifikasi,
+                    totalSub : totalSub,
+                    diskon : parseFloat(diskon).toFixed(2),
+                    ppn : ppn,
+                    pph : pph,
+                    bAntar : parseFloat(bantar).toFixed(2),
+                    total : total,
+                    tgl_verify : '',
+                    tgl_approve : '',
+                    plan : userData.uplan
+                });
+                Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');
+                setIsLoading(false);
+            }
         } catch (error) {
             console.log(error)
             Swal.fire('Info', `${error.response.data.message}`, 'warning');

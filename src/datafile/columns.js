@@ -1088,7 +1088,7 @@ export const COLUMNS_DATAPO =[
         width: 150,
         maxWidth:405,
         editable: true,
-        pinned: 'left'
+        pinned: 'left',
     },
     { 
         headerName: 'Nama Barang',
