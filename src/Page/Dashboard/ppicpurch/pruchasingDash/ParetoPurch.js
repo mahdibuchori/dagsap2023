@@ -362,7 +362,7 @@ export const ParetoPurch = (props) => {
 
         </div>
         <div className='row'>
-            <div className='col-xl-6 col-lg-6 mb-0'>
+            <div className='col-xl-6 col-lg-6 col-sm-6 mb-0'>
                 <Pagination size="sm">
                     <Pagination.Item 
                         active={pagiJum}
@@ -393,7 +393,7 @@ export const ParetoPurch = (props) => {
                     </Pagination.Item>
                 </Pagination>
             </div>
-            <div className='col-xl-6 col-lg-6 mb-0'>
+            <div className='col-xl-6 col-lg-6 col-sm-6 mb-0'>
                 <Dropdown as={ButtonGroup} size="sm">
                     <Button variant="primary">Filter</Button>
 
@@ -434,8 +434,9 @@ export const ParetoPurch = (props) => {
                 </Dropdown>
             </div>
         </div>
+        
 
-        <div>
+        <div style={{ maxHeight: "310px", overflowY: "auto" }}>
             <ListGroup className='h-75' numbered>
                 {fileName.map((e, i) =>{
                     let stn = false;

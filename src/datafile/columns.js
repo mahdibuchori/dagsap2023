@@ -1129,7 +1129,9 @@ export const COLUMNS_DATAPO =[
             else{
                 const awaln = parseFloat(data.qtyAwal);
                 const akhrn = parseFloat(data.qty);
-                hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                // console.log("awaln : "+awaln)
+                // console.log("akhrn : "+akhrn)
+                 hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 if(data.parsial.length < 2){
                     if(akhrn <= awaln){
                         params.data.parsial[0].qty = data.qty;
@@ -1172,6 +1174,7 @@ export const COLUMNS_DATAPO =[
                         }
 
                         data.parsial = [];
+                        
                         for(let x = 0; x < datd.length; x++){
                             params.data.parsial.push({
                                 tgl: datd[x].tgl,
@@ -1203,6 +1206,7 @@ export const COLUMNS_DATAPO =[
         field : 'newSatuan',
         width: 70,
         editable: false,
+        hide : true
     },
     { 
         headerName: 'Harga Satuan',

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
+// import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form } from 'react-bootstrap';
-import { WeaklyPurch } from './WeaklyPurch';
-import { MonthlyPurch } from './MonthlyPurch';
 import { ParetoPurch } from './ParetoPurch';
 import { ListMounthly } from './ListMounthly';
 import { LoadingPage } from '../../../../LoadingPage/LoadingPage';
@@ -11,6 +9,7 @@ import useAuthStore, { selectUser } from '../../../../store/DataUser';
 import useDashboardStore, { selectDashPurchY,selectFetchYdash,selectPurchYReady } from '../../../../store/dataDashboard';
 import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaanReady, selectFalsePengadaan} from '../../../../store/DataPengadaan';
 //useDashboardStore, { selectDashPurchY,selectFetchPurch,selectPurchYReady,selectFalsePurch}
+import { NewWeaklyPurch } from './NewWeaklyPurch';
 
 export const DashPurch = () => {
   const navigate = useNavigate();
@@ -36,6 +35,7 @@ export const DashPurch = () => {
 
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [newWeak, setNewWeak] = useState(true);
 
   useEffect(() => { 
     setIsLoading(true);
@@ -76,6 +76,9 @@ export const DashPurch = () => {
 
   const onGridReady = (x) =>{
     setIsLoading(false); 
+    console.log(nabar) 
+    console.log(naMat) 
+    console.log(item)
     const data = PurchYDashboard.data;
     // console.log(data);
     const resultItem = data.filter((v,i,a)=>a.findIndex(v2=>(v2.item===v.item))===i);
@@ -110,9 +113,9 @@ export const DashPurch = () => {
     setJmlSelesai(jumSelesai.length);
   }
 
-  const handleSelect = (e) =>{
+  /* const handleSelect = (e) =>{
     setNabar(e.value)
-  }
+  } */
 
   const onSetDate =async (event) => {
     setIsLoading(true)
@@ -210,7 +213,7 @@ export const DashPurch = () => {
           </div>
           <div className='col-xl-7 col-lg-7 mb-1'>
             <div className='row'>
-              <div className='col-xl-4 col-lg-4'>
+              {/* <div className='col-xl-4 col-lg-4'>
                 <h6 className='mt-1 mb-1 float-end text-dark'>Nama Item : </h6>
               </div>
               <div className='col-xl-8 col-lg-8'>
@@ -224,12 +227,9 @@ export const DashPurch = () => {
                   options={item}
                   onChange={e => handleSelect(e)}
                 />
-              </div>
+              </div> */}
               <div className='col-xl-12 col-lg-12 mb-2'>
-                <WeaklyPurch name={nabar}/>
-              </div>
-              <div className='col-xl-12 col-lg-12 mb-2'>
-                <MonthlyPurch name={nabar}/>
+                <NewWeaklyPurch name={isMaterial} sendToParent={setIsMaterial} sendWeek={setNewWeak} getWeek={newWeak}/>
               </div>
             </div>
           </div>

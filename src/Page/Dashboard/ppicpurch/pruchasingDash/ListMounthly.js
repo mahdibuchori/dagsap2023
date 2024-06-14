@@ -45,7 +45,7 @@ export const ListMounthly = () => {
     const [pagiDef, setPagiDef] = useState('jumlah');
     const [show, setShow] = useState(false);
 
-    const [radioValue, setRadioValue] = useState('1');
+    const [radioValue, setRadioValue] = useState('0');
 
     const radios = [
         { name: '', value: '0', icon : 'bi bi-filter-square' },
@@ -105,7 +105,6 @@ export const ListMounthly = () => {
 
     const onGridReady = (tgl,tipe,fil,nil) => {
         setIsLoading(false)
-        console.log(nil)
         if( fil === 'jumlah'){
             setPagiHarga(false);
             setPagiJum(true);
@@ -389,7 +388,7 @@ export const ListMounthly = () => {
                 }
             }
         }
-        console.log(nilai)
+        // console.log(nilai)
         let detail = []
         if(parseInt(nil) === 0){
             detail = nilai
@@ -447,7 +446,6 @@ export const ListMounthly = () => {
             }
         }
         else{console.log("Log")}
-        console.log(detail)
         let datas = [];
         for(let x= 0; x < detail.length; x++){
             if(year === 2024){
@@ -812,7 +810,6 @@ export const ListMounthly = () => {
             <Col xs={2} >
                 <ButtonGroup>
                     {radios.map((radio, idx) =>{ 
-                        console.log(radio.value)
                         return(
                             <ToggleButton
                                 key={idx}

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Swal from "sweetalert2";
+import { utils, writeFileXLSX } from 'xlsx';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import { useNavigate } from 'react-router-dom';
@@ -880,6 +881,85 @@ export const Tablepengadaan = ({columns}) => {
     window.location.reload(false);
   }
 
+  const createPenarikan = () =>{
+    console.log(newPengadaan)
+    let data = []
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let bb = String(month).padStart(2, '0');
+    const day = date.getDate();
+    let dd = String(day).padStart(2, '0');
+    const judul = `Penawaran barang ${dd}-${bb}-${year}.xlsx`
+    if(dataPo.length === 0){
+      const cek = newPengadaan.filter((x) => x.status === "Verifikasi")
+      data = cek.map((e,i) =>{
+        let nabar, merk = '';
+        if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
+          nabar = e.tipeMaterial
+          merk = e.brandMaterial
+        }
+        else{
+          nabar = e.material[0].material
+          merk = ''
+        }
+        return(
+          {
+            No : i+1,
+            Id : e.id_Pengadaan,
+            Nama_Item : nabar,
+            Merk : merk,
+            Spesifikasi : e.spesifikasi,
+            Quantity : e.qty_pengadaan[0].order,
+            Satuan : e.qty_pengadaan[0].satuan,	
+          }
+        )
+      })
+    }
+    else{
+      let uniqueChars = [...new Set(dataPo)];
+      let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+      const cek = newArray.filter((x) => x.status === "Verifikasi")
+      data = cek.map((e,i) =>{
+        let nabar, merk = '';
+        if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
+          nabar = e.tipeMaterial
+          merk = e.brandMaterial
+        }
+        else{
+          nabar = e.material[0].material
+          merk = ''
+        }
+        return(
+          {
+            No : i+1,
+            Id : e.id_Pengadaan,
+            Nama_Item : nabar,
+            Merk : merk,
+            Spesifikasi : e.spesifikasi,
+            Quantity : e.qty_pengadaan[0].order,
+            Satuan : e.qty_pengadaan[0].satuan,	
+          }
+        )
+      })
+    }
+    console.log(data)
+    const worksheet = utils.json_to_sheet(data);
+    for(let x =0; x < data.length; x++){
+      let n = `F${x+2}`
+      console.log(n)
+      worksheet[n].z = '#,##0';
+    }
+    const workbook = utils.book_new();
+    utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    /* fix headers */
+    utils.sheet_add_aoa(worksheet, [['No','Id','Nama Item','Merk','Spesifikasi','Quantity','Satuan']], { origin: 'A1' });
+    
+    /* calculate column width */
+    const max_width = data.reduce((w, r) => Math.max(w, r.No.length), 10);
+    worksheet['!cols'] = [{ wch: max_width }];
+    writeFileXLSX(workbook, judul, { compression: true });
+  }
   return (
     <>
       <div>
@@ -913,6 +993,8 @@ export const Tablepengadaan = ({columns}) => {
                 <Dropdown.Item onClick={(e) => navigate('/form/pengadaan/create')}><i class="bi bi-pencil"></i> Create Pengadaan</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={createPurchase}><i class="bi bi-pencil"></i> Create PO</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={createPenarikan}><i class="bi bi-file-earmark-spreadsheet-fill"></i> Penawaran</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={printChange}><i className="bi bi-printer"></i> Print</Dropdown.Item>
                 <Dropdown.Divider />
