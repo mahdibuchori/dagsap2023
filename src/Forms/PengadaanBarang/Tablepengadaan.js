@@ -862,9 +862,42 @@ export const Tablepengadaan = ({columns}) => {
       let fData = dataSementara.filter((i)=>i.status !== "Verifikasi");
       if(fData.length === 0){
         // let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+        const menu_data = dataSementara.map((obj, i) =>{
+          const par = obj.parsial_data.map((x,y) =>{
+            return(
+              {...x, state : false}
+            )
+          })
+          return(
+            {
+                "id_Pengadaan": obj.id_Pengadaan,
+                "t_pengadaan": obj.t_pengadaan,
+                "filter_bulan": obj.filter_bulan,
+                "user": obj.user,
+                "status": obj.status,
+                "material": obj.material,
+                "qty_pengadaan": obj.qty_pengadaan,
+                "spesifikasi": obj.spesifikasi,
+                "tgl_verify": obj.tgl_verify,
+                "tgl_approve": obj.tgl_approve,
+                "parsial_data": par,
+                "tipeMaterial": obj.tipeMaterial,
+                "brandMaterial": obj.brandMaterial,
+                "mesin": obj.mesin,
+                "coa": obj.coa,
+                "halal": obj.halal,
+                "msds": obj.msds,
+                "copypo": obj.copypo,
+                "health": obj.health,
+                "kh": obj.kh,
+                "foodgrade": obj.foodgrade
+            }
+          )
+        })
+        console.log(menu_data)
         navigate(`/form/purchaseorder/create`,{
           state:{
-            data : dataSementara
+            data : menu_data
           }}
         );
       }

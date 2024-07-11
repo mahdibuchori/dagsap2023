@@ -10,7 +10,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Accordion, Breadcrumb, Button, Col, Container, Form, InputGroup, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { COLUMNS_DATAPO } from '../../datafile/columns';
+import { COLUMNS_DATAPOEDIT } from '../../datafile/columns';
 import { FileBarang } from '../../datafile/FileSelect';
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
@@ -112,7 +112,7 @@ export const EditPo = () => {
     setShows(false)
   };
 
-  const columns = useMemo(() => COLUMNS_DATAPO, []);
+  const columns = useMemo(() => COLUMNS_DATAPOEDIT, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -1289,7 +1289,7 @@ export const EditPo = () => {
           data={inputList}
           onAddGoal={onAddGoalHandler}
       />
-  }
+    }
 
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>

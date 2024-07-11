@@ -586,8 +586,7 @@ export const ReloadPo = () => {
                                         <Text style={[styles.border,{width: '25mm', padding: 2,textAlign: 'right'}]}>{String(hargaSa).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
                                         <Text style={[styles.border,{width: '19mm', padding: 2}]}>{row.diskon}</Text>
                                         <Text style={[styles.border,{width: '24mm', padding: 2,textAlign: 'right'}]}>{String(hargaJm).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
-                                        <Text style={[styles.border,styles.textsize,{fontSize: '1vw'}]}>{row.divisi
-                                        }</Text>
+                                        <Text style={[styles.border,styles.textsize,{fontSize: '1vw'}]}>{row.divisi}</Text>
                                     </View>
                                     )
                                 })
@@ -617,7 +616,7 @@ export const ReloadPo = () => {
                                                 <Text style={{marginTop: '2mm'}}>Mawi Prabudi</Text>
                                             </View>
                                             <View style={[{width: '20mm', marginLeft : '1mm', marginTop: '2mm'}]}>
-                                                <Text>Disiapkan Oleh</Text>
+                                                <Text>Disetujui Oleh</Text>
                                                 {stAppro ? 
                                                     <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Rusli Adna`}/> 
                                                     :

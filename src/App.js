@@ -22,7 +22,7 @@ import { ViewLogbook } from './Forms/KedatanganBarang/ViewLogbook';
 import { LabelPrint } from './Forms/KedatanganBarang/LabelPrint';
 import { Karyawan } from './Forms/karyawan/Karyawan';
 import { InputKaryawan } from './Forms/karyawan/InputKaryawan';
-import { EditPo } from './Forms/PurchasingOrder/EditPo';
+// import { EditPo } from './Forms/PurchasingOrder/EditPo';
 import { UpdatePrevPengada } from './Forms/PengadaanBarang/UpdatePrevPengada';
 import { CetakPengadaan } from './Forms/PengadaanBarang/CetakPengadaan';
 import { Okp } from './Forms/okp/Okp';
@@ -31,6 +31,7 @@ import { InputOkp } from './Forms/okp/InputOkp';
 import { VerifikasiPo } from './Forms/PurchasingOrder/VerifikasiPo';
 import { ReloadPo } from './Forms/PurchasingOrder/ReloadPo';
 import { TableAddRemove } from './Forms/PengadaanBarang/TableAddRemove';
+import { NewEditPo } from './Forms/PurchasingOrder/NewEditPo';
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
 
         <Route path="/form/purchaseorder" element={<PurcahsingOrder />} /> 
         <Route path="/form/purchaseorder/create" element={<CreatePo />} />  
-        <Route path="/form/purchaseorder/update" element={<EditPo />} />
+        {/* <Route path="/form/purchaseorder/update" element={<EditPo />} /> */}
+        <Route path="/form/purchaseorder/update" element={<NewEditPo />} />
         <Route path="/form/purchaseorder/data" element={<ViewPo />} />  
         <Route path="/form/purchaseorder/verifikasi" element={<VerifikasiPo />} /> 
         <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} /> 

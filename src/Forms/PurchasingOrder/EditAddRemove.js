@@ -338,7 +338,6 @@ export const EditAddRemove = (props) => {
             });
 
             let fData = next.filter((i)=>i.status !== "Verifikasi");
-            console.log(fData)
             if(fData.length === 0){
               let posCek = dataPos;
               let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
@@ -573,7 +572,6 @@ export const EditAddRemove = (props) => {
     const onSelectionChanged = useCallback((params) => {
         const list = []
         params.api.forEachNode((node,i) => {
-            console.log(node.selected)
             let myStatus = "";
             const filt = props.data.filter((c) => c.id_Pengadaan === node.data.id_Pengadaan)
             if(node.data.status === "Selesai"){

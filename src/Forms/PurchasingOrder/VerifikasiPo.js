@@ -443,7 +443,7 @@ export const VerifikasiPo = () => {
         )})
         let file = JSON.stringify(files)
         console.log(file)
-        const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+        const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","CASHDISCOUNT":"${data.diskon}","PO_Item":${file}}]}`;
         const encoded = encodeURIComponent(uri);
         const newStr = encoded.replace(/%3A/g, ':')
         .replace(/%5B/g, '[')
@@ -459,7 +459,7 @@ export const VerifikasiPo = () => {
         )})
         console.log(files)
         let file = JSON.stringify(files);
-        const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
+        const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","CASHDISCOUNT":"${data.diskon}","PO_Item":${file}}]}`;
         const encoded = encodeURIComponent(uris)
         const newStr = encoded.replace(/%3A/g, ':')
                     .replace(/%5B/g, '[')

@@ -755,15 +755,15 @@ export const UpdatePengadaan = () => {
 
                           <div className='col-sm-12 col-md-2 col-lg2 col-xl-2'>
                             <Form.Group as={Col} controlId="validationCustom01">
-                                <Form.Label>Tanggal Kirim</Form.Label>
-                                <Form.Control
-                                required
-                                name="tglDatang"
-                                type="date"
-                                placeholder="Tanggal Kirim"
-                                value={x.tglDatang}
-                                disabled
-                                />
+                              <Form.Label>Tanggal Kirim</Form.Label>
+                              <Form.Control
+                              required
+                              name="tglDatang"
+                              type="date"
+                              placeholder="Tanggal Kirim"
+                              value={x.tglDatang}
+                              disabled
+                              />
                             </Form.Group>
                           </div>
                           
@@ -804,76 +804,95 @@ export const UpdatePengadaan = () => {
                   </Accordion.Item>
               </Accordion>
               : 
-                  <Accordion defaultActiveKey="0">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Parsial Data Kedatangan & Qty Material</Accordion.Header>
-                <Accordion.Body>
-                {inputList.map((x, i) => {
-                  return(
-                    <div className="row  g-2 ">
-                      <h6>Parsial Ke-{i+1}</h6>
-                      <div className='col-sm-12 col-md-5 col-lg5 col-xl-5'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Tanggal Kirim</Form.Label>
-                          <Form.Control
-                            required
-                            name="tglDatang"
-                            type="date"
-                            placeholder="Tanggal Kirim"
-                            value={x.tglDatang}
-                            onChange={(e) => handleInputChange(e, i)}
-                            
-                          />
-                        </Form.Group>
-                      </div>
-                      
-                      <div className='col-sm-12 col-md-5 col-lg-5 col-xl-5'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Qty</Form.Label>
-                          <InputGroup className="mb-3">
-                            <NumericFormat 
-                              name="qty"
-                              customInput={Form.Control}
-                              thousandSeparator={false}
-                              value={x.qty}
-                              
-                              onChange ={(e) =>{
-                                handleInputChange(e, i)
-                              }}
-                                
+              <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Parsial Data Kedatangan & Qty Material</Accordion.Header>
+                  <Accordion.Body>
+                  {inputList.map((x, i) => {
+                    let ada = false;
+                    if(x.po === ""){ada = false}else{ada = true}
+                    return(
+                      <div className="row  g-2 ">
+                        <h6>Parsial Ke-{i+1}</h6>
+                        <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>No PO</Form.Label>
+                            <Form.Control
+                              required
+                              name="tglDatang"
+                              type="text"
+                              placeholder="No. PO"
+                              value={x.po}
+                              disabled
                             />
-                            <InputGroup.Text id="basic-addon2">{satuan}</InputGroup.Text>
-                          </InputGroup>
-                        </Form.Group>
-                      </div>
+                          </Form.Group>
+                        </div>
 
-                      <div className='col-sm-2 col-md-2 col-lg-2 col-xl-2'>
-                        <h6>&nbsp;</h6>
-                        <div style={{display: "flex"}}>
-                          
-                          {inputList.length - 1 === i && (
-                            <Button 
-                                variant="success" 
-                                className=' d-flex justify-content-center align-items-center h-10' 
-                                onClick={() => handleAddClick(i)}
-                            ><i className="bi bi-plus-square"></i></Button>
-                          )}
-                              {inputList.length !== 1 && (
-                                <Button 
+                        <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Tanggal Kirim</Form.Label>
+                            <Form.Control
+                              required
+                              name="tglDatang"
+                              type="date"
+                              placeholder="Tanggal Kirim"
+                              value={x.tglDatang}
+                              onChange={(e) => handleInputChange(e, i)}
+                              
+                            />
+                          </Form.Group>
+                        </div>
+                        
+                        <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Qty</Form.Label>
+                            <InputGroup className="mb-3">
+                              <NumericFormat 
+                                name="qty"
+                                customInput={Form.Control}
+                                thousandSeparator={false}
+                                value={x.qty}
+                                
+                                onChange ={(e) =>{
+                                  handleInputChange(e, i)
+                                }}
+                                  
+                              />
+                              <InputGroup.Text id="basic-addon2">{satuan}</InputGroup.Text>
+                            </InputGroup>
+                          </Form.Group>
+                        </div>
+
+                        <div className='col-sm-2 col-md-2 col-lg-2 col-xl-2'>
+                          <h6>&nbsp;</h6>
+                          <div style={{display: "flex"}}>
+                            
+                            {inputList.length - 1 === i && (
+                              <Button 
+                                  variant="success" 
+                                  className=' d-flex justify-content-center align-items-center h-10' 
+                                  onClick={() => handleAddClick(i)}
+                              ><i className="bi bi-plus-square"></i></Button>
+                            )}
+                                {inputList.length !== 1 && (
+                                  <Button 
                                     variant="primary" 
                                     onClick={() => handleRemoveClick(i)} 
-                                    className='d-flex justify-content-center align-items-center h-10' style={{marginLeft: 10}}>
-                                  <i className="bi bi-trash"></i>
-                                </Button>
-                              )}
+                                    className='d-flex justify-content-center align-items-center h-10'
+                                    style={{marginLeft: 10}}
+                                    disabled={ada}
+                                  >
+                                    <i className="bi bi-trash"></i>
+                                  </Button>
+                                )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )
-                })}
-                </Accordion.Body>
-              </Accordion.Item>
-                  </Accordion>
+                    )
+                  })}
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
               }
             </div>
             <div className='col-sm-12	col-md-12	col-lg-2	col-xl-2 mb-5'>

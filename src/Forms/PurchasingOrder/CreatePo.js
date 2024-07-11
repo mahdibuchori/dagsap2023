@@ -109,7 +109,7 @@ export const CreatePo = () => {
     const [screenHeight, setScreenHeight] = useState(tHeigt);
 
     const columns = useMemo(() => COLUMNS_DATAPO, []);
-    const [rowData, setRowData] = useState();
+    const [rowData, setRowData] = useState([]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -264,69 +264,122 @@ export const CreatePo = () => {
         const gntiDta = async () =>{
             try {
                 setIsLoading(true);
-                // console.log(dataSementara)
-                let data1 = {
-                    material : dataSementara.material,
-                    qty : dataSementara.qty,
-                    qtyAwal : dataSementara.qty,
-                    satuan : dataSementara.satuan,
-                    hargasatuan : "",
-                    diskon : "",
-                    jmlhHarga : "",
-                    departement : "",
-                    itemNo : dataSementara.itemNo,
-                    pajak : "",
-                    spesifikasi : dataSementara.spesifikasi,
-                    divisi : dataSementara.divisi,
-                    brandMaterial : dataSementara.brandMaterial,
-                    tipeMaterial : dataSementara.tipeMaterial,
-                    terima  : "",
-                    tutup : "",
-                    id_Pengadaan : dataSementara.id_Pengadaan,
-                    tipe : dataSementara.tipe,
-                    tgl_datang : dataSementara.tgl_datang,
-                    po : dataSementara.po,
-                    parsial: {
-                        tgl: dataSementara.tgl_datang,
-                        qty :dataSementara.qty,
-                    },
-                    parsialAwal: {
-                        tgl: dataSementara.tgl_datang,
-                        qty :dataSementara.qty,
-                    },
-                    newSpek : `${dataSementara.tipeMaterial}, ${dataSementara.brandMaterial}, ${dataSementara.spesifikasi}`,
-                    newMaterial : dataSementara.material,
-                    newSatuan : dataSementara.satuan,
-                    
-                }
-                // console.log(data1)
-                if(dataPo.length < 1){
-                    if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
+                // setRowData([])
+                console.log(dataSementara)
+                if(dataSementara.tgl_datang === undefined || dataSementara.qty === undefined ){
+                    Swal.fire('Opps..','Harap Ulangi Pemilihan Data','info')
                 }
                 else{
-                    if(dataSementara.boll){
-                        const cek = dataPo.filter(obj => obj.id_Pengadaan === dataSementara.id_Pengadaan && obj.tgl_datang
-                            === dataSementara.tgl_datang
-                        );
-                        // console.log(cek)
+                    let data1 = {
+                        material : dataSementara.material,
+                        qty : dataSementara.qty,
+                        qtyAwal : dataSementara.qty,
+                        satuan : dataSementara.satuan,
+                        hargasatuan : "",
+                        diskon : "",
+                        jmlhHarga : "",
+                        departement : "",
+                        itemNo : dataSementara.itemNo,
+                        pajak : "",
+                        spesifikasi : dataSementara.spesifikasi,
+                        divisi : dataSementara.divisi,
+                        brandMaterial : dataSementara.brandMaterial,
+                        tipeMaterial : dataSementara.tipeMaterial,
+                        terima  : "",
+                        tutup : "",
+                        id_Pengadaan : dataSementara.id_Pengadaan,
+                        tipe : dataSementara.tipe,
+                        tgl_datang : dataSementara.tgl_datang,
+                        po : dataSementara.po,
+                        parsial: [{
+                            tgl: dataSementara.tgl_datang,
+                            qty :dataSementara.qty,
+                        }],
+                        parsialAwal: [{
+                            tgl: dataSementara.tgl_datang,
+                            qty :dataSementara.qty,
+                        }],
+                        newSpek : `${dataSementara.tipeMaterial}, ${dataSementara.brandMaterial}, ${dataSementara.spesifikasi}`,
+                        newMaterial : dataSementara.material,
+                        newSatuan : dataSementara.satuan,
+                        parsi : dataSementara.parsi
+                        
+                    }
+                    if(dataPo.length < 1){
+                        if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
+                    }
+                    else{
+                        const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
                         if(cek.length === 0){
                             setDataPo(prev => [...prev, data1])
                         }
-                        else{}
-                    }
-                    else{
-                        const layer = []
-                        for(let x = 0; x < dataPo.length;x++){
-                            if(dataPo[x].id_Pengadaan === dataSementara.id_Pengadaan && dataPo[x].tgl_datang === dataSementara.tgl_datang ){
-                                console.log(x)
+                        else{
+                            const id = dataPo.findIndex((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan);
+                            dataPo[id].parsial = [];
+                            dataPo[id].parsialAwal = [];
+                            const filN = dataSementara.parsi.filter((i)=> i.state === true)
+                            let hasil = [];
+                            hasil = filN.map((obj,i)=>{return({
+                                tgl: obj.tglDatang,
+                                qty :obj.qty,
+                            })})
+                            if(hasil.length !== 0){
+                                dataPo[id].parsial = hasil;
+                                dataPo[id].parsialAwal = hasil;
+                                let sum = hasil.reduce(function (s, a) {
+                                    return s + parseFloat(a.qty);
+                                }, 0);
+                                dataPo[id].qty = sum.toFixed(2)
                             }
                             else{
-                                layer.push(dataPo[x])
+                                dataPo.splice(id,1);
+                            }
+                            console.log(dataPo)
+                            setDataPo(dataPo)
+                        }
+                        /* if(dataSementara.boll){
+                            const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
+                            if(cek.length === 0){
+                                setDataPo(prev => [...prev, data1])
+                            }
+                            else{
+                                const id = dataPo.findIndex((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
+                                let qty = parseFloat(dataPo[id].qty) + parseFloat(dataSementara.qty)
+                                dataPo[id].qty = `${qty}`
+                                dataPo[id].qtyAwal = `${qty}`
+                                dataPo[id].parsial.push({
+                                    tgl: dataSementara.tgl_datang,
+                                    qty :dataSementara.qty,
+                                })
+                                dataPo[id].parsialAwal.push({
+                                    tgl: dataSementara.tgl_datang,
+                                    qty :dataSementara.qty,
+                                })
+                                setDataPo(dataPo)
                             }
                         }
-                        setDataPo(layer)
+                        else{
+                            const id = dataPo.findIndex((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan);
+                            let qty = parseFloat(dataPo[id].qty) - parseFloat(dataSementara.qty);
+                            if(qty === 0){
+                                dataPo.splice(id,1);
+                                setDataPo(dataPo);
+                            }
+                            else{
+                                dataPo[id].qty = `${qty}`;
+                                dataPo[id].qtyAwal = `${qty}`;
+                                let prs = dataPo[id].parsial;
+                                let prsm = dataPo[id].parsialAwal;
+                                let idx = prs.findIndex((i)=> i.tgl === dataSementara.tgl_datang && i.qty === dataSementara.qty);
+                                let idy = prsm.findIndex((i)=> i.tgl === dataSementara.tgl_datang && i.qty === dataSementara.qty);
+                                if(idx >= 0){prs.splice(idx, 1)}else{console.log('idx < 0')};
+                                if(idy >= 0){prsm.splice(idy, 1)}else{console.log('idy < 0')};
+                                setDataPo(dataPo);
+                            }
+                        } */
                     }
                 }
+                
                 setIsLoading(false);
                 
                 setDataSementara([])
@@ -334,21 +387,20 @@ export const CreatePo = () => {
             } catch (error) {
                 setIsLoading(false);
                 Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Pengambilan Data Pengadaan Gagal!',
-                footer: error
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Pengambilan Data Pengadaan Gagal!',
+                    footer: error
                 })
                 
                 setDataSementara([])
                 setDataReady(false);
             }
         } 
-    
         gntiDta();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[dataReady]);
-
+ 
     useEffect (() => {
         if(!isReady) return;
         const gntiDta = async () =>{
@@ -450,7 +502,8 @@ export const CreatePo = () => {
         }
     }
 
-    const handlecheckbox = (e, i,val) =>{
+    const handlecheckbox = (e, i,val,db) =>{
+        let pr = db.filter((x) => x.id_Pengadaan === e.id_Pengadaan);
         let data1 = {
             id_Pengadaan : e.id_Pengadaan,
             itemNo : e.material[0].itemNo,
@@ -465,25 +518,42 @@ export const CreatePo = () => {
             divisi : e.mesin,
             tipeMaterial : e.tipeMaterial,
             brandMaterial : e.brandMaterial,
-            newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`
+            newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`,
+            parsi : pr[0].parsial_data
         }
         setDataSementara(data1)
+        const newData = [];
+        for(let x = 0 ; x < inputList.length; x++){
+            if(inputList[x].id_Pengadaan === e.id_Pengadaan){
+                let par = inputList[x].parsial_data;
+                let idx = par.findIndex((x)=> x.po === i.po && x.qty === i.qty && x.expro === i.expro && x.noAkun === i.noAkun && x.tglDatang === i.tglDatang && x.state === i.state)
+                if(idx >= 0){
+                    par[idx].state = val
+                }
+                newData.push(inputList[x])
+            }
+            else{
+                newData.push(inputList[x])
+            }
+        }
+        setInputList(newData)
+        // console.log([...inpt_br, ...inputNn])
+
+
         setDataReady(true)
     }
 
     const handleCekData = () =>{
-        if(rowData === undefined){
+        if(rowData.length === 0){
             setRowData([])
             if(dataPo.length === 0){
                 Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
             }
             else{
-                // console.log(dataPo)
                 let plan = String(userData.uplan).toUpperCase();
                 let data = [];
-                for(let x = 0; x< dataPo.length; x++){
-                    // console.log(dataPo[x])
-                    let file = {
+                for(let x = 0; x < dataPo.length; x++){
+                    data.push({
                         material : dataPo[x].material,
                         qty : parseFloat(dataPo[x].qty).toFixed(2),
                         satuan : dataPo[x].satuan,
@@ -499,40 +569,20 @@ export const CreatePo = () => {
                         tutup : "",
                         id_Pengadaan : dataPo[x].id_Pengadaan,
                         tipe : dataPo[x].tipe,
-                        parsial: [dataPo[x].parsial],
+                        parsial: dataPo[x].parsial,
                         po : dataPo[x].po,
                         qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
-                        parsialAwal: [dataPo[x].parsialAwal],
+                        parsialAwal: dataPo[x].parsialAwal,
                         brandMaterial : dataPo[x].brandMaterial,
                         tipeMaterial : dataPo[x].tipeMaterial,
                         newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
                         newMaterial : dataPo[x].newMaterial,
                         newSatuan : dataPo[x].newSatuan,
-                    }
-                    if(data.length === 0){
-                        data.push(file)
-                    }
-                    else{
-                        let foundIndex = data.findIndex(i => i.id_Pengadaan === dataPo[x].id_Pengadaan);
-                        if(foundIndex >= 0){
-                            data[foundIndex].qty = (parseFloat(data[foundIndex].qty) + parseFloat(dataPo[x].qty)).toFixed(2);
-                            data[foundIndex].qtyAwal = (parseFloat(data[foundIndex].qtyAwal) + parseFloat(dataPo[x].qtyAwal)).toFixed(2);
-                            let parsil = data[foundIndex].parsial;
-                            let parsilA = data[foundIndex].parsialAwal;
-                            parsil.push(dataPo[x].parsial)
-                            parsilA.push(dataPo[x].parsialAwal)
-                            data[foundIndex].parsial = parsil;
-                            data[foundIndex].parsialAwal = parsilA;
-                        }
-                        else{
-                            data.push(file)
-                        }
-                        
-                    }
+                        parsi : dataPo[x].parsi
+                    })
                 }
-
-                // console.log(data)
-                setRowData(data)
+                console.log(data)
+                setRowData(data);  
                 setShow(false)
             }
         }
@@ -549,7 +599,6 @@ export const CreatePo = () => {
         };
     }, []);
     
-
     const handleSubmit = (e) =>{
         e.preventDefault();
         try {
@@ -558,12 +607,6 @@ export const CreatePo = () => {
             }
             else if(bantar === ""){
                 Swal.fire('Oppsss','Harap isi nilai biaya antar','info');
-            }
-            else if(totalSub === "" || totalSub === 0 || totalSub === "0.00"){
-                Swal.fire('Oppsss','Harap nilai total sub','info');
-            }
-            else if(total === "" || total === 0 || total === "0.00"){
-                Swal.fire('Oppsss','Harap nilai total','info');
             }
             else {
                 const cekDep = rowData.filter(x => x.departement === "");
@@ -583,68 +626,99 @@ export const CreatePo = () => {
         try {
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
-            let nilai = ""
+            let nilai = "";
+            let fMate = "";
             for(let x =0; x < rowData.length; x++){
                 if(rowData[x].hargasatuan === ""){
-                nilai = `Harga satuan pada material ${rowData[x].material} harap isikan nominal`;
+                    nilai = `Harga satuan pada material ${rowData[x].material} harap isikan nominal`;
+                    break
+                }
+            }
+            for(let x =0; x < rowData.length; x++){
+                const nilai1 = rowData[x].material.includes(`"`);
+                const nilai2 = rowData[x].material.includes(`'`);
+                if(nilai1 || nilai2){
+                    fMate = `Nama material ${rowData[x].material} terdapat tanda " atau ' harap dirubah`;
                 break
                 }
             }
+            
             if(nilai !== ""){
                 Swal.fire("Opps",nilai,'info')
             }
             else{
-                setIsLoading(true)
-                /* console.log({
-                    id_po : nopo,
-                    po_no: '',
-                    tgl_po: tgl,
-                    tgl_kirim : tglKrm,
-                    filter_bulan: `${tahu}-${bln}`,
-                    pembayaran: termName,
-                    tukar : currencyName,
-                    idexpro	: expro?.id,
-                    expro : expro?.value,
-                    status : 'Pengajuan',
-                    statusfina : '',
-                    dataPO : rowData,
-                    keterangan : spesifikasi,
-                    totalSub : totalSub,
-                    diskon : parseFloat(diskon).toFixed(2),
-                    ppn : ppn,
-                    pph : pph,
-                    bAntar : parseFloat(bantar).toFixed(2),
-                    total : total,
-                    tgl_verify : '',
-                    tgl_approve : '',
-                    plan : userData.uplan
-                }) */
-                const next = await API_AUTH.post(`/createpo`, {
-                    id_po : nopo,
-                    po_no: '',
-                    tgl_po: tgl,
-                    tgl_kirim : tglKrm,
-                    filter_bulan: `${tahu}-${bln}`,
-                    pembayaran: termName,
-                    tukar : currencyName,
-                    idexpro	: expro?.id,
-                    expro : expro?.value,
-                    status : 'Pengajuan',
-                    statusfina : '',
-                    dataPO : rowData,
-                    keterangan : spesifikasi,
-                    totalSub : totalSub,
-                    diskon : parseFloat(diskon).toFixed(2),
-                    ppn : ppn,
-                    pph : pph,
-                    bAntar : parseFloat(bantar).toFixed(2),
-                    total : total,
-                    tgl_verify : '',
-                    tgl_approve : '',
-                    plan : userData.uplan
-                });
-                Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');
-                setIsLoading(false);
+                if(fMate !== ""){
+                    Swal.fire("Opps",fMate,'info')
+                }
+                else{
+                    setIsLoading(true)
+                    /* let parRow = [];
+                    for(let x = 0; x < rowData.length; x++){
+                        parRow = rowData[x].parsial;
+                        const isi = dataPo.filter((i)=> i.id_Pengadaan === rowData[x].id_Pengadaan);
+                        const parPo = isi[0].parsial;
+                        const results = parRow.findIndex(({ tgl: tgl1, qty: qty1 }) => !parPo.some(({ tgl: tgl2, qty: qty2 }) => tgl2 === tgl1 && qty2 === qty1));
+                        if(results >= 0){
+                            parRow[results].tgl = tglKrm ;
+                        }
+                        else{
+                            console.log('parRow : '+results);
+                        }
+                    } */
+                    console.log({
+                        id_po : nopo,
+                        po_no: '',
+                        tgl_po: tgl,
+                        tgl_kirim : tglKrm,
+                        filter_bulan: `${tahu}-${bln}`,
+                        pembayaran: termName,
+                        tukar : currencyName,
+                        idexpro	: expro?.id,
+                        expro : expro?.value,
+                        status : 'Pengajuan',
+                        statusfina : '',
+                        dataPO : rowData,
+                        keterangan : spesifikasi,
+                        totalSub : totalSub,
+                        diskon : parseFloat(diskon).toFixed(2),
+                        ppn : ppn,
+                        pph : pph,
+                        bAntar : parseFloat(bantar).toFixed(2),
+                        total : total,
+                        tgl_verify : '',
+                        tgl_approve : '',
+                        plan : userData.uplan
+                    })
+                    // console.log(dataPo)
+                    const next = await API_AUTH.post(`/createpo`, {
+                        id_po : nopo,
+                        po_no: '',
+                        tgl_po: tgl,
+                        tgl_kirim : tglKrm,
+                        filter_bulan: `${tahu}-${bln}`,
+                        pembayaran: termName,
+                        tukar : currencyName,
+                        idexpro	: expro?.id,
+                        expro : expro?.value,
+                        status : 'Pengajuan',
+                        statusfina : '',
+                        dataPO : rowData,
+                        keterangan : spesifikasi,
+                        totalSub : totalSub,
+                        diskon : parseFloat(diskon).toFixed(2),
+                        ppn : ppn,
+                        pph : pph,
+                        bAntar : parseFloat(bantar).toFixed(2),
+                        total : total,
+                        tgl_verify : '',
+                        tgl_approve : '',
+                        plan : userData.uplan,
+                        user : userData.uname
+                    });
+                    console.log(next.data)
+                    Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');
+                    setIsLoading(false);
+                }
             }
         } catch (error) {
             console.log(error)
@@ -685,13 +759,25 @@ export const CreatePo = () => {
                 tipeMaterial : e.tipeMaterial,
                 newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`,
                 newMaterial : e.newMaterial,
-                newSatuan : e.newSatuan,                              
+                newSatuan : e.newSatuan,
+                parsi : e.parsi                              
             }
         })
-        const pjk = modifiedArr[0]?.pajak;
+        // const pjk = modifiedArr[0]?.pajak;
         let dataPo = numbPo.data;
         if(dataPo.length === 0){
-            if(pjk === ""){
+            let cek_pj = "";
+            if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" ){
+                cek_pj = value?.pajak
+            }
+            else{
+                cek_pj = ""
+            }
+      
+            if(value?.id === "3801" || value?.id ==="25617"){
+              cek_pj = "ADA"
+            }
+            if(cek_pj === ""){
                 const numb = ("00" + 1).slice(-2);
                 setNopo(`${kode}5${numb}`);
             }
@@ -701,6 +787,43 @@ export const CreatePo = () => {
             }
         }
         else{
+            let dtPpn = [];
+            let dtPph = [];
+            
+            dataPo.map((e)=>{
+                const c =e.id_po.substr(-3);
+                if(parseFloat(c) > 499){
+                  return dtPph.push(parseFloat(c))
+                }
+                else{
+                  return dtPpn.push(parseFloat(c))
+                }
+            })
+      
+            let cek_pj = "";
+            if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" ){
+              cek_pj = value?.pajak
+            }
+            else{
+              cek_pj = ""
+            }
+      
+            if(value?.id === "3801" || value?.id ==="25617"){
+              cek_pj = "ADA"
+            }
+      
+            if(cek_pj === ""){
+                const numb = ("00" + (dtPph.length + 1)).slice(-2);
+                setNopo(`${kode}5${numb}`);
+                console.log(`${kode}5${numb}`);
+            }
+            else{
+                const numb = ("00" + (dtPpn.length + 1)).slice(-3);
+                setNopo(`${kode}${numb}`);
+                console.log(`${kode}${numb}`);
+            }
+        }
+        /* else{
             let dtPpn = [];
             let dtPph = []
             
@@ -721,7 +844,7 @@ export const CreatePo = () => {
                 const numb = ("00" + (dtPpn.length + 1)).slice(-3);
                 setNopo(`${kode}${numb}`);
             }
-        }
+        } */
         setRowData(modifiedArr)
         setisReady(true)
     }
@@ -1022,87 +1145,211 @@ export const CreatePo = () => {
     );
 
     const onAddGoalHandler = (newGoal) =>{
-        setInputList(newGoal)
-        setDataPo([])
-        setShow(true)
+        const results = newGoal.filter(({ id_Pengadaan: id1 }) => !inputList.some(({ id_Pengadaan: id2 }) => id2 === id1));
+        const result = inputList.filter(({ id_Pengadaan: id1 }) => !newGoal.some(({ id_Pengadaan: id2 }) => id2 === id1));
+
+        let newData = [];
+        if(results.length > 0){
+            const menu_data = results.map((obj, i) =>{
+                const par = obj.parsial_data.map((x,y) =>{
+                  return(
+                    {...x, state : false}
+                  )
+                })
+                return(
+                  {
+                      "id_Pengadaan": obj.id_Pengadaan,
+                      "t_pengadaan": obj.t_pengadaan,
+                      "filter_bulan": obj.filter_bulan,
+                      "user": obj.user,
+                      "status": obj.status,
+                      "material": obj.material,
+                      "qty_pengadaan": obj.qty_pengadaan,
+                      "spesifikasi": obj.spesifikasi,
+                      "tgl_verify": obj.tgl_verify,
+                      "tgl_approve": obj.tgl_approve,
+                      "parsial_data": par,
+                      "tipeMaterial": obj.tipeMaterial,
+                      "brandMaterial": obj.brandMaterial,
+                      "mesin": obj.mesin,
+                      "coa": obj.coa,
+                      "halal": obj.halal,
+                      "msds": obj.msds,
+                      "copypo": obj.copypo,
+                      "health": obj.health,
+                      "kh": obj.kh,
+                      "foodgrade": obj.foodgrade
+                  }
+                )
+            })
+            newData = [...inputList, ...menu_data]
+        }
+        else{
+            newData = inputList
+        }
+
+        if(result.length > 0){
+            for(let x = 0; x < result.length; x++){
+                const idx = newData.findIndex((i)=> i.id_Pengadaan === result[x].id_Pengadaan);
+                if(idx >= 0){newData.splice(idx,1)}else{console.log('idx < 0')}
+            }
+        }
+        console.log(newData)
+        setInputList(newData);
+        setShow(true);
+        handleAdd(result);
+    }
+
+    const handleAdd = (e) =>{
+        if(e !== undefined){
+            if(e.length > 0){
+                for(let x = 0; x < e.length; x++){
+                    const idx = dataPo.findIndex((i)=> i.id_Pengadaan === e[x].id_Pengadaan);
+                    const idp = rowData.findIndex((i)=> i.id_Pengadaan === e[x].id_Pengadaan);
+                    if(idx >= 0){dataPo.splice(idx,1)}else{console.log('idx < 0')}
+                    if(idp >= 0){rowData.splice(idx,1)}else{console.log('idp < 0')}
+                }
+            }
+        }
+        setDataPo(dataPo)
     }
 
     const readNewData = () =>{
-        
+        /* if(dataPo.length === 0){
+            Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
+        }
+        else{
+        let file = rowData;
+        setRowData([]);
+        let uset = "";
+        if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
+        let plan = String(userData.uplan).toUpperCase();
+        let data = [];
+        for(let x = 0; x < dataPo.length; x++){
+            data.push({
+                material : dataPo[x].material,
+                qty : parseFloat(dataPo[x].qty).toFixed(2),
+                satuan : dataPo[x].satuan,
+                hargasatuan : "",
+                diskon : "",
+                jmlhHarga : "",
+                departement : `PABRIK ${plan}`,
+                itemNo : dataPo[x].itemNo,
+                pajak : uset,
+                spesifikasi : dataPo[x].spesifikasi,
+                divisi : dataPo[x].divisi,
+                terima  : "",
+                tutup : "",
+                id_Pengadaan : dataPo[x].id_Pengadaan,
+                tipe : dataPo[x].tipe,
+                parsial: dataPo[x].parsial,
+                po : dataPo[x].po,
+                qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
+                parsialAwal: dataPo[x].parsialAwal,
+                brandMaterial : dataPo[x].brandMaterial,
+                tipeMaterial : dataPo[x].tipeMaterial,
+                newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
+                newMaterial : dataPo[x].newMaterial,
+                newSatuan : dataPo[x].newSatuan,
+                parsi : dataPo[x].parsi
+            })
+        }
+
+        for(let x = 0; x < file.length; x++){
+            const hargasatuan = file[x].hargasatuan;
+            const jmlhHarga = file[x].jmlhHarga;
+            const material = file[x].material;
+            const id_file = file[x].id_Pengadaan;
+            for(let y = 0; y < data.length; y++){
+                const id_data = data[y].id_Pengadaan
+                if(id_data === id_file){
+                    data[y].hargasatuan = hargasatuan;
+                    data[y].jmlhHarga = jmlhHarga;
+                    data[y].material = material;
+                }
+            }
+        }
+        setRowData(data);
+        setisReady(true);
+        setShow(false);
+        } */
         if(dataPo.length === 0){
             Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
         }
         else{
-            let file = rowData;
-            setRowData([])
-            let uset = "";
-            if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
-            let plan = String(userData.uplan).toUpperCase();
-            let data = [];
-            for(let x = 0; x< dataPo.length; x++){
-                let file = {
-                    material : dataPo[x].material,
-                    qty : parseFloat(dataPo[x].qty).toFixed(2),
-                    satuan : dataPo[x].satuan,
-                    hargasatuan : "",
-                    diskon : "",
-                    jmlhHarga : "",
-                    departement : `PABRIK ${plan}`,
-                    itemNo : dataPo[x].itemNo,
-                    pajak : uset,
-                    spesifikasi : dataPo[x].spesifikasi,
-                    divisi : dataPo[x].divisi,
-                    terima  : "",
-                    tutup : "",
-                    id_Pengadaan : dataPo[x].id_Pengadaan,
-                    tipe : dataPo[x].tipe,
-                    parsial: [dataPo[x].parsial],
-                    po : dataPo[x].po,
-                    qtyAwal : parseFloat(dataPo[x].qtyAwal).toFixed(2),
-                    parsialAwal: [dataPo[x].parsialAwal],
-                    brandMaterial : dataPo[x].brandMaterial,
-                    tipeMaterial : dataPo[x].tipeMaterial,
-                    newSpek : `${dataPo[x].tipeMaterial}, ${dataPo[x].brandMaterial}, ${dataPo[x].spesifikasi}`,
-                    newMaterial : dataPo[x].newMaterial,
-                    newSatuan : dataPo[x].newSatuan,
-                }
-                if(data.length === 0){
-                    data.push(file)
-                }
-                else{
-                    let foundIndex = data.findIndex(i => i.id_Pengadaan === dataPo[x].id_Pengadaan);
-                    if(foundIndex >= 0){
-                        data[foundIndex].qty = (parseFloat(data[foundIndex].qty) + parseFloat(dataPo[x].qty)).toFixed(2);
-                        data[foundIndex].qtyAwal = (parseFloat(data[foundIndex].qtyAwal) + parseFloat(dataPo[x].qtyAwal)).toFixed(2);
-                        let parsil = data[foundIndex].parsial;
-                        let parsilA = data[foundIndex].parsialAwal;
-                        parsil.push(dataPo[x].parsial)
-                        parsilA.push(dataPo[x].parsialAwal)
-                        data[foundIndex].parsial = parsil;
-                        data[foundIndex].parsialAwal = parsilA;
-                    }
-                    else{
-                        data.push(file)
-                    }
-                    
-                }
+        let file = rowData;
+        setRowData([]);
+        let uset = "";
+        if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
+        let plan = String(userData.uplan).toUpperCase();
+        const newFile = dataPo.map((obj,i)=>{
+            let jmlhHarga,harsa = 0;
+            if(obj.hargasatuan !== ""){
+            jmlhHarga = parseFloat(obj.qty) * parseFloat(obj.hargasatuan)
+            harsa = parseFloat(obj.hargasatuan)
+            }
+            //   console.log(obj)
+            return({
+            departement : `PABRIK ${plan}`,
+            diskon : obj.diskon,
+            divisi : obj.divisi,
+            hargasatuan : harsa,
+            id_Pengadaan : obj.id_Pengadaan,
+            itemNo : obj.itemNo,
+            jmlhHarga : jmlhHarga,
+            material : obj.material,
+            newMaterial : obj.newMaterial,
+            newSatuan : obj.newSatuan,
+            pajak : uset,
+            po : obj.po,
+            qty : parseFloat(obj.qty).toFixed(2),
+            qtyAwal : parseFloat(obj.qtyAwal).toFixed(2),
+            satuan : obj.satuan,
+            terima  : obj.terima,
+            tipe : obj.tipe,
+            tutup : obj.tutup,
+            spesifikasi : obj.spesifikasi,
+            brandMaterial : obj.brandMaterial,
+            tipeMaterial : obj.tipeMaterial,
+            newSpek : obj.newSpek,
+            parsial : obj.parsial,
+            parsialAwal : obj.parsialAwal,
+            parsi : obj.parsi,
             }
             
-            for(let x = 0; x < file.length; x++){
-                let n = file[x];
-                let foundIndex = dataPo.findIndex(a => a.id_Pengadaan === n.id_Pengadaan);
-                if(foundIndex >= 0){
-                    data[foundIndex]["hargasatuan"] = n.hargasatuan;
-                    data[foundIndex]["material"] = n.material;
-                    data[foundIndex]["pajak"] = n.pajak;
+            )
+        })
+        for(let x = 0; x < newFile.length; x++){
+            const idC = file.findIndex((i)=> i.id_Pengadaan === newFile[x].id_Pengadaan);
+            if(idC >= 0){
+                const ids = new Set(file[idC].parsialAwal.map(({ tgl }) => tgl));
+                const sele = newFile[x].parsialAwal.filter(({ tgl }) => !ids.has(tgl));
+                // console.log(sele);
+                let jmlhHarga,harsa = 0;
+                newFile[x].material = file[idC].material;
+                if(file[idC].hargasatuan !== ""){
+                    jmlhHarga = parseFloat(newFile[x].qty) * parseFloat(file[idC].hargasatuan)
+                    harsa = parseFloat(file[idC].hargasatuan)
+                    newFile[x].hargasatuan = harsa;
+                    newFile[x].jmlhHarga = jmlhHarga;
                 }
                 else{
-                    console.log(foundIndex)
+                    newFile[x].jmlhHarga = 0;
+                }
+                if(sele.length === 0){
+                    newFile[x].parsial = []
+                    newFile[x].parsialAwal = []
+                    
+                    newFile[x].parsial = file[idC].parsial
+                    newFile[x].parsialAwal = file[idC].parsialAwal
+                    newFile[x].qty = file[idC].qty
                 }
             }
-            // const r = data.filter((elem) => rowData.find(({ id_Pengadaan }) => elem.id_Pengadaan === id_Pengadaan));
-            setRowData(data)
-            setShow(false)
+        }
+        // console.log(newFile);
+        setRowData(newFile);
+        setisReady(true);
+        setShow(false);
         }
     }
 
@@ -1390,9 +1637,9 @@ export const CreatePo = () => {
         />
     }
     
-    <Modal show={show} onHide={handleClose} size="lg" centered>
+    <Modal show={show} size="lg" centered>
         <Modal.Body>
-            <Accordion defaultActiveKey="0">
+            <Accordion>
             {
                 inputList?.map((e,i)=>{
                     return(
@@ -1401,41 +1648,47 @@ export const CreatePo = () => {
                                 ({e.material[0].itemNo})&nbsp;{e.material[0].material}&nbsp;{e.qty_pengadaan[0].order}&nbsp;{e.qty_pengadaan[0].satuan}||{e.spesifikasi}
                             </Accordion.Header>
                             <Accordion.Body>
-                            <Form>
-                                {e.parsial_data.map((i)=>{
-                                    let cara = true;
-                                    if(i.po === ""){
-                                        cara = false;
-                                    }
-                                    return (
-                                        <div className='row g-2 p-0'>
-                                            <div className='col-sm-1 col-md-1 col-lg-1 col-xl-1'>
-                                                <div className="form-check">
-                                                    <input 
-                                                        className="form-check-input"
-                                                        type="checkbox" 
-                                                        value={i}
-                                                        disabled={cara}
-                                                        onClick={(x) => handlecheckbox(e,i,x.target.checked)}
-                                                    />
+                                <Form>
+                                    {e.parsial_data.map((i)=>{
+                                        let cara = true;
+                                        if(i.po === ""){
+                                            cara = false;
+                                        }
+                                        return (
+                                            <div className='row g-2 p-0'>
+                                                <div className='col-sm-1 col-md-1 col-lg-1 col-xl-1'>
+                                                    <div className="form-check">
+                                                        <input 
+                                                            className="form-check-input"
+                                                            type="checkbox" 
+                                                            value={i}
+                                                            disabled={cara}
+                                                            checked={i.state}
+                                                            onClick={(x) => handlecheckbox(e,i,x.target.checked,inputList)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className='col-sm-4 col-md-4 col-lg-5 col-xl-4'>
+                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                        <Form.Label>No. PO</Form.Label>
+                                                        <Form.Control type="text" value={i.po} disabled/>
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-3 col-md-3 col-lg-5 col-xl-3'>
+                                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                                        <Form.Label>Qty</Form.Label>
+                                                        <Form.Control type="text" value={i.qty} disabled/>
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-4 col-md-4 col-lg-6 col-xl-4'>
+                                                    <Form.Label>Tgl Kedatangan</Form.Label>
+                                                        <Form.Control type="date" value={i.tglDatang} disabled/>
                                                 </div>
                                             </div>
-                                            <div className='col-sm-5 col-md-5 col-lg-5 col-xl-5'>
-                                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                    <Form.Label>No. PO</Form.Label>
-                                                    <Form.Control type="text" value={i.po} disabled/>
-                                                </Form.Group>
-                                            </div>
-                                            <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                                                <Form.Label>Tgl Kedatangan</Form.Label>
-                                                    <Form.Control type="date" value={i.tglDatang} disabled/>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                                
-                            </Form>
-                            
+                                        )
+                                    })}
+                                    
+                                </Form>
                             </Accordion.Body>
                         </Accordion.Item>
                     )

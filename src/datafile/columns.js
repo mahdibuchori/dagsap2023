@@ -4,6 +4,8 @@ import { BtnTerima } from '../Forms/KedatanganBarang/BtnTerima';
 import { BtnLogbook } from '../Forms/KedatanganBarang/BtnLogbook';
 import { BtnKaryawan } from '../Forms/karyawan/BtnKaryawan';
 import { PopupCellRenderer } from '../Forms/PurchasingOrder/PopupCellRenderer';
+import { format } from "date-fns";
+import id from 'date-fns/locale/id';
 
 
 const departement = ["", "GW-LAMPUNG", "GW-PUSAT", "GW-SERANG", "JABAR-BANDUNG", "JABAR-SUBANG", "JATENG-BANTUL", "JATENG-SEMARANG", "JATIM-BANJARMASIN", "JATIM-JEMBER", "JATIM-MADIUN", "JATIM-SURABAYA", "PABRIK SENTUL", "PABRIK YOGYA", "RPA" ];
@@ -1111,9 +1113,12 @@ export const COLUMNS_DATAPO =[
         editable: true,
         cellRenderer: params => {
             let data = params.data;
-            // console.log(data);
             data.parsial = []
             const parAwal = data.parsialAwal;
+            let bln = format(new Date(), "MM", { locale: id });
+            let tahun = format(new Date(), "yyyy", { locale: id });
+            let day = format(new Date(), "dd", { locale: id });
+
             for(let x = 0; x < parAwal.length; x++){
                 data.parsial.push({
                     tgl: parAwal[x].tgl,
@@ -1128,70 +1133,248 @@ export const COLUMNS_DATAPO =[
             }
             else{
                 const awaln = parseFloat(data.qtyAwal);
-                const akhrn = parseFloat(data.qty);
-                // console.log("awaln : "+awaln)
-                // console.log("akhrn : "+akhrn)
-                 hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                if(data.parsial.length < 2){
-                    if(akhrn <= awaln){
-                        params.data.parsial[0].qty = data.qty;
+                let akhrn = parseFloat(data.qty);
+                let saldo = akhrn - awaln;
+                hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                // console.log(awaln)
+                // console.log(akhrn)
+                // if(saldo !== 0){
+                //     if(saldo > 0){
+                //         const cek = data.parsi;
+                //         let files = []
+                //         let jml = 0
+                //         for(let x = 0; x < cek.length ; x++){
+                //             if(cek[x].po === ""){
+                //                 jml += parseFloat(cek[x].qty)
+                //                 if(jml <= akhrn){
+                //                     files.push({tgl: cek[x].tglDatang, qty: cek[x].qty})
+                //                 }
+                                
+                //             }
+                //         }
+                //         // console.log(files)
+                //         let ttl = akhrn - jml;
+                //         // console.log(ttl)
+                //         if(ttl > 0){
+                //             files.push({
+                //                 tgl : `${tahun}-${bln}-${day}`,
+                //                 qty : `${ttl}`
+                //             })
+                //         }
+                //         data.parsial.length = 0;
+                        
+                //         for(let y = 0; y < files.length; y++){
+                //             params.data.parsial.push(files[y])
+                //         }
+                //     }
+                //     else{
+                //         const cek = data.parsi;
+                //         // console.log(cek)
+                //         let filen = []
+                //         let jml = akhrn
+                //         let ttl = 0
+                //         for(let x = 0; x < cek.length ; x++){
+                //             let n = parseFloat(cek[x].qty) - parseFloat(jml)
+                //             if(cek[x].po === ''){
+                //                 if(parseFloat(jml) === parseFloat(cek[x].qty)){
+                //                     filen.push({
+                //                         tgl : `${cek[x].tglDatang}`,
+                //                         qty : `${cek[x].qty}`
+                //                     });
+                //                     break
+                //                 }
+                //                 else if(parseFloat(jml) < parseFloat(cek[x].qty)){
+                //                     ttl += n
+                //                     break
+                //                 }
+                //                 else{
+                //                     filen.push({
+                //                         tgl : `${cek[x].tglDatang}`,
+                //                         qty : `${cek[x].qty}`
+                //                     })
+                //                     jml -= parseFloat(cek[x].qty)
+                //                 }
+                                
+                //             }
+                //         }
+                        
+                //         console.log(ttl)
+                //         if(filen.length > 0){
+                //             if(ttl > 0){
+                //                 filen.push({
+                //                     tgl : `${tahun}-${bln}-${day}`,
+                //                     qty : `${jml}`
+                //                 })
+                //             }
+                //             else{}
+                //         }
+                //         else{
+                //             if(ttl > 0){
+                //                 filen.push({
+                //                     tgl : `${tahun}-${bln}-${day}`,
+                //                     qty : `${akhrn}`
+                //                 })
+                //             }
+                //             else{} 
+                //         }
+
+                        
+                //         data.parsial.length = 0;
+                        
+                //         for(let y = 0; y < filen.length; y++){
+                //             params.data.parsial.push(filen[y])
+                //         }
+                //         // console.log(filen)
+                //     }
+                // }
+                // else{
+                //     console.log('log = 0')
+                // }
+                data.parsial = [];
+                const dt_A = data.parsi;
+                /* const id = data.mypo
+                const hil_max = dt_A.findIndex((i) => i.noAkun === "max" && i.po === id);
+                if(hil_max >= 0){dt_A.splice(hil_max, 1)}else{};
+               */
+                const nec = dt_A.map((obj, i)=>{
+                    return({
+                        "po": obj.po,
+                        "qty": obj.qty,
+                        "expro": obj.expro,
+                        "noAkun": obj.noAkun,
+                        "tglDatang": obj.tglDatang
+                    })
+                }) 
+                // console.log(nec)
+                const cb = []
+                for(let x =0; x < nec.length; x++){
+                    if(nec[x].po === "" && nec[x].noAkun === "min"){
+                        cb.push(x)
+                    }
+                }
+                if(cb.length !== 0){
+                    let total = parseFloat(dt_A[cb[0]].qty);
+                    for(let i = 1; i < cb.length; i++){
+                        let id = cb[i];
+                        total += parseFloat(dt_A[id].qty);
+                        nec.splice(id, 1)
+                        
+                    }
+                    nec[cb[0]].qty = `${total}`
+                    nec[cb[0]].noAkun = ""
+                }
+                const cek = nec.filter((i)=> i.po === "");
+                let sum = cek.reduce(function (s, a) {
+                    return s + parseFloat(a.qty);
+                }, 0);
+                let newSaldo = akhrn - sum;
+                if(newSaldo !== 0){
+                    if(saldo > 0){
+                        let files = []
+                        let jml = 0
+                        for(let x = 0; x < cek.length ; x++){
+                            if(cek[x].po === ""){
+                                jml += parseFloat(cek[x].qty)
+                                if(jml <= akhrn){
+                                    files.push({tgl: cek[x].tglDatang, qty: cek[x].qty})
+                                }
+                                
+                            }
+                        }
+                        // console.log(files)
+                        let ttl = akhrn - jml;
+                        // console.log(ttl)
+                        // console.log(jml)
+                        if(ttl > 0){
+                            files.push({
+                                tgl : `${tahun}-${bln}-${day}`,
+                                qty : `${ttl}`
+                            })
+                        }
+                        else{
+                            let sums = files.reduce(function (s, a) {
+                                return s + parseFloat(a.qty);
+                            }, 0);
+                            // console.log(sums)
+                            let tts = akhrn - sums;
+                            files.push({
+                                tgl : `${tahun}-${bln}-${day}`,
+                                qty : `${tts}`
+                            })
+                        }
+                        data.parsial.length = 0;
+                        
+                        for(let y = 0; y < files.length; y++){
+                            params.data.parsial.push(files[y])
+                        }
                     }
                     else{
-                        const sisan = ((akhrn - awaln) * 1000) / 1000;
-                        params.data.parsial.push({
-                            tgl: params.data.parsial[0].tgl,
-                            qty: String(sisan)
-                        })
+                        let filen = []
+                        let jml = akhrn
+                        let ttl = 0
+                        for(let x = 0; x < cek.length ; x++){
+                            let n = parseFloat(cek[x].qty) - parseFloat(jml)
+                            if(cek[x].po === ''){
+                                if(parseFloat(jml) === parseFloat(cek[x].qty)){
+                                    filen.push({
+                                        tgl : `${cek[x].tglDatang}`,
+                                        qty : `${cek[x].qty}`
+                                    });
+                                    break
+                                }
+                                else if(parseFloat(jml) < parseFloat(cek[x].qty)){
+                                    ttl += n
+                                    break
+                                }
+                                else{
+                                    filen.push({
+                                        tgl : `${cek[x].tglDatang}`,
+                                        qty : `${cek[x].qty}`
+                                    })
+                                    jml -= parseFloat(cek[x].qty)
+                                }
+                                
+                            }
+                        }
+                        
+                        // console.log(ttl)
+                        if(filen.length > 0){
+                            if(ttl > 0){
+                                filen.push({
+                                    tgl : `${tahun}-${bln}-${day}`,
+                                    qty : `${jml}`
+                                })
+                            }
+                            else{}
+                        }
+                        else{
+                            if(ttl > 0){
+                                filen.push({
+                                    tgl : `${tahun}-${bln}-${day}`,
+                                    qty : `${akhrn}`
+                                })
+                            }
+                            else{} 
+                        }
+
+                        
+                        data.parsial.length = 0;
+                        
+                        for(let y = 0; y < filen.length; y++){
+                            params.data.parsial.push(filen[y])
+                        }
+                        // console.log(filen)
                     }
                 }
                 else{
-                    const p = data.parsial;
-                    if(awaln === akhrn){
-                        console.log('data sama')
-                    }
-                    else if(akhrn < awaln){
-                        let datd = [];
-                        let nilaiX = akhrn;
-                        for (let i = 0; i < p.length; i++) {
-                            let hsl = parseFloat(data.parsial[i].qty);
-                            if (hsl <= nilaiX){
-                                datd.push(data.parsial[i])
-                                nilaiX -= hsl;
-                            }
-                            else { 
-                                break; 
-                            }
-                            
-                        }
-
-                        let sum = datd.reduce((s, a) => parseFloat(s) + parseFloat(a.qty), 0);
-                        if(akhrn !== sum){
-                            const sisan = ((akhrn - sum) * 1000) / 1000;
-                            datd.push({
-                                tgl: data.parsial[p.length-1].tgl,
-                                qty: String(sisan)
-                            })
-                        }
-
-                        data.parsial = [];
-                        
-                        for(let x = 0; x < datd.length; x++){
-                            params.data.parsial.push({
-                                tgl: datd[x].tgl,
-                                qty: datd[x].qty
-                            })
-                        }
-                    }
-                    else{
-                        const sisan = ((akhrn - awaln) * 1000) / 1000;
-                        params.data.parsial.push({
-                            tgl: params.data.parsial[p.length-1].tgl,
-                            qty: String(sisan)
-                        })
-                    }
+                    // console.log(cek)
+                    for(let y = 0; y < cek.length; y++){
+                        params.data.parsial.push({qty : cek[y].qty, tgl : cek[y].tglDatang})
+                    };
+                    console.log('log = 0')
                 }
             }
-            // console.log(data.parsial)
+            // console.log(data)
             return hSatuan
         }
     },
@@ -1330,6 +1513,395 @@ export const COLUMNS_DATAPO =[
         field : 'tutup',
         width: 120,
         editable: false,
+    },
+]
+export const COLUMNS_DATAPOEDIT =[
+    { 
+        headerName: 'Nama Barang',
+        field : 'material',
+        width: 150,
+        maxWidth:405,
+        editable: true,
+        pinned: 'left',
+    },
+    { 
+        headerName: 'Nama Barang',
+        field : 'newMaterial',
+        width: 150,
+        maxWidth:405, 
+        hide : true
+    },
+    { 
+        headerName: 'Tipe',
+        field : 'tipe',
+        width: 150,
+        maxWidth:405,
+        hide : true
+    },
+    { 
+        headerName: 'Jumlah',
+        field : 'qty',
+        width: 110,
+        editable: true,
+        cellRenderer: params => {
+            let data = params.data;
+            let bln = format(new Date(), "MM", { locale: id });
+            let tahun = format(new Date(), "yyyy", { locale: id });
+            let day = format(new Date(), "dd", { locale: id });
+            let hSatuan = 0;
+            if(data.qty === undefined || data.qty === ""){
+                hSatuan = 0;
+                params.data.parsial[0].qty = 0;
+            }
+            else{
+                // const awaln = parseFloat(data.qtyAwal);
+                let akhrn = parseFloat(data.qty);
+                hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                data.parsial = [];
+                const dt_A = data.parsi;
+                const id = data.mypo
+                const hil_max = dt_A.findIndex((i) => i.noAkun === "max" && i.po === id);
+                if(hil_max >= 0){dt_A.splice(hil_max, 1)}else{};
+               const nec = dt_A.map((obj, i)=>{
+                    let cc = "";
+                    let epro = ""
+                    if(obj.po === id){cc = ""; epro =""}else{cc = obj.po; epro = obj.expro}
+                    return({
+                        "po": cc,
+                        "qty": obj.qty,
+                        "expro": epro,
+                        "noAkun": obj.noAkun,
+                        "tglDatang": obj.tglDatang
+                    })
+                })
+                const cb = []
+                for(let x =0; x < nec.length; x++){
+                    if(nec[x].po === "" && nec[x].noAkun === "min"){
+                        cb.push(x)
+                    }
+                }
+                if(cb.length !== 0){
+                    let total = parseFloat(nec[cb[0]].qty);
+                    for(let i = 1; i < cb.length; i++){
+                        let id = cb[i];
+                        total += parseFloat(nec[id].qty);
+                        nec.splice(id, 1)
+                        
+                    }
+                    nec[cb[0]].qty = `${total}`
+                    nec[cb[0]].noAkun = ""
+                }
+                const cek = nec.filter((i)=> i.po === "");
+                // console.log(cek)
+                let sum = cek.reduce(function (s, a) {
+                    return s + parseFloat(a.qty);
+                }, 0);
+                let newSaldo = akhrn - sum;
+                // console.log(newSaldo)
+                if(newSaldo !== 0){
+                    if(newSaldo > 0){
+                        let files = []
+                        let jml = 0
+                        for(let x = 0; x < cek.length ; x++){
+                            if(cek[x].po === ""){
+                                jml += parseFloat(cek[x].qty)
+                                if(jml <= akhrn){
+                                    files.push({tgl: cek[x].tglDatang, qty: cek[x].qty})
+                                }
+                                
+                            }
+                        }
+                        console.log(files)
+                        let ttl = akhrn - jml;
+                        // console.log(ttl)
+                        if(ttl > 0){
+                            files.push({
+                                tgl : `${tahun}-${bln}-${day}`,
+                                qty : `${ttl}`
+                            })
+                        }
+                        data.parsial.length = 0;
+                        
+                        for(let y = 0; y < files.length; y++){
+                            params.data.parsial.push(files[y])
+                        }
+                    }
+                    else{
+                        let filen = []
+                        let jml = akhrn
+                        let ttl = 0
+                        for(let x = 0; x < cek.length ; x++){
+                            let n = parseFloat(cek[x].qty) - parseFloat(jml)
+                            if(cek[x].po === ''){
+                                if(parseFloat(jml) === parseFloat(cek[x].qty)){
+                                    filen.push({
+                                        tgl : `${cek[x].tglDatang}`,
+                                        qty : `${cek[x].qty}`
+                                    });
+                                    break
+                                }
+                                else if(parseFloat(jml) < parseFloat(cek[x].qty)){
+                                    ttl += n
+                                    break
+                                }
+                                else{
+                                    filen.push({
+                                        tgl : `${cek[x].tglDatang}`,
+                                        qty : `${cek[x].qty}`
+                                    })
+                                    jml -= parseFloat(cek[x].qty)
+                                }
+                                
+                            }
+                        }
+                        
+                        // console.log(ttl)
+                        if(filen.length > 0){
+                            if(ttl > 0){
+                                filen.push({
+                                    tgl : `${tahun}-${bln}-${day}`,
+                                    qty : `${jml}`
+                                })
+                            }
+                            else{}
+                        }
+                        else{
+                            if(ttl > 0){
+                                filen.push({
+                                    tgl : `${tahun}-${bln}-${day}`,
+                                    qty : `${akhrn}`
+                                })
+                            }
+                            else{} 
+                        }
+
+                        
+                        data.parsial.length = 0;
+                        
+                        for(let y = 0; y < filen.length; y++){
+                            params.data.parsial.push(filen[y])
+                        }
+                        // console.log(filen)
+                    }
+                }
+                else{
+                    // console.log(cek)
+                    for(let y = 0; y < cek.length; y++){
+                        params.data.parsial.push({qty : cek[y].qty, tgl : cek[y].tglDatang})
+                    };
+                    console.log('log = 0')
+                }
+                
+            }
+            // console.log(data)
+            return hSatuan
+        }
+    },
+    { 
+        headerName: 'Unit',
+        field : 'satuan',
+        width: 70,
+        editable: false,
+    },
+    { 
+        headerName: 'Unit',
+        field : 'newSatuan',
+        width: 70,
+        editable: false,
+        hide : true
+    },
+    { 
+        headerName: 'Harga Satuan',
+        field : 'hargasatuan',
+        width: 110,
+        cellDataType: 'number',
+        cellRenderer: params => {
+            let data = params.data;
+            let hSatuan = 0;
+            if(data.hargasatuan === undefined || data.hargasatuan === ""){hSatuan = 0}
+            else{
+                let nilai = (parseFloat(data.hargasatuan)).toFixed(4);
+                const x  = ((parseFloat(nilai)) * 10000) / 10000;
+                // console.log(x);
+                hSatuan = (parseFloat(x)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            return hSatuan
+        }
+    },
+    { 
+        headerName: '% Disc',
+        field : 'diskon',
+        width: 80,
+        /* valueFormatter: params => {
+            console.log(params)
+            return params.data.diskon
+        } */
+    },
+    { 
+        headerName: 'Jumlah Harga',
+        field : 'jmlhHarga',
+        editable: false,
+        width: 120,
+        valueGetter: params => {
+            let data = params.data;
+            // console.log(params.data)
+            let jmlh = 0;
+            let hSatuan = 0;
+            let diskon = 0;
+            if(data.qty === undefined || data.qty === ""){jmlh = 0}
+            else{jmlh = parseFloat(data.qty)}
+            if(data.hargasatuan === undefined || data.hargasatuan === ""){hSatuan = 0}
+            else{hSatuan = parseFloat(data.hargasatuan)}
+            if(data.diskon === undefined || data.diskon === ""){diskon = 0}
+            else{diskon = String(data.diskon).split("+")}
+            let total = jmlh * hSatuan;
+
+            if(diskon.length <2){
+                let cekHarga = (parseFloat(diskon) * total) / 100;
+                total = total - cekHarga;
+            }
+            else{
+                for(let x = 0; x < diskon.length;x++){
+                    let cekHarga = (parseFloat(diskon[x]) * total) / 100;
+                    total = total - cekHarga;
+                }
+            }
+            return (parseFloat(total)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
+    },
+    { 
+        headerName: 'Departemen',
+        field : 'departement',
+        width: 120,
+        editable: true,
+        cellEditor: "agSelectCellEditor",
+        cellEditorParams: {
+            values: departement,
+        },
+    },
+    { 
+        headerName: 'Barang',
+        field : 'itemNo',
+        width: 110,
+    },
+    { 
+        headerName: '',
+        colId: 'action',
+        editable: false,
+        maxWidth: 15,
+        cellStyle: {padding: 0},
+        cellRenderer: PopupCellRenderer,
+    },
+    { 
+        headerName: 'Pajak',
+        field : 'pajak',
+        width: 70,
+        editable: true,
+        cellRenderer: params => {
+            let data = params.data;
+            let pajak = "";
+            if(data.pajak === ""){
+                pajak = "";
+            }
+            else{
+                pajak = String(data.pajak).toUpperCase();
+            }
+            return pajak
+        }
+    },
+    { 
+        headerName: 'Spesifikasi',
+        field : 'newSpek',
+        width: 200,
+        editable: true,
+    },
+    { 
+        headerName: 'Divisi',
+        field : 'divisi',
+        width: 110,
+        editable: true,
+    },
+    { 
+        headerName: 'Terima',
+        field : 'terima',
+        width: 120,
+        editable: false,
+    },
+    { 
+        headerName: 'Tutup',
+        field : 'tutup',
+        width: 120,
+        editable: false,
+    },
+]
+export const COLUMNS_DATAPOVIEW =[
+    { 
+        headerName: 'Nama Barang',
+        field : 'material',
+        width: 150,
+        maxWidth:405,
+        pinned: 'left',
+    },
+    { 
+        headerName: 'Jumlah',
+        field : 'qty',
+        width: 110,
+    },
+    { 
+        headerName: 'Unit',
+        field : 'satuan',
+        width: 70,
+    },
+    { 
+        headerName: 'Harga Satuan',
+        field : 'hargasatuan',
+        width: 110,
+        cellDataType: 'number',
+    },
+    { 
+        headerName: '% Disc',
+        field : 'diskon',
+        width: 80,
+    },
+    { 
+        headerName: 'Jumlah Harga',
+        field : 'jmlhHarga',
+        width: 120,
+    },
+    { 
+        headerName: 'Departemen',
+        field : 'departement',
+        width: 120,
+    },
+    { 
+        headerName: 'Barang',
+        field : 'itemNo',
+        width: 110,
+    },
+    { 
+        headerName: 'Pajak',
+        field : 'pajak',
+        width: 70,
+    },
+    { 
+        headerName: 'Spesifikasi',
+        field : 'newSpek',
+        width: 200,
+    },
+    { 
+        headerName: 'Divisi',
+        field : 'divisi',
+        width: 110,
+    },
+    { 
+        headerName: 'Terima',
+        field : 'terima',
+        width: 120,
+    },
+    { 
+        headerName: 'Tutup',
+        field : 'tutup',
+        width: 120,
     },
 ]
 export const COLUMNS_DEPARTEMENT =[
@@ -1637,6 +2209,25 @@ export const COLUMNS_PO =[
         headerName: 'Tgl Kirim',
         width: 150,
         field : 'tgl_kirim',
+    },
+    {
+        headerName: 'Dibuat Oleh',
+        width: 150,
+        field : 'user',
+        /* cellRenderer: params => {
+            let data = params.data;
+            // console.log(data)
+        } */
+    },
+    {
+        headerName: 'Tgl Verifikasi',
+        width: 150,
+        field : 'tgl_verify',
+    },
+    {
+        headerName: 'Tgl Approved',
+        width: 150,
+        field : 'tgl_approve',
     },
     {
         field : 'Action',

@@ -617,14 +617,20 @@ export const TableAddRemove = (props) => {
 
     const createPurchase = () =>{
         if(userData.usubdiv === "Purchasing"){
-          let fData = dataPos.filter((i)=>i.status !== "Verifikasi");
-          if(fData.length === 0){
-            props.onAddGoal(dataPos);
-            props.close();
-          }
-          else{
-            Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
-          }
+            console.log(dataPos)
+            if(dataPos.length > 0){
+                let fData = dataPos.filter((i)=>i.status !== "Verifikasi");
+                if(fData.length === 0){
+                    props.onAddGoal(dataPos);
+                    props.close();
+                }
+                else{
+                    Swal.fire('Oppss..','Harap cek kembali pilihan anda masih ada status pengajuan, revisi atau sudah selsai dalam pengadaan','warning')
+                }
+            }
+            else{
+                Swal.fire('Oppss..','Harap pilih data pengadaan barang','warning')
+            }
     
         }
         else{

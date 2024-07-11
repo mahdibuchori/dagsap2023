@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     pageNumber: {
         fontSize: '8px',
     },
+    textsize:{
+        width: '18mm',
+        padding: 2,
+        textAlign: 'left',
+        fontSize:'16px',
+    }
 });
 
 export const PrintPo = () => {
@@ -87,7 +93,7 @@ export const PrintPo = () => {
     const [totalSub, setTotalSub] = useState(0);
     const [bantar, setBantar] = useState(0);
     const [diskon, setDiskon] = useState(0);
-    
+    const [taxName, setTaxName] = useState('');
     const [dtPar, setDtPar] = useState(false);
     const [dtNote, setDtNote] = useState(false);
     const [show, setShow] = useState(false);
@@ -233,6 +239,7 @@ export const PrintPo = () => {
 
         if(cek.length > 0){
             const n = cek[0];
+            console.log(n)
             let alamat = "";
             if(n.addressline2 === ""){alamat = n.addressline1} else{alamat = `${n.addressline1}, ${n.addressline2}`}
             let alamat1 = "";
@@ -245,6 +252,7 @@ export const PrintPo = () => {
             if(n.country === ""){alamat4 = alamat3}else{alamat4 = `${alamat3}, ${n.country}`}
             
             setAlamat(alamat4);
+            setTaxName(n.tax2name)
         }
         else{
             setAlamat('');
@@ -408,27 +416,25 @@ export const PrintPo = () => {
                                 <Text style={[styles.border,{width: '7mm', fontSize: "8px", padding: 2}]}>No</Text>
                                 <Text style={[styles.border,{width: '63mm', fontSize: "8px", padding: 2}]}>Nama Barang</Text>
                                 <Text style={[styles.border,{width: '19mm', fontSize: "8px", padding: 2}]}>Jumlah</Text>
-                                <Text style={[styles.border,{width: '19mm', fontSize: "8px", padding: 2}]}>Satuan</Text>
+                                <Text style={[styles.border,{width: '15mm', fontSize: "8px", padding: 2}]}>Satuan</Text>
                                 <Text style={[styles.border,{width: '25mm', fontSize: "8px", padding: 2}]}>Harga Satuan</Text>
                                 <Text style={[styles.border,{width: '19mm', fontSize: "8px", padding: 2}]}>% Diskon</Text>
                                 <Text style={[styles.border,{width: '24mm', fontSize: "8px", padding: 2}]}>Jumlah Harga</Text>
-                                <Text style={[styles.border,{width: '14mm', fontSize: "8px", padding: 2}]}>Div</Text>
+                                <Text style={[styles.border,{width: '18mm', fontSize: "8px", padding: 2}]}>Div</Text>
                             </View>
                             {
                                 list.map((row, i) => {
                                     const hargaSa = parseFloat(row.hargasatuan).toFixed(2);
                                     const hargaJm = parseFloat(row.jmlhHarga).toFixed(2);
-                                    return(
-                                        <View style={[styles.row,{textAlign: 'center'}]}>
+                                    return(<View style={[styles.row,{textAlign: 'center'}]}>
                                         <Text style={[styles.border,{width: '7mm', padding: 3}]}>{i+1}</Text>
                                         <Text style={[styles.border,{width: '63mm', padding: 2, textAlign: 'left'}]}>{row.material}</Text>
                                         <Text style={[styles.border,{width: '19mm', padding: 2,textAlign: 'right'}]}>{row.qty}</Text>
-                                        <Text style={[styles.border,{width: '19mm', padding: 2}]}>{row.satuan}</Text>
+                                        <Text style={[styles.border,{width: '15mm', padding: 2}]}>{row.satuan}</Text>
                                         <Text style={[styles.border,{width: '25mm', padding: 2,textAlign: 'right'}]}>{String(hargaSa).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
                                         <Text style={[styles.border,{width: '19mm', padding: 2}]}>{row.diskon}</Text>
                                         <Text style={[styles.border,{width: '24mm', padding: 2,textAlign: 'right'}]}>{String(hargaJm).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
-                                        <Text style={[styles.border,{width: '14mm', padding: 2,textAlign: 'left'}]}>{row.divisi
-                                        }</Text>
+                                        <Text style={[styles.border,styles.textsize,{fontSize: '1vw'}]}>{row.divisi}</Text>
                                     </View>
                                     )
                                 })
@@ -445,7 +451,7 @@ export const PrintPo = () => {
                                         <View style={[styles.row,{width: '60mm',height: '30mm', textAlign: 'center'}]}>
                                             <View style={[{width: '20mm', marginTop: '2mm'}]}>
                                                 <Text>Disiapkan Oleh</Text>
-                                                <Image style={{width: '18mm', height:'18mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Endang W`}/> 
+                                                <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Endang W`}/> 
                                                 <Text style={{marginTop: '2mm'}}>Endang W</Text>
                                             </View>
                                             <View style={[{width: '20mm', marginLeft : '1mm', marginTop: '2mm'}]}>
@@ -458,7 +464,7 @@ export const PrintPo = () => {
                                                 <Text style={{marginTop: '2mm'}}>Mawi Prabudi</Text>
                                             </View>
                                             <View style={[{width: '20mm', marginLeft : '1mm', marginTop: '2mm'}]}>
-                                                <Text>Disiapkan Oleh</Text>
+                                                <Text>Disetujui Oleh</Text>
                                                 {stAppro ? 
                                                     <Image style={{width: '16mm', height:'16mm', marginLeft : '2mm', marginTop: '2mm'}} src={`https://api.qrserver.com/v1/create-qr-code/?data=Rusli Adna`}/> 
                                                     :
@@ -503,7 +509,7 @@ export const PrintPo = () => {
                                         </Text>
                                     </View>
                                     <View style={[styles.row,styles.fontBold]}>
-                                        <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}> </Text>
+                                        <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>{taxName} :</Text>
                                         <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>
                                         {String(totalPph).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </Text>
