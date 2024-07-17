@@ -13,7 +13,7 @@ import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaa
 
 export const Tablepengadaan = ({columns}) => {
     
-  const arrDiv = ['FG', 'HR-GA', 'Maintenance', 'PPIC-WH', 'Produksi', 'Purchasing', 'QAQC', 'RnD', 'SSD', 'FAT', 'Budgeting']
+  const arrDiv = ['FG', 'HR-GA', 'Maintenance', 'PPIC-WH', 'Produksi', 'Purchasing', 'QAQC', 'RnD', 'SSD', 'FAT', 'Budgeting', 'Sales-Marketing']
   let navigate = useNavigate();
   const gridRef = useRef();
   const userData = useAuthStore(selectUser);
@@ -37,6 +37,7 @@ export const Tablepengadaan = ({columns}) => {
   const [rowSsd, setRowSsd] = useState();
   const [rowFat, setRowFat] = useState();
   const [rowBudget, setRowBudget] = useState();
+  const [rowSales, setRowSales] = useState();
   const [dataPo, setDataPo] = useState([]);
   const [fileBox, setFileBox] = useState([]);
   const [dataSementara, setDataSementara] = useState([]);
@@ -52,6 +53,7 @@ export const Tablepengadaan = ({columns}) => {
   const [usRnd, setUsRnd] = useState(true);
   const [usFat, setUsFat] = useState(true);
   const [usBudg, setUsBudg] = useState(true);
+  const [usSales, setUsSales] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [fileReady, setFileReady] = useState(false);
@@ -139,6 +141,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "HR-GA":
             setKey("HR-GA");
@@ -152,6 +155,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsSsd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "Maintenance":
             setKey("Maintenance");
@@ -166,6 +170,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "PPIC-WH":
             setKey("PPIC-WH");
@@ -180,6 +185,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "Produksi":
             setKey("Produksi");
@@ -194,6 +200,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "Purchasing":
             setKey("Purchasing");
@@ -208,6 +215,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(false);
             setUsBudg(false);
             setUsFat(false);
+            setUsSales(false);
         break;
         case "QAQC":
             setKey("QAQC");
@@ -222,6 +230,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "Budgeting":
             setKey("Budgeting");
@@ -236,6 +245,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(false);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "FAT":
             setKey("FAT");
@@ -250,6 +260,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(false);
+            setUsSales(true);
         break;
         case "FAT & Budgeting":
             setKey("FAT");
@@ -264,6 +275,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(false);
             setUsFat(false);
+            setUsSales(true);
         break;
         case "RnD":
             setKey("RnD");
@@ -279,6 +291,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsSsd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
         break;
         case "SSD":
             setKey("SSD");
@@ -293,6 +306,22 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(true);
             setUsBudg(true);
             setUsFat(true);
+            setUsSales(true);
+        break;
+        case "Sales-Marketing":
+          setKey("SSD");
+          setUsFg(true);
+          setUsHrga(true);
+          setUsMaintenance(true);
+          setUsPpic(true);
+          setUsProduksi(true);
+          setUsPurchasing(true);
+          setUsQaqc(true);
+          setUsSsd(true);
+          setUsRnd(true);
+          setUsBudg(true);
+          setUsFat(true);
+          setUsSales(false);
         break;
         case "PPIC-Purchasing":
             setKey("FG");
@@ -307,6 +336,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(false);
             setUsBudg(false);
             setUsFat(false);
+            setUsSales(true);
         break;
         case "Develop":
             setKey("FG");
@@ -321,6 +351,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(false);
             setUsBudg(false);
             setUsFat(false);
+            setUsSales(false);
         break;
         case "BOD/BOC":
             setKey("FG");
@@ -335,6 +366,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsRnd(false);
             setUsBudg(false);
             setUsFat(false);
+            setUsSales(false);
         break;
         default:
               setKey("");
@@ -348,6 +380,7 @@ export const Tablepengadaan = ({columns}) => {
               setUsSsd(true);
               setUsBudg(true);
               setUsFat(true);
+              setUsSales(true);
       }
     }
     cekList();
@@ -559,6 +592,7 @@ export const Tablepengadaan = ({columns}) => {
       const ssd = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SSD");
       const fat = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FAT");
       const budg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "BUDGETING");
+      const sales = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SALES-MARKETING");
 
       const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
       const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
@@ -620,6 +654,11 @@ export const Tablepengadaan = ({columns}) => {
         const dateB = new Date(b.t_pengadaan);
         return dateB - dateA;
       });
+      sales.sort(function(a, b) {
+        const dateA = new Date(a.t_pengadaan);
+        const dateB = new Date(b.t_pengadaan);
+        return dateB - dateA;
+      });
       
       setRowFg(fg); 
       setRowHrga(hrga);
@@ -632,6 +671,7 @@ export const Tablepengadaan = ({columns}) => {
       setRowSsd(ssd);
       setRowFat(fat);
       setRowBudget(budg);
+      setRowSales(sales)
 
       setJmlPengajuan(jumPengajuan.length);
       setJmlRevisi(jumRevisi.length);
@@ -707,6 +747,7 @@ export const Tablepengadaan = ({columns}) => {
     const ssd = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SSD" && x.status.toUpperCase() === data.toUpperCase());
     const fat = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FAT" && x.status.toUpperCase() === data.toUpperCase());
     const budg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "BUDGETING" && x.status.toUpperCase() === data.toUpperCase());
+    const sales = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SALES-MARKETING" && x.status.toUpperCase() === data.toUpperCase());
 
     fg.sort(function(a, b) {
       const dateA = new Date(a.t_pengadaan);
@@ -763,6 +804,11 @@ export const Tablepengadaan = ({columns}) => {
       const dateB = new Date(b.t_pengadaan);
       return dateB - dateA;
     });
+    sales.sort(function(a, b) {
+      const dateA = new Date(a.t_pengadaan);
+      const dateB = new Date(b.t_pengadaan);
+      return dateB - dateA;
+    });
 
     setRowFg(fg);
     setRowHrga(hrga);
@@ -775,6 +821,7 @@ export const Tablepengadaan = ({columns}) => {
     setRowSsd(ssd);
     setRowFat(fat);
     setRowBudget(budg);
+    setRowSales(sales)
     /* 
     uuid	
     uname	
@@ -1349,6 +1396,21 @@ export const Tablepengadaan = ({columns}) => {
                   <AgGridReact
                     ref={gridRef}
                     rowData={rowBudget}
+                    columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    pagination={false}
+                    cacheQuickFilter={true}
+                    rowSelection={'multiple'}
+                    onSelectionChanged={onSelectionChanged}
+                    onRowDataUpdated={onRowDataUpdated}
+                  ></AgGridReact>
+                </div>
+            </Tab>
+            <Tab eventKey="Sales-Marketing" title="Sales-Marketing" disabled={usSales}>
+                <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                  <AgGridReact
+                    ref={gridRef}
+                    rowData={rowSales}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     pagination={false}

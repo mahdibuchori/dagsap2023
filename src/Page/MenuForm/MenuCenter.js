@@ -12,6 +12,7 @@ import { MenuQaqc } from './MenuQaqc';
 import { MenuFg } from './MenuFg';
 import { MenuMtc } from './MenuMtc';
 import { MenuFat } from './MenuFat';
+import { MenuRnd } from './MenuRnd';
 
 
 const MenuCenter = () => {
@@ -88,6 +89,14 @@ const MenuCenter = () => {
     return (
       <div className='setContain'>
         <MenuQaqc />
+      </div>
+    )
+  }
+  
+  else if(userData?.udivisi === "RnD" ){
+    return (
+      <div className='setContain'>
+        <MenuRnd />
       </div>
     )
   }
