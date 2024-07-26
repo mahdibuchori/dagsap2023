@@ -63,7 +63,7 @@ export const BtnPengadaan = (props) => {
       }
 
       if(String(props.data.status).toUpperCase() === "PENGAJUAN"){
-          if(level === 0){
+          if(level === 0 || level === 1){
               navigate(`/form/pengadaan/verfikasi`,{state:{
                   data : props.data
               }});

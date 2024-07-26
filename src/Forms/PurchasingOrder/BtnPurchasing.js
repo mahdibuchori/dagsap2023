@@ -107,8 +107,8 @@ export const BtnPurchasing = (props) => {
         const coba = () =>{
             // console.log(userData)
             if (data ==='Pengajuan' && fina === "") {
-                if(userData.usubdiv === "Purchasing"){
-                    if(userData.ulevel === 3){
+                if(userData?.usubdiv === "Purchasing"){
+                    if(userData?.ulevel === 3){
                         setclikUpdate('block');
                         // setClickDelete('block');
                     }
@@ -117,14 +117,14 @@ export const BtnPurchasing = (props) => {
                     }
                     
                 }
-                else if(userData.usubdiv === "PPIC-WH" && userData.ulevel === 2){
+                else if(userData?.usubdiv === "PPIC-WH" && userData?.ulevel === 2){
                     setclickVery('block')
                 }
                 else{}
             }
             else if (data ==='Pengajuan' && fina === "Upload") {
-                if(userData.usubdiv === "Purchasing"){
-                    if(userData.ulevel === 3){
+                if(userData?.usubdiv === "Purchasing"){
+                    if(userData?.ulevel === 3){
                         setclikUpdate('block');
                         // setClickDelete('block');
                     }
@@ -132,31 +132,31 @@ export const BtnPurchasing = (props) => {
                         setclikUpdate('none');
                     }
                 }
-                else if(userData.usubdiv === "PPIC-WH" && userData.ulevel === 2){
+                else if(userData?.usubdiv === "PPIC-WH" && userData?.ulevel === 2){
                     setclickVery('block')
                 }
                 else{}
             }
             else if (data ==='Verifikasi' && fina === "") {
-                if(userData.usubdiv === "Purchasing"){
+                if(userData?.usubdiv === "Purchasing"){
                     setclickPrint('block')
                 }
-                else if(userData.usubdiv === "BOD/BOC"){
+                else if(userData?.usubdiv === "BOD/BOC"){
                     setclickVery('block')
                 }
                 else{}
             }
             else if (data ==='Verifikasi' && fina === "Upload") {
-                if(userData.usubdiv === "Purchasing"){
+                if(userData?.usubdiv === "Purchasing"){
                     setclickPrint('block')
                 }
-                else if(userData.usubdiv === "BOD/BOC"){
+                else if(userData?.usubdiv === "BOD/BOC"){
                     setclickVery('block')
                 }
                 else{}
             }
             else if (data ==='Selesai' && fina === "") {
-                if(userData.usubdiv === "Purchasing"){
+                if(userData?.usubdiv === "Purchasing"){
                     setclickPrint('block')
                     setclickReload('block')
                 }
@@ -166,7 +166,7 @@ export const BtnPurchasing = (props) => {
                 }  
             }
             else if (data ==='Selesai' && fina === "Upload") {
-                if(userData.usubdiv === "Purchasing"){
+                if(userData?.usubdiv === "Purchasing"){
                     setclickPrint('block')
                 }
                 else{
@@ -174,8 +174,8 @@ export const BtnPurchasing = (props) => {
                 }  
             }
             else if (data ==='Revisi' && fina === "") {
-                if(userData.usubdiv === "Purchasing"){
-                    if(userData.ulevel === 3){
+                if(userData?.usubdiv === "Purchasing"){
+                    if(userData?.ulevel === 3){
                         setclikUpdate('block')
                     }
                     else{
@@ -183,14 +183,14 @@ export const BtnPurchasing = (props) => {
                     }
                     
                 }
-                else if(userData.usubdiv === "PPIC-WH" && userData.ulevel === 2){
+                else if(userData?.usubdiv === "PPIC-WH" && userData?.ulevel === 2){
                     setclickVery('block')
                 }
                 else{}
             }
             else if (data ==='Revisi' && fina === "Upload") {
-                if(userData.usubdiv === "Purchasing"){
-                    if(userData.ulevel === 3){
+                if(userData?.usubdiv === "Purchasing"){
+                    if(userData?.ulevel === 3){
                         setclikUpdate('block')
                     }
                     else{
@@ -198,7 +198,7 @@ export const BtnPurchasing = (props) => {
                     }
                     
                 }
-                else if(userData.usubdiv === "PPIC-WH" && userData.ulevel === 2){
+                else if(userData?.usubdiv === "PPIC-WH" && userData?.ulevel === 2){
                     setclickVery('block')
                 }
                 else{}
@@ -259,8 +259,8 @@ export const BtnPurchasing = (props) => {
     )
 
     const buttonClicked = () => {
-        if(props?.data.status === "Pengajuan" && userData.usubdiv === "Purchasing" && userData.uplan === "Sentul"){
-            if(userData.ulevel === 3){
+        if(props?.data.status === "Pengajuan" && userData?.usubdiv === "Purchasing" && userData?.uplan === "Sentul"){
+            if(userData?.ulevel === 3){
                 navigate(`/form/purchaseorder/update`,{state:{
                     data : props.data
                 }});
@@ -269,8 +269,8 @@ export const BtnPurchasing = (props) => {
                 bacaData()
             }
         }
-        else if(props?.data.status === "Revisi" && userData.usubdiv === "Purchasing" && userData.uplan === "Sentul"){
-            if(userData.ulevel === 3){
+        else if(props?.data.status === "Revisi" && userData?.usubdiv === "Purchasing" && userData?.uplan === "Sentul"){
+            if(userData?.ulevel === 3){
                 navigate(`/form/purchaseorder/update`,{state:{
                     data : props.data
                 }});
@@ -426,7 +426,7 @@ export const BtnPurchasing = (props) => {
                     className="buttonCancel"
                 >
                 <i className="bi bi-arrow-clockwise"></i>
-                <p style={{display:"none"}}>{userData.uname}</p>
+                <p style={{display:"none"}}>{userData?.uname}</p>
                 </button>
             </OverlayTrigger>
 
@@ -442,7 +442,7 @@ export const BtnPurchasing = (props) => {
                     className="buttonPrint"
                 >
                 <i className="bi bi-printer-fill"></i>
-                <p style={{display:"none"}}>{userData.uname}</p>
+                <p style={{display:"none"}}>{userData?.uname}</p>
                 </button>
             </OverlayTrigger>
 

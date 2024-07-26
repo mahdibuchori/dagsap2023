@@ -35,7 +35,7 @@ export const FileDivisi = [
   { value: 'Produksi', label: 'Produksi', subDiv :[{lab: 'Produksi', valu: 'Produksi'}]},
   { value: 'QAQC', label: 'QAQC', subDiv :[{lab: 'QAQC', valu: 'QAQC'}]},
   { value: 'RnD', label: 'RnD', subDiv :[{lab: 'RnD', valu: 'RnD'}]},
-  { value: 'Sales-Marketing', label: 'Sales-Marketing', subDiv :[{lab: 'Marketing', valu: 'Marketing'},{lab: 'Sales', valu: 'Sales'}]},
+  { value: 'Sales-Marketing', label: 'Sales-Marketing', subDiv :[{lab: 'Sales-Marketing', valu: 'Sales-Marketing'}]},
   { value: 'SSD', label: 'SSD', subDiv :[{lab: 'SSD', valu: 'SSD'}]},
 ]
 

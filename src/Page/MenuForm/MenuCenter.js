@@ -13,6 +13,7 @@ import { MenuFg } from './MenuFg';
 import { MenuMtc } from './MenuMtc';
 import { MenuFat } from './MenuFat';
 import { MenuRnd } from './MenuRnd';
+import { MenuSsm } from './MenuSsm';
 
 
 const MenuCenter = () => {
@@ -97,6 +98,12 @@ const MenuCenter = () => {
     return (
       <div className='setContain'>
         <MenuRnd />
+      </div>
+    )
+  }else if(userData?.udivisi === "Sales-Marketing" ){
+    return (
+      <div className='setContain'>
+        <MenuSsm />
       </div>
     )
   }
