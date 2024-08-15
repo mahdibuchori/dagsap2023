@@ -31,6 +31,7 @@ export const EditAddRemove = (props) => {
     const [rowSsd, setRowSsd] = useState();
     const [rowFat, setRowFat] = useState();
     const [rowBudget, setRowBudget] = useState();
+    const [rowSales, setRowSales] = useState();
     const [dataPo, setDataPo] = useState([]);
     const [fileBox, setFileBox] = useState([]);
     const [dataPos, setdataPos] = useState([]);
@@ -44,6 +45,9 @@ export const EditAddRemove = (props) => {
     const [usQaqc, setUsQaqc] = useState(true);
     const [usSsd, setUsSsd] = useState(true);
     const [usRnd, setUsRnd] = useState(true);
+    const [usFat, setUsFat] = useState(true);
+    const [usBudg, setUsBudg] = useState(true);
+    const [usSales, setUsSales] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [dataReady, setDataReady] = useState(false);
     const [fileReady, setFileReady] = useState(false);
@@ -122,6 +126,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(true);
                 setUsSsd(true);
                 setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "HR-GA":
                 setKey("HR-GA");
@@ -133,6 +140,10 @@ export const EditAddRemove = (props) => {
                 setUsPurchasing(true);
                 setUsQaqc(true);
                 setUsSsd(true);
+                setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "Maintenance":
                 setKey("Maintenance");
@@ -145,6 +156,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(true);
                 setUsSsd(true);
                 setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "PPIC-WH":
                 setKey("PPIC-WH");
@@ -157,6 +171,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(true);
                 setUsSsd(true);
                 setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "Produksi":
                 setKey("Produksi");
@@ -169,6 +186,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(true);
                 setUsSsd(true);
                 setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "Purchasing":
                 setKey("Purchasing");
@@ -181,6 +201,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(false);
                 setUsSsd(false);
                 setUsRnd(false);
+                setUsBudg(false);
+                setUsFat(false);
+                setUsSales(false);
             break;
             case "QAQC":
                 setKey("QAQC");
@@ -193,6 +216,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(false);
                 setUsSsd(true);
                 setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "RnD":
                 setKey("RnD");
@@ -204,8 +230,10 @@ export const EditAddRemove = (props) => {
                 setUsProduksi(true);
                 setUsPurchasing(true);
                 setUsQaqc(true);
-                setUsRnd(false);
                 setUsSsd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "SSD":
                 setKey("SSD");
@@ -218,6 +246,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(true);
                 setUsSsd(false);
                 setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(true);
             break;
             case "PPIC-Purchasing":
                 setKey("FG");
@@ -230,6 +261,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(false);
                 setUsSsd(false);
                 setUsRnd(false);
+                setUsBudg(false);
+                setUsFat(false);
+                setUsSales(false);
             break;
             case "Develop":
                 setKey("FG");
@@ -242,6 +276,9 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(false);
                 setUsSsd(false);
                 setUsRnd(false);
+                setUsBudg(false);
+                setUsFat(false);
+                setUsSales(false);
             break;
             case "BOD/BOC":
                 setKey("FG");
@@ -254,7 +291,55 @@ export const EditAddRemove = (props) => {
                 setUsQaqc(false);
                 setUsSsd(false);
                 setUsRnd(false);
+                setUsBudg(false);
+                setUsFat(false);
+                setUsSales(false);
             break;
+            case "FAT":
+                setKey("FAT");
+                setUsFg(true);
+                setUsHrga(true);
+                setUsMaintenance(true);
+                setUsPpic(true);
+                setUsProduksi(true);
+                setUsPurchasing(true);
+                setUsQaqc(true);
+                setUsSsd(true);
+                setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(false);
+                setUsSales(true);
+            break;
+            case "FAT & Budgeting":
+                setKey("FAT");
+                setUsFg(true);
+                setUsHrga(true);
+                setUsMaintenance(true);
+                setUsPpic(true);
+                setUsProduksi(true);
+                setUsPurchasing(true);
+                setUsQaqc(true);
+                setUsSsd(true);
+                setUsRnd(true);
+                setUsBudg(false);
+                setUsFat(false);
+                setUsSales(true);
+            break;
+            case "Sales-Marketing":
+                setKey("SSD");
+                setUsFg(true);
+                setUsHrga(true);
+                setUsMaintenance(true);
+                setUsPpic(true);
+                setUsProduksi(true);
+                setUsPurchasing(true);
+                setUsQaqc(true);
+                setUsSsd(true);
+                setUsRnd(true);
+                setUsBudg(true);
+                setUsFat(true);
+                setUsSales(false);
+              break;
             default:
                     setKey("");
                     setUsFg(true);
@@ -462,6 +547,7 @@ export const EditAddRemove = (props) => {
             const ssd = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SSD");
             const fat = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "FAT");
             const budg = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "BUDGETING");
+            const sales = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SALES-MARKETING");
         
             fg.sort(function(a, b) {
                 const dateA = new Date(a.t_pengadaan);
@@ -518,6 +604,11 @@ export const EditAddRemove = (props) => {
                 const dateB = new Date(b.t_pengadaan);
                 return dateB - dateA;
             });
+            sales.sort(function(a, b) {
+              const dateA = new Date(a.t_pengadaan);
+              const dateB = new Date(b.t_pengadaan);
+              return dateB - dateA;
+            });
             
             setRowFg(fg); 
             setRowHrga(hrga);
@@ -530,6 +621,7 @@ export const EditAddRemove = (props) => {
             setRowSsd(ssd);
             setRowFat(fat);
             setRowBudget(budg);
+            setRowSales(sales);
 
             await pengadaanFalse()
             if(pengadaanReady){
@@ -818,7 +910,7 @@ export const EditAddRemove = (props) => {
                             ></AgGridReact>
                             </div>
                         </Tab>
-                        <Tab eventKey="FAT" title="FAT" disabled={usSsd}>
+                        <Tab eventKey="FAT" title="FAT" disabled={usFat}>
                             <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
                             <AgGridReact
                                 ref={gridRef}
@@ -833,11 +925,26 @@ export const EditAddRemove = (props) => {
                             ></AgGridReact>
                             </div>
                         </Tab>
-                        <Tab eventKey="Budgeting" title="Budgeting" disabled={usSsd}>
+                        <Tab eventKey="Budgeting" title="Budgeting" disabled={usBudg}>
                             <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
                             <AgGridReact
                                 ref={gridRef}
                                 rowData={rowBudget}
+                                columnDefs={columns}
+                                defaultColDef={defaultColDef}
+                                pagination={false}
+                                cacheQuickFilter={true}
+                                rowSelection={'multiple'}
+                                onRowDataUpdated={onRowDataUpdated}
+                                onSelectionChanged={onSelectionChanged}
+                            ></AgGridReact>
+                            </div>
+                        </Tab>
+                        <Tab eventKey="Sales-Marketing" title="Sales-Marketing" disabled={usSales}>
+                            <div style={{height: screenHeight, width: screenWidth, padding: 10}} className="ag-theme-alpine">
+                            <AgGridReact
+                                ref={gridRef}
+                                rowData={rowSales}
                                 columnDefs={columns}
                                 defaultColDef={defaultColDef}
                                 pagination={false}

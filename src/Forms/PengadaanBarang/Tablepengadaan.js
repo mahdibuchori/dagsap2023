@@ -671,7 +671,7 @@ export const Tablepengadaan = ({columns}) => {
       setRowSsd(ssd);
       setRowFat(fat);
       setRowBudget(budg);
-      setRowSales(sales)
+      setRowSales(sales);
 
       setJmlPengajuan(jumPengajuan.length);
       setJmlRevisi(jumRevisi.length);
