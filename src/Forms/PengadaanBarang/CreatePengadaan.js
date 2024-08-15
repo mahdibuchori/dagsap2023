@@ -68,9 +68,9 @@ export const CreatePengadaan = () => {
           }
           return unique;
       },[]);
-      const  newFileNab= result?.filter(x => x.value !== "Finished Goods");
+      // const  newFileNab= result?.filter(x => x.value !== "Finished Goods");
       
-      setFileNab(newFileNab);
+      setFileNab(result);
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
