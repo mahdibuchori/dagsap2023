@@ -963,6 +963,7 @@ export const Tablepengadaan = ({columns}) => {
 
   const createPenarikan = () =>{
     console.log(newPengadaan)
+    console.log(dataSementara)
     let data = []
     const date = new Date();
     const month = date.getMonth() + 1;
@@ -987,6 +988,7 @@ export const Tablepengadaan = ({columns}) => {
           {
             No : i+1,
             Id : e.id_Pengadaan,
+            Tanggal_Pengadaan : e.t_pengadaan,
             Nama_Item : nabar,
             Merk : merk,
             Spesifikasi : e.spesifikasi,
@@ -997,10 +999,9 @@ export const Tablepengadaan = ({columns}) => {
       })
     }
     else{
-      let uniqueChars = [...new Set(dataPo)];
-      let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
-      const cek = newArray.filter((x) => x.status === "Verifikasi")
+      const cek = dataSementara.filter((x) => x.status === "Verifikasi")
       data = cek.map((e,i) =>{
+        console.log(e)
         let nabar, merk = '';
         if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
           nabar = e.tipeMaterial
@@ -1014,6 +1015,7 @@ export const Tablepengadaan = ({columns}) => {
           {
             No : i+1,
             Id : e.id_Pengadaan,
+            Tanggal_Pengadaan : e.t_pengadaan,
             Nama_Item : nabar,
             Merk : merk,
             Spesifikasi : e.spesifikasi,
@@ -1023,6 +1025,33 @@ export const Tablepengadaan = ({columns}) => {
         )
       })
     }
+    // else{
+    //   let uniqueChars = [...new Set(dataPo)];
+    //   let newArray = newPengadaan.filter((array22) => uniqueChars.some((array11) => array11 === array22.id_Pengadaan));
+    //   const cek = newArray.filter((x) => x.status === "Verifikasi")
+    //   data = cek.map((e,i) =>{
+    //     let nabar, merk = '';
+    //     if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
+    //       nabar = e.tipeMaterial
+    //       merk = e.brandMaterial
+    //     }
+    //     else{
+    //       nabar = e.material[0].material
+    //       merk = ''
+    //     }
+    //     return(
+    //       {
+    //         No : i+1,
+    //         Id : e.id_Pengadaan,
+    //         Nama_Item : nabar,
+    //         Merk : merk,
+    //         Spesifikasi : e.spesifikasi,
+    //         Quantity : e.qty_pengadaan[0].order,
+    //         Satuan : e.qty_pengadaan[0].satuan,	
+    //       }
+    //     )
+    //   })
+    // }
     console.log(data)
     const worksheet = utils.json_to_sheet(data);
     for(let x =0; x < data.length; x++){
@@ -1033,7 +1062,7 @@ export const Tablepengadaan = ({columns}) => {
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, 'Sheet1');
     /* fix headers */
-    utils.sheet_add_aoa(worksheet, [['No','Id','Nama Item','Merk','Spesifikasi','Quantity','Satuan']], { origin: 'A1' });
+    utils.sheet_add_aoa(worksheet, [['No','Id','Tanggal Pengadaan','Nama Item','Merk','Spesifikasi','Quantity','Satuan']], { origin: 'A1' });
     
     /* calculate column width */
     const max_width = data.reduce((w, r) => Math.max(w, r.No.length), 10);
