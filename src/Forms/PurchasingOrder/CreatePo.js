@@ -53,6 +53,7 @@ export const CreatePo = () => {
     const [dataPo, setDataPo] = useState([]);
     const [inputList, setInputList] = useState([]);
     const [dataSementara, setDataSementara] = useState([]);
+    const [tglKirimView, setTglKirimView] = useState([]);
     const [fileNab, setFileNab] = useState(FileBarang);
     const [fileDep, setFileDep] = useState(FileBarang);
     const [tax1name, setTax1name] = useState('');
@@ -581,8 +582,24 @@ export const CreatePo = () => {
                         parsi : dataPo[x].parsi
                     })
                 }
-                console.log(data)
-                setRowData(data);  
+                console.log(data);
+                setRowData(data);
+                let filTgl = [];
+                for(let x = 0; x < data.length; x++){
+                    const nilai = data[x].parsial;
+                    for(let y = 0; y < nilai.length; y++){
+                        filTgl.push(nilai[y].tgl)
+                    }
+                }
+                console.log(filTgl)
+                let unique = [...new Set(filTgl)];
+                unique.sort(function(a, b) {
+                    const dateA = new Date(a);
+                    const dateB = new Date(b);
+                    return dateA - dateB;
+                });
+                console.log(unique)
+                setTglKirimView(unique)
                 setShow(false)
             }
         }
@@ -1143,6 +1160,19 @@ export const CreatePo = () => {
           </ul>
         </Tooltip>
     );
+    const renderTgltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+          <ul>
+            {
+                tglKirimView?.map((e,i)=>{
+                    return(
+                        <li>{e}</li>
+                    )
+                })
+            }
+          </ul>
+        </Tooltip>
+    );
 
     const onAddGoalHandler = (newGoal) =>{
         const results = newGoal.filter(({ id_Pengadaan: id1 }) => !inputList.some(({ id_Pengadaan: id2 }) => id2 === id1));
@@ -1215,6 +1245,7 @@ export const CreatePo = () => {
     }
 
     const readNewData = () =>{
+        setTglKirimView([])
         /* if(dataPo.length === 0){
             Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
         }
@@ -1277,77 +1308,94 @@ export const CreatePo = () => {
             Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
         }
         else{
-        let file = rowData;
-        setRowData([]);
-        let uset = "";
-        if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
-        let plan = String(userData.uplan).toUpperCase();
-        const newFile = dataPo.map((obj,i)=>{
-            let jmlhHarga,harsa = 0;
-            if(obj.hargasatuan !== ""){
-            jmlhHarga = parseFloat(obj.qty) * parseFloat(obj.hargasatuan)
-            harsa = parseFloat(obj.hargasatuan)
-            }
-            //   console.log(obj)
-            return({
-            departement : `PABRIK ${plan}`,
-            diskon : obj.diskon,
-            divisi : obj.divisi,
-            hargasatuan : harsa,
-            id_Pengadaan : obj.id_Pengadaan,
-            itemNo : obj.itemNo,
-            jmlhHarga : jmlhHarga,
-            material : obj.material,
-            newMaterial : obj.newMaterial,
-            newSatuan : obj.newSatuan,
-            pajak : uset,
-            po : obj.po,
-            qty : parseFloat(obj.qty).toFixed(2),
-            qtyAwal : parseFloat(obj.qtyAwal).toFixed(2),
-            satuan : obj.satuan,
-            terima  : obj.terima,
-            tipe : obj.tipe,
-            tutup : obj.tutup,
-            spesifikasi : obj.spesifikasi,
-            brandMaterial : obj.brandMaterial,
-            tipeMaterial : obj.tipeMaterial,
-            newSpek : obj.newSpek,
-            parsial : obj.parsial,
-            parsialAwal : obj.parsialAwal,
-            parsi : obj.parsi,
-            }
-            
-            )
-        })
-        for(let x = 0; x < newFile.length; x++){
-            const idC = file.findIndex((i)=> i.id_Pengadaan === newFile[x].id_Pengadaan);
-            if(idC >= 0){
-                const ids = new Set(file[idC].parsialAwal.map(({ tgl }) => tgl));
-                const sele = newFile[x].parsialAwal.filter(({ tgl }) => !ids.has(tgl));
-                // console.log(sele);
+            let file = rowData;
+            setRowData([]);
+            let uset = "";
+            if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
+            let plan = String(userData.uplan).toUpperCase();
+            const newFile = dataPo.map((obj,i)=>{
                 let jmlhHarga,harsa = 0;
-                newFile[x].material = file[idC].material;
-                if(file[idC].hargasatuan !== ""){
-                    jmlhHarga = parseFloat(newFile[x].qty) * parseFloat(file[idC].hargasatuan)
-                    harsa = parseFloat(file[idC].hargasatuan)
-                    newFile[x].hargasatuan = harsa;
-                    newFile[x].jmlhHarga = jmlhHarga;
+                if(obj.hargasatuan !== ""){
+                jmlhHarga = parseFloat(obj.qty) * parseFloat(obj.hargasatuan)
+                harsa = parseFloat(obj.hargasatuan)
                 }
-                else{
-                    newFile[x].jmlhHarga = 0;
+                //   console.log(obj)
+                return({
+                departement : `PABRIK ${plan}`,
+                diskon : obj.diskon,
+                divisi : obj.divisi,
+                hargasatuan : harsa,
+                id_Pengadaan : obj.id_Pengadaan,
+                itemNo : obj.itemNo,
+                jmlhHarga : jmlhHarga,
+                material : obj.material,
+                newMaterial : obj.newMaterial,
+                newSatuan : obj.newSatuan,
+                pajak : uset,
+                po : obj.po,
+                qty : parseFloat(obj.qty).toFixed(2),
+                qtyAwal : parseFloat(obj.qtyAwal).toFixed(2),
+                satuan : obj.satuan,
+                terima  : obj.terima,
+                tipe : obj.tipe,
+                tutup : obj.tutup,
+                spesifikasi : obj.spesifikasi,
+                brandMaterial : obj.brandMaterial,
+                tipeMaterial : obj.tipeMaterial,
+                newSpek : obj.newSpek,
+                parsial : obj.parsial,
+                parsialAwal : obj.parsialAwal,
+                parsi : obj.parsi,
                 }
-                if(sele.length === 0){
-                    newFile[x].parsial = []
-                    newFile[x].parsialAwal = []
-                    
-                    newFile[x].parsial = file[idC].parsial
-                    newFile[x].parsialAwal = file[idC].parsialAwal
-                    newFile[x].qty = file[idC].qty
+                
+                )
+            })
+            for(let x = 0; x < newFile.length; x++){
+                const idC = file.findIndex((i)=> i.id_Pengadaan === newFile[x].id_Pengadaan);
+                if(idC >= 0){
+                    const ids = new Set(file[idC].parsialAwal.map(({ tgl }) => tgl));
+                    const sele = newFile[x].parsialAwal.filter(({ tgl }) => !ids.has(tgl));
+                    // console.log(sele);
+                    let jmlhHarga,harsa = 0;
+                    newFile[x].material = file[idC].material;
+                    if(file[idC].hargasatuan !== ""){
+                        jmlhHarga = parseFloat(newFile[x].qty) * parseFloat(file[idC].hargasatuan)
+                        harsa = parseFloat(file[idC].hargasatuan)
+                        newFile[x].hargasatuan = harsa;
+                        newFile[x].jmlhHarga = jmlhHarga;
+                    }
+                    else{
+                        newFile[x].jmlhHarga = 0;
+                    }
+                    if(sele.length === 0){
+                        newFile[x].parsial = []
+                        newFile[x].parsialAwal = []
+                        
+                        newFile[x].parsial = file[idC].parsial
+                        newFile[x].parsialAwal = file[idC].parsialAwal
+                        newFile[x].qty = file[idC].qty
+                    }
                 }
+            }
+        console.log(newFile);
+        setRowData(newFile);
+        let filTgl = [];
+        for(let x = 0; x < newFile.length; x++){
+            const nilai = newFile[x].parsial;
+            for(let y = 0; y < nilai.length; y++){
+                console.log(nilai[y].tgl)
+                filTgl.push(nilai[y].tgl)
             }
         }
-        // console.log(newFile);
-        setRowData(newFile);
+        console.log(filTgl)
+        let unique = [...new Set(filTgl)];
+        unique.sort(function(a, b) {
+            const dateA = new Date(a);
+            const dateB = new Date(b);
+            return dateA - dateB;
+          });
+        console.log(unique)
+        setTglKirimView(unique)
         setisReady(true);
         setShow(false);
         }
@@ -1451,14 +1499,26 @@ export const CreatePo = () => {
                             </div>
                             <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4'>
                             <h6>Tgl Kirim</h6>
-                            <Form.Control
-                                required
-                                type="date"
-                                onChange={(e)=>{
-                                    setTglKrm(e.target.value)
-                                }}
-                                disabled = {false}
-                            />
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    required
+                                    type="date"
+                                    onChange={(e)=>{
+                                        setTglKrm(e.target.value)
+                                    }}
+                                    disabled = {false}
+                                />
+                                <InputGroup.Text id="basic-addon2" className='bg bg-primary text text-light'>
+                                    <OverlayTrigger
+                                    placement="bottom"
+                                    delay={{ show: 250, hide: 400 }}
+                                    overlay={renderTgltip}
+                                    >
+                                        <i class="bi bi-caret-down-fill"></i>
+                                    </OverlayTrigger>
+                                    
+                                </InputGroup.Text>
+                            </InputGroup>
                             </div>
                             
                         </div>
