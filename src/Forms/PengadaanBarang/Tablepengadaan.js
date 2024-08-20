@@ -595,6 +595,7 @@ export const Tablepengadaan = ({columns}) => {
       const sales = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SALES-MARKETING");
 
       const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
+      console.log(jumPengajuan)
       const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
       const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
       const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");
