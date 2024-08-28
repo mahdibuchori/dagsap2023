@@ -306,18 +306,22 @@ export const CreatePo = () => {
                         parsi : dataSementara.parsi
                         
                     }
+                    console.log(data1)
                     if(dataPo.length < 1){
                         if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
                     }
                     else{
                         const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
+                        console.log(cek)
                         if(cek.length === 0){
                             setDataPo(prev => [...prev, data1])
                         }
                         else{
-                            const id = dataPo.findIndex((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan);
-                            dataPo[id].parsial = [];
-                            dataPo[id].parsialAwal = [];
+                            const newPo = dataPo;
+                            setDataPo([])
+                            const id = newPo.findIndex((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan);
+                            newPo[id].parsial = [];
+                            newPo[id].parsialAwal = [];
                             const filN = dataSementara.parsi.filter((i)=> i.state === true)
                             let hasil = [];
                             hasil = filN.map((obj,i)=>{return({
@@ -325,18 +329,19 @@ export const CreatePo = () => {
                                 qty :obj.qty,
                             })})
                             if(hasil.length !== 0){
-                                dataPo[id].parsial = hasil;
-                                dataPo[id].parsialAwal = hasil;
+                                newPo[id].parsial = hasil;
+                                newPo[id].parsialAwal = hasil;
                                 let sum = hasil.reduce(function (s, a) {
                                     return s + parseFloat(a.qty);
                                 }, 0);
-                                dataPo[id].qty = sum.toFixed(2)
+                                newPo[id].qty = sum.toFixed(2)
+                                newPo[id].qtyAwal = sum.toFixed(2)
                             }
                             else{
-                                dataPo.splice(id,1);
+                                newPo.splice(id,1);
                             }
-                            console.log(dataPo)
-                            setDataPo(dataPo)
+                            console.log(newPo)
+                            setDataPo(newPo)
                         }
                         /* if(dataSementara.boll){
                             const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
@@ -545,15 +550,21 @@ export const CreatePo = () => {
     }
 
     const handleCekData = () =>{
+        // console.log(dataPo)
         if(rowData.length === 0){
             setRowData([])
             if(dataPo.length === 0){
                 Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
             }
             else{
+                setRowData([])
+                console.log(dataPo)
+                const cekX = dataPo;
                 let plan = String(userData.uplan).toUpperCase();
-                let data = [];
+                /* let data = [];
                 for(let x = 0; x < dataPo.length; x++){
+                    console.log(dataPo[x])
+                    console.log(dataPo[x].parsial)
                     data.push({
                         material : dataPo[x].material,
                         qty : parseFloat(dataPo[x].qty).toFixed(2),
@@ -581,12 +592,49 @@ export const CreatePo = () => {
                         newSatuan : dataPo[x].newSatuan,
                         parsi : dataPo[x].parsi
                     })
-                }
-                console.log(data);
-                setRowData(data);
+                } */
+                const cekM = cekX.map((e,i) =>{
+                    const newData = e.parsial
+                    console.log(newData)
+                    return({
+                        material : e.material,
+                        qty : parseFloat(e.qty).toFixed(2),
+                        satuan : e.satuan,
+                        hargasatuan : "",
+                        diskon : "",
+                        
+                        jmlhHarga : "",
+                        departement : `PABRIK ${plan}`,
+                        itemNo : e.itemNo,
+                        pajak : "",
+                        spesifikasi : e.spesifikasi,
+                        
+                        divisi : e.divisi,
+                        terima  : "",
+                        tutup : "",
+                        id_Pengadaan : e.id_Pengadaan,
+                        tipe : e.tipe,
+                        
+                        parsial: newData,
+                        po : e.po,
+                        qtyAwal : parseFloat(e.qtyAwal).toFixed(2),
+                        parsialAwal: e.parsialAwal,
+                        brandMaterial : e.brandMaterial,
+                        
+                        tipeMaterial : e.tipeMaterial,
+                        newSpek : `${e.tipeMaterial}, ${e.brandMaterial}, ${e.spesifikasi}`,
+                        newMaterial : e.newMaterial,
+                        newSatuan : e.newSatuan,
+                        parsi : e.parsi
+                    }
+
+                    )
+                })
+                setRowData(cekM)
+                console.log(cekM)
                 let filTgl = [];
-                for(let x = 0; x < data.length; x++){
-                    const nilai = data[x].parsial;
+                for(let x = 0; x < cekM.length; x++){
+                    const nilai = cekM[x].parsial;
                     for(let y = 0; y < nilai.length; y++){
                         filTgl.push(nilai[y].tgl)
                     }
@@ -706,7 +754,6 @@ export const CreatePo = () => {
                         tgl_approve : '',
                         plan : userData.uplan
                     })
-                    // console.log(dataPo)
                     const next = await API_AUTH.post(`/createpo`, {
                         id_po : nopo,
                         po_no: '',

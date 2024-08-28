@@ -1136,242 +1136,147 @@ export const COLUMNS_DATAPO =[
                 let akhrn = parseFloat(data.qty);
                 let saldo = akhrn - awaln;
                 hSatuan = (parseFloat(data.qty)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                // console.log(awaln)
-                // console.log(akhrn)
-                // if(saldo !== 0){
-                //     if(saldo > 0){
-                //         const cek = data.parsi;
-                //         let files = []
-                //         let jml = 0
-                //         for(let x = 0; x < cek.length ; x++){
-                //             if(cek[x].po === ""){
-                //                 jml += parseFloat(cek[x].qty)
-                //                 if(jml <= akhrn){
-                //                     files.push({tgl: cek[x].tglDatang, qty: cek[x].qty})
-                //                 }
-                                
-                //             }
-                //         }
-                //         // console.log(files)
-                //         let ttl = akhrn - jml;
-                //         // console.log(ttl)
-                //         if(ttl > 0){
-                //             files.push({
-                //                 tgl : `${tahun}-${bln}-${day}`,
-                //                 qty : `${ttl}`
-                //             })
-                //         }
-                //         data.parsial.length = 0;
-                        
-                //         for(let y = 0; y < files.length; y++){
-                //             params.data.parsial.push(files[y])
-                //         }
-                //     }
-                //     else{
-                //         const cek = data.parsi;
-                //         // console.log(cek)
-                //         let filen = []
-                //         let jml = akhrn
-                //         let ttl = 0
-                //         for(let x = 0; x < cek.length ; x++){
-                //             let n = parseFloat(cek[x].qty) - parseFloat(jml)
-                //             if(cek[x].po === ''){
-                //                 if(parseFloat(jml) === parseFloat(cek[x].qty)){
-                //                     filen.push({
-                //                         tgl : `${cek[x].tglDatang}`,
-                //                         qty : `${cek[x].qty}`
-                //                     });
-                //                     break
-                //                 }
-                //                 else if(parseFloat(jml) < parseFloat(cek[x].qty)){
-                //                     ttl += n
-                //                     break
-                //                 }
-                //                 else{
-                //                     filen.push({
-                //                         tgl : `${cek[x].tglDatang}`,
-                //                         qty : `${cek[x].qty}`
-                //                     })
-                //                     jml -= parseFloat(cek[x].qty)
-                //                 }
-                                
-                //             }
-                //         }
-                        
-                //         console.log(ttl)
-                //         if(filen.length > 0){
-                //             if(ttl > 0){
-                //                 filen.push({
-                //                     tgl : `${tahun}-${bln}-${day}`,
-                //                     qty : `${jml}`
-                //                 })
-                //             }
-                //             else{}
-                //         }
-                //         else{
-                //             if(ttl > 0){
-                //                 filen.push({
-                //                     tgl : `${tahun}-${bln}-${day}`,
-                //                     qty : `${akhrn}`
-                //                 })
-                //             }
-                //             else{} 
-                //         }
-
-                        
-                //         data.parsial.length = 0;
-                        
-                //         for(let y = 0; y < filen.length; y++){
-                //             params.data.parsial.push(filen[y])
-                //         }
-                //         // console.log(filen)
-                //     }
-                // }
-                // else{
-                //     console.log('log = 0')
-                // }
-                data.parsial = [];
-                const dt_A = data.parsi;
-                /* const id = data.mypo
-                const hil_max = dt_A.findIndex((i) => i.noAkun === "max" && i.po === id);
-                if(hil_max >= 0){dt_A.splice(hil_max, 1)}else{};
-               */
-                const nec = dt_A.map((obj, i)=>{
-                    return({
-                        "po": obj.po,
-                        "qty": obj.qty,
-                        "expro": obj.expro,
-                        "noAkun": obj.noAkun,
-                        "tglDatang": obj.tglDatang
-                    })
-                }) 
-                // console.log(nec)
-                const cb = []
-                for(let x =0; x < nec.length; x++){
-                    if(nec[x].po === "" && nec[x].noAkun === "min"){
-                        cb.push(x)
+                if(awaln !== akhrn){
+                    data.parsial = [];
+                    const dt_A = data.parsi;
+                    const nec = dt_A.map((obj, i)=>{
+                        return({
+                            "po": obj.po,
+                            "qty": obj.qty,
+                            "expro": obj.expro,
+                            "noAkun": obj.noAkun,
+                            "tglDatang": obj.tglDatang
+                        })
+                    }) 
+                    const cb = []
+                    for(let x =0; x < nec.length; x++){
+                        if(nec[x].po === "" && nec[x].noAkun === "min"){
+                            cb.push(x)
+                        }
                     }
-                }
-                if(cb.length !== 0){
-                    let total = parseFloat(dt_A[cb[0]].qty);
-                    for(let i = 1; i < cb.length; i++){
-                        let id = cb[i];
-                        total += parseFloat(dt_A[id].qty);
-                        nec.splice(id, 1)
-                        
+                    if(cb.length !== 0){
+                        let total = parseFloat(dt_A[cb[0]].qty);
+                        for(let i = 1; i < cb.length; i++){
+                            let id = cb[i];
+                            total += parseFloat(dt_A[id].qty);
+                            nec.splice(id, 1)
+                            
+                        }
+                        nec[cb[0]].qty = `${total}`
+                        nec[cb[0]].noAkun = ""
                     }
-                    nec[cb[0]].qty = `${total}`
-                    nec[cb[0]].noAkun = ""
-                }
-                const cek = nec.filter((i)=> i.po === "");
-                let sum = cek.reduce(function (s, a) {
-                    return s + parseFloat(a.qty);
-                }, 0);
-                let newSaldo = akhrn - sum;
-                if(newSaldo !== 0){
-                    if(saldo > 0){
-                        let files = []
-                        let jml = 0
-                        for(let x = 0; x < cek.length ; x++){
-                            if(cek[x].po === ""){
-                                jml += parseFloat(cek[x].qty)
-                                if(jml <= akhrn){
-                                    files.push({tgl: cek[x].tglDatang, qty: cek[x].qty})
+                    const cek = nec.filter((i)=> i.po === "");
+                    let sum = cek.reduce(function (s, a) {
+                        return s + parseFloat(a.qty);
+                    }, 0);
+                    let newSaldo = akhrn - sum;
+                    if(newSaldo !== 0){
+                        if(saldo > 0){
+                            let files = []
+                            let jml = 0
+                            for(let x = 0; x < cek.length ; x++){
+                                if(cek[x].po === ""){
+                                    jml += parseFloat(cek[x].qty)
+                                    if(jml <= akhrn){
+                                        files.push({tgl: cek[x].tglDatang, qty: cek[x].qty})
+                                    }
+                                    
                                 }
-                                
+                            }
+                            // console.log(files)
+                            let ttl = akhrn - jml;
+                            // console.log(ttl)
+                            // console.log(jml)
+                            if(ttl > 0){
+                                files.push({
+                                    tgl : `${tahun}-${bln}-${day}`,
+                                    qty : `${ttl}`
+                                })
+                            }
+                            else{
+                                let sums = files.reduce(function (s, a) {
+                                    return s + parseFloat(a.qty);
+                                }, 0);
+                                // console.log(sums)
+                                let tts = akhrn - sums;
+                                files.push({
+                                    tgl : `${tahun}-${bln}-${day}`,
+                                    qty : `${tts}`
+                                })
+                            }
+                            data.parsial.length = 0;
+                            
+                            for(let y = 0; y < files.length; y++){
+                                params.data.parsial.push(files[y])
                             }
                         }
-                        // console.log(files)
-                        let ttl = akhrn - jml;
-                        // console.log(ttl)
-                        // console.log(jml)
-                        if(ttl > 0){
-                            files.push({
-                                tgl : `${tahun}-${bln}-${day}`,
-                                qty : `${ttl}`
-                            })
-                        }
                         else{
-                            let sums = files.reduce(function (s, a) {
-                                return s + parseFloat(a.qty);
-                            }, 0);
-                            // console.log(sums)
-                            let tts = akhrn - sums;
-                            files.push({
-                                tgl : `${tahun}-${bln}-${day}`,
-                                qty : `${tts}`
-                            })
-                        }
-                        data.parsial.length = 0;
-                        
-                        for(let y = 0; y < files.length; y++){
-                            params.data.parsial.push(files[y])
+                            let filen = []
+                            let jml = akhrn
+                            let ttl = 0
+                            for(let x = 0; x < cek.length ; x++){
+                                let n = parseFloat(cek[x].qty) - parseFloat(jml)
+                                if(cek[x].po === ''){
+                                    if(parseFloat(jml) === parseFloat(cek[x].qty)){
+                                        filen.push({
+                                            tgl : `${cek[x].tglDatang}`,
+                                            qty : `${cek[x].qty}`
+                                        });
+                                        break
+                                    }
+                                    else if(parseFloat(jml) < parseFloat(cek[x].qty)){
+                                        ttl += n
+                                        break
+                                    }
+                                    else{
+                                        filen.push({
+                                            tgl : `${cek[x].tglDatang}`,
+                                            qty : `${cek[x].qty}`
+                                        })
+                                        jml -= parseFloat(cek[x].qty)
+                                    }
+                                    
+                                }
+                            }
+                            
+                            // console.log(ttl)
+                            if(filen.length > 0){
+                                if(ttl > 0){
+                                    filen.push({
+                                        tgl : `${tahun}-${bln}-${day}`,
+                                        qty : `${jml}`
+                                    })
+                                }
+                                else{}
+                            }
+                            else{
+                                if(ttl > 0){
+                                    filen.push({
+                                        tgl : `${tahun}-${bln}-${day}`,
+                                        qty : `${akhrn}`
+                                    })
+                                }
+                                else{} 
+                            }
+
+                            
+                            data.parsial.length = 0;
+                            
+                            for(let y = 0; y < filen.length; y++){
+                                params.data.parsial.push(filen[y])
+                            }
+                            // console.log(filen)
                         }
                     }
                     else{
-                        let filen = []
-                        let jml = akhrn
-                        let ttl = 0
-                        for(let x = 0; x < cek.length ; x++){
-                            let n = parseFloat(cek[x].qty) - parseFloat(jml)
-                            if(cek[x].po === ''){
-                                if(parseFloat(jml) === parseFloat(cek[x].qty)){
-                                    filen.push({
-                                        tgl : `${cek[x].tglDatang}`,
-                                        qty : `${cek[x].qty}`
-                                    });
-                                    break
-                                }
-                                else if(parseFloat(jml) < parseFloat(cek[x].qty)){
-                                    ttl += n
-                                    break
-                                }
-                                else{
-                                    filen.push({
-                                        tgl : `${cek[x].tglDatang}`,
-                                        qty : `${cek[x].qty}`
-                                    })
-                                    jml -= parseFloat(cek[x].qty)
-                                }
-                                
-                            }
-                        }
-                        
-                        // console.log(ttl)
-                        if(filen.length > 0){
-                            if(ttl > 0){
-                                filen.push({
-                                    tgl : `${tahun}-${bln}-${day}`,
-                                    qty : `${jml}`
-                                })
-                            }
-                            else{}
-                        }
-                        else{
-                            if(ttl > 0){
-                                filen.push({
-                                    tgl : `${tahun}-${bln}-${day}`,
-                                    qty : `${akhrn}`
-                                })
-                            }
-                            else{} 
-                        }
-
-                        
-                        data.parsial.length = 0;
-                        
-                        for(let y = 0; y < filen.length; y++){
-                            params.data.parsial.push(filen[y])
-                        }
-                        // console.log(filen)
+                        for(let y = 0; y < cek.length; y++){
+                            params.data.parsial.push({qty : cek[y].qty, tgl : cek[y].tglDatang})
+                        };
+                        console.log('log = 0')
                     }
                 }
                 else{
-                    // console.log(cek)
-                    for(let y = 0; y < cek.length; y++){
-                        params.data.parsial.push({qty : cek[y].qty, tgl : cek[y].tglDatang})
-                    };
-                    console.log('log = 0')
+                    console.log('sama')
                 }
             }
             // console.log(data)
