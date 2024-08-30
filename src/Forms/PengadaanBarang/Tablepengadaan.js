@@ -1070,6 +1070,20 @@ export const Tablepengadaan = ({columns}) => {
     worksheet['!cols'] = [{ wch: max_width }];
     writeFileXLSX(workbook, judul, { compression: true });
   }
+
+  const createPengadaan = () =>{
+    if(userData.udivisi === "Maintenance"){
+      if(userData.uuid === "DEE-MTC02"){
+        navigate('/form/pengadaan/create')
+      }
+      else{
+        Swal.fire("Oppss...","Maaf akses dibatasi", 'info');
+      }
+    }
+    else{
+      navigate('/form/pengadaan/create')
+    }
+  }
   return (
     <>
       <div>
@@ -1100,7 +1114,7 @@ export const Tablepengadaan = ({columns}) => {
               </Dropdown.Toggle>
       
               <Dropdown.Menu variant="dark">
-                <Dropdown.Item onClick={(e) => navigate('/form/pengadaan/create')}><i class="bi bi-pencil"></i> Create Pengadaan</Dropdown.Item>
+                <Dropdown.Item onClick={createPengadaan}><i class="bi bi-pencil"></i> Create Pengadaan</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={createPurchase}><i class="bi bi-pencil"></i> Create PO</Dropdown.Item>
                 <Dropdown.Divider />
