@@ -600,7 +600,7 @@ export const UpdatePengadaan = () => {
                           aria-label="With textarea" 
                           rows={1}
                           value = {mesin}
-                          onChange = {e => setMateril(e.target.value)}
+                          onChange = {e => setMesin(e.target.value)}
                           required
                         />
                         <Form.Control.Feedback type="invalid">
