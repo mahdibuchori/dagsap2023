@@ -268,7 +268,7 @@ export const TablePo = ({columns}) => {
         let nbb = String(nmonth).padStart(2, '0');
         const nday = ndate.getDate();
         let ndd = String(nday).padStart(2, '0');
-        const judul = `Penawaran barang ${ndd}-${nbb}-${nyear}.xlsx`
+        const judul = `Monitoring PO ${ndd}-${nbb}-${nyear}.xlsx`
 
         const worksheet = utils.json_to_sheet(coba);
 
