@@ -632,6 +632,10 @@ export const EditPo = () => {
           nppn += 0;
           npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
       }
+      else if(pjk1.toUpperCase() === "H"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 1.75) / 100;
+      }
       else{
           nppn += 0;
           npph += 0;
@@ -664,6 +668,10 @@ export const EditPo = () => {
       else if(pjk2.toUpperCase() === "T"){
           nppn += 0;
           npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+      }
+      else if(pjk2.toUpperCase() === "H"){
+          nppn += 0;
+          npph += ((parseFloat(e.jmlhHarga)) * 1.75) / 100;
       }
       else{
           nppn += 0;

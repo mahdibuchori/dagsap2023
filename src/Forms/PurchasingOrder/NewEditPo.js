@@ -641,7 +641,7 @@ export const NewEditPo = () => {
         }
       })
       let cek_pj = "";
-      if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" ){
+      if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" || value?.pajak === "SH" ){
         cek_pj = value?.pajak
       }
       else{
@@ -771,6 +771,10 @@ export const NewEditPo = () => {
         nppn += 0;
         npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
       }
+      else if(pjk1.toUpperCase() === "H"){
+        nppn += 0;
+        npph += ((parseFloat(e.jmlhHarga)) * 1.75) / 100;
+      }
       else{
         nppn += 0;
         npph += 0;
@@ -803,6 +807,10 @@ export const NewEditPo = () => {
       else if(pjk2.toUpperCase() === "T"){
         nppn += 0;
         npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+      }
+      else if(pjk2.toUpperCase() === "H"){
+        nppn += 0;
+        npph += ((parseFloat(e.jmlhHarga)) * 1.75) / 100;
       }
       else{
         nppn += 0;

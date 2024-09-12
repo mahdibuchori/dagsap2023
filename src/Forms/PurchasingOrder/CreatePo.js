@@ -831,7 +831,7 @@ export const CreatePo = () => {
         let dataPo = numbPo.data;
         if(dataPo.length === 0){
             let cek_pj = "";
-            if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" ){
+            if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" || value?.pajak === "SH" ){
                 cek_pj = value?.pajak
             }
             else{
@@ -865,7 +865,7 @@ export const CreatePo = () => {
             })
       
             let cek_pj = "";
-            if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" ){
+            if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" || value?.pajak === "SH" ){
               cek_pj = value?.pajak
             }
             else{
@@ -1135,6 +1135,10 @@ export const CreatePo = () => {
             nppn += 0;
             npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
         }
+        else if(pjk1.toUpperCase() === "H"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 1.75) / 100;
+        }
         else{
             nppn += 0;
             npph += 0;
@@ -1167,6 +1171,10 @@ export const CreatePo = () => {
         else if(pjk2.toUpperCase() === "T"){
             nppn += 0;
             npph += ((parseFloat(e.jmlhHarga)) * 2) / 100;
+        }
+        else if(pjk2.toUpperCase() === "H"){
+            nppn += 0;
+            npph += ((parseFloat(e.jmlhHarga)) * 1.75) / 100;
         }
         else{
             nppn += 0;
@@ -1772,6 +1780,7 @@ export const CreatePo = () => {
                                                             disabled={cara}
                                                             checked={i.state}
                                                             onClick={(x) => handlecheckbox(e,i,x.target.checked,inputList)}
+                                                            style={{borderColor: '#287BFF' }}
                                                         />
                                                     </div>
                                                 </div>
