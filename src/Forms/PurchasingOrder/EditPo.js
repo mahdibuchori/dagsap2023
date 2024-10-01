@@ -740,6 +740,49 @@ export const EditPo = () => {
       }
       else{
         setIsLoading(true)
+        const cekUlang = rowData.map((e, i) =>{
+          let total = 0
+          const hSatuan = e.hargasatuan;
+          const disc = parseFloat(e.diskon);
+          const quant = parseFloat(e.qty);
+          if(hSatuan === 0 || hSatuan === null || hSatuan === "null"){
+            total = 0
+          }
+          else{
+            const subTotal  = quant * parseFloat(hSatuan);
+            total = (subTotal - ((subTotal * disc) / 100)) * 100 / 100
+          }
+
+          return(
+            {
+              "material": e.material,
+              "qty": e.qty,
+              "qtyAwal": e.qtyAwal,
+              "satuan": e.satuan,
+              "hargasatuan": e.hargasatuan,
+              "diskon": e.diskon,
+              "jmlhHarga": total,
+              "departement": e.departement,
+              "itemNo": e.itemNo,
+              "pajak": e.pajak,
+              "divisi": e.divisi,
+              "spesifikasi": e.spesifikasi,
+              "terima": e.terima,
+              "tutup": e.tutup,
+              "id_Pengadaan": e.id_Pengadaan,
+              "tipe": e.tipe,
+              "parsial": e.parsial,
+              "parsialAwal": e.parsialAwal,
+              "po": e.po,
+              "brandMaterial": e.brandMaterial,
+              "tipeMaterial": e.tipeMaterial,
+              "newSpek": e.newSpek,
+              "newMaterial": e.newMaterial,
+              "newSatuan": e.newSatuan,
+              "parsi": e.parsi
+            }
+          )
+      })
           /* console.log({
             id_po : nopo,
             po_no: '',
@@ -776,7 +819,7 @@ export const EditPo = () => {
           expro : expro?.value,
           status : 'Pengajuan',
           statusfina : '',
-          dataPO : rowData,
+          dataPO : cekUlang,
           keterangan : spesifikasi,
           totalSub : totalSub,
           diskon : parseFloat(diskon).toFixed(2),

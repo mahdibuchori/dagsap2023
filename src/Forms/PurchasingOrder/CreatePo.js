@@ -835,7 +835,7 @@ export const CreatePo = () => {
                         Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');  
                     }
                    else{
-                    Swal.fire('Oppss...',`Harga Satuan pada material ${rowData[nmbering-1].material} tidak boleh null`,'info')
+                    Swal.fire('Oppss...',`Harga satuan pada material ${rowData[nmbering-1].material} harap isikan nominal`,'info')
                    }
                     setIsLoading(false);
                 }
