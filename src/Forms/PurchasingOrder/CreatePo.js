@@ -730,57 +730,113 @@ export const CreatePo = () => {
                             console.log('parRow : '+results);
                         }
                     } */
-                    console.log({
-                        id_po : nopo,
-                        po_no: '',
-                        tgl_po: tgl,
-                        tgl_kirim : tglKrm,
-                        filter_bulan: `${tahu}-${bln}`,
-                        pembayaran: termName,
-                        tukar : currencyName,
-                        idexpro	: expro?.id,
-                        expro : expro?.value,
-                        status : 'Pengajuan',
-                        statusfina : '',
-                        dataPO : rowData,
-                        keterangan : spesifikasi,
-                        totalSub : totalSub,
-                        diskon : parseFloat(diskon).toFixed(2),
-                        ppn : ppn,
-                        pph : pph,
-                        bAntar : parseFloat(bantar).toFixed(2),
-                        total : total,
-                        tgl_verify : '',
-                        tgl_approve : '',
-                        plan : userData.uplan
-                    })
-                    const next = await API_AUTH.post(`/createpo`, {
-                        id_po : nopo,
-                        po_no: '',
-                        tgl_po: tgl,
-                        tgl_kirim : tglKrm,
-                        filter_bulan: `${tahu}-${bln}`,
-                        pembayaran: termName,
-                        tukar : currencyName,
-                        idexpro	: expro?.id,
-                        expro : expro?.value,
-                        status : 'Pengajuan',
-                        statusfina : '',
-                        dataPO : rowData,
-                        keterangan : spesifikasi,
-                        totalSub : totalSub,
-                        diskon : parseFloat(diskon).toFixed(2),
-                        ppn : ppn,
-                        pph : pph,
-                        bAntar : parseFloat(bantar).toFixed(2),
-                        total : total,
-                        tgl_verify : '',
-                        tgl_approve : '',
-                        plan : userData.uplan,
-                        user : userData.uname
-                    });
-                    console.log(next.data)
-                    Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');
+                    let nmbering = 0
+                    for(let x = 0; x < rowData.length; x++){
+                        let hSatuan = rowData[x].hargasatuan;
+                        if(hSatuan === null || hSatuan === "null"){
+                            nmbering = x + 1
+                            break 
+                        }
+                    }
+                    if(nmbering === 0){
+                        const cekUlang = rowData.map((e, i) =>{
+                            let total = 0
+                            const hSatuan = e.hargasatuan;
+                            const disc = parseFloat(e.diskon);
+                            const quant = parseFloat(e.qty);
+                            if(hSatuan === 0 || hSatuan === null || hSatuan === "null"){
+                                total = 0
+                            }
+                            else{
+                                const subTotal  = quant * parseFloat(hSatuan);
+                                total = (subTotal - ((subTotal * disc) / 100)) * 100 / 100
+                            }
+        
+                            return(
+                                {
+                                    "material": e.material,
+                                    "qty": e.qty,
+                                    "qtyAwal": e.qtyAwal,
+                                    "satuan": e.satuan,
+                                    "hargasatuan": e.hargasatuan,
+                                    "diskon": e.diskon,
+                                    "jmlhHarga": total,
+                                    "departement": e.departement,
+                                    "itemNo": e.itemNo,
+                                    "pajak": e.pajak,
+                                    "divisi": e.divisi,
+                                    "spesifikasi": e.spesifikasi,
+                                    "terima": e.terima,
+                                    "tutup": e.tutup,
+                                    "id_Pengadaan": e.id_Pengadaan,
+                                    "tipe": e.tipe,
+                                    "parsial": e.parsial,
+                                    "parsialAwal": e.parsialAwal,
+                                    "po": e.po,
+                                    "brandMaterial": e.brandMaterial,
+                                    "tipeMaterial": e.tipeMaterial,
+                                    "newSpek": e.newSpek,
+                                    "newMaterial": e.newMaterial,
+                                    "newSatuan": e.newSatuan,
+                                    "parsi": e.parsi
+                                }
+                            )
+                        })
+                        /* console.log({
+                            id_po : nopo,
+                            po_no: '',
+                            tgl_po: tgl,
+                            tgl_kirim : tglKrm,
+                            filter_bulan: `${tahu}-${bln}`,
+                            pembayaran: termName,
+                            tukar : currencyName,
+                            idexpro	: expro?.id,
+                            expro : expro?.value,
+                            status : 'Pengajuan',
+                            statusfina : '',
+                            dataPO : cekUlang,
+                            keterangan : spesifikasi,
+                            totalSub : totalSub,
+                            diskon : parseFloat(diskon).toFixed(2),
+                            ppn : ppn,
+                            pph : pph,
+                            bAntar : parseFloat(bantar).toFixed(2),
+                            total : total,
+                            tgl_verify : '',
+                            tgl_approve : '',
+                            plan : userData.uplan
+                        }) */
+                        const next = await API_AUTH.post(`/createpo`, {
+                            id_po : nopo,
+                            po_no: '',
+                            tgl_po: tgl,
+                            tgl_kirim : tglKrm,
+                            filter_bulan: `${tahu}-${bln}`,
+                            pembayaran: termName,
+                            tukar : currencyName,
+                            idexpro	: expro?.id,
+                            expro : expro?.value,
+                            status : 'Pengajuan',
+                            statusfina : '',
+                            dataPO : cekUlang,
+                            keterangan : spesifikasi,
+                            totalSub : totalSub,
+                            diskon : parseFloat(diskon).toFixed(2),
+                            ppn : ppn,
+                            pph : pph,
+                            bAntar : parseFloat(bantar).toFixed(2),
+                            total : total,
+                            tgl_verify : '',
+                            tgl_approve : '',
+                            plan : userData.uplan,
+                            user : userData.uname
+                        });
+                        console.log(next.data)
+                        Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');  
+                    }
+                   else{
+                    Swal.fire('Oppss...',`Harga Satuan pada material ${rowData[nmbering-1].material} tidak boleh null`,'info')
+                   }
                     setIsLoading(false);
                 }
             }
