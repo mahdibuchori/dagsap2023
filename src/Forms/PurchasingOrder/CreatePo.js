@@ -741,8 +741,15 @@ export const CreatePo = () => {
                     if(nmbering === 0){
                         const cekUlang = rowData.map((e, i) =>{
                             let total = 0
+                            let disc = 0
                             const hSatuan = e.hargasatuan;
-                            const disc = parseFloat(e.diskon);
+                            if(e.diskon === "" || e.diskon === null || e.diskon === "null"){
+                                disc = 0
+                            }
+                            else{
+                                disc = parseFloat(e.diskon);
+                            }
+                            
                             const quant = parseFloat(e.qty);
                             if(hSatuan === 0 || hSatuan === null || hSatuan === "null"){
                                 total = 0
@@ -751,7 +758,6 @@ export const CreatePo = () => {
                                 const subTotal  = quant * parseFloat(hSatuan);
                                 total = (subTotal - ((subTotal * disc) / 100)) * 100 / 100
                             }
-        
                             return(
                                 {
                                     "material": e.material,

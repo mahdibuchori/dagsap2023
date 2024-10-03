@@ -742,8 +742,14 @@ export const EditPo = () => {
         setIsLoading(true)
         const cekUlang = rowData.map((e, i) =>{
           let total = 0
+          let disc = 0
           const hSatuan = e.hargasatuan;
-          const disc = parseFloat(e.diskon);
+          if(e.diskon === "" || e.diskon === null || e.diskon === "null"){
+            disc = 0
+          }
+          else{
+            disc = parseFloat(e.diskon);
+          }
           const quant = parseFloat(e.qty);
           if(hSatuan === 0 || hSatuan === null || hSatuan === "null"){
             total = 0
