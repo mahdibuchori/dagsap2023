@@ -1073,7 +1073,7 @@ export const Tablepengadaan = ({columns}) => {
 
   const createPengadaan = () =>{
     if(userData.udivisi === "Maintenance"){
-      if(userData.uuid === "DEE-MTC02"){
+      if(userData.uuid === "DEE-MTC02" || userData.uuid === "DEE-SPART01"){
         navigate('/form/pengadaan/create')
       }
       else{
