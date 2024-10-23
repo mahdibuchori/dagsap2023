@@ -104,10 +104,10 @@ export const UpdatePengadaan = () => {
           setHilangs('none')
           setKontak(false)
           setMunculs(false)
+          setBrand(' ')
+          setMesin(' ')
+          setTipeMaterial(' ')
         }
-        setBrand('')
-        setMesin('')
-        setTipeMaterial('')
         setMateril('')
         let modifiedArr = newFileNab.map(function(element){
             return { value: element.itemno, label: `${element.itemno} - ${element.itemdescription}`, item: element.itemdescription , satuan: element.unit1 };
@@ -287,6 +287,7 @@ export const UpdatePengadaan = () => {
 
           if(ndata.length === inputList.length){
               handleSave()
+              // console.log('lanjut save')
           }
           else{
               Swal.fire('Info',`Harap input qty pengadaan parsial`, 'warning')
@@ -558,7 +559,7 @@ export const UpdatePengadaan = () => {
                       </Form.Group>
                     </div>
                   </div>
-
+                  
                   <div className="row  g-2" style={{display: hilangs}}>
                     <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                       <Form.Group as={Col} controlId="validationCustom01">
