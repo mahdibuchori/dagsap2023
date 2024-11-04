@@ -10,14 +10,13 @@ const useDataProvider = create(
             providerReady: false,
             fetchProvider : async () => {
                 try {
-                    /* const { data } = await API_GSHEET.get(`exec?tipe=dataProv`); */
                     const { data }  = await axios.get(`${process.env.REACT_APP_API_KEY_RAIL}/provider`);
                     set(produce((state) => {
                         state.provider = data;
                         state.providerReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseProvider : async () => {
@@ -26,7 +25,7 @@ const useDataProvider = create(
                         state.providerReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
         }),

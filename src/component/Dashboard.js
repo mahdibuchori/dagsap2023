@@ -14,7 +14,7 @@ import useDataDepartemen, { selectFetchDepartemen,selectDepartemenReady } from '
 
 export const Dashboard = () => {
     const navigate = useNavigate();
-    const [token, setToken] = useState('');
+    const [token, setToken] = useState(''); 
     const [expire, setExpire] = useState('');
     const [users, setUsers] = useState([]);
     const [menu, setMenu] = useState('dashboard');
@@ -136,7 +136,7 @@ export const Dashboard = () => {
             setIsReady(true)
         } catch (error) {
             setIsLoading(false)
-            console.log(error)
+            navigate('/login');
             if(error.response){
                 navigate('/login');
             }

@@ -22,6 +22,10 @@ export const CreatePengadaan = () => {
   
   const [kode, setKode] = useState('');
   const [tgl, setTgl] = useState('');
+  const [jam,setJam] = useState('00');
+  const [menit,setMenit] = useState('00');
+  const [detik,setDetik] = useState('00');
+  const [bagian, setBagian] = useState('PM');
 
   const [ tibar, setTibar ] = useState('');
   const [ materil, setMateril ] = useState('');
@@ -41,6 +45,7 @@ export const CreatePengadaan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataReady, setDataReady] = useState(false);
   const [fileReady, setFileReady] = useState(false);
+  const [isReady, setIsReady] = useState(true);
   const [cekReady, setCekReady] = useState(false);
   const [kontak, setKontak] = useState(false);
   const [hilang, setHilang] = useState('flex');
@@ -70,6 +75,8 @@ export const CreatePengadaan = () => {
       },[]);
       // const  newFileNab= result?.filter(x => x.value !== "Finished Goods");
       
+      console.log(menit)
+      console.log(detik)
       setFileNab(result);
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -110,7 +117,6 @@ export const CreatePengadaan = () => {
           setMesin(" ")
         }
         const newFileNab = material.material?.filter(x => x.kategori === tibar.value);
-        console.log(newFileNab);
         
         const newFiles = newFileNab.filter(x => x.itemtype !== "3");
         let modifiedArr = newFiles.map(function(element){
@@ -228,7 +234,7 @@ export const CreatePengadaan = () => {
           setIsLoading(false);
         }
         else{
-          console.log(tibar.value)
+          console.log("")
         }
         
       } catch (error) {
@@ -246,6 +252,14 @@ export const CreatePengadaan = () => {
     gntiDta();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[cekReady]);
+
+  useEffect(() => {
+    // setIsLoading(true);
+    if (!isReady) return;
+    onGridReady()
+    setIsReady(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [isReady]);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -276,7 +290,6 @@ export const CreatePengadaan = () => {
     else if (form.checkValidity() === false) {
       e.stopPropagation();
       setValidated(true);
-      console.log('test')
     }
     else{
       if(inputList.length === 0){
@@ -285,7 +298,7 @@ export const CreatePengadaan = () => {
       else{
         let ndata = []
         inputList.map((e,i) => {
-            console.log(e.qty)
+            // console.log(e.qty)
           if(e.qty === "" || parseFloat(e.qty) === 0){
               return(
                   console.log(ndata)
@@ -300,7 +313,6 @@ export const CreatePengadaan = () => {
         
         if(ndata.length === inputList.length){
             const cSta = []
-            console.log(dataPO)
             if(dataPO === undefined){
               handleSave()
             }
@@ -359,6 +371,7 @@ export const CreatePengadaan = () => {
   const handleSave = async () =>{
     setIsLoading(true)
     try {
+      let newTang = tgl;
       const date = new Date();
       let mm = parseInt(date.getMonth()) + 1;
       let yy = date.getFullYear();
@@ -371,9 +384,35 @@ export const CreatePengadaan = () => {
       else{
         myDivisi = userData?.usubdiv
       }
+      // // console.log(`${jam}:${menit}:${detik} ${bagian}`)
+      // console.log(new Date () + 1)
+
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      let bul = format(new Date(tomorrow), "MM", { locale: id });
+      let days = format(new Date(tomorrow), "dd", { locale: id });
+      let yea = format(new Date(tomorrow), "yyyy", { locale: id });
+      
+      let waktu = parseInt(jam)
+      console.log(waktu)
+      if( waktu >= 2 && waktu <= 12){
+        if(bagian === "PM"){
+          newTang = `${yea}-${bul}-${days}`;
+        }
+        else{
+          newTang = tgl;
+        }
+      }
+      else{
+        newTang = tgl;
+      }
+
+      // console.log(tgl)
+      // console.log(newTang);
       const next = await API_AUTH.post(`/pengadaan`, {
         id_Pengadaan : kode,
-        t_pengadaan : tgl,
+        t_pengadaan : newTang,
         user : [{
             pemohon : userData?.uname,
             jabatan : userData?.ujabatan,
@@ -413,6 +452,30 @@ export const CreatePengadaan = () => {
       Swal.fire('Info', `${error.response.data.message}`, 'warning');
       setIsLoading(false);
     }
+  }
+
+  const onGridReady = () =>{
+    let date = new Date(),
+    h = date.getHours(),
+    m = date.getMinutes(),
+    s = date.getSeconds(),
+    ampm = "AM";
+
+    if(h >= 12) {
+      h = h - 12;
+      ampm = "PM";
+    }
+    h = h === 0 ? h = 12 : h;
+    h = h < 10 ? "0" + h : h;
+    m = m < 10 ? "0" + m : m;
+    s = s < 10 ? "0" + s : s;
+    setTimeout(() => {
+      setJam(h)
+      setMenit(m)
+      setDetik(s)
+      setBagian(ampm)  
+      setIsReady(true)
+    }, 1000)
   }
   return (
     <>

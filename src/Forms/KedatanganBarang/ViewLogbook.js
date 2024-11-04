@@ -146,20 +146,6 @@ export const ViewLogbook = () => {
             try {
               setIsLoading(true);
               const idNumb = location.state.data?.id_no;
-              console.log({
-                id : idNumb,
-                srtJalan : srtJalan,
-                lot : lot,
-                tipe : tipe,
-                wktSelesai : wktSelesai,
-                tglDatang : tglDatang,
-                tglExp : tglExp,
-                qtyTrm : qtyTrm,
-                rincian : rincian,
-                ket : ketBar,
-                user: userData?.uname,
-                plan : userData?.uplan,
-              })
   
               const next = await API_AUTH.put(`/logbook/${idNumb}`, {
                 srtJalan : srtJalan,
@@ -177,7 +163,7 @@ export const ViewLogbook = () => {
               Swal.fire(`${next.data.success}`, navigate(`/form/kedatangan`), 'success');
               setIsLoading(false);
             } catch (error) {
-                console.log(error)
+                console.log('error')
                 Swal.fire('Info', `${error.response.data.message}`, 'warning');
                 setIsLoading(false);
             }

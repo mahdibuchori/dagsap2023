@@ -509,7 +509,6 @@ export const Tablepengadaan = ({columns}) => {
               // setDataSementara(isi)
             }
             else{
-              // console.log(dataSementara)
               const same = dataSementara.filter((item, index, self) =>
                 index === self.findIndex((t) => (
                   t.id_Pengadaan === item.id_Pengadaan
@@ -595,7 +594,6 @@ export const Tablepengadaan = ({columns}) => {
       const sales = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SALES-MARKETING");
 
       const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
-      console.log(jumPengajuan)
       const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
       const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
       const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");
@@ -942,7 +940,6 @@ export const Tablepengadaan = ({columns}) => {
             }
           )
         })
-        console.log(menu_data)
         navigate(`/form/purchaseorder/create`,{
           state:{
             data : menu_data
@@ -963,8 +960,6 @@ export const Tablepengadaan = ({columns}) => {
   }
 
   const createPenarikan = () =>{
-    console.log(newPengadaan)
-    console.log(dataSementara)
     let data = []
     const date = new Date();
     const month = date.getMonth() + 1;
@@ -1002,7 +997,6 @@ export const Tablepengadaan = ({columns}) => {
     else{
       const cek = dataSementara.filter((x) => x.status === "Verifikasi")
       data = cek.map((e,i) =>{
-        console.log(e)
         let nabar, merk = '';
         if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
           nabar = e.tipeMaterial
@@ -1053,11 +1047,9 @@ export const Tablepengadaan = ({columns}) => {
     //     )
     //   })
     // }
-    console.log(data)
     const worksheet = utils.json_to_sheet(data);
     for(let x =0; x < data.length; x++){
       let n = `F${x+2}`
-      console.log(n)
       worksheet[n].z = '#,##0';
     }
     const workbook = utils.book_new();

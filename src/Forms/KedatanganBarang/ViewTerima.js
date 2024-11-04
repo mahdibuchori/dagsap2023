@@ -141,11 +141,6 @@ export const ViewTerima = () => {
             try {
                 setIsLoading(true);
                 const idNumb = location.state.data?.id_no;
-                console.log({
-                    id : idNumb,
-                    tanggal : tglKirim,
-                    currency : currency
-                })
                 const next = await API_AUTH.put(`/kedatangan/${idNumb}`, {
                     tanggal : tglKirim,
                     currency : currency
@@ -153,7 +148,7 @@ export const ViewTerima = () => {
                 Swal.fire(`${next.data.success}`, navigate(`/form/kedatangan`), 'success');
                 setIsLoading(false);
             } catch (error) {
-                console.log(error)
+                console.log('error')
                 Swal.fire('Info', `${error.response.data.message}`, 'warning');
                 setIsLoading(false);
             }

@@ -90,9 +90,10 @@ export const Login = ({handleClick}) => {
       else{
         alert(res.data.Error)
         setIsLoading(false)
+        navigate('/login');
       }
     } catch (error) {
-      console.log(error)
+      navigate('/login');
       setIsLoading(false)
     }
   }

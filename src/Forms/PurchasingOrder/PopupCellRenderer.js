@@ -22,7 +22,6 @@ export const PopupCellRenderer = (props) => {
         setVisible(true)
     };
     const hide = () => setVisible(false);
-    /* console.log(props.data); */
 
     useEffect(() => {
         const result = material.material?.reduce((unique, o) => {
@@ -36,7 +35,6 @@ export const PopupCellRenderer = (props) => {
           }
           return unique;
         },[]);
-        // console.log(result)
         setFileNab(result);
         cekData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,8 +134,6 @@ export const PopupCellRenderer = (props) => {
         hide();
         const itemsToUpdate = [];
         const data = props.data;
-        console.log(data)
-        console.log(option)
         data.newMaterial = option.item
         data.tipe = tibar.value
         data.itemNo = option.value 
@@ -146,35 +142,6 @@ export const PopupCellRenderer = (props) => {
         props.api.applyTransaction({
             update: itemsToUpdate
         });
-        
-        /* if (option === 'create') {
-        props.api.applyTransaction({
-            update: [{ make: 'Toyota1', model: 'Celica', price: 35000 }],
-        });
-        }
-        if (option === 'delete') {
-        props.api.applyTransaction({ remove: [props.data] });
-        }
-
-        if (option === 'edit') {
-        console.log(props);
-        props.api.startEditingCell({
-            rowIndex: props.rowIndex,
-            data: [{ make: 'Toyota2' }],
-            colKey: 'make',
-        });
-        }
-
-        if (option === 'update') {
-        console.log(props.data);
-        const itemsToUpdate = [];
-        const data = props.data;
-        data.make = 'BMW'
-        itemsToUpdate.push(data);
-        props.api.applyTransaction({
-            update: itemsToUpdate
-        });
-        } */
     };
 
     return (

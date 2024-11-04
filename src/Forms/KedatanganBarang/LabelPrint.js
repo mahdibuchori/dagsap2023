@@ -111,7 +111,6 @@ export const LabelPrint = () => {
             Swal.fire('Info','Harap kembali ke halaman permintaan data tidak lengkap', 'info')
         }
         else{
-            console.log(location.state.data)
             setKode(location.state.data.kode_item)
             setDetail({
                 kode : location.state.data.kode_item,

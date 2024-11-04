@@ -709,7 +709,6 @@ export const TableAddRemove = (props) => {
 
     const createPurchase = () =>{
         if(userData.usubdiv === "Purchasing"){
-            console.log(dataPos)
             if(dataPos.length > 0){
                 let fData = dataPos.filter((i)=>i.status !== "Verifikasi");
                 if(fData.length === 0){

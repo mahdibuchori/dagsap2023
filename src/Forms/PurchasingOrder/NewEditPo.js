@@ -311,8 +311,6 @@ export const NewEditPo = () => {
             
           )
         })
-        console.log(cekId);
-        console.log(coba);
 
         setRowData(cekId);
         setDataPo(coba);
@@ -321,6 +319,10 @@ export const NewEditPo = () => {
       }
     }
     sinyal()
+    
+    console.log(fileDep)
+    console.log(tax1id)
+    console.log(tax2id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -367,7 +369,6 @@ export const NewEditPo = () => {
     if(!isReady) return;
     const gntiDta = async () =>{
       try {
-        console.log(true)
         setIsLoading(true);
         handleTotal()
         setisReady(false)
@@ -391,7 +392,6 @@ export const NewEditPo = () => {
   useEffect (() => {
     if(!dataReady) return;
     const gntiDta = async () =>{
-      // console.log(dataSementara)
       try {
         setIsLoading(true);
         if(dataSementara.tgl_datang === undefined || dataSementara.qty === undefined ){
@@ -438,7 +438,7 @@ export const NewEditPo = () => {
           }
           else{
             const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
-            console.log(cek)
+            
             if(cek.length === 0){
               setDataPo(prev => [...prev, data1])
             }
@@ -558,7 +558,6 @@ export const NewEditPo = () => {
       }
     });
     setFileDep(result);
-    console.log(fileDep)
   }
 
   const noPoRead =async () =>{
@@ -615,7 +614,6 @@ export const NewEditPo = () => {
         mypo : location.state.data.id_po                            
       }
     })
-    console.log(modifiedArr)
     const pjk = modifiedArr[0]?.pajak;
     let dataPo = numbPo.data;
     if(dataPo.length === 0){
@@ -717,9 +715,7 @@ export const NewEditPo = () => {
     let dpp = [];
     if(diskon === ""){nDiskon = 0} else{nDiskon = diskon}
     if(bantar === ""){nBantar = 0} else{nBantar = bantar}
-    console.log(tax1id+""+tax2id)
     rowData.map((e,i)=>{
-      // console.log(e.jmlhHarga)
       if(e.jmlhHarga === "" || e.jmlhHarga === 0  || e.jmlhHarga === undefined ){ntotalSub += 0}
       else{ntotalSub += parseFloat(e.jmlhHarga)}
       return(
@@ -946,7 +942,6 @@ export const NewEditPo = () => {
   }
 
   const handleCekData = () =>{
-    // console.log(dataPo)
     if(rowData.length === 0){
       setRowData([])
       if(dataPo.length === 0){
@@ -985,7 +980,6 @@ export const NewEditPo = () => {
             mypo : location.state.data.id_po
           })
         }
-        // console.log(data)
         setRowData(data);  
         setShow(false)
       }
@@ -1001,20 +995,17 @@ export const NewEditPo = () => {
     }
     else{
       let file = rowData;
-      // console.log(file)
-      // console.log(dataPo)
       setRowData([]);
       let uset = "";
       if(expro === undefined){ uset = ""}else{ uset = expro?.pajak}
       let plan = String(userData.uplan).toUpperCase();
-      console.log(dataPo)
       const newFile = dataPo.map((obj,i)=>{
         let jmlhHarga,harsa = 0;
         if(obj.hargasatuan !== ""){
           jmlhHarga = parseFloat(obj.qty) * parseFloat(obj.hargasatuan)
           harsa = parseFloat(obj.hargasatuan)
         }
-        // console.log(obj)
+
         return({
           departement : `PABRIK ${plan}`,
           diskon : obj.diskon,
@@ -1048,13 +1039,10 @@ export const NewEditPo = () => {
       })
       for(let x = 0; x < newFile.length; x++){
         const idC = file.findIndex((i)=> i.id_Pengadaan === newFile[x].id_Pengadaan);
-        // console.log(idC)
+        
         if(idC >= 0){
-          console.log(file[idC])
-          console.log(newFile[x])
           const ids = new Set(file[idC].parsialAwal.map(({ tgl }) => tgl));
           const sele = newFile[x].parsialAwal.filter(({ tgl }) => !ids.has(tgl));
-          console.log(sele);
           let jmlhHarga,harsa = 0;
           newFile[x].material = file[idC].material;
           if(file[idC].hargasatuan !== ""){
@@ -1077,7 +1065,6 @@ export const NewEditPo = () => {
           newFile[x].jmlhHarga = 0;
         }
       }
-      // console.log(newFile);
       setRowData(newFile);
       setisReady(true);
       setShows(false);
@@ -1086,8 +1073,6 @@ export const NewEditPo = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault();
-    // console.log(lastPO)
-    // console.log(nopo)
     try {
       if(diskon === ""){
         Swal.fire('Oppsss','Harap isi nilai diskon','info');
@@ -1129,7 +1114,7 @@ export const NewEditPo = () => {
         
       }
     } catch (error) {
-      console.log(error)
+      console.log('error')
     }
   };
 
@@ -1162,54 +1147,8 @@ export const NewEditPo = () => {
           Swal.fire("Opps",fMate,'info')
         }
         else{
-          setIsLoading(true)
-          // let parRow = [];
-          /* for(let x = 0; x < rowData.length; x++){
-            parRow = rowData[x].parsial;
-            const isi = dataPo.filter((i)=> i.id_Pengadaan === rowData[x].id_Pengadaan);
-            const parPo = isi[0].parsial;
-            const results = parRow.findIndex(({ tgl: tgl1, qty: qty1 }) => !parPo.some(({ tgl: tgl2, qty: qty2 }) => tgl2 === tgl1 && qty2 === qty1));
-            if(results >= 0){
-              parRow[results].tgl = tglKrm ;
-            }
-            else{
-              console.log('parRow : '+results);
-            }
-          } */
-          /* for(let x = 0; x < rowData.length; x++){
-            const p = rowData[x].parsial;
-            const pa = rowData[x].parsialAwal;
-            if(p.length === pa.length){
-              rowData[x].parsial.length = 0
-              rowData[x].parsial = p
-            }
-          } */
-          // console.log(rowData)
-          /* console.log({
-            id_po : nopo,
-            po_no: '',
-            tgl_po: tgl,
-            tgl_kirim : tglKrm,
-            filter_bulan: `${tahu}-${bln}`,
-            pembayaran: termName,
-            tukar : currencyName,
-            idexpro	: expro?.id,
-            expro : expro?.value,
-            status : 'Pengajuan',
-            statusfina : '',
-            dataPO : rowData,
-            keterangan : spesifikasi,
-            totalSub : totalSub,
-            diskon : parseFloat(diskon).toFixed(2),
-            ppn : ppn,
-            pph : pph,
-            bAntar : parseFloat(bantar).toFixed(2),
-            total : total,
-            tgl_verify : '',
-            tgl_approve : '',
-            plan : userData.uplan
-          }) */
-            let nmbering = 0
+          setIsLoading(true);
+          let nmbering = 0;
             for(let x = 0; x < rowData.length; x++){
                 let hSatuan = rowData[x].hargasatuan;
                 if(hSatuan === null || hSatuan === "null"){
@@ -1267,30 +1206,7 @@ export const NewEditPo = () => {
                   }
                 )
               })
-              // console.log({
-              //     id_po : nopo,
-              //     po_no: '',
-              //     tgl_po: tgl,
-              //     tgl_kirim : tglKrm,
-              //     filter_bulan: `${tahu}-${bln}`,
-              //     pembayaran: termName,
-              //     tukar : currencyName,
-              //     idexpro	: expro?.id,
-              //     expro : expro?.value,
-              //     status : 'Pengajuan',
-              //     statusfina : '',
-              //     dataPO : cekUlang,
-              //     keterangan : spesifikasi,
-              //     totalSub : totalSub,
-              //     diskon : parseFloat(diskon).toFixed(2),
-              //     ppn : ppn,
-              //     pph : pph,
-              //     bAntar : parseFloat(bantar).toFixed(2),
-              //     total : total,
-              //     tgl_verify : '',
-              //     tgl_approve : '',
-              //     plan : userData.uplan
-              // })
+              
               const next = await API_AUTH.put(`/createpo/${lastPO}`, {
                 id_po : nopo,
                 po_no: '',
@@ -1315,7 +1231,7 @@ export const NewEditPo = () => {
                 tgl_approve : '',
                 plan : userData.uplan
               });
-              // console.log(next.data.success)
+              
               Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success');
                 
             }
@@ -1328,7 +1244,6 @@ export const NewEditPo = () => {
       }
       
     } catch (error) {
-      console.log(error)
       Swal.fire('Info', `${error.response.data.message}`, 'warning');
       setIsLoading(false);
     }
@@ -1593,7 +1508,6 @@ export const NewEditPo = () => {
                       variant="outline-success m-2 btn-sm" 
                       className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
                       onClick={() => {
-                        console.log(inputList.length)
                         setShows(true)
                       }}
                     >   
@@ -1659,8 +1573,7 @@ export const NewEditPo = () => {
                     else{
                       cara = true
                     }
-                    // console.log(i)
-                    // console.log(e.material[0].material+" "+i.po+" "+i.tglDatang)
+                    
                     return (
                       <div className='row g-2 p-0'>
                         <div className='col-sm-1 col-md-1 col-lg-1 col-xl-1'>

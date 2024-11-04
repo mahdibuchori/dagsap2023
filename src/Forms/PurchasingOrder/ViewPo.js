@@ -243,7 +243,6 @@ export const ViewPo = () => {
     if(!isReady) return;
     const gntiDta = async () =>{
       try {
-        console.log(true)
         setIsLoading(true);
         handleTotal()
         setisReady(false)
@@ -279,7 +278,6 @@ export const ViewPo = () => {
   }, []);
 
   const handleTotal =() =>{
-    console.log(rowData)
     if(rowData.length === 0){
       setisReady(true);
     }
@@ -293,17 +291,13 @@ export const ViewPo = () => {
       let dpp = [];
       if(diskon === ""){nDiskon = 0} else{nDiskon = diskon}
       if(bantar === ""){nBantar = 0} else{nBantar = bantar}
-      // console.log(rowData)
       rowData.map((e,i)=>{
-        // console.log(e.jmlhHarga)
         if(e.jmlhHarga === "" || e.jmlhHarga === 0  || e.jmlhHarga === undefined ){ntotalSub += 0}
         else{ntotalSub += parseFloat(e.jmlhHarga)}
         return(
           setTotalSub(ntotalSub.toFixed(2))
         )
       })
-      // console.log(ntotalSub)
-      // console.log(rowData)
 
       rowData.map((e,i)=>{
         const pjk = e.pajak;
@@ -394,7 +388,6 @@ export const ViewPo = () => {
       })
       let unique = [...new Set(dpp)];
       const filt = unique.filter(x=> x.toUpperCase() === "S");
-      // console.log(filt.length)
       if(filt.length > 0){
         let jumd = (nDiskon * 11) / 100;
         nppn -= jumd

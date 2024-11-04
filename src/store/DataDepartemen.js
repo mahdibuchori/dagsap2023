@@ -34,7 +34,7 @@ const useDataDepartemen = create(
                         state.departemenReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseMaterial : async () => {
@@ -43,7 +43,7 @@ const useDataDepartemen = create(
                         state.departemenReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
         }),

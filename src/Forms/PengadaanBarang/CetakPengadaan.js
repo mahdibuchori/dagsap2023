@@ -110,7 +110,6 @@ export const CetakPengadaan = () => {
             Swal.fire('Info','Harap kembali ke halaman permintaan data tidak lengkap', 'info')
         }
         else{
-            console.log(userData)
             setDataPengadaan(location.state.data);
             const iptData = [
                 {
@@ -154,7 +153,6 @@ export const CetakPengadaan = () => {
       }, []);
 
     const cekData = () =>{
-        console.log(location.state.data);
         setIsLoading(false);
     }
   return (
@@ -267,7 +265,6 @@ export const CetakPengadaan = () => {
                         t_terima.push(`${day} ${bln} ${tahu}`)
                         if(row.parsial_data[x].expro !== ""){suply.push(`${row.parsial_data[x].expro}`)}
                       }
-                      console.log(row)
                       let nama = "";
                       if(row.tipeMaterial === "" || row.tipeMaterial === undefined){
                         nama = row.spesifikasi

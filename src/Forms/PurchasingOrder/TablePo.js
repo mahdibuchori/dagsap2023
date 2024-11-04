@@ -140,7 +140,7 @@ export const TablePo = ({columns}) => {
             try {
                 await poFalse();
             } catch (error) {
-                console.log(error)
+                console.log('error')
             }
             setIsLoading(false);
         }
@@ -198,7 +198,6 @@ export const TablePo = ({columns}) => {
     }
     
     const handleDate = () =>{
-        // console.log(state)
         const startDate = state[0].startDate;
         const endDate =  state[0].endDate
         const d = new Date(startDate);
@@ -260,7 +259,6 @@ export const TablePo = ({columns}) => {
             const dateB = new Date(b.tglKirim);
             return dateA - dateB;
         });
-        console.log(coba)
 
         const ndate = new Date();
         const nmonth = ndate.getMonth() + 1;

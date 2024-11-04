@@ -75,6 +75,7 @@ export const CreatePo = () => {
     const [showModal, setShowModal] = useState(false);
     
     const handleClose = () => {
+        console.log(fileDep)
         navigate(`/form/Pengadaan`)
         setShow(false)
     };
@@ -178,9 +179,7 @@ export const CreatePo = () => {
             setIsLoading(false);
         }
         else{
-            // console.log(data)
-            const next = data.filter((e)=> e.status === "Pengajuan");
-            console.log(next.length)
+            // const next = data.filter((e)=> e.status === "Pengajuan");
             setInputList(location.state.data);
             if(filePon === undefined){
                 navigate(`/form/pengadaan`);
@@ -265,8 +264,6 @@ export const CreatePo = () => {
         const gntiDta = async () =>{
             try {
                 setIsLoading(true);
-                // setRowData([])
-                console.log(dataSementara)
                 if(dataSementara.tgl_datang === undefined || dataSementara.qty === undefined ){
                     Swal.fire('Opps..','Harap Ulangi Pemilihan Data','info')
                 }
@@ -306,13 +303,11 @@ export const CreatePo = () => {
                         parsi : dataSementara.parsi
                         
                     }
-                    console.log(data1)
                     if(dataPo.length < 1){
                         if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
                     }
                     else{
-                        const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan)
-                        console.log(cek)
+                        const cek = dataPo.filter((x)=> x.id_Pengadaan === dataSementara.id_Pengadaan);
                         if(cek.length === 0){
                             setDataPo(prev => [...prev, data1])
                         }
@@ -340,7 +335,6 @@ export const CreatePo = () => {
                             else{
                                 newPo.splice(id,1);
                             }
-                            console.log(newPo)
                             setDataPo(newPo)
                         }
                         /* if(dataSementara.boll){
@@ -413,7 +407,6 @@ export const CreatePo = () => {
           try {
             setIsLoading(true);
             handleTotal()
-            // console.log('aktivitas')
             setisReady(false)
             setIsLoading(false);
           } catch (error) {
@@ -484,7 +477,6 @@ export const CreatePo = () => {
             }
         });
         setFileDep(result);
-        console.log(fileDep)
     }
 
     const noPoRead =async () =>{
@@ -503,7 +495,7 @@ export const CreatePo = () => {
             await falseNopo();
             setIsLoading(false);
         } catch (error) {
-            console.log(error)
+            console.log('error')
             setIsLoading(false)
         }
     }
@@ -558,7 +550,6 @@ export const CreatePo = () => {
             }
             else{
                 setRowData([])
-                console.log(dataPo)
                 const cekX = dataPo;
                 let plan = String(userData.uplan).toUpperCase();
                 /* let data = [];
@@ -631,7 +622,6 @@ export const CreatePo = () => {
                     )
                 })
                 setRowData(cekM)
-                console.log(cekM)
                 let filTgl = [];
                 for(let x = 0; x < cekM.length; x++){
                     const nilai = cekM[x].parsial;
@@ -639,14 +629,12 @@ export const CreatePo = () => {
                         filTgl.push(nilai[y].tgl)
                     }
                 }
-                console.log(filTgl)
                 let unique = [...new Set(filTgl)];
                 unique.sort(function(a, b) {
                     const dateA = new Date(a);
                     const dateB = new Date(b);
                     return dateA - dateB;
                 });
-                console.log(unique)
                 setTglKirimView(unique)
                 setShow(false)
             }
@@ -683,7 +671,7 @@ export const CreatePo = () => {
                 }
             }
         } catch (error) {
-            console.log(error)
+            console.log('error')
         }
     };
 
@@ -837,7 +825,6 @@ export const CreatePo = () => {
                             plan : userData.uplan,
                             user : userData.uname
                         });
-                        console.log(next.data)
                         Swal.fire(`${next.data.success}`, backhome(`/form/Pengadaan`), 'success');  
                     }
                    else{
@@ -847,7 +834,7 @@ export const CreatePo = () => {
                 }
             }
         } catch (error) {
-            console.log(error)
+            console.log('error')
             Swal.fire('Info', `${error.response.data.message}`, 'warning');
             setIsLoading(false);
         }
@@ -859,8 +846,7 @@ export const CreatePo = () => {
         setExpro(value)
         let modifiedArr = rowData.map((e)=>{
             let pjk = "";
-            if(value?.pajak === "DD" || value?.pajak ==="D"){pjk = ""}else{pjk = value?.pajak}
-            // console.log(e)
+            if(value?.pajak === "DD" || value?.pajak ==="D"){pjk = ""}else{pjk = value?.pajak};
             return {
                 material : e.material,
                 qty : parseFloat(e.qty).toFixed(2),
@@ -941,12 +927,10 @@ export const CreatePo = () => {
             if(cek_pj === ""){
                 const numb = ("00" + (dtPph.length + 1)).slice(-2);
                 setNopo(`${kode}5${numb}`);
-                console.log(`${kode}5${numb}`);
             }
             else{
                 const numb = ("00" + (dtPpn.length + 1)).slice(-3);
                 setNopo(`${kode}${numb}`);
-                console.log(`${kode}${numb}`);
             }
         }
         /* else{
@@ -1258,7 +1242,7 @@ export const CreatePo = () => {
         else{
             setPpn(nppn.toFixed(2));
         }
-        console.log(npph)
+        
         setPph(npph.toFixed(2));
         ntotal = ntotalSub  - parseFloat(nDiskon) + nppn - npph + parseFloat(nBantar)
         setTotal(parseFloat(ntotal).toFixed(2))
@@ -1341,7 +1325,7 @@ export const CreatePo = () => {
                 if(idx >= 0){newData.splice(idx,1)}else{console.log('idx < 0')}
             }
         }
-        console.log(newData)
+        
         setInputList(newData);
         setShow(true);
         handleAdd(result);
@@ -1494,24 +1478,23 @@ export const CreatePo = () => {
                     }
                 }
             }
-        console.log(newFile);
+        
         setRowData(newFile);
         let filTgl = [];
         for(let x = 0; x < newFile.length; x++){
             const nilai = newFile[x].parsial;
             for(let y = 0; y < nilai.length; y++){
-                console.log(nilai[y].tgl)
                 filTgl.push(nilai[y].tgl)
             }
         }
-        console.log(filTgl)
+        
         let unique = [...new Set(filTgl)];
         unique.sort(function(a, b) {
             const dateA = new Date(a);
             const dateB = new Date(b);
             return dateA - dateB;
           });
-        console.log(unique)
+          
         setTglKirimView(unique)
         setisReady(true);
         setShow(false);

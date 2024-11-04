@@ -707,8 +707,6 @@ export const EditAddRemove = (props) => {
 
     const createPurchase = () =>{
         if(userData.usubdiv === "Purchasing"){
-            console.log(dataPos)
-            console.log(props.data)
             // let fData = dataPos.filter((i)=>i.status !== "Verifikasi");
             props.onAddGoal(dataPos);
             props.close();

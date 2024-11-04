@@ -19,7 +19,7 @@ const BottomBar = ({menubar, data}) => {
             navigate('/login');
             setIsLoading(false);
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
     

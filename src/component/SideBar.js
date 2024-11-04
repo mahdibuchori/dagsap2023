@@ -46,7 +46,9 @@ export const SideBar = ({menubar, data}) => {
             navigate('/login');
             setIsLoading(false);
         } catch (error) {
-            console.log(error)
+            console.log("error")
+            setIsLoading(false);
+            // console.log(error)
         }
     }
 

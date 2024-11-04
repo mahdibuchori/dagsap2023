@@ -94,7 +94,6 @@ export const UpdatePengadaan = () => {
       try {
         setIsLoading(true);
         const newFileNab = material.material?.filter(x => x.kategori === tibar.value);
-        console.log(tibar.value)
         if(tibar.value === "NonInventori" || tibar.value === "Sparepart"){
           setHilangs('flex')
           setKontak(true)
@@ -184,8 +183,6 @@ export const UpdatePengadaan = () => {
     setMesin(data?.mesin)
     setTipeMaterial(data?.tipeMaterial)
 
-    console.log(data)
-    console.log(data?.user[0].plan)
     if(String(data?.status).toUpperCase() === "PENGAJUAN" || String(data?.status).toUpperCase() === "REVISI"){
       if(String(data?.user[0].pemohon).toUpperCase() === String(userData?.uname).toUpperCase()){
         setHilang('block');
@@ -272,7 +269,6 @@ export const UpdatePengadaan = () => {
       else{
           let ndata = []
           inputList.map((e,i) => {
-              console.log(e.qty)
           if(e.qty === "" || parseFloat(e.qty) === 0){
               return(
                   console.log(ndata)
@@ -320,7 +316,6 @@ export const UpdatePengadaan = () => {
       let tglVerif = "";
       let tglPeng = "";
       let filt = "";
-      console.log("test : "+location.state.data.tgl_verify)
       if(String(data?.user[0].plan).toUpperCase() === String(userData?.uplan).toUpperCase() && userData?.usubdiv === 'Purchasing'){
         if(location.state.data.tgl_verify === ""){
           statusny = "Pengajuan";

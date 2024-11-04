@@ -32,7 +32,7 @@ const useDashboardStore = create(
                         state.purchWReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseWPurch : async () => {
@@ -41,7 +41,7 @@ const useDashboardStore = create(
                         state.purchWReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchYdash : async () => {
@@ -53,7 +53,7 @@ const useDashboardStore = create(
                         state.purchYReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseYdash : async () => {
@@ -62,7 +62,7 @@ const useDashboardStore = create(
                         state.purchYReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
         }),

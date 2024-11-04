@@ -27,7 +27,7 @@ const usePengadaanStore = create(
                         state.pengadaanReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falsePengadaan : async () => {
@@ -36,7 +36,7 @@ const usePengadaanStore = create(
                         state.pengadaanReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             filterPengadaan: async (id) => {

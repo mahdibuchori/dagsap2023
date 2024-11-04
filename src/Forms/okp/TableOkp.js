@@ -202,7 +202,6 @@ export const TableOkp = ({columns,columnsNo}) => {
     }
 
     const createOKP = (e) =>{
-        console.log(userData)
         if(userData.udivisi === "Develop"){
             Swal.fire({
                 title: 'Silahkan pilih option di bawah ini ?',
@@ -236,15 +235,12 @@ export const TableOkp = ({columns,columnsNo}) => {
         setIsLoading(true);
         noOkpFalse();
         dataNoOkp(e,"getNoOKP","");
-        console.log(noOkpReady);
-        console.log(userData.name)
     }
 
     const cekDataOK = () =>{
         setNosOKP(noOkp[0].okp);
         noOkpFalse();
         setIsLoading(false);
-        console.log(noOkpReady);
     }
 
     const handleSelectChange = (e) => {

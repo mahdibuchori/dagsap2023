@@ -31,7 +31,7 @@ export const BtnPurchasing = (props) => {
                     navigate('/login');
                 }
             } catch (error) {
-                console.log(error)
+                console.log('error')
             }
         }
         handleLogout()

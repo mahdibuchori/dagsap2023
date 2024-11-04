@@ -54,7 +54,6 @@ export const InputKaryawan = () => {
                 });
                 setFileJbtn(modifiedArr);
                 setjbtnReady(false);
-                console.log(modifiedArr);
             }
             
             
@@ -91,13 +90,11 @@ export const InputKaryawan = () => {
                     setfileDiv([
                         { value: '', label: '' }
                     ])
-                    console.log(divisi)
                     let modifiedArr = divisi.subDiv.map(function(element){
                         return { value: element.valu, label: element.lab};
                     });
                     setfileDiv(modifiedArr);
                     setDivReady(false);
-                    console.log(modifiedArr);
                 }
                 setIsLoading(false);
             } catch (error) {
@@ -121,7 +118,6 @@ export const InputKaryawan = () => {
         setIsLoading(true)
         setPicture('https://bootdey.com/img/Content/avatar/avatar7.png')
         if(userData.udivisi === "Develop" || userData.udivisi === "HR-GA" ){
-            console.log('nik :' +nik)
             if(nik === ""){
                 Swal.fire(`Oppsss...`, `Harap ulangi input nik karyawan`, 'info');
                 setIsLoading(false);
@@ -139,18 +135,6 @@ export const InputKaryawan = () => {
 
     const handleSave = async () =>{  
         try {
-            /* console.log({
-                nik : nik,
-                nama : nama,
-                level : level.value,
-                jabatan : selectedValue.value,
-                divisi : divisi.value,
-                subDivisi : subDiv.value,
-                plan : plan.value,
-                cutTah : cutTah,
-                cutBes : cutBes,
-                userData
-            }) */
             const next = await API_AUTH.post(`/register`, 
                 {
                     "id" : nik,
@@ -169,10 +153,9 @@ export const InputKaryawan = () => {
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
-            console.log(error)
             Swal.fire('Opsss',`${error.response.data.message}`,'error');
             setNik('')
-            console.log(error.response.data.message);
+            console.log(`error.response.data.message`);
         }
     }
   return (

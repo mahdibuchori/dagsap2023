@@ -201,6 +201,7 @@ export const ReloadPo = () => {
     
       useEffect(() => { 
         // setIsLoading(true);
+        console.log(status)
         onProvider()
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
@@ -289,14 +290,12 @@ export const ReloadPo = () => {
                 )
             })
             setListPar(nilai)
-            console.log(nilai)
             setDtPar(true)
         }
         setShow(false)
     }
 
     const handleSubmit = () =>{
-        console.log(userData)
         if(userData?.udivisi === "Develop"){
           handleAlert()
         }
@@ -316,8 +315,6 @@ export const ReloadPo = () => {
     }
     
     const handleAlert = (e) =>{
-        console.log(status);
-        console.log(pajak)
         Swal.fire({
             title: "Apakah anda ingin Mengirimkan ulang data PO ini?",
             showDenyButton: true,
@@ -371,7 +368,6 @@ export const ReloadPo = () => {
             }
             else{}
         } catch (error) {
-          // console.log(error.response.data?.message)
           Swal.fire('Ooppsss',error.response.data?.message,'error')
           setIsLoading(false)
         }
@@ -379,7 +375,6 @@ export const ReloadPo = () => {
 
     const handleFina = () =>{
         const data = location.state.data;
-        console.log(data)
         let date = new Date(data.tgl_kirim);
         let bln = date.getMonth() + 1;
         let tahu = date.getFullYear();
@@ -397,7 +392,6 @@ export const ReloadPo = () => {
                 {"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
             )})
             let file = JSON.stringify(files)
-            console.log(file)
             const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
             const encoded = encodeURIComponent(uri);
             const newStr = encoded.replace(/%3A/g, ':')
@@ -412,7 +406,6 @@ export const ReloadPo = () => {
             return(
                 {"SEQ":`${i}`,"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
             )})
-            console.log(files)
             let file = JSON.stringify(files);
             const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","PO_Item":${file}}]}`;
             const encoded = encodeURIComponent(uris)
@@ -430,13 +423,10 @@ export const ReloadPo = () => {
         setIsLoading(true);
         try {
             setIsLoading(true);
-            console.log(uri)
-            // const saveData = await API_GSHEET.get(`exec?tipe=sendDataFina&file=${uri}`);
             
             const saveData = await axios.post(`${process.env.REACT_APP_API_KEY_RAIL}/data`,{
                 data : uri
             });
-            console.log(saveData.data.result[0])
 
             if(saveData.data.result[0] === "Current data already exists." || saveData.data.result[0] === ""){
                 handleSave('Done','')
@@ -694,9 +684,6 @@ export const ReloadPo = () => {
                                     </View>
 
                                     {listPar.map((row, i) => {
-                                        console.log(row)
-                                        /* let bulans = (row.tglDatang).split("-");
-                                        let isi =(`${bulans[2]} ${bulan[parseInt(bulans[1])]} ${bulans[0]}`); */
                                         return(
                                             <View style={[styles.row,{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm'}]}>
                                                 <Text style={[styles.border,{width : '7mm',minHeight: '6mm',padding: '1mm'}]}>
@@ -778,7 +765,6 @@ export const ReloadPo = () => {
                             aria-label="With textarea" 
                             value={note}
                             onChange={(e) => {
-                                console.log(e.target.value)
                                 setNote(e.target.value)
                             }}
                             

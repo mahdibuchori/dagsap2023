@@ -106,9 +106,6 @@ export const LogBook = () => {
         let days = date.getDate();
         let bulan = String(month).padStart(2, '0');
         let hari = String(days).padStart(2, '0');
-
-        console.log(`${yy}-${bb}-${dd}`);
-        console.log(`${year}-${bulan}-${hari}`);
         
         setTglAwal(`${yy}-${bb}-${dd}`);
         setTglAkhir(`${year}-${bulan}-${hari}`);
@@ -136,7 +133,7 @@ export const LogBook = () => {
             }
             setIsLoading(false);
         } catch (error) {
-            console.log(error)
+            console.log('error')
             setIsLoading(false);
         }
 

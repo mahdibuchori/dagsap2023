@@ -38,7 +38,7 @@ const useDataMaterial = create(
                         state.materialReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseMaterial : async () => {
@@ -47,7 +47,7 @@ const useDataMaterial = create(
                         state.materialReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
         }),

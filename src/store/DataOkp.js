@@ -39,7 +39,7 @@ const useOkpStore = create(
                         state.okpReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseOkp : async () => {
@@ -48,19 +48,18 @@ const useOkpStore = create(
                         state.okpReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchNoOKP : async (id,tipe) => {
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=getNoOKP&date=${id}`);
-                    console.log(data)
                     set(produce((state) => {
                         state.noOKP = data.data;
                         state.noOKPReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseNoOkp : async () => {
@@ -69,19 +68,19 @@ const useOkpStore = create(
                         state.noOKPReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchCreateOKP : async (id,tgOKP,tgRev,rev,no) => {
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=createOKP&date=${id}&tOkp=${tgOKP}&tRev=${tgRev}&rev=${rev}&no=${no}`);
-                    console.log(data)
+                    
                     set(produce((state) => {
                         state.creOKP = data.data;
                         state.createReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseCreateOkp : async () => {
@@ -90,7 +89,7 @@ const useOkpStore = create(
                         state.createReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchSaveOKP : async (tglOK,tglPro,revisi,no,id,produk,varian,revisiProd,batch) => {
@@ -101,7 +100,7 @@ const useOkpStore = create(
                         state.saveReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseSaveOkp : async () => {
@@ -110,19 +109,19 @@ const useOkpStore = create(
                         state.saveReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchNoteOKP : async (tglOK,tglPro,revisi,no,note,noLama,noteLama) => {
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=saveNoteOKP&date=${tglPro}&tOkp=${tglOK}&rev=${revisi}&no=${no}&note=${note}&noLama=${noLama}&noteLama=${noteLama}&sheet&tRev`);
-                    console.log(data)
+                    
                     set(produce((state) => {
                         state.noteOKP = data;
                         state.noteReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseNoteOkp : async () => {
@@ -131,20 +130,19 @@ const useOkpStore = create(
                         state.noteReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchDelOKP : async (tglOK,tglPro,revisi,no) => {
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=deleteOKP&date=${tglPro}&tOkp=${tglOK}&rev=${revisi}&no=${no}&sheet`);
-                    console.log(data)
                     
                     set(produce((state) => {
                         state.deleteOKP = data;
                         state.deleteReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseDeleteOkp : async () => {
@@ -153,21 +151,19 @@ const useOkpStore = create(
                         state.deleteReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchDelNote : async (tglOK,tglPro,revisi,no,note) => {
                 try {
                     const { data } = await API_GSHEET.get(`exec?tipe=deleteNote&date=${tglPro}&tOkp=${tglOK}&rev=${revisi}&no=${no}&note=${note}&sheet`);
-                    console.log(data)
-                    console.log(`exec?tipe=deleteNote&date=${tglPro}&tOkp=${tglOK}&rev=${revisi}&no=${no}&note=${note}&sheet`)
                     
                     set(produce((state) => {
                         state.deleteNote = data;
                         state.deleNotReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseDeleteNote : async () => {
@@ -176,7 +172,7 @@ const useOkpStore = create(
                         state.deleNotReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             

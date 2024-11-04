@@ -200,7 +200,7 @@ export const UpdatePrevPengada = () => {
                 Swal.fire(`Oppss...`, 'Anda tidak memiliki akses', 'info');
             }
         } catch (error) {
-            console.log(error);
+            console.log('error');
             setIsLoading(false);
         }
     }

@@ -227,7 +227,6 @@ export const PrintPo = () => {
         setBantar(data?.bAntar);
         setDiskon(data?.diskon);
         
-        console.log(data);
         setIsLoading(false)
     }
 
@@ -239,7 +238,6 @@ export const PrintPo = () => {
 
         if(cek.length > 0){
             const n = cek[0];
-            console.log(n)
             let alamat = "";
             if(n.addressline2 === ""){alamat = n.addressline1} else{alamat = `${n.addressline1}, ${n.addressline2}`}
             let alamat1 = "";
@@ -297,7 +295,6 @@ export const PrintPo = () => {
                 )
             })
             setListPar(nilai)
-            console.log(nilai)
             setDtPar(true)
         }
         setShow(false)
@@ -542,9 +539,6 @@ export const PrintPo = () => {
                                     </View>
 
                                     {listPar.map((row, i) => {
-                                        console.log(row)
-                                        /* let bulans = (row.tglDatang).split("-");
-                                        let isi =(`${bulans[2]} ${bulan[parseInt(bulans[1])]} ${bulans[0]}`); */
                                         return(
                                             <View style={[styles.row,{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm'}]}>
                                                 <Text style={[styles.border,{width : '7mm',minHeight: '6mm',padding: '1mm'}]}>
@@ -626,7 +620,6 @@ export const PrintPo = () => {
                             aria-label="With textarea" 
                             value={note}
                             onChange={(e) => {
-                                console.log(e.target.value)
                                 setNote(e.target.value)
                             }}
                             

@@ -62,7 +62,6 @@ export const InputOkp = () => {
     }
 
     const handleSelectChange = (e) => {
-        console.log(e)
         const item = []
         // const item = dataBom.filter(x => x.deskripsi_item.toUpperCase() === e.value.toUpperCase())
         // console.log(item)
@@ -97,12 +96,12 @@ export const InputOkp = () => {
         setId(kose);
         // setRevisiProd(item[0]?.revisi);
         setVarian(item[0]?.varian);
-        console.log(item)
+        // console.log(item)
         setSelectItemRev([])
         let modifiedArr = item.map(function(element){
             return { value: element.revisi, label: element.revisi };
         });
-        console.log(modifiedArr)
+        // console.log(modifiedArr)
         setSelectItemRev(modifiedArr)
         setRevisiProd(modifiedArr[0])
         setIsTrue(false)
@@ -116,7 +115,7 @@ export const InputOkp = () => {
     const savePermintaan = async (tglOK) =>{
         const item = [];
         // const item = dataBom.filter(x => x.deskripsi_item.toUpperCase() === produk.value.toUpperCase());
-        console.log(item[0]?.list_material.length);
+        // console.log(item[0]?.list_material.length);
         if(item.length === 0){
             Swal.fire("Info","Harap ulangi proses penyimpanan data","info");
         }
@@ -159,7 +158,7 @@ export const InputOkp = () => {
                         'jml_item' : String(ihaon),
                     }) */
                 } catch (error) {
-                    console.log(error.message)
+                    console.log(`error.message`)
                 }
             }
             // Swal.fire('Saved!', backhome(`/main/${userData.user_divisi}/OKP`), 'success');

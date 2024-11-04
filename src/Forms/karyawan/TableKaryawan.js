@@ -8,9 +8,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useUserStore, { selectUserReady, selectOnEmployee, selectKaryawan, selectFalseEmployee } from '../../store/dataKaryawan';
-
-
-//useUserStore, 
+ 
 export const TableKaryawan = ({columns, data}) => {
   let navigate = useNavigate();
   const onEmploye = useUserStore(selectOnEmployee);

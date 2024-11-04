@@ -169,9 +169,7 @@ export const EditPo = () => {
         setTglKrm(location.state.data.tgl_kirim);
         const poData = location.state.data.dataPO;
         const data = [];
-        console.log(poData)
         for(let x = 0; x< poData.length; x++){
-          console.log(poData[x].parsial)
           let file = {
             material : poData[x].material,
             qty : parseFloat(poData[x].qty).toFixed(2),
@@ -198,10 +196,8 @@ export const EditPo = () => {
             newMaterial : poData[x].material,
             newSatuan : poData[x].satuan,
           }
-          console.log(file)
           data.push(file)
         }
-        console.log(data)
         setRowData(data);
         if(location.state.data.status === "Revisi"){setStaRev(true)} else{setStaRev(false)}
         
@@ -224,6 +220,10 @@ export const EditPo = () => {
         setIsLoading(false);
       }
     }
+    
+    console.log(fileDep)
+    console.log(tax1id)
+    console.log(tax2id)
     sinyal()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -296,7 +296,7 @@ export const EditPo = () => {
     const gntiDta = async () =>{
         try {
             setIsLoading(true);
-            // console.log(dataSementara)
+            
             let data1 = {
                 material : dataSementara.material,
                 qty : dataSementara.qty,
@@ -331,7 +331,7 @@ export const EditPo = () => {
                 newSatuan : dataSementara.satuan,
                 
             }
-            // console.log(data1)
+            
             if(dataPo.length < 1){
               if(dataSementara.boll){ setDataPo(prev => [...prev, data1])}
             }
@@ -339,7 +339,7 @@ export const EditPo = () => {
                 if(dataSementara.boll){
                   const cek = dataPo.filter(obj => obj.id_Pengadaan === dataSementara.id_Pengadaan && obj.tgl_datang === dataSementara.tgl_datang
                   );
-                  // console.log(cek)
+                  
                   if(cek.length === 0){
                     setDataPo(prev => [...prev, data1])
                   }
@@ -390,7 +390,7 @@ export const EditPo = () => {
 
   const cekProvider =()=>{
     const data = provider.provider
-    // console.log(data)
+    
     let result = data?.map(function(e){
       let pajak = "";
       if(e.tax2code === ""){
@@ -441,7 +441,7 @@ export const EditPo = () => {
       }
     });
     setFileDep(result);
-    console.log(fileDep)
+    
   }
 
   const handleEprov = (value) =>{
@@ -529,7 +529,7 @@ export const EditPo = () => {
       await falseNopo();
       setIsLoading(false);
     } catch (error) {
-      console.log(error)
+      console.log('error')
       setIsLoading(false)
     }
   }
@@ -540,7 +540,7 @@ export const EditPo = () => {
 
   const onCellValueChanged = (e) => {
     const data = rowData[e.rowIndex];
-    // console.log(data)
+    
     let jmlh = 0;
     let hSatuan = 0;
     let diskon = 0;
@@ -577,8 +577,6 @@ export const EditPo = () => {
     let dpp = [];
     if(diskon === ""){nDiskon = 0} else{nDiskon = diskon}
     if(bantar === ""){nBantar = 0} else{nBantar = bantar}
-    console.log(tax1id+""+tax2id)
-
     rowData.map((e,i)=>{
       if(e.jmlhHarga === "" || e.jmlhHarga === 0 ){ntotalSub += 0}
       else{ntotalSub += parseFloat(e.jmlhHarga)}
@@ -684,7 +682,6 @@ export const EditPo = () => {
     })
     let unique = [...new Set(dpp)];
     const filt = unique.filter(x=> x.toUpperCase() === "S");
-    console.log(filt.length)
     if(filt.length > 0){
       let jumd = (nDiskon * 11) / 100;
       nppn -= jumd
@@ -719,7 +716,7 @@ export const EditPo = () => {
         savePengadaan()
       }
     } catch (error) {
-      console.log(error)
+      console.log('error')
     }
   };
 
@@ -789,30 +786,7 @@ export const EditPo = () => {
             }
           )
       })
-          /* console.log({
-            id_po : nopo,
-            po_no: '',
-            tgl_po: tgl,
-            tgl_kirim : tglKrm,
-            filter_bulan: `${tahu}-${bln}`,
-            pembayaran: termName,
-            tukar : currencyName,
-            idexpro	: expro?.id,
-            expro : expro?.value,
-            status : 'Pengajuan',
-            statusfina : '',
-            dataPO : rowData,
-            keterangan : spesifikasi,
-            totalSub : totalSub,
-            diskon : parseFloat(diskon).toFixed(2),
-            ppn : ppn,
-            pph : pph,
-            bAntar : parseFloat(bantar).toFixed(2),
-            total : total,
-            tgl_verify : '',
-            tgl_approve : '',
-            plan : userData.uplan
-          }) */
+          
         const next = await API_AUTH.put(`/createpo/${lastPO}`, {
           id_po : nopo,
           po_no: '',
@@ -837,7 +811,7 @@ export const EditPo = () => {
           tgl_approve : '',
           plan : userData.uplan
         });
-        console.log(next.data.success)
+        
         Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success');
         
           
@@ -845,7 +819,6 @@ export const EditPo = () => {
       }
       
     } catch (error) {
-        console.log(error)
         Swal.fire('Info', `${error.response.data.message}`, 'warning');
         setIsLoading(false);
     }
@@ -885,7 +858,6 @@ export const EditPo = () => {
         Swal.fire('Info','Harap pilih tanggal kedatangan item','info');
       }
       else{
-        // console.log(dataPo)
         let plan = String(userData.uplan).toUpperCase();
         let data = [];
         for(let x = 0; x< dataPo.length; x++){
@@ -936,8 +908,7 @@ export const EditPo = () => {
               
           }
         }
-
-        // console.log(data)
+        
         setRowData(data)
         setShows(false)
       }
@@ -1010,7 +981,6 @@ export const EditPo = () => {
       for(let x = 0; x < file.length; x++){
         let n = file[x];
         let foundIndex = dataPo.findIndex(a =>{
-          console.log(a.id_Pengadaan+"  ===  "+n.id_Pengadaan)
           return(
             a.id_Pengadaan === n.id_Pengadaan
           )
@@ -1022,7 +992,7 @@ export const EditPo = () => {
           data[foundIndex]["satuan"] = n?.satuan;
         }
         else{
-          console.log(foundIndex)
+          console.log('foundIndex')
         }
       }
       // const r = data.filter((elem) => rowData.find(({ id_Pengadaan }) => elem.id_Pengadaan === id_Pengadaan));
@@ -1069,7 +1039,6 @@ export const EditPo = () => {
                       required
                       options = {fileNab}
                       onChange={(value) => {
-                          console.log(value)
                           handleEprov(value)
                           setTermName(value.termname)
                           setCurrencyName(value.currencyname)
@@ -1310,7 +1279,6 @@ export const EditPo = () => {
                           variant="outline-success m-2 btn-sm" 
                           className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
                           onClick={() => {
-                            console.log(inputList.length)
                             setShows(true)
                           }}
                         >   

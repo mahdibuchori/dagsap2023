@@ -21,7 +21,7 @@ const useDataPo = create(
                         state.nopoReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falseNoPo : async () => {
@@ -30,7 +30,7 @@ const useDataPo = create(
                         state.nopoReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             fetchPo: async (token,plan) => {
@@ -41,7 +41,7 @@ const useDataPo = create(
                         state.poReady = true;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
             falsePo : async () => {
@@ -50,7 +50,7 @@ const useDataPo = create(
                         state.poReady = false;
                     }))
                 } catch (error) {
-                    console.log(error);
+                    console.log('error');
                 }
             },
         }),

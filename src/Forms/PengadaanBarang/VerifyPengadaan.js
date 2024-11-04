@@ -169,12 +169,7 @@ export const VerifyPengadaan = () => {
       let dd = date.getDate();
       let bulan = String(mm).padStart(2, '0');
       let tang = String(dd).padStart(2, '0');
-      /* console.log({
-          id_Pengadaan : location.state.data.id_Pengadaan,
-          status : stat,
-          tgl_verify : `${yy}-${bulan}-${tang}`,
-          tgl_approve : rev,
-      }) */
+      
       const next = await API_AUTH.put(`/verifyPengadaan`, {
         id_Pengadaan : location.state.data.id_Pengadaan,
         status : stat,

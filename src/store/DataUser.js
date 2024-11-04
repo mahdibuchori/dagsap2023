@@ -12,7 +12,6 @@ const useAuthStore = create(
             user: initialUser,
             authReady: false,
             onAuth: async (token) => {
-                console.log(token)
                 try {
                     const data  = await API_AUTH.get(`/users/${token}`);
                     set(produce((state) => {

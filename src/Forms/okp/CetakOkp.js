@@ -113,8 +113,6 @@ export const CetakOkp = () => {
           const mt = data.dNote.length * 5;
           setPnote(mt)
           console.log(dataOKP)
-          console.log(dataOKP.okp)
-          console.log(data.dNote.length)
           setIsLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
