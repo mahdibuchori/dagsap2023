@@ -587,8 +587,29 @@ export const NewEditPo = () => {
     setTax2id(value.tax2code);
     setExpro(value);
     let modifiedArr = rowData.map((e)=>{
-      let pjk = "";
-      if(value?.pajak === "DD" || value?.pajak ==="D"){pjk = ""}else{pjk = value?.pajak}
+      let newPjk = "";
+      if(value.tax1code === "D" && value.tax2code === ""){
+        newPjk = ""
+      }
+      else if(value.tax1code === "D" && value.tax2code === "D"){
+        newPjk = ""
+      }
+      else if(value.tax1code === "D" && value.tax2code !== ""){
+        newPjk = value.tax2code
+      }
+      else if(value.tax1code === "" && value.tax2code === ""){
+        newPjk = ""
+      }
+      else if(value.tax1code === "" && value.tax2code !== ""){
+        newPjk = value.tax2code
+      }
+      else if(value.tax1code !== "" && value.tax2code === ""){
+        newPjk = value.tax1code
+      }
+      else{
+        newPjk = `${value.tax1code}${value.tax2code}`;
+      }
+
       return {
         material : e.material,
         qty : parseFloat(e.qty).toFixed(2),
@@ -599,7 +620,7 @@ export const NewEditPo = () => {
         jmlhHarga : e.jmlhHarga,
         departement : e.departement,
         itemNo : e.itemNo,
-        pajak : pjk,
+        pajak : newPjk,
         divisi : e.divisi,
         terima  : e.terima,
         tutup : e.tutup,
@@ -614,16 +635,37 @@ export const NewEditPo = () => {
         mypo : location.state.data.id_po                            
       }
     })
-    const pjk = modifiedArr[0]?.pajak;
+    // const pjk = modifiedArr[0]?.pajak;
     let dataPo = numbPo.data;
     if(dataPo.length === 0){
-      if(pjk === ""){
+      /* if(pjk === ""){
         const numb = ("00" + 1).slice(-2);
         setNopo(`${kode}5${numb}`);
       }
       else{
         const numb = ("00" + 1).slice(-3);
         setNopo(`${kode}${numb}`);
+      } */
+      console.log(value.tax1code);
+      console.log(value.tax2code);
+      if(value?.id === "3801" || value?.id ==="25617"){
+        const numb = ("00" + 1).slice(-3);
+        setNopo(`${kode}${numb}`);
+      }
+      else{
+        if(value.tax1code === "" && value.tax2code === ""){
+          const numb = ("00" + 1).slice(-2);
+          setNopo(`${kode}5${numb}`);
+        }
+        else if(value.tax1code === "D" && value.tax2code === ""){
+          const numb = ("00" + 1).slice(-2);
+          setNopo(`${kode}5${numb}`);
+        }
+        else{
+          const numb = ("00" + 1).slice(-3);
+          setNopo(`${kode}${numb}`);
+                
+        }
       }
     }
     else{
@@ -638,7 +680,7 @@ export const NewEditPo = () => {
           return dtPpn.push(parseFloat(c))
         }
       })
-      let cek_pj = "";
+      /* let cek_pj = "";
       if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" || value?.pajak === "SH" ){
         cek_pj = value?.pajak
       }
@@ -657,7 +699,27 @@ export const NewEditPo = () => {
       else{
         const numb = ("00" + (dtPpn.length + 1)).slice(-3);
         setNopo(`${kode}${numb}`);
-      }
+      } */
+        console.log(value.tax1code);
+        console.log(value.tax2code);
+        if(value?.id === "3801" || value?.id ==="25617"){
+          const numb = ("00" + (dtPph.length + 1)).slice(-2);
+          setNopo(`${kode}${numb}`);
+        }
+        else{
+          if(value.tax1code === "" && value.tax2code === ""){
+            const numb = ("00" + (dtPph.length + 1)).slice(-2);
+            setNopo(`${kode}5${numb}`);
+          }
+          else if(value.tax1code === "D" && value.tax2code === ""){
+            const numb = ("00" + (dtPph.length + 1)).slice(-2);
+            setNopo(`${kode}5${numb}`);
+          }
+          else{
+            const numb = ("00" + (dtPpn.length + 1)).slice(-3);
+            setNopo(`${kode}${numb}`);
+          }
+        }
     }
     setRowData(modifiedArr)
     setisReady(true)

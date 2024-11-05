@@ -845,8 +845,32 @@ export const CreatePo = () => {
         setTax2name(value.tax2name);
         setExpro(value)
         let modifiedArr = rowData.map((e)=>{
-            let pjk = "";
-            if(value?.pajak === "DD" || value?.pajak ==="D"){pjk = ""}else{pjk = value?.pajak};
+            let newPjk = "";
+
+            if(value.tax1code === "D" && value.tax2code === ""){
+                newPjk = ""
+            }
+            else if(value.tax1code === "D" && value.tax2code === "D"){
+                newPjk = ""
+            }
+            else if(value.tax1code === "D" && value.tax2code !== ""){
+                newPjk = value.tax2code
+            }
+            else if(value.tax1code === "" && value.tax2code === ""){
+                newPjk = ""
+            }
+            else if(value.tax1code === "" && value.tax2code !== ""){
+                newPjk = value.tax2code
+            }
+            else if(value.tax1code !== "" && value.tax2code === ""){
+                newPjk = value.tax1code
+            }
+            else{
+                newPjk = `${value.tax1code}${value.tax2code}`;
+            }
+            // console.log('tax1code :' +value.tax1code);
+            // console.log('tax2code :' +value.tax2code);
+            // console.log('newPjk :' +newPjk);
             return {
                 material : e.material,
                 qty : parseFloat(e.qty).toFixed(2),
@@ -857,7 +881,7 @@ export const CreatePo = () => {
                 jmlhHarga : e.jmlhHarga,
                 departement : e.departement,
                 itemNo : e.itemNo,
-                pajak : pjk,
+                pajak : newPjk,
                 divisi : e.divisi,
                 spesifikasi : e.spesifikasi,
                 terima  : e.terima,
@@ -878,7 +902,7 @@ export const CreatePo = () => {
         // const pjk = modifiedArr[0]?.pajak;
         let dataPo = numbPo.data;
         if(dataPo.length === 0){
-            let cek_pj = "";
+            /* let cek_pj = "";
             if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" || value?.pajak === "SH" ){
                 cek_pj = value?.pajak
             }
@@ -896,6 +920,28 @@ export const CreatePo = () => {
             else{
                 const numb = ("00" + 1).slice(-3);
                 setNopo(`${kode}${numb}`);
+            } */
+
+            console.log(value.tax1code);
+            console.log(value.tax2code);
+            if(value?.id === "3801" || value?.id ==="25617"){
+                const numb = ("00" + 1).slice(-3);
+                setNopo(`${kode}${numb}`);
+            }
+            else{
+
+                if(value.tax1code === "" && value.tax2code === ""){
+                    const numb = ("00" + 1).slice(-2);
+                    setNopo(`${kode}5${numb}`);
+                }
+                else if(value.tax1code === "D" && value.tax2code === ""){
+                    const numb = ("00" + 1).slice(-2);
+                    setNopo(`${kode}5${numb}`);
+                }
+                else{
+                    const numb = ("00" + 1).slice(-3);
+                    setNopo(`${kode}${numb}`);
+                }
             }
         }
         else{
@@ -912,7 +958,7 @@ export const CreatePo = () => {
                 }
             })
       
-            let cek_pj = "";
+            /* let cek_pj = "";
             if(value?.pajak === "S" || value?.pajak ==="SE" || value?.pajak === "ST" || value?.pajak === "SH" ){
               cek_pj = value?.pajak
             }
@@ -931,6 +977,27 @@ export const CreatePo = () => {
             else{
                 const numb = ("00" + (dtPpn.length + 1)).slice(-3);
                 setNopo(`${kode}${numb}`);
+            } */
+
+            console.log(value.tax1code);
+            console.log(value.tax2code);
+            if(value?.id === "3801" || value?.id ==="25617"){
+                const numb = ("00" + (dtPph.length + 1)).slice(-2);
+                setNopo(`${kode}${numb}`);
+            }
+            else{
+                if(value.tax1code === "" && value.tax2code === ""){
+                    const numb = ("00" + (dtPph.length + 1)).slice(-2);
+                    setNopo(`${kode}5${numb}`);
+                }
+                else if(value.tax1code === "D" && value.tax2code === ""){
+                    const numb = ("00" + (dtPph.length + 1)).slice(-2);
+                    setNopo(`${kode}5${numb}`);
+                }
+                else{
+                    const numb = ("00" + (dtPpn.length + 1)).slice(-3);
+                    setNopo(`${kode}${numb}`);
+                }
             }
         }
         /* else{
