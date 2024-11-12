@@ -5,14 +5,14 @@ import { format } from "date-fns";
 import id from 'date-fns/locale/id';
 import { useNavigate } from 'react-router-dom';
 import { NumericFormat } from 'react-number-format';
-import { Accordion, Breadcrumb, Button, Card, Col, Container, Form, InputGroup } from 'react-bootstrap';
+import { Accordion, Badge, Breadcrumb, Button, Card, Col, Container, Form, InputGroup, Modal } from 'react-bootstrap';
 
 import { FileBarang } from '../../datafile/FileSelect';
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataMaterial, { selectMaterial } from '../../store/DataMaterial';
 import { API_AUTH } from '../../apis/apisData';
-import { PrevPengadaan } from './PrevPengadaan';
+// import { PrevPengadaan } from './PrevPengadaan';
 
 export const CreatePengadaan = () => {
   const navigate = useNavigate();
@@ -60,6 +60,12 @@ export const CreatePengadaan = () => {
   const [foodGra, setFoodGra] = useState(false);
 
   const [selectedValue, setSelectedValue] = useState();
+
+  const [show, setShow] = useState(false);
+  const [arrPo, setArrPo] = useState([]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
       const result = material.material?.reduce((unique, o) => {
@@ -180,11 +186,6 @@ export const CreatePengadaan = () => {
       try {
         if(tibar.value !== "NonInventori"){
           setIsLoading(true);
-          /* const data = await API_AUTH.get(`pengadaanId/${selectedValue.value}`);
-          if( data.data[0] !== undefined){
-            const cek = await API_AUTH.get(`pengadaanbyid/${data.data[0].id_Pengadaan}`);
-            setDataPO(cek.data)
-          } */
           const data = await API_AUTH.get(`prevpengadaan/${selectedValue.value}`);
           if( data.data.length !== 0){
             const dRec = data.data.map((e,i)=>{
@@ -230,6 +231,31 @@ export const CreatePengadaan = () => {
               )
             })
             setDataPO(dRec)
+            let dataN = [];
+            for(let x = 0; x < dRec.length; x++){
+              let parsial = dRec[x].parsial_data
+              let usr = dRec[x].user
+              for(let y = 0; y < parsial.length; y++){
+                parsial[y].id_Pengadaan = dRec[x].id_Pengadaan;
+                parsial[y].filter_bulan = dRec[x].filter_bulan;
+                parsial[y].divisi= usr[0].divisi;
+                dataN.push(parsial[y])
+              }
+            }
+
+            const groupedPo = Object.entries(
+              dataN.reduce((acc, { po, qty, expro, noAkun, tglDatang, id_Pengadaan, filter_bulan, divisi }) => {
+                if (!acc[po]) {
+                  acc[po] = [];
+                }
+                acc[po].push({ qty, expro, noAkun, tglDatang, id_Pengadaan, filter_bulan, divisi });
+            
+                return acc;
+              }, {})
+            ).map(([label, options]) => ({ label, options }));
+            const sukses = groupedPo.filter(i => i.label !== "");
+            setArrPo(sukses)
+            handleShow()
           }
           setIsLoading(false);
         }
@@ -477,6 +503,19 @@ export const CreatePengadaan = () => {
       setIsReady(true)
     }, 1000)
   }
+
+  const handleMoveUpdate = (e, id) =>{
+    const x = dataPO.filter(i => i.id_Pengadaan === e);
+    if(x.length > 0){
+      navigate(`/form/pengadaan/update`,{state:{
+        data : x[0],
+        po : id
+      }});
+    }
+    else{
+      Swal.fire('Opps','Data tiak ditemukan','warning')
+    }
+  }
   return (
     <>
     <div className='setContain'>
@@ -552,7 +591,7 @@ export const CreatePengadaan = () => {
                   </Form.Group>
                 </Card.Body>
               </Card>
-              <PrevPengadaan data={dataPO}/>
+              {/* <PrevPengadaan data={dataPO}/> */}
             </div>
             <div className='col-sm-8	col-md-8	col-lg-8	col-xl-8 mb-1'>
               <Card className='mb-3' bg='white'>
@@ -561,16 +600,16 @@ export const CreatePengadaan = () => {
                     <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
                     <Form.Group as={Col} controlId="validationCustom01">
                       <Form.Label>Tipe Material</Form.Label>
-                      <Select 
-                        required
-                        onChange={(value) => {
-                          setTibar(value)
-                          setDataPO()
-                          setDataReady(true)
-                        }}
-                        options = {fileNab}
-                        isSearchable = {false}
-                      />
+                        <Select 
+                          required
+                          onChange={(value) => {
+                            setTibar(value)
+                            setDataPO()
+                            setDataReady(true)
+                          }}
+                          options = {fileNab}
+                          isSearchable = {false}
+                        />
                     </Form.Group>
                     </div>
                     <div className='col-sm-12 col-md-8 col-lg-8 col-xl-8'>
@@ -862,6 +901,154 @@ export const CreatePengadaan = () => {
     </div>
 
     {isLoading ? <LoadingPage /> : ""}
+
+    <Modal show={show} size='xl'  centered> 
+        <Modal.Body>
+          <Accordion defaultActiveKey="0">
+            {arrPo?.map((x,i)=>{
+              let datapos = x.options;
+              let statusX = 'Open';
+              let colorX = 'danger';
+              let mstat =[]
+              let mdivic = []
+              for(let y=0; y < datapos.length; y++){
+                if(x.label !== "" && datapos[y].noAkun === ""){ mstat.push('Close') }
+                else if(x.label !== "" && datapos[y].noAkun === "purch"){ mstat.push('Open')}
+                else if(x.label !== "" && datapos[y].noAkun === "min"){ mstat.push('Open')}
+                else{ mstat.push('Close')}
+                mdivic.push(datapos[y].divisi)
+              }
+              let cariDiv = mdivic?.filter(i => i === "Purchasing");
+              let cariStas = mstat?.filter(i => i === "Open");
+
+              if(cariDiv.length > 0){
+                statusX = "Forecast"
+                colorX = 'primary'
+              }
+              else{
+                if(cariStas.length > 0){
+                  statusX = "Open"
+                  colorX = 'danger'
+                }
+                else{
+                  statusX = "Close"
+                  colorX = 'success'
+                }
+              }
+              
+              return(
+                <Accordion.Item eventKey={i}>
+                <Accordion.Header>{x.label} <Badge bg={colorX} style={{marginLeft: 10, padding: 10}}>{statusX}</Badge></Accordion.Header>
+                {datapos?.map((a,b)=>{
+                  let status = 'Open';
+                  let colorss = '#c41414';
+                  let pReady = false;
+                  if(x.label !== "" && a.noAkun === ""){ status = 'Close'; colorss = '#c41414'}
+                  else if(x.label !== "" && a.noAkun === "purch"){ status = 'Open'; colorss = '#287bff'}
+                  else if(x.label !== "" && a.noAkun === "min"){ status = 'Open'; colorss = '#287bff'}
+                  else{
+                    status = 'Open'; colorss = '#c41414'
+                  }
+
+                  if(a.divisi === "Purchasing"){
+                    pReady = true
+                  }
+                  else if(status === "Open"){
+                    pReady = true
+                  }
+                  else{
+                    pReady = false
+                  }
+                  return(
+                    <Accordion.Body>
+                    <div className="row  g-2 ">
+                      <div className='col-sm-12 col-md-1 col-lg-1 col-xl-1'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Qty</Form.Label>
+                          <Form.Control
+                            type="text"
+                            value={a.qty}
+                            disabled
+                          />
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Eksternal Provider</Form.Label>
+                          <Form.Control
+                            type="text"
+                            value={a.expro}
+                            disabled
+                          />
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Tgl Kirim</Form.Label>
+                          <Form.Control
+                            type="text"
+                            value={a.tglDatang}
+                            disabled
+                          />
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Divisi</Form.Label>
+                          <Form.Control
+                            type="text"
+                            value={a.divisi}
+                            disabled
+                          />
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Status</Form.Label>
+                          <Form.Control
+                            type="text"
+                            value={status}
+                            style={{background : colorss, color: 'white', textAlign: 'center'}}
+                            disabled
+                          />
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-1 col-lg-1 col-xl-1'>
+                        <div className='d-flex align-items-end flex-column'>
+                          <div className='d-flex align-items-end flex-wrap'>
+                            <div className='row p-1'>
+                              {pReady ?
+                                <Button 
+                                  type="submit"
+                                  variant="outline-primary m-2"
+                                  className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                                  onClick={(e)=> handleMoveUpdate(a.id_Pengadaan, x.label)}
+                                >
+                                Update
+                                </Button>
+                               : ""}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Accordion.Body>
+                  )
+
+                })}
+                  
+              </Accordion.Item>
+              )
+            })}
+          </Accordion>
+        
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     
     </>
   )

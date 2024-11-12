@@ -13,6 +13,7 @@ export const PrevPengadaan = ({data}) => {
       <Accordion>
         {
           data.map((x,i) =>{
+            
             return(
               x.newPar.map((a,z)=>{
                 let statusn = "";
@@ -58,6 +59,7 @@ export const PrevPengadaan = ({data}) => {
                               type="button" 
                               className="btn btn-primary float-right"
                               onClick={(e)=>{
+                                console.log(x)
                                 navigate(`/form/pengadaan/update`,{state:{
                                   data : x,
                                   po : a.po

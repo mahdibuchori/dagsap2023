@@ -994,6 +994,11 @@ export const CreatePo = () => {
                     const numb = ("00" + (dtPph.length + 1)).slice(-2);
                     setNopo(`${kode}5${numb}`);
                 }
+                
+                else if(value.tax1code === "D" && value.tax2code === "D"){
+                    const numb = ("00" + (dtPph.length + 1)).slice(-2);
+                    setNopo(`${kode}5${numb}`);
+                }
                 else{
                     const numb = ("00" + (dtPpn.length + 1)).slice(-3);
                     setNopo(`${kode}${numb}`);
