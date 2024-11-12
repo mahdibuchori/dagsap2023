@@ -48,6 +48,7 @@ export const CreatePengadaan = () => {
   const [isReady, setIsReady] = useState(true);
   const [cekReady, setCekReady] = useState(false);
   const [kontak, setKontak] = useState(false);
+  const [popPeng, setPopPeng] = useState(false);
   const [hilang, setHilang] = useState('flex');
 
 
@@ -187,6 +188,7 @@ export const CreatePengadaan = () => {
         if(tibar.value !== "NonInventori"){
           setIsLoading(true);
           const data = await API_AUTH.get(`prevpengadaan/${selectedValue.value}`);
+          setPopPeng(false)
           if( data.data.length !== 0){
             const dRec = data.data.map((e,i)=>{
               const isi = e.parsial_data;
@@ -255,6 +257,7 @@ export const CreatePengadaan = () => {
             ).map(([label, options]) => ({ label, options }));
             const sukses = groupedPo.filter(i => i.label !== "");
             setArrPo(sukses)
+            setPopPeng(true)
             handleShow()
           }
           setIsLoading(false);
@@ -614,7 +617,17 @@ export const CreatePengadaan = () => {
                     </div>
                     <div className='col-sm-12 col-md-8 col-lg-8 col-xl-8'>
                       <Form.Group as={Col} controlId="validationCustom01">
-                        <Form.Label>Item</Form.Label>
+                        <Form.Label>
+                          Item
+                          {popPeng ?
+                            <span style={{color: `#287bff`, fontSize: '16px', marginLeft: 10}} onClick={(e) => handleShow()}>
+                              <i className="bi bi-info-square-fill"></i>
+                            </span>
+                            :""
+                          }
+                          
+                          
+                        </Form.Label>
                         <Select
                           required
                           className="basic-single"
@@ -628,6 +641,7 @@ export const CreatePengadaan = () => {
                             setDataPO()
                             setFileReady(true)
                             setCekReady(true)
+                            setPopPeng(false)
                             setSelectedValue(value)
                           }}
                           />
