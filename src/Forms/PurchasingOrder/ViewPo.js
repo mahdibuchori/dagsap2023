@@ -318,15 +318,15 @@ export const ViewPo = () => {
         dpp.push(pjk1)
         if(pjk1.toUpperCase() === "A"){
           nppn += 0;
-          npph += ((parseFloat(e.ntotalSub)) * 2.5) / 100;
+          npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
         }
         else if(pjk1.toUpperCase() === "B"){
           nppn += 0;
-          npph += ((parseFloat(e.ntotalSub)) * 3) / 100;
+          npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
         }
         else if(pjk1.toUpperCase() === "E"){
           nppn += 0;
-          npph += ((parseFloat(e.ntotalSub)) * 10) / 100;
+          npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
         }
         else if(pjk1.toUpperCase() === "G"){
           nppn += 0;
