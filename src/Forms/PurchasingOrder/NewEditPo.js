@@ -159,6 +159,9 @@ export const NewEditPo = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    console.log(fileDep);
+    console.log(tax1id);
+    console.log(tax2id);
     let data = location.state.data
     const sinyal = async () =>{
       if(location.state === null || data.length === 0) {
@@ -320,9 +323,6 @@ export const NewEditPo = () => {
     }
     sinyal()
     
-    console.log(fileDep)
-    console.log(tax1id)
-    console.log(tax2id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -646,8 +646,6 @@ export const NewEditPo = () => {
         const numb = ("00" + 1).slice(-3);
         setNopo(`${kode}${numb}`);
       } */
-      console.log(value.tax1code);
-      console.log(value.tax2code);
       if(value?.id === "3801" || value?.id ==="25617"){
         const numb = ("00" + 1).slice(-3);
         setNopo(`${kode}${numb}`);
@@ -700,8 +698,7 @@ export const NewEditPo = () => {
         const numb = ("00" + (dtPpn.length + 1)).slice(-3);
         setNopo(`${kode}${numb}`);
       } */
-        console.log(value.tax1code);
-        console.log(value.tax2code);
+        
         if(value?.id === "3801" || value?.id ==="25617"){
           const numb = ("00" + (dtPph.length + 1)).slice(-2);
           setNopo(`${kode}${numb}`);
@@ -807,15 +804,15 @@ export const NewEditPo = () => {
       dpp.push(pjk1)
       if(pjk1.toUpperCase() === "A"){
         nppn += 0;
-        npph += ((parseFloat(e.ntotalSub)) * 2.5) / 100;
+        npph += ((parseFloat(e.jmlhHarga)) * 2.5) / 100;
       }
       else if(pjk1.toUpperCase() === "B"){
         nppn += 0;
-        npph += ((parseFloat(e.ntotalSub)) * 3) / 100;
+        npph += ((parseFloat(e.jmlhHarga)) * 3) / 100;
       }
       else if(pjk1.toUpperCase() === "E"){
         nppn += 0;
-        npph += ((parseFloat(e.ntotalSub)) * 10) / 100;
+        npph += ((parseFloat(e.jmlhHarga)) * 10) / 100;
       }
       else if(pjk1.toUpperCase() === "G"){
         nppn += 0;
