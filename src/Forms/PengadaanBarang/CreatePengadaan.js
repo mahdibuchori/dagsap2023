@@ -63,6 +63,7 @@ export const CreatePengadaan = () => {
   const [selectedValue, setSelectedValue] = useState();
 
   const [show, setShow] = useState(false);
+  const [isRefresh, setIsRefresh] = useState(false);
   const [arrPo, setArrPo] = useState([]);
 
   const handleClose = () => setShow(false);
@@ -82,8 +83,8 @@ export const CreatePengadaan = () => {
       },[]);
       // const  newFileNab= result?.filter(x => x.value !== "Finished Goods");
       
-      console.log(menit)
-      console.log(detik)
+      // console.log(menit)
+      // console.log(detik)
       setFileNab(result);
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -282,13 +283,68 @@ export const CreatePengadaan = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[cekReady]);
 
-  useEffect(() => {
-    // setIsLoading(true);
-    if (!isReady) return;
-    onGridReady()
-    setIsReady(false)
+  useEffect (() => {
+    if(!isRefresh) return;
+    const gntiDta = async () =>{
+      try {
+        setFileNab([])
+        let bln = format(new Date(), "MM", { locale: id });
+        let tahu = format(new Date(), "yy", { locale: id });
+
+        let bul = format(new Date(), "MM", { locale: id });
+        let days = format(new Date(), "dd", { locale: id });
+        let yea = format(new Date(), "yyyy", { locale: id });
+        const xsd = Math.random().toString(36).slice(-4);
+
+        const result = material.material?.reduce((unique, o) => {
+          if(!unique.some(obj => obj.kategori === o.kategori)) {
+            unique.push({
+              value :o.kategori,
+              label :o.kategori,
+              kategori :o.kategori,
+              labelId :o.categoryid,
+            });
+          }
+          return unique;
+        },[]);
+        console.log(menit)
+        console.log(detik)
+        setPopPeng(false)
+        setTgl(`${yea}-${bul}-${days}`);
+        setKode(xsd.toUpperCase()+bln+tahu);
+        setMateril("")
+        setBrand(" ")
+        setTipeMaterial(" ")
+        setMesin(" ")
+        setSpesifikasi("")
+        setInputList([{ tglDatang: '', qty: '', expro: '', po: '', noAkun: '' }])
+        setFileNab(result);
+        setFileBar([
+          { value: '', label: '' }
+        ])
+        setSelectedValue({ value: '', label: '' })
+        /* 
+        
+        setTibar(null)
+         */
+      } catch (error) {
+          setIsLoading(false);
+          Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Pengambilan Data Pengadaan Gagal!',
+          footer: error
+          })
+      }
+      setIsRefresh(false);
+    } 
+
+    setIsRefresh(false);
+    gntiDta();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [isReady]);
+  },[isRefresh]);
+
+  
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -396,6 +452,13 @@ export const CreatePengadaan = () => {
       
     }
   }
+  useEffect(() => {
+      // setIsLoading(true);
+      if (!isReady) return;
+      onGridReady()
+      setIsReady(false)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReady]);
 
   const handleSave = async () =>{
     setIsLoading(true)
@@ -475,7 +538,32 @@ export const CreatePengadaan = () => {
         foodgrade : foodGra,
       });
 
-      Swal.fire(`${next.data.success}`, navigate(`/form/Pengadaan`), 'success');
+      Swal.fire({
+        title: `${next.data.success}`,
+        text: 'Apakah anda ingin melanjutkan pembuatan pengadaan ?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Ya",
+        denyButtonText: `Tidak`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setCoa(false)
+          setHalal(false)
+          setMsds(false)
+          setCopyPO(false)
+          setHealth(false)
+          setKh(false)
+          setFoodGra(false)
+          setIsRefresh(true)
+          Swal.fire("Saved!", "", "success");
+        } else if (result.isDenied) {
+          navigate(`/form/Pengadaan`)
+        }
+      });
+
+      
+
+      // Swal.fire(`${next.data.success}`, navigate(`/form/Pengadaan`), 'success');
       setIsLoading(false)
     } catch (error) {
       Swal.fire('Info', `${error.response.data.message}`, 'warning');
@@ -606,6 +694,7 @@ export const CreatePengadaan = () => {
                         <Select 
                           required
                           onChange={(value) => {
+                            console.log(value)
                             setTibar(value)
                             setDataPO()
                             setDataReady(true)
@@ -625,8 +714,6 @@ export const CreatePengadaan = () => {
                             </span>
                             :""
                           }
-                          
-                          
                         </Form.Label>
                         <Select
                           required
@@ -725,8 +812,9 @@ export const CreatePengadaan = () => {
                         aria-label="With textarea" 
                         placeholder='Harap isikan merk, ukuran, dan data yang lengkap'
                         onChange={(e) => {
-                            setSpesifikasi(e.target.value)
+                          setSpesifikasi(e.target.value)
                         }}
+                        value={spesifikasi}
                         required
                       />
                       <Form.Control.Feedback type="invalid">
@@ -750,7 +838,9 @@ export const CreatePengadaan = () => {
                           type='checkbox'
                           id={`inline-checkbox-1`}
                           value={coa}
-                          onClick={(e)=>setCoa(e.target.checked)}
+                          onClick={(e)=>{
+                            setCoa(e.target.checked)
+                          }}
                         />
                       </div>
                       <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>

@@ -37,6 +37,7 @@ export const UpdatePrevPengada = () => {
         else{
             cekData();
             const data = location.state.data;
+            console.log(data)
             if(data?.coa === 1){setCoa(true)}
             if(data?.halal === 1){setHalal(true)}
             if(data?.msds === 1){setMsds(true)}
@@ -143,6 +144,12 @@ export const UpdatePrevPengada = () => {
             let swabt = inputList.filter(x=> x.noAkun !== "");
             if(userData.usubdiv === file.user[0].divisi && userData.uplan === file.user[0].plan){
                 setIsLoading(true)
+                console.log({
+                    id_Pengadaan : location.state.data.id_Pengadaan,
+                    idPo : nop,
+                    parsial_data: nilai,
+                    swabt : swabt
+                })
                 const next = await API_AUTH.put(`/updatePengadaan/parsial`, {
                     id_Pengadaan : location.state.data.id_Pengadaan,
                     idPo : nop,
@@ -151,6 +158,7 @@ export const UpdatePrevPengada = () => {
                 });
                 Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
                 setIsLoading(false);
+                
             }
             else{
                 Swal.fire(`Oppss...`, 'Anda tidak memiliki akses', 'info');
