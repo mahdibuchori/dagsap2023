@@ -11,6 +11,8 @@ import { FileBarang } from '../../datafile/FileSelect';
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataMaterial, { selectMaterial } from '../../store/DataMaterial';
+import usePengadaanStore, {selectFetchPengadaan} from '../../store/DataPengadaan';
+
 import { API_AUTH } from '../../apis/apisData';
 
 export const UpdatePengadaan = () => {
@@ -18,6 +20,7 @@ export const UpdatePengadaan = () => {
   const location = useLocation();
   const userData = useAuthStore(selectUser);
   const material = useDataMaterial(selectMaterial);
+  const fetchPengadaan = usePengadaanStore(selectFetchPengadaan);
   
   const [kode, setKode] = useState('');
   const [tgl, setTgl] = useState('');
@@ -57,6 +60,7 @@ export const UpdatePengadaan = () => {
   const [hilangs, setHilangs] = useState('flex');
   const [hilang, setHilang] = useState('none');
   const [nmButton, setnmButton] = useState('View Data');
+  // const [perintah, setPerintah] = useState('');
   
   useEffect(() => {
     const result = material.material?.reduce((unique, o) => {
@@ -183,7 +187,7 @@ export const UpdatePengadaan = () => {
     setMesin(data?.mesin)
     setTipeMaterial(data?.tipeMaterial)
 
-    if(String(data?.status).toUpperCase() === "PENGAJUAN" || String(data?.status).toUpperCase() === "REVISI"){
+    if(String(data?.status).toUpperCase() === "PENGAJUAN" || String(data?.status).toUpperCase() === "REVISI" || String(data?.status).toUpperCase() === "REJECT"){
       if(String(data?.user[0].pemohon).toUpperCase() === String(userData?.uname).toUpperCase()){
         setHilang('block');
         setnmButton('Update Data');
@@ -219,7 +223,6 @@ export const UpdatePengadaan = () => {
     }
     else if(String(data?.status).toUpperCase() === "SELESAI"){}
     setIsLoading(false);
-      
   }
 
   const handleInputChange = (e, index) => {
@@ -390,6 +393,36 @@ export const UpdatePengadaan = () => {
     </Tooltip>
   );
 
+  const handleDelete = () =>{
+    Swal.fire({
+      title: `Apakah anda yakin akan menghapus pengadaan dengan id ${kode} ?`,
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        handleDestroyed()
+      }
+    });
+}
+const handleDestroyed = async () =>{
+    setIsLoading(true)
+    try {
+      const date = new Date();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      let bb = String(month).padStart(2, '0');
+      await  API_AUTH.delete(`/pengadaan/${kode}`);
+      await fetchPengadaan(`${year}-${bb}`, userData.uplan);
+      navigate(`/form/pengadaan`)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      Swal.fire('Opss..','Gagal unutk menghapus data','warning') 
+      setIsLoading(false);
+    }
+}
+
   return (
     <>
     <div className='setContain'>
@@ -430,16 +463,16 @@ export const UpdatePengadaan = () => {
                   <Form.Group as={Col} controlId="validationCustom01">
                     <Form.Label>
                       Status Pengadaan &nbsp;
-                      {status === 'Revisi' 
-                      ? 
-                      <OverlayTrigger
-                        placement="bottom"
-                        delay={{ show: 250, hide: 400 }}
-                        overlay={renderTooltip}
-                      >
-                        <i className="bi bi-bell-fill text-warning"></i>
-                      </OverlayTrigger>
-                        : ""}  
+                      {
+                        status === 'Revisi' && 
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i className="bi bi-bell-fill text-warning"></i>
+                        </OverlayTrigger>
+                      }  
                     </Form.Label>
                     <Form.Control
                       required
@@ -897,6 +930,44 @@ export const UpdatePengadaan = () => {
                 <div className='d-flex align-items-end flex-wrap'>
                   <div className='row p-2'>
                     <Button type="submit" variant="outline-primary m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12' style={{display: hilang}}>{nmButton}</Button>
+                    {
+                      (status === "Pengajuan" &&  location.state.data?.user[0].pemohon === userData?.uname)?
+                        <Button 
+                          variant="outline-danger m-2"
+                          className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                          onClick={()=>handleDelete()}
+                        >
+                          Delete
+                        </Button>
+                      : 
+                      (status === "Revisi" &&  location.state.data?.user[0].pemohon === userData?.uname)?
+                        <Button 
+                          variant="outline-danger m-2"
+                          className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                          onClick={()=>handleDelete()}
+                        >
+                          Delete
+                        </Button>
+                      : 
+                      (status === "Reject" &&  location.state.data?.user[0].pemohon === userData?.uname)?
+                        <Button 
+                          variant="outline-danger m-2"
+                          className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                          onClick={()=>handleDelete()}
+                        >
+                          Delete
+                        </Button>
+                      : 
+                      (status === "Verifikasi" && userData.usubdiv === "Purchasing") &&
+                        <Button 
+                          variant="outline-danger m-2"
+                          className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                          onClick={()=>handleDelete()}
+                        >
+                          Delete
+                        </Button>
+                    }
+                    
                     
                   </div>
                 </div>

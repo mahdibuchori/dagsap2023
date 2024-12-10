@@ -156,6 +156,47 @@
     margin-right: 10px;
 }
 
+.buttonDel{
+    border: none;
+    background-color: var(--red);
+    color: var(--white);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* btn untuk table pengadaan */
+.btnPengView{
+    border: none;
+    background-color: var(--darkblue);
+    color: var(--white);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 0px;
+}
+
+.btnPengVerify{
+    border: none;
+    background-color: var(--blue);
+    color: var(--white);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.btnPengDel{
+    border: none;
+    background-color: var(--red);
+    color: var(--white);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+/* ****************************** */
 
 .btnFilter{
     width: 100%;

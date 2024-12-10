@@ -169,11 +169,18 @@ export const VerifyPengadaan = () => {
       let dd = date.getDate();
       let bulan = String(mm).padStart(2, '0');
       let tang = String(dd).padStart(2, '0');
+      let tl = ""
+      if(stat === 'Revisi'){
+        tl = `${yy}-${bulan}-${tang}`
+      }
+      else{
+        tl = " "
+      }
       
       const next = await API_AUTH.put(`/verifyPengadaan`, {
         id_Pengadaan : location.state.data.id_Pengadaan,
         status : stat,
-        tgl_verify : `${yy}-${bulan}-${tang}`,
+        tgl_verify : tl,
         tgl_approve : rev,
       });
 
@@ -560,6 +567,27 @@ export const VerifyPengadaan = () => {
                           className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
                         >
                           Verifikasi Data
+                        </Button>
+
+                        <Button 
+                          variant="outline-success m-2" 
+                          className='col-sm-12 col-md-12 col-lg-12 col-xl-12'
+                          onClick={()=>{
+                            Swal.fire({
+                              title: "Apakah anda akan reject permintaan pengadaan?",
+                              showDenyButton: true,
+                              showCancelButton: false,
+                              confirmButtonText: "Reject",
+                              denyButtonText: `Cancel`
+                            }).then((result) => {
+                              /* Read more about isConfirmed, isDenied below */
+                              if (result.isConfirmed) {
+                                handleSave('Reject','')
+                              }
+                            });
+                          }}
+                        >
+                          Reject Data
                         </Button>
 
                         <Button 

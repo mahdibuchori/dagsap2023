@@ -426,7 +426,7 @@ export const BtnPurchasing = (props) => {
                     className="buttonCancel"
                 >
                 <i className="bi bi-arrow-clockwise"></i>
-                <p style={{display:"none"}}>{userData?.uname}</p>
+                <p style={{display:"none"}}>{userData.uname}</p>
                 </button>
             </OverlayTrigger>
 
@@ -442,7 +442,7 @@ export const BtnPurchasing = (props) => {
                     className="buttonPrint"
                 >
                 <i className="bi bi-printer-fill"></i>
-                <p style={{display:"none"}}>{userData?.uname}</p>
+                <p style={{display:"none"}}>{userData.uname}</p>
                 </button>
             </OverlayTrigger>
 
@@ -499,6 +499,20 @@ export const BtnPurchasing = (props) => {
             >
                 <button
                     style={{ height: 30, lineHeight: 0.5, display: clickView}}
+                    onClick={() => bacaData()}
+                    className="buttonRead"
+                >
+                <i className="bi bi-journal-text"></i>
+                </button>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 150, hide: 250 }}
+                overlay={renderEdit}
+            >
+                <button
+                    style={{ height: 30, lineHeight: 0.5}}
                     onClick={() => bacaData()}
                     className="buttonRead"
                 >

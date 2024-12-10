@@ -344,8 +344,6 @@ export const CreatePengadaan = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[isRefresh]);
 
-  
-
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -708,11 +706,10 @@ export const CreatePengadaan = () => {
                       <Form.Group as={Col} controlId="validationCustom01">
                         <Form.Label>
                           Item
-                          {popPeng ?
+                          {popPeng &&
                             <span style={{color: `#287bff`, fontSize: '16px', marginLeft: 10}} onClick={(e) => handleShow()}>
                               <i className="bi bi-info-square-fill"></i>
                             </span>
-                            :""
                           }
                         </Form.Label>
                         <Select

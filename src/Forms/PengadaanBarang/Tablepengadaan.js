@@ -72,6 +72,7 @@ export const Tablepengadaan = ({columns}) => {
   const [screenHeight, setScreenHeight] = useState(tHeigt);
 
   const [jmlPengajuan, setJmlPengajuan] = useState(0);
+  const [jmlReject, setJmlReject] = useState(0);
   const [jmlRevisi, setJmlRevisi] = useState(0);
   const [jmlVerify, setJmlVerify] = useState(0);
   const [jmlSelesai, setJmlSelesai] = useState(0);
@@ -594,7 +595,8 @@ export const Tablepengadaan = ({columns}) => {
       const sales = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === "SALES-MARKETING");
 
       const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
-      const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
+      const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI"); 
+      const jumReject = newPengadaan.filter(x => x.status.toUpperCase() === "REJECT");      
       const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
       const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");
 
@@ -674,6 +676,7 @@ export const Tablepengadaan = ({columns}) => {
 
       setJmlPengajuan(jumPengajuan.length);
       setJmlRevisi(jumRevisi.length);
+      setJmlReject(jumReject.length);
       setJmlVerify(jumVerify.length);
       setJmlSelesai(jumSelesai.length);
       await pengadaanFalse()
@@ -1121,7 +1124,7 @@ export const Tablepengadaan = ({columns}) => {
           </div>
         </Stack>
         <div className="row mb-1 mt-1" style={{padding: "0px 10px 0px 10px"}}>
-          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+          <div className="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
             <Card className='mb-1'>
               <div className="radius-10 border-start border-0 border-3 border-dark">
                 <Card.Body style={{height: "50px", padding: '8px'}}>
@@ -1156,7 +1159,7 @@ export const Tablepengadaan = ({columns}) => {
               </div>
             </Card>
           </div>
-          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+          <div className="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
             <Card className='mb-1'>
               <div className="radius-10 border-start border-0 border-3 border-warning">
                 <Card.Body style={{height: "50px", padding: '8px'}}>
@@ -1192,7 +1195,44 @@ export const Tablepengadaan = ({columns}) => {
               </div>
             </Card>
           </div>
-          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+          <div className="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+            <Card className='mb-1'>
+              <div className="radius-10 border-start border-0 border-3 border-secondary">
+                <Card.Body style={{height: "50px", padding: '8px'}}>
+                  <Stack direction="horizontal" gap={3}>
+                    <div> 
+                      <h6>Reject ({jmlReject})</h6>
+                    </div>
+                    <div className="bg-light ms-auto">
+                      <DropdownButton id="dropdown-basic-button" variant="outline-secondary" size='sm'>
+                        {arrDiv.map((x, i) => {
+                          let index = arrDiv[i].toString();
+                          console.log(arrDiv[i])
+                          let index1 = '';
+                          let index2 = '';
+                          if(index === "Semua"){
+                            index1 = newPengadaan;
+                          }
+                          else{
+                            index1 = newPengadaan.filter(x => x.user[0].divisi.toUpperCase() === index.toUpperCase() && x.status.toUpperCase() === "REJECT");
+                              
+                          }
+                          
+                          index2 = `${index} (${index1.length})`
+                          
+                          return(
+                            <Dropdown.Item onClick={(e)=> handleDrop("Reject",index)}>{index2}</Dropdown.Item>
+                          )
+                            
+                        })}
+                      </DropdownButton>
+                    </div>
+                  </Stack>
+                </Card.Body>
+              </div>
+            </Card>
+          </div>
+          <div className="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
               <Card className='mb-1'>
                   <div className="radius-10 border-start border-0 border-3 border-primary">
                       <Card.Body style={{height: "50px", padding: '8px'}}>
@@ -1228,7 +1268,7 @@ export const Tablepengadaan = ({columns}) => {
                   </div>
               </Card>
           </div>
-          <div className="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+          <div className="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
               <Card className='mb-1'>
                   <div className="radius-10 border-start border-0 border-3 border-success">
                       <Card.Body style={{height: "50px", padding: '8px'}}>

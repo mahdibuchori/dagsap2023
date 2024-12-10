@@ -95,6 +95,9 @@ export const COLUMNS_PENGADAAN =[
             else if (params.value ==='Revisi') {
                 return {color: '#7a0080', backgroundColor: '#a35ea6c4', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
             }
+            else if (params.value ==='Reject') {
+                return {color: '#7a0080', backgroundColor: '#F0C571', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
+            }
             else {
                 return null;
             }
@@ -232,6 +235,9 @@ export const COLUMNS_PENGADAAN1 =[
             }
             else if (params.value ==='Revisi') {
                 return {color: '#7a0080', backgroundColor: '#a35ea6c4', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
+            }
+            else if (params.value ==='Reject') {
+                return {color: '#7a0080', backgroundColor: '#F0C571', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
             }
             else {
                 return null;
@@ -644,6 +650,9 @@ export const COLUMNS_PERMINTAAN =[
             }
             else if (params.value ==='Revisi') {
                 return {color: '#7a0080', backgroundColor: '#a35ea6c4', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '5px',textAlign: 'center',fontWeight: "bold"};
+            }
+            else if (params.value ==='Reject') {
+                return {color: '#7a0080', backgroundColor: '#F0C571', borderRadius: '8px', height: 30, lineHeight: 2, marginTop: '3px',textAlign: 'center'};
             }
             else {
                 return null;
