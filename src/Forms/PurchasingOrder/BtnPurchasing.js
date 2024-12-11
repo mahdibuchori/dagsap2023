@@ -505,26 +505,7 @@ export const BtnPurchasing = (props) => {
                 <i className="bi bi-journal-text"></i>
                 </button>
             </OverlayTrigger>
-
-            <OverlayTrigger
-                placement="bottom"
-                delay={{ show: 150, hide: 250 }}
-                overlay={renderEdit}
-            >
-                <button
-                    style={{ height: 30, lineHeight: 0.5}}
-                    onClick={() => bacaData()}
-                    className="buttonRead"
-                >
-                <i className="bi bi-journal-text"></i>
-                </button>
-            </OverlayTrigger>
-
-            
         </span>
-        
-
-
         </>
         
   )

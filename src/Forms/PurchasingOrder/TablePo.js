@@ -12,6 +12,7 @@ import { utils, writeFileXLSX } from 'xlsx';
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataPo, { selectDataPo, selectPoReady,selectFetchPo, selectFalsePo } from '../../store/DataPo';
+import { API_AUTH } from '../../apis/apisData';
 
 export const TablePo = ({columns}) => {
     let navigate = useNavigate();
@@ -197,89 +198,191 @@ export const TablePo = ({columns}) => {
         window.location.reload(false);
     }
     
-    const handleDate = () =>{
-        const startDate = state[0].startDate;
-        const endDate =  state[0].endDate
-        const d = new Date(startDate);
-        let yy = d.getFullYear();
-        let bln = parseInt(d.getMonth()) + 1;
-        let day = d.getDate();
-        let bb = String(bln).padStart(2, '0');
-        let dd = String(day).padStart(2, '0');
+    // const handleDate = () =>{
+    //     const startDate = state[0].startDate;
+    //     const endDate =  state[0].endDate
+    //     const d = new Date(startDate);
+    //     let yy = d.getFullYear();
+    //     let bln = parseInt(d.getMonth()) + 1;
+    //     let day = d.getDate();
+    //     let bb = String(bln).padStart(2, '0');
+    //     let dd = String(day).padStart(2, '0');
 
-        const date = new Date(endDate);
-        let year = date.getFullYear();
-        let month = parseInt(date.getMonth()) + 1;
-        let days = date.getDate();
-        let bulan = String(month).padStart(2, '0');
-        let hari = String(days).padStart(2, '0');
+    //     const date = new Date(endDate);
+    //     let year = date.getFullYear();
+    //     let month = parseInt(date.getMonth()) + 1;
+    //     let days = date.getDate();
+    //     let bulan = String(month).padStart(2, '0');
+    //     let hari = String(days).padStart(2, '0');
 
-        const fileNew =dataPo.data;
-        const data = fileNew.filter(e => e.status === "Verifikasi" || e.status === "Selesai")
-        const firstDate = `${yy}-${bb}-${dd}`;
-        const lastDate = `${year}-${bulan}-${hari}`;
+    //     const fileNew =dataPo.data;
+    //     const data = fileNew.filter(e => e.status === "Verifikasi" || e.status === "Selesai")
+    //     const firstDate = `${yy}-${bb}-${dd}`;
+    //     const lastDate = `${year}-${bulan}-${hari}`;
 
-        const result = data.filter(e => (new Date(e.tgl_po) >= new Date(firstDate) && new Date(e.tgl_po) <= new Date(lastDate)));
+    //     const result = data.filter(e => (new Date(e.tgl_po) >= new Date(firstDate) && new Date(e.tgl_po) <= new Date(lastDate)));
 
-        let coba = [];
-        for(let e = 0; e < result.length; e++){
-            const po = result[e].dataPO;
-            for(let x = 0; x < po.length; x++){
-                let par = po[x].parsial;
-                let hargaSatuan = parseFloat(po[x].hargasatuan).toFixed(2)
-                let jmlhHarga = parseFloat(po[x].jmlhHarga).toFixed(2)
+    //     let coba = [];
+    //     for(let e = 0; e < result.length; e++){
+    //         const po = result[e].dataPO;
+    //         for(let x = 0; x < po.length; x++){
+    //             let par = po[x].parsial;
+    //             let hargaSatuan = parseFloat(po[x].hargasatuan).toFixed(2)
+    //             let jmlhHarga = parseFloat(po[x].jmlhHarga).toFixed(2)
                 
-                for(let y = 0; y < par.length; y++){
-                    coba.push({
-                        cur : '',
-                        noPesanan : result[e].id_po,
-                        kodeMaterial : po[x].newMaterial,
-                        tglPesan : result[e].tgl_po,
-                        tglKirim :  par[y].tgl,
-                        namaPemasok : result[e].expro,
-                        noItem : po[x].itemNo,
-                        deskripsiItem : po[x].material,
-                        status : '',
-                        ktsDipesan : par[y].qty,
-                        hargaSatuan : hargaSatuan,
-                        tax : po[x].pajak,
-                        disc : po[x].diskon,
-                        jumlahValas : jmlhHarga,
-                        ongkir : result[e].bAntar,
-                        tglTerima : '',
-                        ktsDiterima : '',
-                        keterangan : result[e].keterangan,
-                    })
+    //             for(let y = 0; y < par.length; y++){
+    //                 coba.push({
+    //                     cur : '',
+    //                     noPesanan : result[e].id_po,
+    //                     kodeMaterial : po[x].newMaterial,
+    //                     tglPesan : result[e].tgl_po,
+    //                     tglKirim :  par[y].tgl,
+    //                     namaPemasok : result[e].expro,
+    //                     noItem : po[x].itemNo,
+    //                     deskripsiItem : po[x].material,
+    //                     status : '',
+    //                     ktsDipesan : par[y].qty,
+    //                     hargaSatuan : hargaSatuan,
+    //                     tax : po[x].pajak,
+    //                     disc : po[x].diskon,
+    //                     jumlahValas : jmlhHarga,
+    //                     ongkir : result[e].bAntar,
+    //                     tglTerima : '',
+    //                     ktsDiterima : '',
+    //                     keterangan : result[e].keterangan,
+    //                 })
+    //             }
+    //         }
+    //     }
+            
+    //     coba.sort(function(a, b) {
+    //         const dateA = new Date(a.tglKirim);
+    //         const dateB = new Date(b.tglKirim);
+    //         return dateA - dateB;
+    //     });
+
+    //     const ndate = new Date();
+    //     const nmonth = ndate.getMonth() + 1;
+    //     const nyear = ndate.getFullYear();
+    //     let nbb = String(nmonth).padStart(2, '0');
+    //     const nday = ndate.getDate();
+    //     let ndd = String(nday).padStart(2, '0');
+    //     const judul = `Monitoring PO ${ndd}-${nbb}-${nyear}.xlsx`
+
+    //     const worksheet = utils.json_to_sheet(coba);
+
+    //     const workbook = utils.book_new();
+    //     utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    //     /* fix headers */
+    //     utils.sheet_add_aoa(worksheet, [['CUR','NoPesanan','Kode Material','Tgl Pesan','Tgl Kirim','Nama Pemasok','NoItem','Deskripsi Item','Status',
+    //         'KtsDipesan','Harga satuan','Tax','Disc (%)','Jumlah (Valas)','Ongkir','Tgl Terima','KtsDiterima','Keterangan']], { origin: 'A1' });
+    //     /* calculate column width */
+    //     // const max_width = coba.reduce((w, r) => Math.max(w, r.No.length), 10);
+    //     // worksheet['!cols'] = [{ wch: max_width }];
+    //     writeFileXLSX(workbook, judul, { compression: true });
+    //     handleClose()
+    // }
+
+    const handleDates =async () =>{
+        console.log("next")
+        setIsLoading(true)
+        try {
+            const startDate = state[0].startDate;
+            const endDate =  state[0].endDate
+            const d = new Date(startDate);
+            let yy = d.getFullYear();
+            let bln = parseInt(d.getMonth()) + 1;
+            let day = d.getDate();
+            let bb = String(bln).padStart(2, '0');
+            let dd = String(day).padStart(2, '0');
+
+            const date = new Date(endDate);
+            let year = date.getFullYear();
+            let month = parseInt(date.getMonth()) + 1;
+            let days = date.getDate();
+            let bulan = String(month).padStart(2, '0');
+            let hari = String(days).padStart(2, '0');
+            const firstDate = `${yy}-${bb}-${dd}`;
+            const lastDate = `${year}-${bulan}-${hari}`;
+            const next = await API_AUTH.post(`/purchaseorderbet`, {
+                dateAwal : `${yy}-${bb}`,
+                dateAkhir: `${year}-${bulan}`,
+                plan: userData.uplan,
+            })
+            console.log("next")
+            console.log(next.data)
+
+            const fileNew =next.data;
+            const data = fileNew.filter(e => e.status === "Verifikasi" || e.status === "Selesai");
+            const result = data.filter(e => (new Date(e.tgl_po) >= new Date(firstDate) && new Date(e.tgl_po) <= new Date(lastDate)));
+            let coba = [];
+            for(let e = 0; e < result.length; e++){
+                const po = result[e].dataPO;
+                for(let x = 0; x < po.length; x++){
+                    let par = po[x].parsial;
+                    let hargaSatuan = parseFloat(po[x].hargasatuan).toFixed(2)
+                    let jmlhHarga = parseFloat(po[x].jmlhHarga).toFixed(2)
+                    
+                    for(let y = 0; y < par.length; y++){
+                        coba.push({
+                            cur : '',
+                            noPesanan : result[e].id_po,
+                            kodeMaterial : po[x].newMaterial,
+                            tglPesan : result[e].tgl_po,
+                            tglKirim :  par[y].tgl,
+                            namaPemasok : result[e].expro,
+                            noItem : po[x].itemNo,
+                            deskripsiItem : po[x].material,
+                            status : '',
+                            ktsDipesan : par[y].qty,
+                            hargaSatuan : hargaSatuan,
+                            tax : po[x].pajak,
+                            disc : po[x].diskon,
+                            jumlahValas : jmlhHarga,
+                            ongkir : result[e].bAntar,
+                            tglTerima : '',
+                            ktsDiterima : '',
+                            keterangan : result[e].keterangan,
+                        })
+                    }
                 }
             }
-        }
+                
+            coba.sort(function(a, b) {
+                const dateA = new Date(a.tglKirim);
+                const dateB = new Date(b.tglKirim);
+                return dateA - dateB;
+            });
+
+            console.log(coba)
+
+            if(coba.length === 0){
+                Swal.fire('Oppss..', 'Data yang diminta tidak ditemukan / status po pengajuan', 'info')
+            }
+            else{
+                const judul = `Monitoring PO dari tgl ${firstDate} ke ${lastDate}.xlsx`
+
+                const worksheet = utils.json_to_sheet(coba);
+
+                const workbook = utils.book_new();
+                utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+                /* fix headers */
+                utils.sheet_add_aoa(worksheet, [['CUR','NoPesanan','Kode Material','Tgl Pesan','Tgl Kirim','Nama Pemasok','NoItem','Deskripsi Item','Status',
+                    'KtsDipesan','Harga satuan','Tax','Disc (%)','Jumlah (Valas)','Ongkir','Tgl Terima','KtsDiterima','Keterangan']], { origin: 'A1' });
+                /* calculate column width */
+                // const max_width = coba.reduce((w, r) => Math.max(w, r.No.length), 10);
+                // worksheet['!cols'] = [{ wch: max_width }];
+                writeFileXLSX(workbook, judul, { compression: true });
+                handleClose()
+            }
             
-        coba.sort(function(a, b) {
-            const dateA = new Date(a.tglKirim);
-            const dateB = new Date(b.tglKirim);
-            return dateA - dateB;
-        });
+            setIsLoading(false)
+        } catch (error) {
+            Swal.fire('Oppss..','Data Po tidak dapat di tarik', 'warning')
+            setIsLoading(false)
+        }
 
-        const ndate = new Date();
-        const nmonth = ndate.getMonth() + 1;
-        const nyear = ndate.getFullYear();
-        let nbb = String(nmonth).padStart(2, '0');
-        const nday = ndate.getDate();
-        let ndd = String(nday).padStart(2, '0');
-        const judul = `Monitoring PO ${ndd}-${nbb}-${nyear}.xlsx`
 
-        const worksheet = utils.json_to_sheet(coba);
-
-        const workbook = utils.book_new();
-        utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        /* fix headers */
-        utils.sheet_add_aoa(worksheet, [['CUR','NoPesanan','Kode Material','Tgl Pesan','Tgl Kirim','Nama Pemasok','NoItem','Deskripsi Item','Status',
-            'KtsDipesan','Harga satuan','Tax','Disc (%)','Jumlah (Valas)','Ongkir','Tgl Terima','KtsDiterima','Keterangan']], { origin: 'A1' });
-        /* calculate column width */
-        // const max_width = coba.reduce((w, r) => Math.max(w, r.No.length), 10);
-        // worksheet['!cols'] = [{ wch: max_width }];
-        writeFileXLSX(workbook, judul, { compression: true });
-        handleClose()
     }
     
     return (
@@ -392,17 +495,14 @@ export const TablePo = ({columns}) => {
         </div>
 
         <Modal show={show} centered>
-        <Modal.Header>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
         <Modal.Body>
             <div style={{alignItems: 'center',justifyItems: 'center',textAlign: 'center'}}>
             <DateRange
                 editableDateInputs={true}
                 onChange={item => setState([item.selection])}
                 moveRangeOnFirstSelection={false}
-                minDate={addDays(new Date(), -31)}
-                maxDate={addDays(new Date(), 1)}
+                // minDate={addDays(new Date(), -31)}
+                // maxDate={addDays(new Date(), 1)}
                 ranges={state}
             />
             </div>
@@ -411,7 +511,7 @@ export const TablePo = ({columns}) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleDate}>
+          <Button variant="primary" onClick={()=>handleDates()}>
             Save Changes
           </Button>
         </Modal.Footer>

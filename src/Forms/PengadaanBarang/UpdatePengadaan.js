@@ -931,7 +931,7 @@ const handleDestroyed = async () =>{
                   <div className='row p-2'>
                     <Button type="submit" variant="outline-primary m-2" className='col-sm-12	col-md-12	col-lg-12	col-xl-12' style={{display: hilang}}>{nmButton}</Button>
                     {
-                      (status === "Pengajuan" &&  location.state.data?.user[0].pemohon === userData?.uname)?
+                      (status === "Pengajuan" &&  location.state.data?.user[0].pemohon === userData.uname)?
                         <Button 
                           variant="outline-danger m-2"
                           className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
@@ -940,7 +940,7 @@ const handleDestroyed = async () =>{
                           Delete
                         </Button>
                       : 
-                      (status === "Revisi" &&  location.state.data?.user[0].pemohon === userData?.uname)?
+                      (status === "Revisi" &&  location.state.data?.user[0].pemohon === userData.uname)?
                         <Button 
                           variant="outline-danger m-2"
                           className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
@@ -949,7 +949,7 @@ const handleDestroyed = async () =>{
                           Delete
                         </Button>
                       : 
-                      (status === "Reject" &&  location.state.data?.user[0].pemohon === userData?.uname)?
+                      (status === "Reject" &&  location.state.data?.user[0].pemohon === userData.uname)?
                         <Button 
                           variant="outline-danger m-2"
                           className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
@@ -958,7 +958,7 @@ const handleDestroyed = async () =>{
                           Delete
                         </Button>
                       : 
-                      (status === "Verifikasi" && userData.usubdiv === "Purchasing") &&
+                      (status === "Verifikasi" && userData.usubdiv === "Purchasing" && userData.ulevel === 3) &&
                         <Button 
                           variant="outline-danger m-2"
                           className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
@@ -967,8 +967,6 @@ const handleDestroyed = async () =>{
                           Delete
                         </Button>
                     }
-                    
-                    
                   </div>
                 </div>
               </div>
