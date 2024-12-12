@@ -495,27 +495,27 @@ export const TablePo = ({columns}) => {
         </div>
 
         <Modal show={show} centered>
-        <Modal.Body>
-            <div style={{alignItems: 'center',justifyItems: 'center',textAlign: 'center'}}>
-            <DateRange
-                editableDateInputs={true}
-                onChange={item => setState([item.selection])}
-                moveRangeOnFirstSelection={false}
-                // minDate={addDays(new Date(), -31)}
-                // maxDate={addDays(new Date(), 1)}
-                ranges={state}
-            />
-            </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={()=>handleDates()}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Modal.Body>
+                <div style={{alignItems: 'center',justifyItems: 'center',textAlign: 'center'}}>
+                <DateRange
+                    editableDateInputs={true}
+                    onChange={item => setState([item.selection])}
+                    moveRangeOnFirstSelection={false}
+                    // minDate={addDays(new Date(), -31)}
+                    // maxDate={addDays(new Date(), 1)}
+                    ranges={state}
+                />
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+                Close
+            </Button>
+            <Button variant="primary" onClick={()=>handleDates()}>
+                Save Changes
+            </Button>
+            </Modal.Footer>
+        </Modal>
 
         {isLoading ? <LoadingPage/> : ""}
         </>
