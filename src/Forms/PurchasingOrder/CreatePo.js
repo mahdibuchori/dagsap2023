@@ -588,15 +588,14 @@ export const CreatePo = () => {
                 } */
                 const cekM = cekX.map((e,i) =>{
                     const newData = e.parsial
-                    console.log(newData)
                     return({
                         material : e.material,
                         qty : parseFloat(e.qty).toFixed(2),
                         satuan : e.satuan,
-                        hargasatuan : "",
+                        hargasatuan : 0,
                         diskon : "",
                         
-                        jmlhHarga : "",
+                        jmlhHarga : 0,
                         departement : `PABRIK ${plan}`,
                         itemNo : e.itemNo,
                         pajak : "",
