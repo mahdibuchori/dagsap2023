@@ -342,8 +342,43 @@ export const UpdatePengadaan = () => {
         filt = `${yy}-${bulan}`;
       }
 
+      console.log({
+        id_Pengadaan : location.state.data.id_Pengadaan,
+        t_pengadaan : tglPeng,
+        user : [{
+            pemohon : location.state.data.user[0].pemohon,
+            jabatan : location.state.data.user[0].jabatan,
+            divisi : myDivisi,
+            plan : location.state.data.user[0].plan,
+        }],
+        status : statusny,
+        material : [{
+            tipe : tibar?.value,
+            itemNo : itemNo,
+            material : materil
+        }],
+        qty_pengadaan : [{
+            order : sum,
+            satuan : satuan
+        }],
+        spesifikasi : spesifikasi,
+        parsial_data : inputList,
+        tgl_verify : tglVerif,
+        tgl_approve : "",
+        filter_bulan : filt,
+        tipeMaterial : tipeMaterial,
+        brandMaterial : brand,
+        mesin : mesin,
+        coa : coa,
+        halal : halal,
+        msds : msds,
+        copypo : copyPO,
+        health : health,
+        kh : kh,
+        foodgrade : foodGra,
+      })
       
-      const next = await API_AUTH.put(`/updatePengadaan`, {
+      /* const next = await API_AUTH.put(`/updatePengadaan`, {
           id_Pengadaan : location.state.data.id_Pengadaan,
           t_pengadaan : tglPeng,
           user : [{
@@ -379,7 +414,8 @@ export const UpdatePengadaan = () => {
           foodgrade : foodGra,
       });
       
-      Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
+      Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success'); */
+      
       setIsLoading(false);
     } catch (error) {
         Swal.fire('Info', `${error.response.data.message}`, 'warning');
@@ -514,7 +550,7 @@ const handleDestroyed = async () =>{
                     <Form.Control
                       required
                       type="text"
-                      value={location.state.data?.tgl_verify}
+                      value={location.state.data.tgl_verify}
                       disabled
                     />
                   </Form.Group>

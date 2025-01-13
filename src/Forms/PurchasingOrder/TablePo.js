@@ -330,6 +330,7 @@ export const TablePo = ({columns}) => {
                             kodeMaterial : po[x].newMaterial,
                             tglPesan : result[e].tgl_po,
                             tglKirim :  par[y].tgl,
+                            tglKirimPo : result[e].tgl_kirim,
                             namaPemasok : result[e].expro,
                             noItem : po[x].itemNo,
                             deskripsiItem : po[x].material,
@@ -349,13 +350,10 @@ export const TablePo = ({columns}) => {
             }
                 
             coba.sort(function(a, b) {
-                const dateA = new Date(a.tglKirim);
-                const dateB = new Date(b.tglKirim);
+                const dateA = new Date(a.tglKirimPo);
+                const dateB = new Date(b.tglKirimPo);
                 return dateA - dateB;
             });
-
-            console.log(coba)
-
             if(coba.length === 0){
                 Swal.fire('Oppss..', 'Data yang diminta tidak ditemukan / status po pengajuan', 'info')
             }
@@ -367,7 +365,7 @@ export const TablePo = ({columns}) => {
                 const workbook = utils.book_new();
                 utils.book_append_sheet(workbook, worksheet, 'Sheet1');
                 /* fix headers */
-                utils.sheet_add_aoa(worksheet, [['CUR','NoPesanan','Kode Material','Tgl Pesan','Tgl Kirim','Nama Pemasok','NoItem','Deskripsi Item','Status',
+                utils.sheet_add_aoa(worksheet, [['CUR','NoPesanan','Kode Material','Tgl Pesan','Tgl Kirim','Tgl Kirim PO','Nama Pemasok','NoItem','Deskripsi Item','Status',
                     'KtsDipesan','Harga satuan','Tax','Disc (%)','Jumlah (Valas)','Ongkir','Tgl Terima','KtsDiterima','Keterangan']], { origin: 'A1' });
                 /* calculate column width */
                 // const max_width = coba.reduce((w, r) => Math.max(w, r.No.length), 10);

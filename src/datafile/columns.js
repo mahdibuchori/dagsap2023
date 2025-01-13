@@ -1288,7 +1288,8 @@ export const COLUMNS_DATAPO =[
                     console.log('sama')
                 }
             }
-            // console.log(data)
+            console.log(hSatuan)
+            console.log(data)
             return hSatuan
         }
     },

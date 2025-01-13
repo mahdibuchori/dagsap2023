@@ -70,6 +70,7 @@ export const CreatePengadaan = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
+      console.log(material.material)
       const result = material.material?.reduce((unique, o) => {
           if(!unique.some(obj => obj.kategori === o.kategori)) {
             unique.push({

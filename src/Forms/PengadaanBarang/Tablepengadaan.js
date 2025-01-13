@@ -1207,7 +1207,7 @@ export const Tablepengadaan = ({columns}) => {
                       <DropdownButton id="dropdown-basic-button" variant="outline-secondary" size='sm'>
                         {arrDiv.map((x, i) => {
                           let index = arrDiv[i].toString();
-                          console.log(arrDiv[i])
+                          // console.log(arrDiv[i])
                           let index1 = '';
                           let index2 = '';
                           if(index === "Semua"){

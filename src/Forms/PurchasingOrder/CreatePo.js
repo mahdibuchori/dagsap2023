@@ -427,6 +427,7 @@ export const CreatePo = () => {
 
     const cekProvider =()=>{
         const data = provider.provider
+        console.log(data)
         let result = data?.map(function(e){
             let pajak = "";
             if(e.tax2code === ""){
@@ -470,6 +471,7 @@ export const CreatePo = () => {
 
     const cekDepartemen = () =>{
         const data = departemen.departemen;
+        console.log(data)
         let result = data?.map(function(e){
             return { 
                 value: e.deptNo,
@@ -798,7 +800,8 @@ export const CreatePo = () => {
                             total : total,
                             tgl_verify : '',
                             tgl_approve : '',
-                            plan : userData.uplan
+                            plan : userData.uplan,
+                            user : userData.uname
                         }) */
                         const next = await API_AUTH.post(`/createpo`, {
                             id_po : nopo,
