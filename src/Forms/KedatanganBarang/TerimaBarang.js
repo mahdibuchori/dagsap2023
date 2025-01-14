@@ -241,6 +241,8 @@ export const TerimaBarang = () => {
                 dateAkhir: lastDate,
                 plan: userData.uplan,
             })
+
+            console.log(next)
             const file = next.data;
 
             const ppn  = file.filter(obj => obj.tax === "A" || obj.tax === "G" || obj.tax === "RT" || obj.tax === "S" || obj.tax === "SE" || obj.tax === "ST");
@@ -346,26 +348,52 @@ export const TerimaBarang = () => {
                         nPPH = 0.0;
                     }
                     total = (total + nPPN) - nPPH;
+                    let tglKom = "";
+                    let dis = 0;
+                    let hdis = 0;
+                    let qSj = 0;
+                    if(mfil.tgl_komplain === null || mfil.tgl_komplain === undefined){ tglKom = ""}else{tglKom = mfil.tgl_komplain}
+                    
+                    if(mfil.disc === "" || mfil.disc === undefined || mfil.disc === null){
+                        dis = 0
+                        hdis = mfil.hrga_sat;
+                    }
+                    else{
+                        dis = mfil.disc
+                        hdis = parseFloat(mfil.hrga_sat) - ((dis / 100) * parseFloat(mfil.hrga_sat))
+                    }
+
+                    if(mfil.qty_trma === "" || mfil.qty_trma === undefined || mfil.qty_trma === null){
+                        qSj = 0;
+                    }
+                    else{
+                        qSj = parseFloat(mfil.qty_trma)
+                    }
+
+                    
+                    let outStand = parseFloat(qSj) - parseFloat(mfil.qty_psn);
 
                     pp1.push({
-                        currency : mfil.currency,
-                        no_po : mfil.no_po,
-                        kode_item : mfil.kode_item,
-                        tgl_psn : mfil.tgl_psn,
-                        tgl_terima : mfil.tgl_terima,
-                        eks_provider : mfil.eks_provider,
-                        no_fina: mfil.no_fina,
-                        deskripsi_item : mfil.deskripsi_item,
-                        status_brng : statusx,
-                        qty_psn :(parseFloat(mfil.qty_psn)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                        hrga_sat : (parseFloat(mfil.hrga_sat)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                        tax : mfil.tax,
-                        disc : mfil.disc,
-                        valas: (parseFloat(total)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                        ongkir : mfil.ongkir,
-                        tgl_datang : mfil.tgl_datang,
-                        qty_trma : mfil.qty_trma,
-                        ket_purch : mfil.ket_purch
+                        cur: mfil.currency,
+                        noitem:	mfil.no_fina,
+                        kodeitem: mfil.kode_item,
+                        namapemasok: mfil.eks_provider,
+                        nomorpo: mfil.no_po,
+                        jadwalkirim: mfil.tgl_terima,
+                        tanggaldatang: mfil.tgl_datang,
+                        tanggalkomplain: tglKom,
+                        deskpitem: mfil.deskripsi_item,
+                        qtypo: (parseFloat(mfil.qty_psn)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        qtysj: (parseFloat(qSj)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        qtyditolak: mfil.qty_tolak,
+                        hargasatuan: (parseFloat(mfil.hrga_sat)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        pajak: mfil.tax,
+                        diskon: (parseFloat(dis)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        hargaSdiskon: (parseFloat(hdis)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        ketditolak : mfil.ktrng_tolak,
+                        outstandingpo : (parseFloat(outStand)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        status: statusx,
+                        tanggalpo: mfil.tgl_psn,
                     })
                 }
             }
@@ -472,25 +500,50 @@ export const TerimaBarang = () => {
                     }
                     total = (total + nPPN) - nPPH;
 
+                    let tglKom = "";
+                    let dis = 0;
+                    let hdis = 0;
+                    let qSj = 0;
+                    if(mfil.tgl_komplain === null || mfil.tgl_komplain === undefined){ tglKom = ""}else{tglKom = mfil.tgl_komplain}
+                    
+                    if(mfil.disc === "" || mfil.disc === undefined || mfil.disc === null){
+                        dis = 0
+                        hdis = mfil.hrga_sat;
+                    }
+                    else{
+                        dis = mfil.disc
+                        hdis = parseFloat(mfil.hrga_sat) - ((dis / 100) * parseFloat(mfil.hrga_sat))
+                    }
+
+                    if(mfil.qty_trma === "" || mfil.qty_trma === undefined || mfil.qty_trma === null){
+                        qSj = 0;
+                    }
+                    else{
+                        qSj = parseFloat(mfil.qty_trma)
+                    }
+                    let outStand = parseFloat(qSj) - parseFloat(mfil.qty_psn);
+
                     pp2.push({
-                        currency : mfil.currency,
-                        no_po : mfil.no_po,
-                        kode_item : mfil.kode_item,
-                        tgl_psn : mfil.tgl_psn,
-                        tgl_terima : mfil.tgl_terima,
-                        eks_provider : mfil.eks_provider,
-                        no_fina: mfil.no_fina,
-                        deskripsi_item : mfil.deskripsi_item,
-                        status_brng : statusx,
-                        qty_psn :(parseFloat(mfil.qty_psn)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                        hrga_sat : (parseFloat(mfil.hrga_sat)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                        tax : mfil.tax,
-                        disc : mfil.disc,
-                        valas: (parseFloat(total)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-                        ongkir : mfil.ongkir,
-                        tgl_datang : mfil.tgl_datang,
-                        qty_trma : mfil.qty_trma,
-                        ket_purch : mfil.ket_purch
+                        cur: mfil.currency,
+                        noitem:	mfil.no_fina,
+                        kodeitem: mfil.kode_item,
+                        namapemasok: mfil.eks_provider,
+                        nomorpo: mfil.no_po,
+                        jadwalkirim: mfil.tgl_terima,
+                        tanggaldatang: mfil.tgl_datang,
+                        tanggalkomplain: tglKom,
+                        deskpitem: mfil.deskripsi_item,
+                        qtypo: (parseFloat(mfil.qty_psn)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        qtysj: (parseFloat(qSj)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        qtyditolak: mfil.qty_tolak,
+                        hargasatuan: (parseFloat(mfil.hrga_sat)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        pajak: mfil.tax,
+                        diskon: (parseFloat(dis)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        hargaSdiskon: (parseFloat(hdis)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        ketditolak : mfil.ktrng_tolak,
+                        outstandingpo : (parseFloat(outStand)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                        status: statusx,
+                        tanggalpo: mfil.tgl_psn,
                     })
                 }
             }
@@ -507,8 +560,10 @@ export const TerimaBarang = () => {
             utils.book_append_sheet(workbook, worksheet, 'PPN');
             utils.book_append_sheet(workbook, worksheet1, 'Non PPN');
             
-            utils.sheet_add_aoa(worksheet, [["CUR","NoPesanan","Kode Material","Tgl Pesan","Tgl Kirim","Nama Pemasok","NoItem","Deskripsi Item","Status","KtsDipesan",'Harga satuan','Tax','Disc (%)','Jumlah (Valas)','Ongkir','Tgl Terima','KtsDiterima','Keterangan']], { origin: 'A1' });
-            utils.sheet_add_aoa(worksheet1, [["CUR","NoPesanan","Kode Material","Tgl Pesan","Tgl Kirim","Nama Pemasok","NoItem","Deskripsi Item","Status","KtsDipesan",'Harga satuan','Tax','Disc (%)','Jumlah (Valas)','Ongkir','Tgl Terima','KtsDiterima','Keterangan']], { origin: 'A1' });
+            utils.sheet_add_aoa(worksheet, [
+                ["CUR","NO ITEM","KODE ITEM","NAMA PEMASOK","NOMOR PO","JADWAL KIRIM","TANGGAL DATANG","TANGGAL KOMPLAIN","DESKP ITEM","QTY PO","QTY SJ","QTY DITOLAK","HARGA (Satuan)","Pajak","Diskon (%)","HARGA SETELAH DISKON","KET DITOLAK","OUTSTANDING PO","STATUS","TANGGAL PO"]], { origin: 'A1' });
+            utils.sheet_add_aoa(worksheet1, [
+                ["CUR","NO ITEM","KODE ITEM","NAMA PEMASOK","NOMOR PO","JADWAL KIRIM","TANGGAL DATANG","TANGGAL KOMPLAIN","DESKP ITEM","QTY PO","QTY SJ","QTY DITOLAK","HARGA (Satuan)","Pajak","Diskon (%)","HARGA SETELAH DISKON","KET DITOLAK","OUTSTANDING PO","STATUS","TANGGAL PO"]], { origin: 'A1' });
 
             writeFileXLSX(workbook, judul, { compression: true });
             handleClose()
