@@ -9,6 +9,7 @@ import { Breadcrumb, Card, Dropdown, DropdownButton, Form, InputGroup, Stack, Ta
 
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
+// import useDataMaterial, { selectFetchMaterial, selectMaterialReady } from '../store/DataMaterial';
 import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaanReady, selectFalsePengadaan} from '../../store/DataPengadaan';
 
 export const Tablepengadaan = ({columns}) => {
@@ -21,6 +22,8 @@ export const Tablepengadaan = ({columns}) => {
   const fetchPengadaan = usePengadaanStore(selectFetchPengadaan);
   const pengadaanReady = usePengadaanStore(selectPengadaanReady);
   const pengadaanFalse = usePengadaanStore(selectFalsePengadaan);
+  // const onProduct = useDataMaterial(selectFetchMaterial);
+  // const productReady = useDataMaterial(selectMaterialReady);
 
   const [key, setKey] = useState('FG');
 

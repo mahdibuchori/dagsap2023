@@ -97,7 +97,7 @@ export const BtnPengadaan = (props) => {
                           case "MAINTENANCE":
                             if(level === 2 || level === 3){
                               navigate(`/form/pengadaan/verfikasi`,{state:{
-                                  data : props.data
+                                data : props.data
                               }});
                             }
                             else{

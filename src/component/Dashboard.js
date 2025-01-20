@@ -46,38 +46,27 @@ export const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        // setIsLoading(true);
         if (!authReady) return;
         onGridReady()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authReady]);
 
     useEffect(() => { 
-        // setIsLoading(true);
         onProduct()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => { 
-        // setIsLoading(true);
-        onProduct()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => { 
-        // setIsLoading(true);
         onProvider()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => { 
-        // setIsLoading(true);
         onDepartemen()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        // setIsLoading(true);
         if (!productReady) return;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productReady]);
@@ -130,10 +119,12 @@ export const Dashboard = () => {
                 'Access-Control-Allow-Origin': '*', 
                 'Content-type': 'Application/json', 
                 }})
+            console.log(response)
             setToken(response.data.accessToken);
             const decode = jwtDecode(response.data.accessToken);
             setExpire(decode.exp);
             setIsReady(true)
+            setIsLoading(false)
         } catch (error) {
             setIsLoading(false)
             navigate('/login');
