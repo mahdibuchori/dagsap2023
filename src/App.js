@@ -32,6 +32,9 @@ import { VerifikasiPo } from './Forms/PurchasingOrder/VerifikasiPo';
 import { ReloadPo } from './Forms/PurchasingOrder/ReloadPo';
 import { TableAddRemove } from './Forms/PengadaanBarang/TableAddRemove';
 import { NewEditPo } from './Forms/PurchasingOrder/NewEditPo';
+import { TabelExpro } from './Forms/EksternalProvider/TabelExpro';
+import { TabelMaterial } from './Forms/Material/TabelMaterial';
+import { TabelDepartemen } from './Forms/Departemen/TabelDepartemen';
 
 function App() {
   return (
@@ -71,6 +74,10 @@ function App() {
         <Route path="/form/okp" element={<Okp />} /> 
         <Route path="/form/okp/create" element={<InputOkp />} /> 
         <Route path="/form/okp/printview" element={<CetakOkp />} /> 
+
+        <Route path="/form/expro" element={<TabelExpro />} /> 
+        <Route path="/form/material" element={<TabelMaterial />} /> 
+        <Route path="/form/departemen" element={<TabelDepartemen />} /> 
         </Route>
         <Route path='/login' element={<Portofolio />}></Route>
       </Routes>

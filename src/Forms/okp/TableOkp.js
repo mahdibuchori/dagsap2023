@@ -243,17 +243,22 @@ export const TableOkp = ({columns,columnsNo}) => {
         setIsLoading(false);
     }
 
-    const handleSelectChange = (e) => {
-        setRowData();
-        setRowNote();
-        setSelectTgl();
-        setOkp();
-        setRevisiOK();
-        okpFalse();
-        setIsLoading(true);
-        const nilai = e.target.value;
-        onOkp(nilai,"cekSheetOKP","");
-        
+    const handleSelectChange =async (e) => {
+        try {
+            setRowData();
+            setRowNote();
+            setSelectTgl();
+            setOkp();
+            setRevisiOK();
+            okpFalse();
+            setIsLoading(true);
+            const nilai = e.target.value;
+            await onOkp(nilai,"cekSheetOKP","");
+            setIsLoading(false);
+        } catch (error) {
+            setIsLoading(false);
+            console.log('error')
+        }
     }
 
     const onHandeleRev = (e) =>{
@@ -279,7 +284,7 @@ export const TableOkp = ({columns,columnsNo}) => {
         handleClose();
     }
 
-    const createNew = (e) =>{
+    const createNew =async (e) =>{
         e.preventDefault();
         if(tglOKP === ""){
             Swal.fire('Tgl OKP','Harap isi tanggal OKP','info')
@@ -305,7 +310,8 @@ export const TableOkp = ({columns,columnsNo}) => {
             else{
                 setIsLoading(true);
                 falseCreateOkp();
-                fetchOKP(tglProd,tglOKP,tglRevisi,revSheet,nosOKP);
+                await fetchOKP(tglProd,tglOKP,tglRevisi,revSheet,nosOKP);
+                setIsLoading(false);
             }
         }
         

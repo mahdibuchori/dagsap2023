@@ -819,7 +819,7 @@ export const NewEditPo = () => {
         npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
       }
       else if(pjk1.toUpperCase() === "R"){
-        nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+        nppn += ((parseFloat(e.jmlhHarga)) * 1.2) / 100;
         npph += 0;
       }
       else if(pjk1.toUpperCase() === "S"){
@@ -856,7 +856,7 @@ export const NewEditPo = () => {
         npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
       }
       else if(pjk2.toUpperCase() === "R"){
-        nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
+        nppn += ((parseFloat(e.jmlhHarga)) * 1.2) / 100;
         npph += 0;
       }
       else if(pjk2.toUpperCase() === "S"){
@@ -1297,6 +1297,30 @@ export const NewEditPo = () => {
               
               Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success');
                 
+              /* console.log({
+                id_po : nopo,
+                po_no: '',
+                tgl_po: tgl,
+                tgl_kirim : tglKrm,
+                filter_bulan: `${tahu}-${bln}`,
+                pembayaran: termName,
+                tukar : currencyName,
+                idexpro	: expro?.id,
+                expro : expro?.value,
+                status : 'Pengajuan',
+                statusfina : '',
+                dataPO : cekUlang,
+                keterangan : spesifikasi,
+                totalSub : totalSub,
+                diskon : parseFloat(diskon).toFixed(2),
+                ppn : ppn,
+                pph : pph,
+                bAntar : parseFloat(bantar).toFixed(2),
+                total : total,
+                tgl_verify : '',
+                tgl_approve : '',
+                plan : userData.uplan
+              }) */
             }
            else{
             Swal.fire('Oppss...',`Harga satuan pada material ${rowData[nmbering-1].material} harap isikan nominal`,'info')

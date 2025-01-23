@@ -35,7 +35,7 @@ const MenuDevelop = () => {
                     </div>
                 </Link>
                 {/* Data Stock */}
-                <Link to={"/"} className='link'>
+                <Link to={"/form/material"} className='link'>
                     <div className="card text-center bg-white">
                         <span className='icon'><i className="bi bi-cart2"></i></span>
                         <div class="card-body">
@@ -53,7 +53,7 @@ const MenuDevelop = () => {
                     </div>
                 </Link>
                 {/* Eksternal Provider */}
-                <Link to={"/"} className='link'>
+                <Link to={"/form/expro"} className='link'>
                     <div className="card text-center bg-white">
                         <span className='icon'><i className="bi bi-briefcase"></i></span>
                         <div class="card-body">
@@ -139,6 +139,15 @@ const MenuDevelop = () => {
                         <span className='icon'><i className="bi bi-graph-up-arrow"></i></span>
                         <div class="card-body">
                             <div class="card-text">Sales</div>
+                        </div>
+                    </div>
+                </Link>
+                {/* Departemen */}
+                <Link to={"/form/departemen"} className='link'>
+                    <div className="card text-center bg-white">
+                        <span className='icon'><i className="bi bi-building"></i></span>
+                        <div class="card-body">
+                            <div className="card-text">Departemen</div>
                         </div>
                     </div>
                 </Link>

@@ -2536,5 +2536,207 @@ export const COLUMNS_LOGBOOK =[
     }
 ]
 
+export const COLUMNS_EXPRO =[
+    { 
+        headerName: 'ID',
+        field : 'id',
+        width: 150,
+        maxWidth:405,
+        pinned: 'left',
+    },
+    { 
+        headerName: 'Person No',
+        field : 'personno',
+        width: 150,
+        maxWidth:405, 
+    },
+    { 
+        headerName: 'Name',
+        field : 'name',
+        width: 350,
+        maxWidth:405,
+    },
+    { 
+        headerName: 'Currency ID',
+        field : 'currencyid',
+        width: 110,
+    },
+    { 
+        headerName: 'Currency Name',
+        field : 'currencyname',
+        width: 70,
+    },
+    { 
+        headerName: 'Term ID',
+        field : 'termid',
+        width: 70,
+    },
+    { 
+        headerName: 'Term Name',
+        field : 'termname',
+        width: 110,
+    },
+    { 
+        headerName: 'Tax 1 ID',
+        field : 'tax1id',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 1 Code',
+        field : 'tax1code',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 1 Name',
+        field : 'tax1name',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 1 Rate',
+        field : 'tax1rate',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 2 ID',
+        field : 'tax2id',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 2 Code',
+        field : 'tax2code',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 2 Name',
+        field : 'tax2name',
+        width: 80,
+    },
+    { 
+        headerName: 'Tax 2 Rate',
+        field : 'tax2rate',
+        width: 80,
+    },
+    { 
+        headerName: 'address 1',
+        field : 'addressline1',
+        width: 80,
+    },
+    { 
+        headerName: 'addressline 2',
+        field : 'addressline2',
+        width: 80,
+    },
+    { 
+        headerName: 'City',
+        field : 'city',
+        width: 80,
+    },
+    { 
+        headerName: 'State Prov',
+        field : 'stateprov',
+        width: 80,
+    },
+    { 
+        headerName: 'Zipcode',
+        field : 'zipcode',
+        width: 80,
+    },
+    { 
+        headerName: 'country',
+        field : 'Country',
+        width: 80,
+    },
+    { 
+        headerName: 'Phone',
+        field : 'phone',
+        width: 80,
+    },
+    { 
+        headerName: 'email',
+        field : 'email',
+        width: 80,
+    }
+]
+
+export const COLUMNS_MATERIAL =[
+    { 
+        headerName: 'Item No',
+        field : 'itemno',
+        width: 150,
+        maxWidth:405, 
+        pinned: 'left',
+    },
+    { 
+        headerName: 'Item Type',
+        field : 'itemtype',
+        width: 150,
+        maxWidth:405,
+    },
+    { 
+        headerName: 'Item Description',
+        field : 'itemdescription',
+        width: 350,
+        maxWidth:405,
+    },
+    { 
+        headerName: 'Unit 1',
+        field : 'unit1',
+        width: 100,
+    },
+    { 
+        headerName: 'Unit 2',
+        field : 'unit2',
+        width: 100,
+    },
+    { 
+        headerName: 'Unit 3',
+        field : 'unit3',
+        width: 100,
+    },
+    { 
+        headerName: 'Category Id',
+        field : 'categoryid',
+        width: 150,
+    },
+    { 
+        headerName: 'Kategori',
+        field : 'kategori',
+        width: 150,
+    },
+]
+
+export const COLUMNS_DEPARTEMEN =[
+    { 
+        headerName: 'Dept Id',
+        field : 'deptId',
+        width: 200,
+        maxWidth:405,
+        pinned: 'left',
+    },
+    { 
+        headerName: 'Dept No',
+        field : 'deptNo',
+        width: 200,
+        maxWidth:405, 
+    },
+    { 
+        headerName: 'Dept Name',
+        field : 'deptName',
+        width: 350,
+        maxWidth:405,
+    },
+    { 
+        headerName: 'Sub Dept Id',
+        field : 'subDeptId',
+        width: 200,
+    },
+    { 
+        headerName: 'Parent Name',
+        field : 'parentName',
+        width: 200,
+    },
+]
+
+
 
 

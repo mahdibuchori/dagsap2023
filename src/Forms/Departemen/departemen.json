@@ -1,0 +1,128 @@
+[
+    {
+        "deptId": "2",
+        "deptNo": "GRAND WIJAYA",
+        "deptName": "GRAND WIJAYA",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "4",
+        "deptNo": "JAWA BARAT",
+        "deptName": "JAWA BARAT",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "1413",
+        "deptNo": "JAWA TENGAH",
+        "deptName": "JAWA TENGAH",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "6",
+        "deptNo": "JAWA TIMUR",
+        "deptName": "JAWA TIMUR",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "1126",
+        "deptNo": "PABRIK SENTUL",
+        "deptName": "PABRIK SENTUL",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "8",
+        "deptNo": "PABRIK YOGYA",
+        "deptName": "PABRIK YOGYA",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "10",
+        "deptNo": "RPA",
+        "deptName": "RPA",
+        "subDeptId": "",
+        "parentName": ""
+    },
+    {
+        "deptId": "1534",
+        "deptNo": "GW-LAMPUNG",
+        "deptName": "GW-LAMPUNG",
+        "subDeptId": "2",
+        "parentName": "GRAND WIJAYA"
+    },
+    {
+        "deptId": "1532",
+        "deptNo": "GW-PUSAT",
+        "deptName": "GW-PUSAT",
+        "subDeptId": "2",
+        "parentName": "GRAND WIJAYA"
+    },
+    {
+        "deptId": "1536",
+        "deptNo": "GW-SERANG",
+        "deptName": "GW-SERANG",
+        "subDeptId": "2",
+        "parentName": "GRAND WIJAYA"
+    },
+    {
+        "deptId": "1546",
+        "deptNo": "JABAR-BANDUNG",
+        "deptName": "JABAR-BANDUNG",
+        "subDeptId": "4",
+        "parentName": "JAWA BARAT"
+    },
+    {
+        "deptId": "1548",
+        "deptNo": "JABAR-SUBANG",
+        "deptName": "JABAR-SUBANG",
+        "subDeptId": "4",
+        "parentName": "JAWA BARAT"
+    },
+    {
+        "deptId": "1550",
+        "deptNo": "JATENG-BANTUL",
+        "deptName": "JATENG-BANTUL",
+        "subDeptId": "1413",
+        "parentName": "JAWA TENGAH"
+    },
+    {
+        "deptId": "1552",
+        "deptNo": "JATENG-SEMARANG",
+        "deptName": "JATENG-SEMARANG",
+        "subDeptId": "1413",
+        "parentName": "JAWA TENGAH"
+    },
+    {
+        "deptId": "1544",
+        "deptNo": "JATIM-BANJARMASIN",
+        "deptName": "JATIM-BANJARMASIN",
+        "subDeptId": "6",
+        "parentName": "JAWA TIMUR"
+    },
+    {
+        "deptId": "1542",
+        "deptNo": "JATIM-JEMBER",
+        "deptName": "JATIM-JEMBER",
+        "subDeptId": "6",
+        "parentName": "JAWA TIMUR"
+    },
+    {
+        "deptId": "1540",
+        "deptNo": "JATIM-MADIUN",
+        "deptName": "JATIM-MADIUN",
+        "subDeptId": "6",
+        "parentName": "JAWA TIMUR"
+    },
+    {
+        "deptId": "1538",
+        "deptNo": "JATIM-SURABAYA",
+        "deptName": "JATIM-SURABAYA",
+        "subDeptId": "6",
+        "parentName": "JAWA TIMUR"
+    }
+]

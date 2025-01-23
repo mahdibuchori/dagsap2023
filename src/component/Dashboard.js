@@ -119,7 +119,6 @@ export const Dashboard = () => {
                 'Access-Control-Allow-Origin': '*', 
                 'Content-type': 'Application/json', 
                 }})
-            console.log(response)
             setToken(response.data.accessToken);
             const decode = jwtDecode(response.data.accessToken);
             setExpire(decode.exp);

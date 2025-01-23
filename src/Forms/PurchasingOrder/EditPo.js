@@ -785,9 +785,9 @@ export const EditPo = () => {
               "parsi": e.parsi
             }
           )
-      })
+        })
           
-        const next = await API_AUTH.put(`/createpo/${lastPO}`, {
+        /* const next = await API_AUTH.put(`/createpo/${lastPO}`, {
           id_po : nopo,
           po_no: '',
           tgl_po: tgl,
@@ -812,9 +812,32 @@ export const EditPo = () => {
           plan : userData.uplan
         });
         
-        Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success');
-        
-          
+        Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success'); */
+        console.log({
+          id_po : nopo,
+          po_no: '',
+          tgl_po: tgl,
+          tgl_kirim : tglKrm,
+          filter_bulan: `${tahu}-${bln}`,
+          pembayaran: termName,
+          tukar : currencyName,
+          idexpro	: expro?.id,
+          expro : expro?.value,
+          status : 'Pengajuan',
+          statusfina : '',
+          dataPO : cekUlang,
+          keterangan : spesifikasi,
+          totalSub : totalSub,
+          diskon : parseFloat(diskon).toFixed(2),
+          ppn : ppn,
+          pph : pph,
+          bAntar : parseFloat(bantar).toFixed(2),
+          total : total,
+          tgl_verify : '',
+          tgl_approve : '',
+          plan : userData.uplan
+        })
+           
         setIsLoading(false);
       }
       
