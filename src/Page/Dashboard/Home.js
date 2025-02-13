@@ -26,7 +26,6 @@ const Home = () => {
 
   const getUsers =async () =>{
     setDivisi(userData?.udivisi)
-    console.log(userData)
   }
 
   if(userData?.udivisi === "Develop" || userData?.udivisi === "BOD/BOC"){

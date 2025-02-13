@@ -153,6 +153,7 @@ export const COLUMNS_PENGADAAN =[
         pinned: 'right'
     }
 ]
+
 export const COLUMNS_PENGADAAN1 =[
     {
         headerName: 'ID',
@@ -1430,6 +1431,7 @@ export const COLUMNS_DATAPO =[
         editable: false,
     },
 ]
+
 export const COLUMNS_DATAPOEDIT =[
     { 
         headerName: 'Nama Barang',
@@ -1749,6 +1751,7 @@ export const COLUMNS_DATAPOEDIT =[
         editable: false,
     },
 ]
+
 export const COLUMNS_DATAPOVIEW =[
     { 
         headerName: 'Nama Barang',
@@ -1819,6 +1822,7 @@ export const COLUMNS_DATAPOVIEW =[
         width: 120,
     },
 ]
+
 export const COLUMNS_DEPARTEMENT =[
     {
         headerName: 'DEPTID',
@@ -2734,6 +2738,62 @@ export const COLUMNS_DEPARTEMEN =[
         headerName: 'Parent Name',
         field : 'parentName',
         width: 200,
+    },
+]
+
+// Nomer	Nama Pengirim	Nama doc	Tanggal Kirim	Tanggal Terima	Status Doc	Keterangan doc
+
+//id, pengirim, iddoc, nama_Doc, tgl_kirim, tgl_terima, status_Doc, keterangan_doc
+export const COLUMNS_FORMKIRIM =[
+    { 
+        headerName: 'Id',
+        field : 'id',
+        width: 120,
+        maxWidth:405,
+        pinned: 'left',
+    },
+    { 
+        headerName: 'Nama Pengirim',
+        field : 'pengirim',
+        width: 150,
+        maxWidth:405, 
+    },
+    { 
+        headerName: 'ID Dokumen',
+        field : 'iddoc',
+        width: 150,
+        maxWidth:405,
+    },
+    { 
+        headerName: 'Nama Dokumen',
+        field : 'nama_Doc',
+        width: 200,
+        maxWidth:405,
+    },
+    { 
+        headerName: 'Tanggal Kirim',
+        field : 'tgl_kirim',
+        width: 150,
+    },
+    { 
+        headerName: 'Tanggal Terima',
+        field : 'tgl_terima',
+        width: 150,
+    },
+    { 
+        headerName: 'Tanggal Kirim Ulang',
+        field : 'tgl_ulang',
+        width: 180,
+    },
+    { 
+        headerName: 'Status Doc',
+        field : 'status_Doc',
+        width: 130,
+    },
+    { 
+        headerName: 'Keterangan Dokumen',
+        field : 'keterangan_doc',
+        maxWidth:555, 
     },
 ]
 

@@ -158,3 +158,24 @@ export const FileTally = [
   { value: 'K4', label: 'K4' },
   { value: 'M4', label: 'M4' }
 ]
+
+export const FileDepoCabang = [
+  { idDepo: '47FBE6E7', area: 'Barat', value: 'Cabang Bandung', label: 'Cabang Bandung' },
+  { idDepo: '928E265E', area: 'Barat', value: 'Cabang Yogyakarta', label: 'Cabang Yogyakarta' },	
+  { idDepo: '535D36E7', area: 'Barat', value: 'Depo Lampung', label: 'Depo Lampung' },	
+  { idDepo: 'AE0284B5', area: 'Barat', value: 'Depo Semarang', label: 'Depo Semarang' },	
+  { idDepo: 'D00F1FF3', area: 'Barat', value: 'Depo Serang', label: 'Depo Serang'},	
+  { idDepo: '00D54729', area: 'Barat', value: 'Depo Subang', label: 'Depo Subang' },	
+  { idDepo: 'E0FCA8C6', area: 'Barat', value: 'GW', label: 'GW' },
+  { idDepo: '7DC3EB0D', area: 'Barat', value: 'Kalimantan Barat', label: 'Kalimantan Barat' },
+  { idDepo: '187E551C', area: 'Barat', value: 'Makassar', label: 'Makassar' },
+  { idDepo: '26D90FB7', area: 'Barat', value: 'Non Lampung', label: 'Non Lampung' },	
+  { idDepo: '3C019C98', area: 'Timur', value: 'Cabang Surabaya', label: 'Cabang Surabaya' },	
+  { idDepo: '74EF4FEA', area: 'Timur', value: 'Depo Banjarmasin', label: 'Depo Banjarmasin' },	
+  { idDepo: '92CC8245', area: 'Timur', value: 'Depo Jember', label: 'Depo Jember' },	
+  { idDepo: 'CE6FE993', area: 'Timur', value: 'Depo Madiun', label: 'Depo Madiun' },	
+  { idDepo: '32945493', area: 'Timur', value: 'Kalimantan Timur', label: 'Kalimantan Timur' },	
+ 
+
+
+]

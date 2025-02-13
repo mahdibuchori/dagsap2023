@@ -151,6 +151,15 @@ const MenuDevelop = () => {
                         </div>
                     </div>
                 </Link>
+                {/* Form Dokumen */}
+                <Link to={"/form/dokumen"} className='link'>
+                    <div className="card text-center bg-white">
+                        <span className='icon'><i className="bi bi-file-earmark-spreadsheet"></i></span>
+                        <div class="card-body">
+                            <div class="card-text">Form Dokumen</div>
+                        </div>
+                    </div>
+                </Link>
 
             </Row>
         </Container>
