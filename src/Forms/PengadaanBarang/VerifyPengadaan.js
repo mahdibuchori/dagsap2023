@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { format } from "date-fns";
+import id from 'date-fns/locale/id';
 import Swal from "sweetalert2";
 import Select from 'react-select';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -23,6 +25,10 @@ export const VerifyPengadaan = () => {
   
   const [kode, setKode] = useState('');
   const [tgl, setTgl] = useState('');
+  const [jam,setJam] = useState('00');
+  const [menit,setMenit] = useState('00');
+  const [detik,setDetik] = useState('00');
+  const [bagian, setBagian] = useState('PM');
   const [status, setStatus] = useState('');
   const [ tibar, setTibar ] = useState('');
   const [ materil, setMateril ] = useState('');
@@ -47,6 +53,7 @@ export const VerifyPengadaan = () => {
   const [halal, setHalal] = useState(false);
   const [copyPO, setCopyPO] = useState(false);
   const [health, setHealth] = useState(false);
+  const [isReady, setIsReady] = useState(true);
   const [kh, setKh] = useState(false);
   const [foodGra, setFoodGra] = useState(false);
 
@@ -85,6 +92,38 @@ export const VerifyPengadaan = () => {
     }
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+      // setIsLoading(true);
+      if (!isReady) return;
+      onGridReady()
+      setIsReady(false)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReady]);
+
+  const onGridReady = () =>{
+    let date = new Date(),
+    h = date.getHours(),
+    m = date.getMinutes(),
+    s = date.getSeconds(),
+    ampm = "AM";
+
+    if(h >= 12) {
+      h = h - 12;
+      ampm = "PM";
+    }
+    h = h === 0 ? h = 12 : h;
+    h = h < 10 ? "0" + h : h;
+    m = m < 10 ? "0" + m : m;
+    s = s < 10 ? "0" + s : s;
+    setTimeout(() => {
+      setJam(h)
+      setMenit(m)
+      setDetik(s)
+      setBagian(ampm)  
+      setIsReady(true)
+    }, 1000)
+  }
 
   const cekData = () =>{
     const data = location.state.data
@@ -163,20 +202,38 @@ export const VerifyPengadaan = () => {
     setIsLoading(true);
     try {
       await pengadaanFalse();
-      const date = new Date();
-      let mm = parseInt(date.getMonth()) + 1;
-      let yy = date.getFullYear();
-      let dd = date.getDate();
-      let bulan = String(mm).padStart(2, '0');
-      let tang = String(dd).padStart(2, '0');
+      let newTang = tgl;
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      let bul = format(new Date(tomorrow), "MM", { locale: id });
+      let days = format(new Date(tomorrow), "dd", { locale: id });
+      let yea = format(new Date(tomorrow), "yyyy", { locale: id });
+      
+      let yy = format(new Date(tomorrow), "yy", { locale: id });
+      
+      let waktu = parseInt(jam)
+      if( waktu >= 2 && waktu <= 12){
+        if(bagian === "PM"){
+          newTang = `${yea}-${bul}-${days}`;
+        }
+        else{
+          newTang = tgl;
+        }
+      }
+      else{
+        newTang = tgl;
+      }
+
       let tl = ""
-      if(stat === 'Revisi'){
-        tl = `${yy}-${bulan}-${tang}`
+      if(stat === 'Revisi' || status === "Pengajuan"){
+        tl = newTang
       }
       else{
         tl = " "
       }
-      
+      console.log(menit)
+      console.log(detik)
       const next = await API_AUTH.put(`/verifyPengadaan`, {
         id_Pengadaan : location.state.data.id_Pengadaan,
         status : stat,
@@ -184,10 +241,10 @@ export const VerifyPengadaan = () => {
         tgl_approve : rev,
       });
 
-      await fetchPengadaan(`${yy}-${bulan}`, userData.uplan);
+      await fetchPengadaan(`${yy}-${bul}`, userData.uplan);
       
       Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
-      // Swal.fire(navigate(`/form/pengadaan`), navigate(0), 'success');
+      Swal.fire(navigate(`/form/pengadaan`), navigate(0), 'success');
       setIsLoading(false);
   } catch (error) {
       Swal.fire('Info', `${error.response.data.message}`, 'warning');
