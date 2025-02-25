@@ -234,6 +234,12 @@ export const VerifyPengadaan = () => {
       }
       console.log(menit)
       console.log(detik)
+      console.log({
+        id_Pengadaan : location.state.data.id_Pengadaan,
+        status : stat,
+        tgl_verify : tl,
+        tgl_approve : rev,
+      })
       const next = await API_AUTH.put(`/verifyPengadaan`, {
         id_Pengadaan : location.state.data.id_Pengadaan,
         status : stat,
@@ -244,7 +250,8 @@ export const VerifyPengadaan = () => {
       await fetchPengadaan(`${yy}-${bul}`, userData.uplan);
       
       Swal.fire(`${next.data.success}`, navigate(`/form/pengadaan`), 'success');
-      Swal.fire(navigate(`/form/pengadaan`), navigate(0), 'success');
+      
+      // Swal.fire(navigate(`/form/pengadaan`), navigate(0), 'success');
       setIsLoading(false);
   } catch (error) {
       Swal.fire('Info', `${error.response.data.message}`, 'warning');
