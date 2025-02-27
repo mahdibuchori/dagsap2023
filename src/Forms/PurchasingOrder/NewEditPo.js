@@ -819,7 +819,7 @@ export const NewEditPo = () => {
         npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
       }
       else if(pjk1.toUpperCase() === "R"){
-        nppn += ((parseFloat(e.jmlhHarga)) * 1.2) / 100;
+        nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
         npph += 0;
       }
       else if(pjk1.toUpperCase() === "S"){
@@ -856,7 +856,7 @@ export const NewEditPo = () => {
         npph += ((parseFloat(e.jmlhHarga)) * 0.5) / 100;
       }
       else if(pjk2.toUpperCase() === "R"){
-        nppn += ((parseFloat(e.jmlhHarga)) * 1.2) / 100;
+        nppn += ((parseFloat(e.jmlhHarga)) * 1.1) / 100;
         npph += 0;
       }
       else if(pjk2.toUpperCase() === "S"){

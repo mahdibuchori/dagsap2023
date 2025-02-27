@@ -787,7 +787,7 @@ export const EditPo = () => {
           )
         })
           
-        /* const next = await API_AUTH.put(`/createpo/${lastPO}`, {
+        const next = await API_AUTH.put(`/createpo/${lastPO}`, {
           id_po : nopo,
           po_no: '',
           tgl_po: tgl,
@@ -812,8 +812,8 @@ export const EditPo = () => {
           plan : userData.uplan
         });
         
-        Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success'); */
-        console.log({
+        Swal.fire(`${next.data.success}`, navigate(`/form/purchaseorder`), 'success');
+        /* console.log({
           id_po : nopo,
           po_no: '',
           tgl_po: tgl,
@@ -836,7 +836,7 @@ export const EditPo = () => {
           tgl_verify : '',
           tgl_approve : '',
           plan : userData.uplan
-        })
+        }) */
            
         setIsLoading(false);
       }

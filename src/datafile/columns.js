@@ -182,10 +182,14 @@ export const COLUMNS_PENGADAAN1 =[
         pinned: 'left'
     },
     {
-        headerName: 'Tanggal',
+        headerName: 'Tgl Permohonan',
         field : 't_pengadaan',
         width: 110,
-        maxWidth:115,
+    },
+    {
+        headerName: 'Tgl Verifikasi',
+        field : 'tgl_verify',
+        width: 110,
     },
     {
         headerName: 'Nama Barang',

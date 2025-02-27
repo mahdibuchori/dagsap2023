@@ -209,6 +209,10 @@ export const VerifyPengadaan = () => {
       let bul = format(new Date(tomorrow), "MM", { locale: id });
       let days = format(new Date(tomorrow), "dd", { locale: id });
       let yea = format(new Date(tomorrow), "yyyy", { locale: id });
+
+      let bul1 = format(new Date(), "MM", { locale: id });
+      let days1 = format(new Date(), "dd", { locale: id });
+      let yea1= format(new Date(), "yyyy", { locale: id });
       
       let yy = format(new Date(tomorrow), "yy", { locale: id });
       
@@ -218,11 +222,11 @@ export const VerifyPengadaan = () => {
           newTang = `${yea}-${bul}-${days}`;
         }
         else{
-          newTang = tgl;
+          newTang = `${yea1}-${bul1}-${days1}`;
         }
       }
       else{
-        newTang = tgl;
+        newTang = `${yea1}-${bul1}-${days1}`;
       }
 
       let tl = ""
