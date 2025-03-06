@@ -1069,6 +1069,126 @@ export const Tablepengadaan = ({columns}) => {
     writeFileXLSX(workbook, judul, { compression: true });
   }
 
+  const cetakExcel = () => {
+    let data = []
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    let bb = String(month).padStart(2, '0');
+    const day = date.getDate();
+    let dd = String(day).padStart(2, '0');
+    const judul = `Pengadaan Barang ${dd}-${bb}-${year}.xlsx`
+    if(dataPo.length === 0){
+      // const cek = newPengadaan.filter((x) => x.status === "Verifikasi")
+      data = newPengadaan.map((e,i) =>{
+        let nabar, merk = '';
+        if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
+          nabar = e.tipeMaterial
+          merk = e.brandMaterial
+        }
+        else{
+          nabar = e.material[0].material
+          merk = ''
+        }
+        return(
+          {
+            No : i+1,
+            Id : e.id_Pengadaan,
+            Tanggal_Pengadaan : e.t_pengadaan,
+            Nama_Item : nabar,
+            status : e.status,
+            Merk : merk,
+            Spesifikasi : e.spesifikasi,
+            Quantity : e.qty_pengadaan[0].order,
+            Satuan : e.qty_pengadaan[0].satuan,
+            divisi : e.user[0].divisi,
+          }
+        )
+      })
+    }
+    else{
+      // const cek = dataSementara.filter((x) => x.status === "Verifikasi")
+      data = dataSementara.map((e,i) =>{
+        let nabar, merk = '';
+        if(e.material[0].tipe === 'Sparepart' || e.material[0].tipe === 'NonInventori'){
+          nabar = e.tipeMaterial
+          merk = e.brandMaterial
+        }
+        else{
+          nabar = e.material[0].material
+          merk = ''
+        }
+        return(
+          {
+            No : i+1,
+            Id : e.id_Pengadaan,
+            Tanggal_Pengadaan : e.t_pengadaan,
+            Nama_Item : nabar,
+            status : e.status,
+            Merk : merk,
+            Spesifikasi : e.spesifikasi,
+            Quantity : e.qty_pengadaan[0].order,
+            Satuan : e.qty_pengadaan[0].satuan,
+            divisi : e.user[0].divisi
+          }
+        )
+      })
+    }
+    /* const cdata = data.filter((x) => {
+      return x.divisi === userData.udivisi
+    }) */
+   let cdata = [];
+    if(userData.udivisi === "PPIC-Purchasing"){
+      if(userData.ulevel === 2){
+        cdata = data.filter((x) => {
+          return (x.divisi === "FG") || x.divisi === "Purchasing" || x.divisi === "PPIC-WH"
+        })
+      }
+      else{
+        cdata = data.filter((x) => {
+          return x.divisi === userData.usubdiv
+        })
+      } 
+    }
+    else if(userData.udivisi === "FAT"){
+      if(userData.ulevel <= 3){
+        cdata = data.filter((x) => {
+          return (x.divisi === "FAT & Budgeting") || x.divisi === "Budgeting" || x.divisi === "FAT"
+        })
+      }
+      else{
+        cdata = data.filter((x) => {
+          return x.divisi === userData.usubdiv
+        })
+      } 
+    }
+    else{
+      if(userData <= 1){
+        cdata = data;
+      }
+      else{
+        cdata = data.filter((x) => {
+          return x.divisi === userData.udivisi
+        })
+      }
+    }
+
+    const worksheet = utils.json_to_sheet(cdata);
+    for(let x =0; x < cdata.length; x++){
+      let n = `F${x+2}`
+      worksheet[n].z = '#,##0'; 
+    }
+    const workbook = utils.book_new();
+    utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    /* fix headers */
+    utils.sheet_add_aoa(worksheet, [['No','Id','Tanggal Pengadaan','Nama Item','Status','Merk','Spesifikasi','Quantity','Satuan']], { origin: 'A1' });
+    
+    /* calculate column width */
+    const max_width = data.reduce((w, r) => Math.max(w, r.No.length), 10);
+    worksheet['!cols'] = [{ wch: max_width }];
+    writeFileXLSX(workbook, judul, { compression: true });
+  }
+
   const createPengadaan = () =>{
     if(userData.udivisi === "Maintenance"){
       if(userData.uuid === "DEE-MTC02" || userData.uuid === "DEE-SPART01"){
@@ -1117,6 +1237,8 @@ export const Tablepengadaan = ({columns}) => {
                 <Dropdown.Item onClick={createPurchase}><i class="bi bi-pencil"></i> Create PO</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={createPenarikan}><i class="bi bi-file-earmark-spreadsheet-fill"></i> Penawaran</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={cetakExcel}><i class="bi bi-file-earmark-spreadsheet-fill"></i>Excel</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={printChange}><i className="bi bi-printer"></i> Print</Dropdown.Item>
                 <Dropdown.Divider />

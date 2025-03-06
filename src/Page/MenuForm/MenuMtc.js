@@ -35,15 +35,14 @@ export const MenuMtc = () => {
                             </div>
                         </div>
                     </NavLink>
-                    {/* Permintaan Barang */}
                     <Link to={"/"} className='link'>
-                        <div className="card text-center bg-white">
-                            <span className='icon'><i className="bi bi-file-box-seam"></i></span>
-                            <div class="card-body">
-                                <div class="card-text">Permintaan Barang</div>
-                            </div>
+                    <div className="card text-center bg-white">
+                        <span className='icon'><i className="bi bi-box-seam"></i></span>
+                        <div class="card-body">
+                            <div class="card-text">Permintaan Barang</div>
                         </div>
-                    </Link>
+                    </div>
+                </Link>
                 </Row>
             </Container>
         </div>

@@ -205,6 +205,61 @@ export const CreateDokumen = () => {
               </Card>
             </div>
             <div className='col-sm-8	col-md-8	col-lg-8	col-xl-9 mb-1'>
+              <Accordion defaultActiveKey="1" style={{marginBottom: '10px'}}>
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Data Pengiriman</Accordion.Header>
+                  <Accordion.Body>
+                    <div className="row  g-2 ">
+                      <div className='col-sm-12 col-md-12 col-lg5 col-xl-2'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Jasa Pengiriman</Form.Label>
+                          <Form.Control
+                            required
+                            name="Jasa Pengiriman"
+                            type="text"
+                            // value={x.iddokumen}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                              Harap Masukan Pengirim / Jasa Pengiriman
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                      
+                      <div className='col-sm-12 col-md-12 col-lg-5 col-xl-4'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>Nama Pengirim / Jasa Pengiriman</Form.Label>
+                          <Form.Control
+                            required
+                            name="Nama Pengirim / Jasa Pengiriman"
+                            type="text"
+                            // value={x.namadokumen}
+                            // onChange={(e) => handleInputChange(e, i)}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                              Harap Masukan Nama Pengirim / Jasa Pengiriman
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                      <div className='col-sm-12 col-md-12 col-lg-5 col-xl-4'>
+                        <Form.Group as={Col} controlId="validationCustom01">
+                          <Form.Label>No kendaraan / No Resi</Form.Label>
+                          <Form.Control
+                            required
+                            name="No kendaraan / No Resi"
+                            type="text"
+                            placeholder="No kendaraan / No Resi"
+                            // value={x.namadokumen}
+                            // onChange={(e) => handleInputChange(e, i)}
+                          />
+                          <Form.Control.Feedback type="invalid">
+                              Harap Masukan No kendaraan / No Resi
+                          </Form.Control.Feedback>
+                        </Form.Group>
+                      </div>
+                    </div>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
               <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
                   <Accordion.Header>Data Dokumen</Accordion.Header>

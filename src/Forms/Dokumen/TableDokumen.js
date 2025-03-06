@@ -605,6 +605,45 @@ export const TableDokumen = () => {
                         </Form.Group>
                     </div>
                 </div>
+                <Form.Group className="mb-3" controlId="validationCustom01">
+                    <Form.Label>Jasa Pengiriman</Form.Label>
+                    <Form.Control
+                        required
+                        name="Jasa Pengiriman"
+                        type="text"
+                        // value={x.iddokumen}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Harap Masukan Pengirim / Jasa Pengiriman
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="validationCustom01">
+                    <Form.Label>Nama Pengirim / Jasa Pengiriman</Form.Label>
+                    <Form.Control
+                        required
+                        name="Nama Pengirim / Jasa Pengiriman"
+                        type="text"
+                        // value={x.namadokumen}
+                        // onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Harap Masukan Nama Pengirim / Jasa Pengiriman
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="validationCustom01">
+                    <Form.Label>No kendaraan / No Resi</Form.Label>
+                    <Form.Control
+                        required
+                        name="No kendaraan / No Resi"
+                        type="text"
+                        placeholder="No kendaraan / No Resi"
+                        // value={x.namadokumen}
+                        // onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Harap Masukan No kendaraan / No Resi
+                    </Form.Control.Feedback>
+                </Form.Group>
             </Form>
             </Modal.Body>
             <Modal.Footer>

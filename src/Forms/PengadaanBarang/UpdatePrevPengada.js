@@ -531,10 +531,17 @@ export const UpdatePrevPengada = () => {
                                 <Accordion.Header>Parsial Data Kedatangan & Qty Material</Accordion.Header>
                                 <Accordion.Body>
                                 {inputList.map((x, i) => {
+                                    console.log(x)
                                     const satuan = location.state.data.qty_pengadaan[0].satuan
                                     let setData = true;
                                     if(x.po === location.state.po && x.noAkun === ""){
-                                        setData = true
+                                        if(x.divisi === "Purchasing"){
+                                            setData = false
+                                        }
+                                        else{
+                                            setData = true
+                                        }
+                                        
                                     }
                                     else if(x.po === location.state.po && x.noAkun !== ""){
                                         setData = false
@@ -567,7 +574,7 @@ export const UpdatePrevPengada = () => {
                                                 placeholder="Tanggal Kirim"
                                                 value={x.tglDatang}
                                                 onChange={(e) => handleInputChange(e, i)}
-                                                disabled={setData}
+                                                disabled={x.qty === "" ? false : true}
                                                 />
                                             </Form.Group>
                                         </div>
@@ -601,7 +608,7 @@ export const UpdatePrevPengada = () => {
                                                     variant="success" 
                                                     className=' d-flex justify-content-center align-items-center h-10' 
                                                     onClick={() => handleAddClick(i)}
-                                                    disabled={setData}
+                                                    disabled={false}
                                                     ><i className="bi bi-plus-square"></i></Button>
                                                 )}
                                                     {inputList.length !== 1 && (

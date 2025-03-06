@@ -332,22 +332,22 @@ export const VerifikasiPo = () => {
     
     const handleAlert = (e) =>{
         if(e === "verifikasi"){
-          Swal.fire({
-            title: "Apakah anda ingin memverifikasi PO ini?",
-            showDenyButton: true,
-            confirmButtonText: "Simpan",
-            denyButtonText: `Batal`
-          }).then((result) => {
-            if (result.isConfirmed) {
-              setIsLoading(true)
-              handleSave(e,'');
-            } else if (result.isDenied) {
-              Swal.fire("Batal Verifikasi PO", "", "info");
-            }
-          });
+            Swal.fire({
+                title: "Apakah anda ingin memverifikasi PO ini?",
+                showDenyButton: true,
+                confirmButtonText: "Simpan",
+                denyButtonText: `Batal`
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setIsLoading(true)
+                    handleSave(e,'');
+                } else if (result.isDenied) {
+                    Swal.fire("Batal Verifikasi PO", "", "info");
+                }
+            });
         }
         else if(e === 'revisi'){
-          Swal.fire({
+            Swal.fire({
             text: "Masukan keterangan revisi",
             icon: 'warning',
             input: 'textarea',
@@ -356,19 +356,19 @@ export const VerifikasiPo = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Simpan',
             cancelButtonText: 'Batal',
-        }).then((results) => {
-            if (results.isConfirmed) {
-            if(results.value === ""){
-              Swal.fire('Harap input keterangan revisi','','info');
-            }
-            else{
-              
-              setIsLoading(true)
-              handleSave(e,results.value)
-            }
-            }
-        })
-        }
+            }).then((results) => {
+                if (results.isConfirmed) {
+                if(results.value === ""){
+                Swal.fire('Harap input keterangan revisi','','info');
+                }
+                else{
+                
+                setIsLoading(true)
+                handleSave(e,results.value)
+                }
+                }
+            })
+            }   
         else{
           Swal.fire('Oppsss...','Tidak Dapat melakukan proses selanjutnya','warning');
         }
@@ -376,13 +376,25 @@ export const VerifikasiPo = () => {
     
     const handleSave =async (e,i) =>{
         try {
-            setIsLoading(true)
+            // setIsLoading(true)
             let bln = format(new Date(), "MM", { locale: id });
             let tahu = format(new Date(), "yyyy", { locale: id });
             let day = format(new Date(), "dd", { locale: id });
             const nTang = `${tahu}-${bln}-${day}`
             const data = location.state.data;
             const idp = data?.id_po;
+
+            /* console.log({
+                idp : idp,
+                pajak : pajak,
+                filter_bulan : data?.filter_bulan,
+                dataPo : data?.dataPO,
+                statusPo : data?.status,
+                status : e,
+                keterangan : i,
+                tanggal : nTang,
+                plan : userData.uplan
+            }) */
             const next = await API_AUTH.put(`/purchaseorder/${idp}`, {
                 pajak : pajak,
                 filter_bulan : data?.filter_bulan,
@@ -419,78 +431,77 @@ export const VerifikasiPo = () => {
     }
 
     const handleFina = () =>{
-    const data = location.state.data;
-    let date = new Date(data.tgl_kirim);
-    let bln = date.getMonth() + 1;
-    let tahu = date.getFullYear();
-    let day = date.getDate();
-    let date1 = new Date(data.tgl_po);
-    let bln1 = date1.getMonth() + 1;
-    let tahu1 = date1.getFullYear();
-    let day1 = date1.getDate();
-    const nTang = `${bln}/${day}/${tahu}`;
-    const nTangPo = `${bln1}/${day1}/${tahu1}`;
-    const inputList = data.dataPO;
-    if(data.dataPO.length <2){
-        let files = inputList.map((x, i) => {
-        return(
-            {"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
-        )})
-        let file = JSON.stringify(files);
+        const data = location.state.data;
+        let date = new Date(data.tgl_kirim);
+        let bln = date.getMonth() + 1;
+        let tahu = date.getFullYear();
+        let day = date.getDate();
+        let date1 = new Date(data.tgl_po);
+        let bln1 = date1.getMonth() + 1;
+        let tahu1 = date1.getFullYear();
+        let day1 = date1.getDate();
+        const nTang = `${bln}/${day}/${tahu}`;
+        const nTangPo = `${bln1}/${day1}/${tahu1}`;
+        const inputList = data.dataPO;
+        if(data.dataPO.length <2){
+            let files = inputList.map((x, i) => {
+            return(
+                {"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
+            )})
+            let file = JSON.stringify(files);
 
-        const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","CASHDISCOUNT":"${data.diskon}","PO_Item":${file}}]}`;
-        const encoded = encodeURIComponent(uri);
-        const newStr = encoded.replace(/%3A/g, ':')
-        .replace(/%5B/g, '[')
-        .replace(/%2C/g, ',')
-        .replace(/%5D/g, ']');
+            const uri = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","CASHDISCOUNT":"${data.diskon}","PO_Item":${file}}]}`;
+            const encoded = encodeURIComponent(uri);
+            const newStr = encoded.replace(/%3A/g, ':')
+            .replace(/%5B/g, '[')
+            .replace(/%2C/g, ',')
+            .replace(/%5D/g, ']');
+            handleSendFina(newStr);
+            setIsLoading(false);
+        }
+        else{
+            let files = inputList.map((x, i) => {
+            return(
+                {"SEQ":`${i}`,"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
+            )})
+
+            let file = JSON.stringify(files);
+            const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","CASHDISCOUNT":"${data.diskon}","PO_Item":${file}}]}`;
+            const encoded = encodeURIComponent(uris)
+            const newStr = encoded.replace(/%3A/g, ':')
+                        .replace(/%5B/g, '[')
+                        .replace(/%2C/g, ',')
+                        .replace(/%5D/g, ']');
+        
         handleSendFina(newStr);
-        setIsLoading(false);
-    }
-    else{
-        let files = inputList.map((x, i) => {
-        return(
-            {"SEQ":`${i}`,"ITEMNO":x.itemNo,"ITEMOVDESC":x.material,"ItemUnit":x.satuan,"QUANTITY":x.qty,"UNITPRICE":`${x.hargasatuan}`, "ITEMDISCPC":x.diskon,"TAXCODES":x.pajak,"DEPTNO":x.departement}
-        )})
-
-        let file = JSON.stringify(files);
-        const uris = `{"PO":[{"PONO":"${data.id_po}","PODate":"${nTangPo}","VENDOR":"${data.idexpro}","EXPECTED":"${nTang}","Description":"${data.keterangan}","CASHDISCOUNT":"${data.diskon}","PO_Item":${file}}]}`;
-        const encoded = encodeURIComponent(uris)
-        const newStr = encoded.replace(/%3A/g, ':')
-                    .replace(/%5B/g, '[')
-                    .replace(/%2C/g, ',')
-                    .replace(/%5D/g, ']');
-    
-    handleSendFina(newStr);
-    setIsLoading(true);
-    }
+        setIsLoading(true);
+        }
     }
 
     const handleSendFina = async (uri) =>{
-    setIsLoading(true);
-    try {
         setIsLoading(true);
-        const saveData = await axios.post(`${process.env.REACT_APP_API_KEY_RAIL}/data`,{
-            data : uri
-        });
-        Swal.fire(`${saveData.data.result}`,'','success')
+        try {
+            setIsLoading(true);
+            const saveData = await axios.post(`${process.env.REACT_APP_API_KEY_RAIL}/data`,{
+                data : uri
+            });
+            Swal.fire(`${saveData.data.result}`,'','success')
 
-        if(saveData.data.result[0] === "Current data already exists." || saveData.data.result[0] === ""){
-        handleSave('Done','')
+            if(saveData.data.result[0] === "Current data already exists." || saveData.data.result[0] === ""){
+            handleSave('Done','')
+            }
+            else{
+            
+            } 
+            setIsLoading(false)
+        } catch (error) {
+            Swal.fire(`Oppss`,'','error')
+            Swal.fire(`Kegagalan Dalam Proses Kirim Data Ke Fina`, navigate(`/form/purchaseorder`), 'error');
+            setIsLoading(false)
         }
-        else{
-        
-        } 
-        setIsLoading(false)
-    } catch (error) {
-        Swal.fire(`Oppss`,'','error')
-        Swal.fire(`Kegagalan Dalam Proses Kirim Data Ke Fina`, navigate(`/form/purchaseorder`), 'error');
-        setIsLoading(false)
     }
 
-    }
-
-      const handleJadwal = async () =>{
+    const handleJadwal = async () =>{
         let bln = format(new Date(), "MM", { locale: id });
         let tahu = format(new Date(), "yyyy", { locale: id });
         

@@ -277,41 +277,181 @@ export const EditDokumen = () => {
                     </Card>
                     </div>
                     <div className='col-sm-8	col-md-8	col-lg-8	col-xl-9 mb-1'>
-                    <Accordion defaultActiveKey="0">
-                        <Accordion.Item eventKey="0">
-                        <Accordion.Header>Data Dokumen</Accordion.Header>
-                        <Accordion.Body>
-                        {inputList.map((x, i) => {
-                            let d = false
-                            let colo = 'danger'
-                            if(x.status === 'Pengajuan'){
+                        <Accordion defaultActiveKey="1" style={{marginBottom: '10px'}}>
+                            <Accordion.Item eventKey="1">
+                                <Accordion.Header>Data Pengiriman</Accordion.Header>
+                                <Accordion.Body>
+                                <div className="row  g-2 ">
+                                    <div className='col-sm-12 col-md-12 col-lg5 col-xl-2'>
+                                    <Form.Group as={Col} controlId="validationCustom01">
+                                        <Form.Label>Jasa Pengiriman</Form.Label>
+                                        <Form.Control
+                                        required
+                                        name="Jasa Pengiriman"
+                                        type="text"
+                                        // value={x.iddokumen}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            Harap Masukan Pengirim / Jasa Pengiriman
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    </div>
+                                    
+                                    <div className='col-sm-12 col-md-12 col-lg-5 col-xl-4'>
+                                    <Form.Group as={Col} controlId="validationCustom01">
+                                        <Form.Label>Nama Pengirim / Jasa Pengiriman</Form.Label>
+                                        <Form.Control
+                                        required
+                                        name="Nama Pengirim / Jasa Pengiriman"
+                                        type="text"
+                                        // value={x.namadokumen}
+                                        // onChange={(e) => handleInputChange(e, i)}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            Harap Masukan Nama Pengirim / Jasa Pengiriman
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    </div>
+                                    <div className='col-sm-12 col-md-12 col-lg-5 col-xl-4'>
+                                    <Form.Group as={Col} controlId="validationCustom01">
+                                        <Form.Label>No kendaraan / No Resi</Form.Label>
+                                        <Form.Control
+                                        required
+                                        name="No kendaraan / No Resi"
+                                        type="text"
+                                        placeholder="No kendaraan / No Resi"
+                                        // value={x.namadokumen}
+                                        // onChange={(e) => handleInputChange(e, i)}
+                                        />
+                                        <Form.Control.Feedback type="invalid">
+                                            Harap Masukan No kendaraan / No Resi
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                    </div>
+                                </div>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                        <Accordion defaultActiveKey="0">
+                            <Accordion.Item eventKey="0">
+                            <Accordion.Header>Data Dokumen</Accordion.Header>
+                            <Accordion.Body>
+                            {inputList.map((x, i) => {
+                                let d = false
+                                let colo = 'danger'
+                                if(x.status === 'Pengajuan'){
+                                    colo = 'danger';
+                                    d = false;
+                                }
+                                else if(x.status === 'Verifikasi'){ 
+                                    colo = 'primary'
+                                    d = true;
+                                }
+                                else if(x.status === 'Hold'){
+                                    colo = 'warning'
+                                    d = false;
+                                }
+                                else if(x.status === 'Selesai'){
+                                colo = 'success'
+                                    d = true;
+                                }
+                                else{
                                 colo = 'danger';
-                                d = false;
-                            }
-                            else if(x.status === 'Verifikasi'){ 
-                                colo = 'primary'
-                                d = true;
-                            }
-                            else if(x.status === 'Hold'){
-                                colo = 'warning'
-                                d = false;
-                            }
-                            else if(x.status === 'Selesai'){
-                            colo = 'success'
-                                d = true;
-                            }
-                            else{
-                            colo = 'danger';
-                                d = false;
-                            }
-                            return(
-                            <div className="row  g-2 ">
-                                <h5>Dokumen Ke-{i+1} <Badge bg={colo}>{x.status}</Badge></h5>
-                                {
-                                    d ?
-                                    <div style={{marginBottom: '10px'}}>
+                                    d = false;
+                                }
+                                return(
+                                <div className="row  g-2 ">
+                                    <h5>Dokumen Ke-{i+1} <Badge bg={colo}>{x.status}</Badge></h5>
+                                    {
+                                        d ?
+                                        <div style={{marginBottom: '10px'}}>
+                                            <div className="row  g-2 ">
+                                                <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2'>
+                                                    <Form.Group as={Col} controlId="validationCustom01">
+                                                        <Form.Label>Id Dokumen</Form.Label>
+                                                        <Form.Control
+                                                        required
+                                                        name="idDokumen"
+                                                        type="text"
+                                                        placeholder="ID Dokumen"
+                                                        value={x.iddokumen}
+                                                        disabled
+                                                        />
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-12 col-md-12 col-lg-5 col-xl-5'>
+                                                    <Form.Group as={Col} controlId="validationCustom01">
+                                                        <Form.Label>Nama Dokumen</Form.Label>
+                                                        <Form.Control
+                                                        required
+                                                        name="namadokumen"
+                                                        type="text"
+                                                        placeholder="Nama Dokumen"
+                                                        value={x.namadokumen}
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                        disabled={d}
+                                                        />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            Harap Masukan Nama Dokumen
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2'>
+                                                    <Form.Group as={Col} controlId="validationCustom01">
+                                                        <Form.Label>Tgl Terima</Form.Label>
+                                                        <Form.Control
+                                                        required
+                                                        name="idDokumen"
+                                                        type="text"
+                                                        value={x.tglTerima}
+                                                        disabled
+                                                        />
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2'>
+                                                    <Form.Group as={Col} controlId="validationCustom01">
+                                                        <Form.Label>Tgl Kirim Ulang</Form.Label>
+                                                        <Form.Control
+                                                        required
+                                                        name="namadokumen"
+                                                        type="text"
+                                                        value={x.tglUlang}
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                        disabled={d}
+                                                        />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            Harap Masukan Nama Dokumen
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1'>
+                                                </div>
+                                            </div>
+                                            <div className="row  g-2 ">
+                                                <div className='col-sm-12 col-md-12 col-lg-11 col-xl-11'>
+                                                    <Form.Group as={Col} controlId="formGridArea">
+                                                        <Form.Label>Keterangan</Form.Label>
+                                                        <Form.Control 
+                                                        as="textarea" 
+                                                        aria-label="With textarea" 
+                                                        placeholder='Harap isikan keterangan data yang lengkap'
+                                                        name="keterangan"
+                                                        value={x.keterangan}
+                                                        onChange={(e) => handleInputChange(e, i)}
+                                                        disabled={d}
+                                                        />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            Harap Masukan Keterangan Dokumen
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                </div>
+                                                <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1'>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        :
                                         <div className="row  g-2 ">
-                                            <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2'>
+                                            <div className='col-sm-12 col-md-12 col-lg-5 col-xl-2'>
                                                 <Form.Group as={Col} controlId="validationCustom01">
                                                     <Form.Label>Id Dokumen</Form.Label>
                                                     <Form.Control
@@ -324,7 +464,7 @@ export const EditDokumen = () => {
                                                     />
                                                 </Form.Group>
                                             </div>
-                                            <div className='col-sm-12 col-md-12 col-lg-5 col-xl-5'>
+                                            <div className='col-sm-12 col-md-12 col-lg-5 col-xl-4'>
                                                 <Form.Group as={Col} controlId="validationCustom01">
                                                     <Form.Label>Nama Dokumen</Form.Label>
                                                     <Form.Control
@@ -341,39 +481,7 @@ export const EditDokumen = () => {
                                                     </Form.Control.Feedback>
                                                 </Form.Group>
                                             </div>
-                                            <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2'>
-                                                <Form.Group as={Col} controlId="validationCustom01">
-                                                    <Form.Label>Tgl Terima</Form.Label>
-                                                    <Form.Control
-                                                    required
-                                                    name="idDokumen"
-                                                    type="text"
-                                                    value={x.tglTerima}
-                                                    disabled
-                                                    />
-                                                </Form.Group>
-                                            </div>
-                                            <div className='col-sm-12 col-md-12 col-lg-2 col-xl-2'>
-                                                <Form.Group as={Col} controlId="validationCustom01">
-                                                    <Form.Label>Tgl Kirim Ulang</Form.Label>
-                                                    <Form.Control
-                                                    required
-                                                    name="namadokumen"
-                                                    type="text"
-                                                    value={x.tglUlang}
-                                                    onChange={(e) => handleInputChange(e, i)}
-                                                    disabled={d}
-                                                    />
-                                                    <Form.Control.Feedback type="invalid">
-                                                        Harap Masukan Nama Dokumen
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            </div>
-                                            <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1'>
-                                            </div>
-                                        </div>
-                                        <div className="row  g-2 ">
-                                            <div className='col-sm-12 col-md-12 col-lg-11 col-xl-11'>
+                                            <div className='col-sm-12 col-md-12 col-lg-5 col-xl-5'>
                                                 <Form.Group as={Col} controlId="formGridArea">
                                                     <Form.Label>Keterangan</Form.Label>
                                                     <Form.Control 
@@ -383,6 +491,7 @@ export const EditDokumen = () => {
                                                     name="keterangan"
                                                     value={x.keterangan}
                                                     onChange={(e) => handleInputChange(e, i)}
+                                                    required
                                                     disabled={d}
                                                     />
                                                     <Form.Control.Feedback type="invalid">
@@ -391,93 +500,39 @@ export const EditDokumen = () => {
                                                 </Form.Group>
                                             </div>
                                             <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1'>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    :
-                                    <div className="row  g-2 ">
-                                        <div className='col-sm-12 col-md-12 col-lg-5 col-xl-2'>
-                                            <Form.Group as={Col} controlId="validationCustom01">
-                                                <Form.Label>Id Dokumen</Form.Label>
-                                                <Form.Control
-                                                required
-                                                name="idDokumen"
-                                                type="text"
-                                                placeholder="ID Dokumen"
-                                                value={x.iddokumen}
-                                                disabled
-                                                />
-                                            </Form.Group>
-                                        </div>
-                                        <div className='col-sm-12 col-md-12 col-lg-5 col-xl-4'>
-                                            <Form.Group as={Col} controlId="validationCustom01">
-                                                <Form.Label>Nama Dokumen</Form.Label>
-                                                <Form.Control
-                                                required
-                                                name="namadokumen"
-                                                type="text"
-                                                placeholder="Nama Dokumen"
-                                                value={x.namadokumen}
-                                                onChange={(e) => handleInputChange(e, i)}
-                                                disabled={d}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    Harap Masukan Nama Dokumen
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        </div>
-                                        <div className='col-sm-12 col-md-12 col-lg-5 col-xl-5'>
-                                            <Form.Group as={Col} controlId="formGridArea">
-                                                <Form.Label>Keterangan</Form.Label>
-                                                <Form.Control 
-                                                as="textarea" 
-                                                aria-label="With textarea" 
-                                                placeholder='Harap isikan keterangan data yang lengkap'
-                                                name="keterangan"
-                                                value={x.keterangan}
-                                                onChange={(e) => handleInputChange(e, i)}
-                                                required
-                                                disabled={d}
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                    Harap Masukan Keterangan Dokumen
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        </div>
-                                        <div className='col-sm-12 col-md-12 col-lg-2 col-xl-1'>
-                                            <h6>&nbsp;</h6>
-                                            <div style={{display: "flex"}}>
-                                                
-                                                {inputList.length - 1 === i && (
-                                                <Button 
-                                                    variant="success"
-                                                    className=' d-flex justify-content-center align-items-center h-10'
-                                                    onClick={() => handleAddClick(i)}
-                                                >
-                                                    <i className="bi bi-plus-square"></i>
-                                                </Button>
-                                                )}
-                                                    {inputList.length !== 1 && (
+                                                <h6>&nbsp;</h6>
+                                                <div style={{display: "flex"}}>
+                                                    
+                                                    {inputList.length - 1 === i && (
                                                     <Button 
-                                                        variant="primary"
-                                                        onClick={() => handleRemoveClick(i)}
-                                                        className='d-flex justify-content-center align-items-center h-10'
-                                                        style={{marginLeft: 10}}
+                                                        variant="success"
+                                                        className=' d-flex justify-content-center align-items-center h-10'
+                                                        onClick={() => handleAddClick(i)}
                                                     >
-                                                        <i className="bi bi-trash"></i>
+                                                        <i className="bi bi-plus-square"></i>
                                                     </Button>
                                                     )}
+                                                        {inputList.length !== 1 && (
+                                                        <Button 
+                                                            variant="primary"
+                                                            onClick={() => handleRemoveClick(i)}
+                                                            className='d-flex justify-content-center align-items-center h-10'
+                                                            style={{marginLeft: 10}}
+                                                        >
+                                                            <i className="bi bi-trash"></i>
+                                                        </Button>
+                                                        )}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                }
-                                
-                            </div>
-                            )
-                        })}
-                        </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
+                                    }
+                                    
+                                </div>
+                                )
+                            })}
+                            </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
                     </div>
                     <div className='col-sm-12	col-md-12	col-lg-1	col-xl-1 mb-5'>
                     <div className='d-flex align-items-end flex-wrap'>

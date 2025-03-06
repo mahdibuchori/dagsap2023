@@ -10,6 +10,7 @@ import { DashQaqc } from './qaqc/DashQaqc';
 import { DashRnd } from './rnd/DashRnd';
 import { DashSsd } from './ssd/DashSsd';
 import { DashWip } from './ppicpurch/DashWip';
+import { DashSsm } from './ssm/DashSsm';
 
 export const DashDev = () => {
     const [key, setKey] = useState('fg');
@@ -49,7 +50,10 @@ export const DashDev = () => {
         <DashSsd />
         </Tab>
         <Tab eventKey="wip" title="WIP">
-        <DashWip />
+            <DashWip />
+        </Tab>
+        <Tab eventKey="ssm" title="SSM">
+            <DashSsm />
         </Tab>
     </Tabs>
     );

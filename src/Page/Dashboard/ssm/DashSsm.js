@@ -1,76 +1,77 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form } from 'react-bootstrap';
+
 import { LoadingPage } from '../../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../../store/DataUser';
 import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaanReady, selectFalsePengadaan} from '../../../store/DataPengadaan';
 
-export const DashPpic = () => {
-  const navigate = useNavigate();
-  const userData = useAuthStore(selectUser);
-
-  const newPengadaan = usePengadaanStore(selectPengadaan);
-  const fetchPengadaan = usePengadaanStore(selectFetchPengadaan);
-  const pengadaanReady = usePengadaanStore(selectPengadaanReady);
-  const pengadaanFalse = usePengadaanStore(selectFalsePengadaan);
-
-  const [month, setMonth] = useState('');
-  const [jmlPengajuan, setJmlPengajuan] = useState(0);
-  const [jmlRevisi, setJmlRevisi] = useState(0);
-  const [jmlVerify, setJmlVerify] = useState(0);
-  const [jmlSelesai, setJmlSelesai] = useState(0);
-  const [jmlReject, setJmlReject] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => { 
-    setIsLoading(true);
-    // pengadaanFalse();
-    const date = new Date();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    let bb = String(month).padStart(2, '0');
-    setMonth(`${year}-${bb}`);
-    fetchPengadaan(`${year}-${bb}`, userData.uplan);
-    setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    // setIsLoading(true);
-    if (!pengadaanReady) return;
-    onDataReady()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pengadaanReady]);
-
-  const onDataReady = () =>{
-    setIsLoading(false);
-    console.log(month)
-    const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
-    const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
-    const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
-    const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");  
-    const jumReject = newPengadaan.filter(x => x.status.toUpperCase() === "REJECT");
-
-    let fPengajuan = jumPengajuan.filter(i=> i.user[0].divisi === "PPIC-WH");
-    let fRevisi = jumRevisi.filter(i=> i.user[0].divisi === "PPIC-WH");
-    let fVerifikasi = jumVerify.filter(i=> i.user[0].divisi === "PPIC-WH");
-    let fSelesai = jumSelesai.filter(i=> i.user[0].divisi === "PPIC-WH");
-    let fReject = jumReject.filter(i=> i.user[0].divisi === "PPIC-WH");
-    setJmlPengajuan(fPengajuan.length);
-    setJmlRevisi(fRevisi.length);
-    setJmlVerify(fVerifikasi.length);
-    setJmlSelesai(fSelesai.length);
-    setJmlReject(fReject.length);
-  } 
-
-  const onSetDate =async (event) => {
-    setIsLoading(true)
-    pengadaanFalse();
-    setMonth(event.target.value);
-    await fetchPengadaan(event.target.value, userData.uplan);
-  }
+export const DashSsm = () => {
+    const navigate = useNavigate();
+    const userData = useAuthStore(selectUser);
   
-  return (
+    const newPengadaan = usePengadaanStore(selectPengadaan);
+    const fetchPengadaan = usePengadaanStore(selectFetchPengadaan);
+    const pengadaanReady = usePengadaanStore(selectPengadaanReady);
+    const pengadaanFalse = usePengadaanStore(selectFalsePengadaan);
+  
+    const [month, setMonth] = useState('');
+    const [jmlPengajuan, setJmlPengajuan] = useState(0);
+    const [jmlRevisi, setJmlRevisi] = useState(0);
+    const [jmlVerify, setJmlVerify] = useState(0);
+    const [jmlSelesai, setJmlSelesai] = useState(0);
+    const [jmlReject, setJmlReject] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+  
+    useEffect(() => { 
+      setIsLoading(true);
+      // pengadaanFalse();
+      const date = new Date();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      let bb = String(month).padStart(2, '0');
+      setMonth(`${year}-${bb}`);
+      fetchPengadaan(`${year}-${bb}`, userData.uplan);
+      setIsLoading(false);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  
+    useEffect(() => {
+      // setIsLoading(true);
+      if (!pengadaanReady) return;
+      onDataReady()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pengadaanReady]);
+  
+    const onDataReady = () =>{
+      setIsLoading(false);
+      console.log(month)
+      const jumPengajuan = newPengadaan.filter(x => x.status.toUpperCase() === "PENGAJUAN");  
+      const jumRevisi = newPengadaan.filter(x => x.status.toUpperCase() === "REVISI");       
+      const jumVerify = newPengadaan.filter(x => x.status.toUpperCase() === "VERIFIKASI");    
+      const jumSelesai = newPengadaan.filter(x => x.status.toUpperCase() === "SELESAI");  
+      const jumReject = newPengadaan.filter(x => x.status.toUpperCase() === "REJECT");
+  
+      let fPengajuan = jumPengajuan.filter(i=> i.user[0].divisi === "Sales-Marketing");
+      let fRevisi = jumRevisi.filter(i=> i.user[0].divisi === "Sales-Marketing");
+      let fVerifikasi = jumVerify.filter(i=> i.user[0].divisi === "Sales-Marketing");
+      let fSelesai = jumSelesai.filter(i=> i.user[0].divisi === "Sales-Marketing");
+      let fReject = jumReject.filter(i=> i.user[0].divisi === "Sales-Marketing");
+      setJmlPengajuan(fPengajuan.length);
+      setJmlRevisi(fRevisi.length);
+      setJmlVerify(fVerifikasi.length);
+      setJmlSelesai(fSelesai.length);
+      setJmlReject(fReject.length);
+    } 
+  
+    const onSetDate =async (event) => {
+      setIsLoading(true)
+      pengadaanFalse();
+      setMonth(event.target.value);
+      await fetchPengadaan(event.target.value, userData.uplan);
+    }
+   
+    return (
       <>
         <Container className='mt-2' fluid>
           <div class="shadow p-3 mb-5 bg-body rounded" style={{marginTop: '50px'}}>
@@ -160,5 +161,5 @@ export const DashPpic = () => {
           {/* 'col-sm-12' | 'col-md-2' | 'col-lg-2' | 'col-xl-2' */}
         {isLoading && <LoadingPage/>}
       </>
-  )
+    )
 }

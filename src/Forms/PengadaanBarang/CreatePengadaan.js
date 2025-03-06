@@ -1002,144 +1002,153 @@ export const CreatePengadaan = () => {
      
     </div>
 
-    {isLoading ? <LoadingPage /> : ""}
+    {isLoading ? <LoadingPage /> : ""} 
 
     <Modal show={show} size='xl'  centered> 
         <Modal.Body>
           <Accordion defaultActiveKey="0">
-            {arrPo?.map((x,i)=>{
-              let datapos = x.options;
+            {arrPo?.map((e, i) =>{
+              let datapos = e.options;
               let statusX = 'Open';
               let colorX = 'danger';
               let mstat =[]
               let mdivic = []
               for(let y=0; y < datapos.length; y++){
-                if(x.label !== "" && datapos[y].noAkun === ""){ mstat.push('Close') }
-                else if(x.label !== "" && datapos[y].noAkun === "purch"){ mstat.push('Open')}
-                else if(x.label !== "" && datapos[y].noAkun === "min"){ mstat.push('Open')}
+                if(e.label !== "" && datapos[y].noAkun === ""){ mstat.push('Close') }
+                else if(e.label !== "" && datapos[y].noAkun === "purch"){ mstat.push('Open')}
+                else if(e.label !== "" && datapos[y].noAkun === "min"){ mstat.push('Open')}
                 else{ mstat.push('Close')}
                 mdivic.push(datapos[y].divisi)
               }
               let cariDiv = mdivic?.filter(i => i === "Purchasing");
               let cariStas = mstat?.filter(i => i === "Open");
-
-              if(cariDiv.length > 0){
-                statusX = "Forecast"
-                colorX = 'primary'
-              }
-              else{
-                if(cariStas.length > 0){
-                  statusX = "Open"
-                  colorX = 'danger'
+              let cariClose = mstat?.filter(i => i === "Close");
+              if(cariStas.length > 0){
+                if(cariDiv.length > 0){
+                  statusX = "Forecast";
+                  colorX = 'primary';
                 }
                 else{
-                  statusX = "Close"
-                  colorX = 'success'
+                  statusX = "Open";
+                  colorX = 'danger';
+                }
+                
+              }
+              else{
+                if(cariDiv.length > 0 && cariClose.length < 2 ){
+                  statusX = "Forecast";
+                  colorX = 'primary';
+                }
+                else{
+                  statusX = "Close";
+                  colorX = 'success';
                 }
               }
-              
               return(
                 <Accordion.Item eventKey={i}>
-                <Accordion.Header>{x.label} <Badge bg={colorX} style={{marginLeft: 10, padding: 10}}>{statusX}</Badge></Accordion.Header>
-                {datapos?.map((a,b)=>{
-                  let status = 'Open';
-                  let colorss = '#c41414';
-                  let pReady = false;
-                  if(x.label !== "" && a.noAkun === ""){ status = 'Close'; colorss = '#c41414'}
-                  else if(x.label !== "" && a.noAkun === "purch"){ status = 'Open'; colorss = '#287bff'}
-                  else if(x.label !== "" && a.noAkun === "min"){ status = 'Open'; colorss = '#287bff'}
-                  else{
-                    status = 'Open'; colorss = '#c41414'
-                  }
-
-                  if(a.divisi === "Purchasing"){
-                    pReady = true
-                  }
-                  else if(status === "Open"){
-                    pReady = true
-                  }
-                  else{
-                    pReady = false
-                  }
-                  return(
-                    <Accordion.Body>
-                    <div className="row  g-2 ">
-                      <div className='col-sm-12 col-md-1 col-lg-1 col-xl-1'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Qty</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={a.qty}
-                            disabled
-                          />
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Eksternal Provider</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={a.expro}
-                            disabled
-                          />
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Tgl Kirim</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={a.tglDatang}
-                            disabled
-                          />
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Divisi</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={a.divisi}
-                            disabled
-                          />
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
-                        <Form.Group as={Col} controlId="validationCustom01">
-                          <Form.Label>Status</Form.Label>
-                          <Form.Control
-                            type="text"
-                            value={status}
-                            style={{background : colorss, color: 'white', textAlign: 'center'}}
-                            disabled
-                          />
-                        </Form.Group>
-                      </div>
-                      <div className='col-sm-12 col-md-1 col-lg-1 col-xl-1'>
-                        <div className='d-flex align-items-end flex-column'>
-                          <div className='d-flex align-items-end flex-wrap'>
-                            <div className='row p-1'>
-                              {pReady ?
-                                <Button 
-                                  type="submit"
-                                  variant="outline-primary m-2"
-                                  className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
-                                  onClick={(e)=> handleMoveUpdate(a.id_Pengadaan, x.label)}
-                                >
-                                Update
-                                </Button>
-                               : ""}
+                  <Accordion.Header>{e.label} <Badge bg={colorX} style={{marginLeft: 10, padding: 10}}>{statusX}</Badge></Accordion.Header>
+                  {datapos?.map((a,b)=>{
+                    let status = 'Open';
+                    let colorss = '#c41414';
+                    let pReady = false;
+                    if(e.label !== "" && a.noAkun === ""){ status = 'Close'; colorss = '#c41414'}
+                    else if(e.label !== "" && a.noAkun === "purch"){ status = 'Open'; colorss = '#287bff'}
+                    else if(e.label !== "" && a.noAkun === "min"){ status = 'Open'; colorss = '#287bff'}
+                    else{
+                      status = 'Open'; colorss = '#c41414'
+                    }
+  
+                    
+                    if(status === "Open"){
+                      pReady = true
+                    }
+                    else{
+                      if(cariDiv.length > 0 && cariClose.length < 2){
+                        pReady = true
+                      }
+                      else{
+                        pReady = false
+                      }
+                      
+                    }
+                    return(
+                      <Accordion.Body>
+                      <div className="row  g-2 ">
+                        <div className='col-sm-12 col-md-1 col-lg-1 col-xl-1'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Qty</Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={a.qty}
+                              disabled
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className='col-sm-12 col-md-4 col-lg-4 col-xl-4'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Eksternal Provider</Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={a.expro}
+                              disabled
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Tgl Kirim</Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={a.tglDatang}
+                              disabled
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Divisi</Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={a.divisi}
+                              disabled
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className='col-sm-12 col-md-2 col-lg-2 col-xl-2'>
+                          <Form.Group as={Col} controlId="validationCustom01">
+                            <Form.Label>Status</Form.Label>
+                            <Form.Control
+                              type="text"
+                              value={ status }
+                              style={{background : colorss, color: 'white', textAlign: 'center'}}
+                              disabled
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className='col-sm-12 col-md-1 col-lg-1 col-xl-1'>
+                          <div className='d-flex align-items-end flex-column'>
+                            <div className='d-flex align-items-end flex-wrap'>
+                              <div className='row p-1'>
+                                {pReady ?
+                                  <Button 
+                                    type="submit"
+                                    variant="outline-primary m-2"
+                                    className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                                    onClick={(y)=> handleMoveUpdate(a.id_Pengadaan, e.label)}
+                                  >
+                                  Update
+                                  </Button>
+                                 : ""}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </Accordion.Body>
-                  )
-
-                })}
-                  
-              </Accordion.Item>
+                    </Accordion.Body>
+                    )
+  
+                  })}
+                </Accordion.Item>
               )
             })}
           </Accordion>

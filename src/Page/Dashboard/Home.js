@@ -14,11 +14,11 @@ import { DashHrga } from './hrdga/DashHrga';
 import { DashRnd } from './rnd/DashRnd';
 import { DashQaqc } from './qaqc/DashQaqc';
 import { DashSsd } from './ssd/DashSsd';
+import { DashSsm } from './ssm/DashSsm';
 
 const Home = () => {
   const [divisi, setDivisi] = useState('');
   const userData = useAuthStore(selectUser);
-
   useEffect(() => {
     getUsers()
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +85,7 @@ const Home = () => {
       
     )
   }
-  else if(userData?.udivisi === "Maintenace" ){
+  else if(userData?.udivisi === "Maintenance" ){
     return (
       <div className='setContain'>
         <DashMantc />
@@ -121,6 +121,14 @@ const Home = () => {
     return (
       <div className='setContain'>
         <DashSsd />
+      </div>
+      
+    )
+  }
+  else if(userData?.udivisi === "Sales-Marketing" ){
+    return (
+      <div className='setContain'>
+        <DashSsm />
       </div>
       
     )
