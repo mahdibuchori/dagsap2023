@@ -313,7 +313,7 @@ export const Tablepengadaan = ({columns}) => {
             setUsSales(true);
         break;
         case "Sales-Marketing":
-          setKey("SSD");
+          setKey("Sales-Marketing");
           setUsFg(true);
           setUsHrga(true);
           setUsMaintenance(true);
