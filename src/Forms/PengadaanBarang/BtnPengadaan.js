@@ -4,6 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import usePengadaanStore, {selectFalsePengadaan, selectPengadaanReady} from '../../store/DataPengadaan';
+import { TimePengadaan } from './TimePengadaan';
 
 
 export const BtnPengadaan = (props) => {
@@ -12,7 +13,7 @@ export const BtnPengadaan = (props) => {
     const userData = useAuthStore(selectUser);
     const pengadaanFalse = usePengadaanStore(selectFalsePengadaan);
     const pengadaanReady = usePengadaanStore(selectPengadaanReady);
-
+    const [show, setShow] = useState(false);
     const renderVerify = (props) => (
         <Tooltip id="button-tooltip" {...props}>
           Verify Pengadaan
@@ -30,6 +31,12 @@ export const BtnPengadaan = (props) => {
           Create/Cek PO
         </Tooltip>
     )
+
+    const renderTimeline = (props) => (
+      <Tooltip id="button-tooltip" {...props}>
+        Time Line Data
+      </Tooltip>
+  )
 
     const handleEdit = () =>{
       navigate(`/form/pengadaan/data`,{state:{
@@ -301,6 +308,12 @@ export const BtnPengadaan = (props) => {
 
 
     }
+
+    const handleTimeLine = () =>{
+      // Swal.fire('ooppss', 'timeline', 'info');
+      setShow(true)
+      
+    }
   return (
     <>
         <span style={{display: 'flex'}}>
@@ -333,19 +346,43 @@ export const BtnPengadaan = (props) => {
             </OverlayTrigger>
 
             <OverlayTrigger
-                placement="bottom"
-                delay={{ show: 150, hide: 250 }}
-                overlay={renderPO}
+              placement="bottom"
+              delay={{ show: 150, hide: 250 }}
+              overlay={renderPO}
             >
                 <button
-                    style={{ height: 30, lineHeight: 0.5, display: cekData }}
-                    // onClick={() => buttonOrder()}
-                    className="buttonReset"
+                  style={{ height: 30, lineHeight: 0.5, display: cekData }}
+                  // onClick={() => buttonOrder()}
+                  className="buttonReset"
                 >
                 <i className="bi bi-pencil"></i>
                 </button>
             </OverlayTrigger>
+            <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 150, hide: 250 }}
+                overlay={renderTimeline}
+            >
+                <button
+                  style={{
+                    height: 30,
+                    lineHeight: 0.5,
+                    background : '#7a0080',
+                    color : '#fff',
+                    borderRadius: 4,
+                    width: 40,
+                    padding: 8,
+                    marginTop: 5,
+                    marginLeft: 10
+                  }}
+                  onClick={() => handleTimeLine()}
+                >
+                <i className="bi bi-hourglass-split"></i>
+                </button>
+            </OverlayTrigger>
         </span>
+
+        <TimePengadaan data={props.data} show={show}  close={()=>setShow(false)}/>
     </>
   )
 }
