@@ -865,7 +865,9 @@ export const PrintPo = () => {
                     data={pdfFile}
                     list={list}
                     dtPar={dtPar}
+                    listPar={listPar}
                     dtNote={dtNote}
+                    note={note}
                     close={()=>setShowDownload(false)}
                     closeMail={()=> {
                         setShowDownload(false);

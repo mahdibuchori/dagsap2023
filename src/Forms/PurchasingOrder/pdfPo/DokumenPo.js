@@ -61,17 +61,15 @@ const styles = StyleSheet.create({
 });
 
 export const DokumenPo = (props) => {
+  console.log(props)
   return (
-    
     <Document>
       <Page size="A4" style={styles.body}>
         <View>
           <View style={styles.header} fixed>
             <View style={[styles.row,{marginLeft: '185mm',marginBottom: '2mm'}]}>
               <Image style={{width: '4mm', height:'4mm'}} src={lgDg}/> 
-              <Text style={[styles.pageNumber,{marginLeft: '2mm'}]} render={({ pageNumber, totalPages }) => (
-                `${pageNumber}`
-              )} fixed />
+              <Text style={[styles.pageNumber,{marginLeft: '2mm'}]} render={({ pageNumber, totalPages }) => (`${pageNumber}` )} fixed />
             </View>
               
             <View style={styles.row}>
@@ -79,14 +77,11 @@ export const DokumenPo = (props) => {
                 <Text style={[styles.fontBold,styles.border,{height: '5mm',textAlign: 'center',padding:2, fontSize: "8px"}]}>
                   PT DAGSAP ENDURA EATORE
                 </Text>
-
                 <Text style={[styles.fontBold,styles.border,{height: '19.5mm',fontSize: "8px", padding : 3, marginTop: '0',textAlign: 'left'}]}>Jl. Cahaya Raya Kav H-3 Kawasan Industri Sentul Bogor Ph. 62-2187920420, Fax. 62-21-87920409</Text>
               </View>
 
               <View style={{ width: '75mm', height: "25mm",marginLeft: '7mm' ,padding: 0}}>
-                <Text style={{marginTop: 3, fontSize: '14', textDecoration : 'underline' }}>
-                Pesanan Pembelian
-                </Text>
+                <Text style={{marginTop: 3, fontSize: '14', textDecoration : 'underline' }}>Pesanan Pembelian</Text>
               </View>
 
               <View style={{ width: '25mm', height: "25mm",marginLeft: '8mm' ,padding: 0}}>
@@ -231,19 +226,19 @@ export const DokumenPo = (props) => {
               <View style={[styles.row,styles.fontBold]}>
                 <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>Diskon :</Text>
                 <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>
-                {String(props.data.diskon).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {String(props.data.diskon).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </Text>
               </View>
               <View style={[styles.row,styles.fontBold]}>
                 <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>PPN-STANDAR :</Text>
                 <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>
-                { String(props.data.totalPpn).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  { String(props.data.totalPpn).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </Text>
               </View>
               <View style={[styles.row,styles.fontBold]}>
                 <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>{props.data.taxName} :</Text>
                 <Text style={[styles.border,{width : '31mm',height: '7.5mm', padding : '2mm'}]}>
-                {String(props.data.totalPph).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {String(props.data.totalPph).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </Text>
               </View>
               <View style={[styles.row,styles.fontBold]}>
@@ -262,53 +257,38 @@ export const DokumenPo = (props) => {
           </View>
 
           <Text style={{fontSize: "4px"}}> </Text>
-          {props.dtPar ? 
+          {props.dtPar &&
             <View>
-                <Text style={{width: '190mm',fontSize: "8px",textAlign: 'center'}}>Jadwal Pengiriman Barang</Text>
-                <Text style={{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm',border: '0.3mm solid black'}}></Text>
-                <View style={[styles.row,{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm',marginTop: '1mm'}]}>
-                    <Text style={{width : '7mm', minHeight: '6mm'}}>No</Text>
-                    <Text style={{width : '63mm',minHeight: '6mm'}}>Nama Barang</Text>
-                    <Text style={{width : '30mm',minHeight: '6mm'}}>Tanggal Datang</Text>
-                    <Text style={{width : '20mm',minHeight: '6mm'}}>Qty</Text>
-                </View>
+              <Text style={{width: '190mm',fontSize: "8px",textAlign: 'center'}}>Jadwal Pengiriman Barang</Text>
+              <Text style={{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm',border: '0.3mm solid black'}}></Text>
+              <View style={[styles.row,{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm',marginTop: '1mm'}]}>
+                <Text style={{width : '7mm', minHeight: '6mm'}}>No</Text>
+                <Text style={{width : '63mm',minHeight: '6mm'}}>Nama Barang</Text>
+                <Text style={{width : '30mm',minHeight: '6mm'}}>Tanggal Datang</Text>
+                <Text style={{width : '20mm',minHeight: '6mm'}}>Qty</Text>
+              </View>
 
-                {props.listPar.map((row, i) => {
-                    return(
-                        <View style={[styles.row,{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm'}]}>
-                            <Text style={[styles.border,{width : '7mm',minHeight: '6mm',padding: '1mm'}]}>
-                                {i + 1}
-                            </Text>
-                            <Text style={[styles.border,{width : '63mm',minHeight: '6mm',padding: '1mm',textAlign: 'left'}]}>
-                                {row.item}
-                            </Text>
-                            <Text style={[styles.border,{width : '30mm',minHeight: '6mm',padding: '1mm'}]}>
-                                {row.tanggal}
-                            </Text>
-                            <Text style={[styles.border,{width : '20mm',minHeight: '6mm',padding: '1mm'}]}>
-                                {row.qty}
-                            </Text>
-                        </View>
-                    )
-                })
-                }
-            </View>    
-          : 
-            <View>
-                <Text></Text>
+              {props.listPar.map((row, i) => {
+                return(
+                  <View style={[styles.row,{width: '120mm',fontSize: "8px",textAlign: 'center',marginLeft: '35mm'}]}>
+                    <Text style={[styles.border,{width : '7mm',minHeight: '6mm',padding: '1mm'}]}>{i + 1}</Text>
+                    <Text style={[styles.border,{width : '63mm',minHeight: '6mm',padding: '1mm',textAlign: 'left'}]}>{row.item}</Text>
+                    <Text style={[styles.border,{width : '30mm',minHeight: '6mm',padding: '1mm'}]}>{row.tanggal}</Text>
+                    <Text style={[styles.border,{width : '20mm',minHeight: '6mm',padding: '1mm'}]}>{row.qty}</Text>
+                  </View>
+                )
+              })
+              }
             </View>
           }
-
           <Text style={{fontSize: "16px"}}> </Text>
-          
-          {props.dtNote ?
+          {props.dtNote &&
             <View>
-            <Text style={[styles.fontBold,{fontSize: "8px",marginBottom:'2mm'}]}>Note</Text>
-            <Text style={{fontSize: "8px",border: '0.3mm solid black', padding: '2mm'}}>{props.data.note}</Text>
+              <Text style={[styles.fontBold,{fontSize: "8px",marginBottom:'2mm'}]}>Note</Text>
+              <Text style={{fontSize: "8px",border: '0.3mm solid black', padding: '2mm'}}>{props.note}</Text>
             </View>
-            :
-            <Text style={{fontSize: "16px"}}> </Text>
           } 
+          <Text style={{fontSize: "16px"}}> </Text>
         </View>
       </Page>
     </Document>

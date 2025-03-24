@@ -81,7 +81,20 @@ export const NewPrintpo = (props) => {
         <Modal.Footer>
           <div style={{ ...styles.flex, ...{ flexDirection: 'row-reverse' } }}>
             <div style={styles.btn_yes}>
-              <PDFDownloadLink document={<DokumenPo data={props.data} list={props.list} dtPar={props.dtPar} dtNote={props.dtNote}/>} fileName={`${props.data.idpo}.pdf`} onDownload={handleDownload}>
+              <PDFDownloadLink 
+                document={
+                  <DokumenPo 
+                    data={props.data}
+                    list={props.list}
+                    dtPar={props.dtPar}
+                    listPar={props.listPar}
+                    dtNote={props.dtNote}
+                    note={props.note}
+                  />
+                }
+                fileName={`${props.data.idpo}.pdf`}
+                onDownload={handleDownload}
+              >
                 {({ blob, url, loading, error }) => (
                   <button style={{color: "#fff",cursor: 'pointer'}} onClick={() => {handleDownload(blob)}}>
                     <span>Ya</span>
