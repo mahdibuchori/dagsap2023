@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Swal from "sweetalert2";
 import { format } from "date-fns";
 import id from 'date-fns/locale/id';
-
-import { Form, Breadcrumb, Button, Col, Modal, Stack } from 'react-bootstrap';
+import { Editor, ScrollPanel, Toast } from "primereact";
+import { ReactMultiEmail } from 'react-multi-email';
+import 'react-multi-email/dist/style.css';
+import './styles/poStyle.css'
+import { Form, Breadcrumb, Col, Modal, Stack } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PDFViewer } from "@react-pdf/renderer";
 import {
@@ -17,8 +20,9 @@ import {
 
 import lgDg from '../../assets/img/dee.png'
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
-// import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDataProvider, { selectProvider, selectFetchProvider,selectProviderReady } from '../../store/DataProvider';
+import { NewPrintpo } from './pdfPo/NewPrintpo';
+import { API_AUTH } from '../../apis/apisData';
 
 const styles = StyleSheet.create({
     body: {
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
 export const PrintPo = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    // const userData = useAuthStore(selectUser);
     const provider = useDataProvider(selectProvider);
     const onProvider = useDataProvider(selectFetchProvider);
     const providerReady = useDataProvider(selectProviderReady);
@@ -87,6 +90,13 @@ export const PrintPo = () => {
     const [exprovider, setExprovider] = useState('');
     const [alamat, setAlamat] = useState('');
     const [note, setNote] = useState('');
+    const [file, setFile] = useState(null);
+    const [filePath, setFilePath] = useState(null);
+    const toast = useRef(null);
+
+    const [emails, setEmails] = useState([]);
+    const [ccemails, setCcemails] = useState([]);
+    const [pdfFile, setPdfFile] = useState([]);
     const [totalPpn, setTotalPpn] = useState(0);
     const [totalPph, setTotalPph] = useState(0);
     const [totalPesan, setTotalPesan] = useState(0);
@@ -97,24 +107,16 @@ export const PrintPo = () => {
     const [dtPar, setDtPar] = useState(false);
     const [dtNote, setDtNote] = useState(false);
     const [show, setShow] = useState(false);
-
-    
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true);
-        setDtPar(false);
-        setDtNote(false);
-        setNote();
-        setListPar([]);
-        setNumbering([]);
-    }
+    const [showMail, setShowMail] = useState(false);
+    const [showDownload, setShowDownload] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
     const [stAppro, setStAppro] = useState(false);
     const [stVeri, setStVeri] = useState(false);
-
+    const [text, setText] = useState(`<p><span style="background-color: rgb(255, 255, 255); color: rgb(38, 40, 42);">Dear </span></p><p><br></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">MOHON MEMBERI FEEDBACK APABILA SUDAH MENERIMA EMAIL INI</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"> </span></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">Berikut kami lampirkan </span><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">${location.state.data.id_po} </strong><span style="color: rgb(0, 0, 0); background-color: inherit;"> Mohon dibantu untuk dikirim sesuai dengan jadwal yang tertulis  di jadwal pengiriman  </span><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">(terlampir)</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"> </span></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">NOTE : MOHON MENYERTAKAN</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> COPY PO SAAT PENGIRIMAN, APABILA TIDAK DILAMPIRKAN MAKA BARANG TIDAK BISA DITERIMA  </strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"> </span></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">SYARAT PENGIRIMAN BARANG :</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> </strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">1. HARUS ADA COA YANG SESUAI DENGAN MATERIAL YANG DI KIRIM</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">2. HARUS ADA LAMPIRAN COPY</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> PO</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">Demikian</span><span style="color: rgb(0, 0, 0); background-color: inherit;"> PO ini kami sampaikan atas perhatian dan kerjasamanya terima kasih.</span></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(80, 0, 80);"> </span></p><p><em style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"><u>Note : Mohon disampaikan ke bagian Invoice / keuangan agar mengikuti persyaratan tukar faktur dibawah ini :</u></em><em style="color: rgb(0, 0, 0); background-color: inherit;"><u> </u></em></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(80, 0, 80);"> </span></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">PERSYARATAN TUKAR FAKTUR :</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">1. Invoice 2 Rangkap</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> </strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">2. Faktur pajak 2 Rangkap</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">3. Surat Jalan 2 Rangkap</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">4. Copy</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> PO 2 Rangkap</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(80, 0, 80);"> </span></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">Mohon diperhatiikan persyaratan tukar faktur tersebut,</span><span style="color: rgb(0, 0, 0); background-color: inherit;"> jika tidak sesuai dengan persyaratan Invoice tidak kami proses</span></p><p><span style="background-color: rgb(255, 255, 255);">--</span></p><p><span style="background-color: inherit;">Best Regards,</span></p><p><br></p><p><span style="background-color: rgb(255, 255, 255);">Kevin</span></p><p><em style="background-color: rgb(255, 255, 255);">Purchase Departement</em></p><p><strong style="background-color: rgb(255, 255, 255);">PT. DAGSAP ENDURA EATORE</strong></p><p><span style="background-color: rgb(255, 255, 255);">Jl. Cahaya Raya Kav. H-3 Kawasan Industri Sentul</span></p><p><span style="background-color: rgb(255, 255, 255);">Mobile: +6281280464885</span></p><p><span style="background-color: rgb(255, 255, 255);">Phone: (021) 87920420</span></p><p><span style="background-color: rgb(255, 255, 255);">Fax: (021) 87920409</span></p><p><a href="http://www.dagsap.co.id/" rel="noopener noreferrer" target="_blank" style="background-color: rgb(255, 255, 255); color: rgb(17, 85, 204);">www.dagsap.co.id</a></p><p><br></p>`);
+    
     const tHeigt = parseInt(window.innerHeight);
+    const mHeigt = parseInt(window.innerHeight) - 200;
     let tWidth = 0;
     if(parseInt(window.innerWidth) < 1022){
         tWidth = parseInt(window.innerWidth) - 30;
@@ -123,7 +125,7 @@ export const PrintPo = () => {
         tWidth = parseInt(window.innerWidth) - 99 ;
     }
     const [screenWidth, setScreenWidth] = useState(tWidth);
-    const [screenHeight, setScreenHeight] = useState(tHeigt);
+    const [screenHeight, setScreenHeight] = useState(tHeigt - 100);
 
     useEffect(() => {
         const handleResize = () => {
@@ -201,19 +203,62 @@ export const PrintPo = () => {
             cekData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+    }, []);
     
-      useEffect(() => { 
-        // setIsLoading(true);
-        onProvider()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+    useEffect(() => { 
+    // setIsLoading(true);
+    onProvider()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
-      useEffect(() => {
+    useEffect(() => {
         if (!providerReady) return;
         cekProvider()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [providerReady]);
+
+    const handleClose = () => setShow(false);
+    const handleCloseMail = () => {
+        setShowMail(false)
+        setFile(null)
+        setFilePath(null)
+        setEmails([])
+        setCcemails([])
+    };
+
+    const handleShow = () => {
+        setShow(true);
+        setDtPar(false);
+        setDtNote(false);
+        setNote();
+        setListPar([]);
+        setNumbering([]);
+    }
+
+    const handleShowMail = () => {
+        setPdfFile({
+            idpo : location.state.data.id_po,
+            exprovider : exprovider,
+            alamat : alamat,
+            kirim : kirim,
+            tglPo : tglPo,
+            bayar : bayar,
+            tukar : tukar,
+            stVeri : stVeri,
+            stAppro : stAppro,
+            totalSub : totalSub,
+            diskon : diskon,
+            totalPpn : totalPpn,
+            totalPph : totalPph,
+            bantar : bantar,
+            totalPesan : totalPesan
+        })
+        setShowDownload(true);
+        setFile(null)
+        setFilePath(null)
+        setEmails([])
+        setCcemails([])
+    }
 
     const cekData = () =>{
         const data = location.state.data;
@@ -299,6 +344,68 @@ export const PrintPo = () => {
         }
         setShow(false)
     }
+
+    const handleGmail =async () =>{
+        // http://localhost:8081/dagsap/sendmail
+        setIsLoading(true)
+        try {
+            if(emails.length === 0 || emails === undefined){
+                Swal.fire('Opsss...', 'Harap lampirkan tujuan email');
+                setIsLoading(false)
+            }
+            else if(filePath.length === 0 || filePath === undefined || filePath === null){
+                Swal.fire('Opsss...', 'Data dokumen tidak ada, harap ulangi proses pemilihan dokumen');
+                setIsLoading(false)
+            }else{
+                // console.log(filePath)
+                const next = await API_AUTH.post(`/sendmail`, {
+                    "to" : emails,
+                    "cc" : "",
+                    "bcc" : "",
+                    "subject" : "Lampiran File PDF",
+                    "html" : text,
+                    "uri" : filePath.file.filename,
+                    "filename" : file.name
+                })
+                console.log(next.status)
+                Swal.fire(`${location.state.data.id_po} berhasil terkirim ke-`,`${emails}`,'success')
+                setShowMail(false)
+                setIsLoading(false)
+            }
+        } catch (error) {
+            console.log(error)
+            Swal.fire('Opsss...', 'Data dokumen tidak ada, harap ulangi proses pemilihan dokumen');
+            setIsLoading(false)
+        }
+        
+    }  
+
+    const handleFileInputChange = (e) =>{
+        const image = e.target.files[0];
+        console.log(e.target.files[0]);
+        setFile(image)
+        uploadImage(image)
+    }
+
+    const uploadImage =async (image) =>{
+        if(!image){
+            Swal.fire("Oppss...","Harap Upload Image","error")
+        }
+        else{
+          let formData = new FormData();
+          console.log(image)
+          formData.append("photo", image);
+          console.log(formData)
+          try {
+            const result = await API_AUTH.post("/upload",formData);
+            setFilePath(result.data)
+          } catch (error) {
+            console.log()
+          }
+        }
+    }
+
+    
     return (
     <>
         <div className='setContain'>
@@ -314,9 +421,16 @@ export const PrintPo = () => {
                 </div>
                 <div className="ms-auto"></div>
                 <div className="bg-body">
-                <Button variant="primary" onClick={handleShow}>
-                    <i className="bi bi-pencil-fill"></i> &nbsp; Parsial
-                </Button>
+                <div style={{ display: 'flex', flexDirection:'row', gap: 10}}>
+                    <button type="button" className="btn btn-primary" style={{width: '150px'}} onClick={handleShow}>
+                        <i className="bi bi-pencil-fill"></i> &nbsp; Parsial
+                    </button>
+                    <button type="button" class="btn btn-danger" style={{width: '150px'}} onClick={handleShowMail}>
+                        <i className="bi bi-envelope-at"></i> &nbsp; Mail
+                    </button>
+                </div>
+
+                
                 </div>
             </Stack>
 
@@ -578,9 +692,111 @@ export const PrintPo = () => {
                         </View>
                     </Page>
                 </Document>
-                
             </PDFViewer>
         </div>
+
+        <Modal show={showMail} size="lg" scrollable={true} >
+            <div style={{backgroundColor: 'white', position: 'fixed', bottom: 10, right: 20}}>
+                <ScrollPanel style={{ width: '850px', height: mHeigt, padding: '21px'}} className="custombar1">
+                    <div className="p-inputgroup flex-1 mt-2">
+                        <span className="p-inputgroup-addon">To :</span>
+                        <ReactMultiEmail
+                            placeholder="Input your email"
+                            emails={emails}
+                            onChange={_emails => {
+                                setEmails(_emails)
+                            }}
+                            autoFocus={true}
+                            // onFocus={() => setFocused(true)}
+                            // onBlur={() => setFocused(false)}
+                            getLabel={(email, index, removeEmail) => {
+                            return (
+                                <div data-tag key={index}>
+                                <div data-tag-item>{email}</div>
+                                <span data-tag-handle onClick={() => removeEmail(index)}>
+                                    ×
+                                </span>
+                                </div>
+                            )
+                            }}
+                        />
+                    </div>
+                    <div className="p-inputgroup flex-1 mt-2 mb-2">
+                        <span className="p-inputgroup-addon">CC :</span>
+                        <ReactMultiEmail
+                            placeholder="Input your email"
+                            emails={ccemails}
+                            onChange={_emails => {
+                                setCcemails(_emails)
+                            }}
+                            getLabel={(email, index, removeEmail) => {
+                            return (
+                                <div data-tag key={index}>
+                                <div data-tag-item>{email}</div>
+                                <span data-tag-handle onClick={() => removeEmail(index)}>
+                                    ×
+                                </span>
+                                </div>
+                            )
+                            }}
+                        />
+                    </div>
+
+                    <Editor value={text} onTextChange={(e) => setText(e.htmlValue)}/>
+
+                    <div className='box'>
+                            <div className='input-box' style={{marginTop: '5px'}}>
+                                <form action=''>
+                                    <input 
+                                        type="file" 
+                                        id='upload' 
+                                        accept='.doc,.docx,.pdf' 
+                                        onChange={(e) => handleFileInputChange(e)} 
+                                        hidden
+                                    />
+                                    <label for="upload" className='uploadlabel'>
+                                        <span><i className="pi pi-cloud-upload" style={{ color: 'var(--primary-color)', fontSize: '45px' }}></i></span>
+                                        <p>Click To Upload</p>
+                                    </label>
+                                </form>
+                            </div>
+                            <div id='filewrapper'>
+                                <h3 className='uploaded'>Uploaded Documents</h3>
+                                <div className='showfilebox'>
+                                    {file && 
+                                    <>
+                                        <div className='leftbx'>
+                                            <span className='filetype'><i className="pi pi-file-pdf" style={{fontSize: '25px'}}></i></span>
+                                            <h3>{file && file.name}</h3>
+                                            <h3>Upload</h3>  
+                                            <div className="card">
+                                                <Toast ref={toast}></Toast>
+                                            </div>
+                                        </div>
+                                        <div className='rightbx'>
+                                            <button 
+                                                onClick={()=>{
+                                                    setFile(null)
+                                                    setFilePath(null)
+                                                }}
+                                            >
+                                                <i className="pi pi-times"></i>
+                                            </button>
+                                        </div>
+                                        </>
+                                    }
+                                </div>
+                            </div>
+                    </div>
+
+
+                </ScrollPanel>
+                <div style={{margin: '20px', display: 'flex', flexDirection:'row-reverse', gap: 10}}>
+                    <button type="button" className="btn btn-primary" style={{width: '100px'}} onClick={handleGmail}>Send</button>
+                    <button type="button" class="btn btn-danger" style={{width: '100px'}} onClick={handleCloseMail}>Cancel</button>
+                </div>
+            </div>
+        </Modal>
 
         <Modal show={show} size="lg" centered  scrollable={true}>
             <Modal.Header>
@@ -630,18 +846,30 @@ export const PrintPo = () => {
                 
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="danger" onClick={handleClose}>
-                Close
-            </Button>
-            <Button variant="primary" onClick={handleChange}>
-                Save Changes
-            </Button>
+                <div style={{ display: 'flex', flexDirection:'row-reverse', gap: 10}}>
+                    <button type="button" className="btn btn-primary" style={{width: '150px'}} onClick={handleChange}>Save Changes</button>
+                    <button type="button" class="btn btn-danger" style={{width: '150px'}} onClick={handleClose}>Close</button>
+                </div>
             </Modal.Footer>
         </Modal>
 
         
 
-        {isLoading ? <LoadingPage /> : ""}
+        {isLoading && <LoadingPage />}
+        {
+            showDownload && 
+                <NewPrintpo
+                    show={showDownload}
+                    data={pdfFile}
+                    list={list}
+                    dtPar={dtPar}
+                    dtNote={dtNote}
+                    close={()=>setShowDownload(false)}
+                    closeMail={()=> {
+                        setShowDownload(false);
+                        setShowMail(true)
+                    }}
+                />}
     </>
   )
 }

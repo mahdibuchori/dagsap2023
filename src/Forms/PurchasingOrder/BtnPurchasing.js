@@ -8,6 +8,8 @@ import { API_AUTH } from '../../apis/apisData';
 export const BtnPurchasing = (props) => {
     const navigate = useNavigate();
     const userData = useAuthStore(selectUser);
+    
+
     // const [cekList, setCekList] = useState('none');
     // const [cekPrint, setcekPrint] = useState('none');
     // const [cekEdit, setCekEdit] = useState('block');
@@ -296,6 +298,19 @@ export const BtnPurchasing = (props) => {
         navigate(`/form/purchaseorder/printview`,{state:{
           data : data
         }});
+        /* <Link 
+            to='/form/purchaseorder/printDulu' 
+            target='_blank'
+            state= { data }
+        >
+            
+        </Link> */
+        /* <Link 
+            to={{ 
+                    pathname: "/form/purchaseorder/printDulu",
+                }} 
+            target="_blank" 
+        /> */
     }
 
     const buttonVerified = () =>{
@@ -441,9 +456,10 @@ export const BtnPurchasing = (props) => {
                     onClick={() => buttonPrint()}
                     className="buttonPrint"
                 >
-                <i className="bi bi-printer-fill"></i>
-                <p style={{display:"none"}}>{userData.uname}</p>
+                    <i className="bi bi-printer-fill"></i>
+                    <p style={{display:"none"}}>{userData.uname}</p>
                 </button>
+                
             </OverlayTrigger>
 
             {/* buton edit */}

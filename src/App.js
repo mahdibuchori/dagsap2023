@@ -66,6 +66,7 @@ function App() {
         <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} />
         <Route path="/form/purchaseorder/printview" element={<PrintPo />} />
 
+
         <Route path="/form/Kedatangan" element={<KedatanganBarang />} />
         <Route path="/form/Kedatangan/terimaview" element={<ViewTerima />} />
         <Route path="/form/Kedatangan/logbook" element={<LogBook />} />

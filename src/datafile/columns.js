@@ -11,9 +11,8 @@ import id from 'date-fns/locale/id';
 
 const departement = ["", "GW-LAMPUNG", "GW-PUSAT", "GW-SERANG", "JABAR-BANDUNG", "JABAR-SUBANG", "JATENG-BANTUL", "JATENG-SEMARANG", "JATIM-BANJARMASIN", "JATIM-JEMBER", "JATIM-MADIUN", "JATIM-SURABAYA", "PABRIK SENTUL", "PABRIK YOGYA", "RPA" ];
 
-
-
 export const COLUMNS_PENGADAAN =[
+    /* ID */
     {
         headerName: 'ID',
         field : 'id_Pengadaan',
@@ -26,6 +25,7 @@ export const COLUMNS_PENGADAAN =[
         checkboxSelection: true,
         showDisabledCheckboxes: true,
     },
+    /* pemohon */
     {
         field : 'pemohon',
         valueGetter: params => {
@@ -36,28 +36,33 @@ export const COLUMNS_PENGADAAN =[
         maxWidth:155,
         pinned: 'left'
     },
+    /* Tgl Permohonan */
     {
         headerName: 'Tgl Permohonan',
         field : 't_pengadaan',
         width: 110,
     },
+    /* Tgl Verifikasi */
     {
         headerName: 'Tgl Verifikasi',
         field : 'tgl_verify',
         width: 110,
     },
+    /* Nama Barang */
     {
         headerName: 'Nama Barang',
         field : 'tipeMaterial',
         width:150,
         maxWidth: 550
     },
+    /* Merk */
     {
         headerName: 'Merk',
         field : 'brandMaterial',
         width:150,
         maxWidth: 550
     },
+    /* order */
     {
         field : 'order',
         valueGetter: params => {
@@ -67,6 +72,7 @@ export const COLUMNS_PENGADAAN =[
         width: 90,
         maxWidth:105,
     },
+    /* Unit */
     {
         headerName: 'Unit',
         field : 'satuan',
@@ -77,6 +83,7 @@ export const COLUMNS_PENGADAAN =[
         width: 80,
         maxWidth:95,
     },
+    /* status */
     {
         field : 'status',
         width: 110,
@@ -108,6 +115,7 @@ export const COLUMNS_PENGADAAN =[
             }
         }
     },
+    /* Item */
     {
         headerName: 'Item',
         field : 'material',
@@ -118,12 +126,14 @@ export const COLUMNS_PENGADAAN =[
         width: 200,
         maxWidth:505,
     },
+    /* Spesifikasi */
     {
         headerName: 'Spesifikasi',
         field : 'spesifikasi',
         width:400,
         maxWidth: 850
     },
+    /* NO PO */
     {
         headerName: 'NO PO',
         field : 'material',
@@ -145,6 +155,7 @@ export const COLUMNS_PENGADAAN =[
         width: 200,
         maxWidth:505,
     },
+    /* Action */
     {
         field : 'Action',
         headerName: 'Action',
@@ -160,6 +171,7 @@ export const COLUMNS_PENGADAAN =[
 ]
 
 export const COLUMNS_PENGADAAN1 =[
+    /* ID */
     {
         headerName: 'ID',
         field : 'id_Pengadaan',
@@ -172,6 +184,7 @@ export const COLUMNS_PENGADAAN1 =[
         checkboxSelection: true,
         showDisabledCheckboxes: true,
     },
+    /* pemohon */
     {
         field : 'pemohon',
         valueGetter: params => {
@@ -182,28 +195,33 @@ export const COLUMNS_PENGADAAN1 =[
         maxWidth:155,
         pinned: 'left'
     },
+    /* Tgl Permohonan */
     {
         headerName: 'Tgl Permohonan',
         field : 't_pengadaan',
         width: 110,
     },
+    /* Tgl Verifikasi */
     {
         headerName: 'Tgl Verifikasi',
         field : 'tgl_verify',
         width: 110,
     },
+    /* Nama Barang */
     {
         headerName: 'Nama Barang',
         field : 'tipeMaterial',
         width:150,
         maxWidth: 550
     },
+    /* Merk */
     {
         headerName: 'Merk',
         field : 'brandMaterial',
         width:150,
         maxWidth: 550
     },
+    /* order */
     {
         field : 'order',
         valueGetter: params => {
@@ -213,6 +231,7 @@ export const COLUMNS_PENGADAAN1 =[
         width: 90,
         maxWidth:105,
     },
+    /* Unit */
     {
         headerName: 'Unit',
         field : 'satuan',
@@ -223,6 +242,7 @@ export const COLUMNS_PENGADAAN1 =[
         width: 80,
         maxWidth:95,
     },
+    /* status */
     {
         field : 'status',
         width: 110,
@@ -254,6 +274,7 @@ export const COLUMNS_PENGADAAN1 =[
             }
         }
     },
+    /* Item */
     {
         headerName: 'Item',
         field : 'material',
@@ -264,12 +285,14 @@ export const COLUMNS_PENGADAAN1 =[
         width: 200,
         maxWidth:505,
     },
+    /* Spesifikasi */
     {
         headerName: 'Spesifikasi',
         field : 'spesifikasi',
         width:400,
         maxWidth: 850
     },
+    /* NO PO */
     {
         headerName: 'NO PO',
         field : 'material',
@@ -295,6 +318,7 @@ export const COLUMNS_PENGADAAN1 =[
 ]
 
 export const COLUMNS_KARYAWAN =[
+    /* NIK */
     {
         headerName: 'NIK',
         field : 'uuid',
@@ -302,6 +326,7 @@ export const COLUMNS_KARYAWAN =[
         suppressSizeToFit: true,
         filter: 'agTextColumnFilter',
     },
+    /* Nama */
     {
         headerName: 'Nama',
         field : 'uname',
@@ -309,30 +334,35 @@ export const COLUMNS_KARYAWAN =[
         maxWidth:450,
         // cellRenderer: ImageRenderer,
     },
+    /* Divisi */
     {
         headerName: 'Divisi',
         field : 'udivisi',
         width: 150,
         maxWidth:175,
     },
+    /* SubDivisi */
     {
         headerName: 'SubDivisi',
         field : 'usubdiv',
         width: 150,
         maxWidth:175,
     },
+    /* Jabatan */
     {
         headerName: 'Jabatan',
         field : 'ujabatan',
         width: 150,
         maxWidth:175,
     },
+    /* Plan */
     {
         headerName: 'Plan',
         field : 'uplan',
         width: 100,
         maxWidth:155,
     },
+    /* action */
     {
         field : '',
         headerName: '',
@@ -343,6 +373,7 @@ export const COLUMNS_KARYAWAN =[
 ]
 
 export const COLUMNS_PROVIDER =[
+    /* ID */
     {
         headerName: 'ID',
         field : 'id_provider',
@@ -350,24 +381,28 @@ export const COLUMNS_PROVIDER =[
         suppressSizeToFit: true,
         filter: 'agTextColumnFilter',
     },
+    /* Nama Pemasok */
     {
         headerName: 'Nama Pemasok',
         width: 200,
         maxWidth:350,
         field : 'nama_provider',
     },
+    /* Telephon */
     {
         headerName: 'Telephon',
         field : 'tlp_provider',
         width: 150,
         maxWidth:175,
     },
+    /* Alamat */
     {
         headerName: 'Alamat',
         field : 'almt_provider',
         width: 400,
         maxWidth:555,
     },
+    /* action */
     {
         field : '',
         headerName: 'Action',
@@ -378,6 +413,7 @@ export const COLUMNS_PROVIDER =[
 ]
 
 export const COLUMNS_BOM =[
+    /* ID */
     {
         headerName: 'ID',
         field : 'id_bom',
@@ -385,36 +421,42 @@ export const COLUMNS_BOM =[
         suppressSizeToFit: true,
         filter: 'agTextColumnFilter',
     },
+    /* No BOM */
     {
         headerName: 'No BOM',
         width: 100,
         maxWidth:350,
         field : 'no_bom',
     },
+    /* No. Item */
     {
         headerName: 'No. Item',
         field : 'id_item',
         width: 80,
         maxWidth:175,
     },
+    /* Deskripsi Item */
     {
         headerName: 'Deskripsi Item',
         field : 'deskripsi_item',
         width: 500,
         maxWidth:755,
     },
+    /* Varian */
     {
         headerName: 'Varian',
         field : 'varian',
         width: 100,
         maxWidth:255,
     },
+    /* Revisi */
     {
         headerName: 'Revisi',
         field : 'revisi',
         width: 100,
         maxWidth:255,
     },
+    /* Action */
     {
         field : '',
         headerName: 'Action',
@@ -425,6 +467,7 @@ export const COLUMNS_BOM =[
 ]
 
 export const COLUMNS_GUDANG =[
+    /* Material */
     {
         headerName: 'Material',
         field : 'item',
@@ -432,35 +475,41 @@ export const COLUMNS_GUDANG =[
         suppressSizeToFit: true,
         filter: 'agTextColumnFilter',
     },
+    /* Unit */
     {
         headerName: 'Unit',
         width: 80,
         field : 'unit',
     },
+    /* S_Awal */
     {
         headerName: 'S_Awal',
         field : 'saldo_awal',
         width: 100,
         maxWidth:175,
     },
+    /* S_Akhir */
     {
         headerName: 'S_Akhir',
         field : 'saldo_akhir',
         width: 100,
         maxWidth:175,
     },
+    /* Rtrn Prod */
     {
         headerName: 'Rtrn Prod',
         field : 'ret_prod',
         width: 150,
         maxWidth:255,
     },
+    /* Permintaan Prod */
     {
         headerName: 'Permintaan Prod',
         field : 'perm_prod',
         width: 150,
         maxWidth:255,
     },
+    /* Status */
     {
         headerName: 'Status',
         field : 'ket_limit',
@@ -487,6 +536,7 @@ export const COLUMNS_GUDANG =[
             }
         }
     },
+    /* Action */
     {
         field : '',
         headerName: 'Action',
@@ -497,6 +547,7 @@ export const COLUMNS_GUDANG =[
 ]
 
 export const COLUMNS_OKP =[
+    /* No */
     {
         headerName: 'No',
         field : 'no',
@@ -513,22 +564,26 @@ export const COLUMNS_OKP =[
             }
         },
     },
+    /* KODE OKP */
     {
         headerName: 'KODE OKP',
         width: 180,
         field : 'kodeOKP',
     },
+    /* Nama Produk */
     {
         headerName: 'Nama Produk',
         field : 'produk',
         width: 350,
         suppressSizeToFit: true,
     },
+    /* Jumlah (batch) */
     {
         headerName: 'Jumlah (batch)',
         field : 'batch',
         width: 120,
     },
+    /* Varian Packing */
     {
         headerName: 'Varian Packing',
         field : 'varian',
@@ -544,11 +599,13 @@ export const COLUMNS_OKP =[
             }
         },
     },
+    /* REVISI */
     {
         headerName: 'REVISI',
         field : 'revisi',
         width: 100,
     },
+    /* Action */
     {
         field : '',
         headerName: 'Action',
@@ -559,16 +616,19 @@ export const COLUMNS_OKP =[
 ]
 
 export const COLUMNS_OKPNOTE =[
+    /* no */
     {
         headerName: '',
         field : 'no',
         width: 150,
     },
+    /* Note */
     {
         headerName: 'Note',
         width: 500,
         field : 'note',
     },
+    /* Action */
     {
         field : '',
         headerName: 'Action',
@@ -586,6 +646,7 @@ export const COLUMNS_OKPNOTE =[
 ]
 
 export const COLUMNS_PERMINTAAN =[
+    /* Item */
     {
         headerName: 'Item',
         field : 'nama_item',
@@ -595,6 +656,7 @@ export const COLUMNS_PERMINTAAN =[
         pinned: 'left',
         filter: 'agTextColumnFilter',
     },
+    /* Estimasi */
     {
         headerName: 'Estimasi',
         field : 'jmlEstimasi',
@@ -608,6 +670,7 @@ export const COLUMNS_PERMINTAAN =[
             return {textAlign: 'right',fontWeight: "bold"};
         }
     },
+    /* Permintaan */
     {
         headerName: 'Permintaan',
         field : 'JmlPermintaan',
@@ -621,6 +684,7 @@ export const COLUMNS_PERMINTAAN =[
             return {textAlign: 'right',fontWeight: "bold"};
         }
     },
+    /* Pengeluaran */
     {
         headerName: 'Pengeluaran',
         field : 'JmlPengeluaran',
@@ -634,12 +698,14 @@ export const COLUMNS_PERMINTAAN =[
             return {textAlign: 'right',fontWeight: "bold"};
         }
     },
+    /* satuan */
     {
         headerName: 'satuan',
         field : 'satuan',
         width: 100,
         maxWidth:115,
     },
+    /* Status Item */
     {
         headerName: 'Status Item',
         field : 'status_item',
@@ -669,6 +735,7 @@ export const COLUMNS_PERMINTAAN =[
             }
         }
     },
+    /* Waktu Kirim */
     {
         headerName: 'Waktu Kirim',
         field : 'Waktu Kirim',
@@ -681,6 +748,7 @@ export const COLUMNS_PERMINTAAN =[
             return {textAlign: 'center',fontWeight: "bold"};
         }
     },
+    /* List */
     {
         headerName: 'List',
         field : 'list_data',
@@ -696,6 +764,7 @@ export const COLUMNS_PERMINTAAN =[
         width: 300,
         maxWidth:405,
     },
+    /* Action */
     {
         field : 'Action',
         headerName: 'Action',
@@ -711,6 +780,7 @@ export const COLUMNS_PERMINTAAN =[
 ]
 
 export const COLUMNS_SPAREPART =[
+    /* Item */
     {
         headerName: 'Item',
         field : 'nama_item',
@@ -723,42 +793,49 @@ export const COLUMNS_SPAREPART =[
         checkboxSelection: true,
         showDisabledCheckboxes: true,
     },
+    /* Unit */
     {
         headerName: 'Unit',
         field : 'unit',
         width: 95,
         maxWidth:105,
     },
+    /* Stok */
     {
         headerName: 'Stok',
         field : 'stok',
         width: 95,
         maxWidth:155,
     },
+    /* Pengeluaran Akhir */
     {
         headerName: 'Pengeluaran Akhir',
         field : 'pengeluaran',
         width: 115,
         maxWidth:155,
     },
+    /* Tgl Keluar */
     {
         headerName: 'Tgl Keluar',
         field : 'tgl_keluar',
         width: 115,
         maxWidth:155,
     },
+    /* Buffer */
     {
         headerName: 'Buffer',
         field : 'buffer',
         width: 100,
         maxWidth:115,
     },
+    /* Maksimal Stok */
     {
         headerName: 'Maksimal Stok',
         field : 'maks_Stok',
         width: 100,
         maxWidth:115,
     },
+    /* Status */
     {
         headerName: 'Status',
         field : 'status_item',
@@ -786,18 +863,21 @@ export const COLUMNS_SPAREPART =[
             }
         }
     },
+    /* Tgl Pengajuan */
     {
         headerName: 'Tgl Pengajuan',
         field : 'tgl_pengajuan',
         width: 130,
         maxWidth:155,
     },
+    /* Tgl Order */
     {
         headerName: 'Tgl Order',
         field : 'tgl_order',
         width: 130,
         maxWidth:155,
     },
+    /* Action */
     {
         field : 'Action',
         headerName: 'Action',
@@ -813,6 +893,7 @@ export const COLUMNS_SPAREPART =[
 ]
 
 export const COLUMNS_STOCKCARD =[
+    /* Item */
     {
         headerName: 'Item',
         field : 'item',
@@ -825,90 +906,105 @@ export const COLUMNS_STOCKCARD =[
         checkboxSelection: true,
         showDisabledCheckboxes: true,
     },
+    /* Tanggal */
     {
         headerName: 'Tanggal',
         field : 'tanggal',
         width: 95,
         maxWidth:155,
     },
+    /* Sumber */
     {
         headerName: 'Sumber',
         field : 'sumber',
         width: 95,
         maxWidth:155,
     },
+    /* Tipe */
     {
         headerName: 'Tipe',
         field : 'tipe',
         width: 115,
         maxWidth:155,
     },
+    /* Provider */
     {
         headerName: 'Provider',
         field : 'provider',
         width: 115,
         maxWidth:155,
     },
+    /* No. Lot */
     {
         headerName: 'No. Lot',
         field : 'lot',
         width: 100,
         maxWidth:115,
     },
+    /* Expired */
     {
         headerName: 'Expired',
         field : 'expired',
         width: 100,
         maxWidth:115,
     },
+    /* Keterangan */
     {
         headerName: 'Keterangan',
         field : 'keterangan',
         width: 130,
         maxWidth:155,
     },
+    /* Terima Barang */
     {
         headerName: 'Terima Barang',
         field : 'terima_barang',
         width: 130,
         maxWidth:155,
     },
+    /* Return Produksi */
     {
         headerName: 'Return Produksi',
         field : 'return_prod',
         width: 130,
         maxWidth:155,
     },
+    /* Produksi */
     {
         headerName: 'Produksi',
         field : 'produksi',
         width: 130,
         maxWidth:155,
     },
+    /* Pindah Barang */
     {
         headerName: 'Pindah Barang',
         field : 'pindah_barang',
         width: 130,
         maxWidth:155,
     },
+    /* Saldo */
     {
         headerName: 'Saldo',
         field : 'saldo',
         width: 130,
         maxWidth:155,
     },
+    /* Stok Awal */
     {
         headerName: 'Stok Awal',
         field : 'stok_awal',
         width: 130,
         maxWidth:155,
     },
+    /* Stock Akhir */
     {
         headerName: 'Stock Akhir',
         field : 'stock_akhir',
         width: 130,
         maxWidth:155,
     },
+    /* Petugas */
     {
         headerName: 'Petugas',
         field : 'petugas',
