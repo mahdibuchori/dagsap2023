@@ -362,7 +362,7 @@ export const PrintPo = () => {
                 // console.log(filePath)
                 const next = await API_AUTH.post(`/sendmail`, {
                     "to" : emails,
-                    "cc" : "",
+                    "cc" : ccemails,
                     "bcc" : "",
                     "subject" : "Lampiran File PDF",
                     "html" : text,
@@ -709,8 +709,6 @@ export const PrintPo = () => {
                                 setEmails(_emails)
                             }}
                             autoFocus={true}
-                            // onFocus={() => setFocused(true)}
-                            // onBlur={() => setFocused(false)}
                             getLabel={(email, index, removeEmail) => {
                             return (
                                 <div data-tag key={index}>
@@ -854,8 +852,6 @@ export const PrintPo = () => {
                 </div>
             </Modal.Footer>
         </Modal>
-
-        
 
         {isLoading && <LoadingPage />}
         {

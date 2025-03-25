@@ -206,7 +206,7 @@ export const TableDokumen = () => {
 
     const getHeader = () => {
         return (
-            <div>
+            <div style={{display:'flex', flexDirection: 'row-reverse', padding: 0}}>
                 <IconField iconPosition="left">
                     <InputIcon className="pi pi-search" />
                     <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Global Search" />
@@ -218,7 +218,7 @@ export const TableDokumen = () => {
     let header = getHeader();
     const statusBodyTemplate = (product) => {
         let data = product.data.status
-        return <Tag value={data} severity={getSeverity(product)}></Tag>;
+        return <div style={{textAlign:'center'}}><Tag value={data} severity={getSeverity(product)}></Tag></div>;
     };
 
     const getSeverity = (product) => {
@@ -476,12 +476,7 @@ export const TableDokumen = () => {
         utils.book_append_sheet(workbook, worksheet, 'Sheet1');
         /* fix headers */
         utils.sheet_add_aoa(worksheet, [['Nomer','Nama Pengirim','Nama doc','Tanggal Kirim','Tanggal Terima','Status Doc','Keterangan doc']], { origin: 'A1' });
-        
-        /* calculate column width */
-        // const max_width = data.reduce((w, r) => Math.max(w, r.No.length), 10);
-        // worksheet['!cols'] = [{ wch: max_width }];
         writeFileXLSX(workbook, judul, { compression: true });
-        // Nomer	Nama Pengirim	Nama doc	Tanggal Kirim	Tanggal Terima	Status Doc	Keterangan doc
     }
 
     return (
@@ -544,15 +539,15 @@ export const TableDokumen = () => {
                     scrollable
                     showGridlines
                 >
-                    <Column field="idForm" header="Id Form" expander sortable style={{fontSize: '0.8em', height: '20px'}}/>
-                    <Column field="pengirim" header="Nama Pengirim" sortable style={{fontSize: '0.8em'}}/>
-                    <Column field="cabang" header="Depo/ Cabang" sortable style={{fontSize: '0.8em'}}/>
-                    <Column field="dokumen" header="Nama Dokumen" sortable style={{fontSize: '0.8em'}}/>
-                    <Column field="tgl_kirim" header="Tgl Kirim" sortable style={{fontSize: '0.8em'}}/>
-                    <Column field="tgl_terima" header="Tgl terima" sortable style={{fontSize: '0.8em'}}/>
-                    <Column field="tgl_ulang" header="Tgl Kirim Ulang" sortable style={{fontSize: '0.8em'}}/>
-                    <Column field="status" header="Status" body={statusBodyTemplate} style={{ minWidth: '10rem' }}/>
-                    <Column field="Action" header="Action" body={buttonTemplate} style={{ minWidth: '10rem' }}/>
+                    <Column field="idForm" header="Id Form" expander sortable style={{fontSize: '0.8em', height: '20px', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="pengirim" header="Nama Pengirim" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="cabang" header="Depo/ Cabang" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="dokumen" header="Nama Dokumen" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="tgl_kirim" header="Tgl Kirim" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="tgl_terima" header="Tgl terima" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="tgl_ulang" header="Tgl Kirim Ulang" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="status" header="Status" body={statusBodyTemplate} style={{ minWidth: '10rem', textAlign:'center', borderBottom: '0.5px outset #287aff'}}/>
+                    <Column field="Action" header="Action" body={buttonTemplate} style={{ minWidth: '10rem', textAlign:'center', borderBottom: '0.5px outset #287aff'}}/>
                 </TreeTable>
             </div>
         </div>

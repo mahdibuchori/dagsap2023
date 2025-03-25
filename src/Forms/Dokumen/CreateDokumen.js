@@ -129,10 +129,8 @@ export const CreateDokumen = () => {
             <Breadcrumb.Item active>Create Dokumen</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        <div className="ms-auto">
-        </div>
-        <div className="bg-body">
-        </div>
+        <div className="ms-auto"></div>
+        <div className="bg-body"></div>
       </Stack>
 
       <Container fluid>
@@ -356,28 +354,26 @@ export const CreateDokumen = () => {
             </div>
             <div className='col-sm-12	col-md-12	col-lg-1	col-xl-1 mb-5'>
               <div className='d-flex align-items-end flex-wrap'>
-                  <div className='row p-2'>
-                    <Button 
-                      type="submit"
-                      variant="outline-primary m-2"
-                      className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
-                    >
-                      Simpan
-                    </Button>
-                    <Button
-                      variant="outline-danger m-2"
-                      className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
-                    >
-                      Batal
-                    </Button>
-                  </div>
+                <div className='row p-2'>
+                  <Button 
+                    type="submit"
+                    variant="outline-primary m-2"
+                    className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                  >
+                    Simpan
+                  </Button>
+                  <Button
+                    variant="outline-danger m-2"
+                    className='col-sm-12	col-md-12	col-lg-12	col-xl-12'
+                  >
+                    Batal
+                  </Button>
                 </div>
-            
+              </div>
             </div>
           </div>
         </Form>
       </Container>
-
       {isLoading && <LoadingPage/>}
     </div>
     </>
