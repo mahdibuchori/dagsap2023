@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Swal from "sweetalert2";
 import { format } from "date-fns";
 import id from 'date-fns/locale/id';
-import { Editor, ScrollPanel, Toast } from "primereact";
+import { Editor, ScrollPanel, Toast, InputText } from "primereact";
 import { ReactMultiEmail } from 'react-multi-email';
 import 'react-multi-email/dist/style.css';
 import './styles/poStyle.css'
@@ -92,6 +92,7 @@ export const PrintPo = () => {
     const [exprovider, setExprovider] = useState('');
     const [alamat, setAlamat] = useState('');
     const [note, setNote] = useState('');
+    const [subject, setSubject] = useState(location.state.data.id_po);
     const [file, setFile] = useState(null);
     const [filePath, setFilePath] = useState(null);
     const toast = useRef(null);
@@ -364,7 +365,7 @@ export const PrintPo = () => {
                     "to" : emails,
                     "cc" : ccemails,
                     "bcc" : "",
-                    "subject" : "Lampiran File PDF",
+                    "subject" : subject,
                     "html" : text,
                     "uri" : filePath.file.filename,
                     "filename" : file.name
@@ -738,6 +739,15 @@ export const PrintPo = () => {
                                 </span>
                                 </div>
                             )
+                            }}
+                        />
+                    </div>
+                    <div className="p-inputgroup flex-1 mt-2 mb-2">
+                        <span className="p-inputgroup-addon">Subject :</span>
+                        <InputText 
+                            value={subject}
+                            onChange={(e) => {
+                                setSubject(e.target.value)
                             }}
                         />
                     </div>
