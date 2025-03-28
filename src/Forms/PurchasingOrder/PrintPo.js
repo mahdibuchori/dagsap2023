@@ -92,7 +92,7 @@ export const PrintPo = () => {
     const [exprovider, setExprovider] = useState('');
     const [alamat, setAlamat] = useState('');
     const [note, setNote] = useState('');
-    const [subject, setSubject] = useState(location.state.data.id_po);
+    const [subject, setSubject] = useState(`${location.state.data.id_po} - ${location.state.data.expro}`);
     const [file, setFile] = useState(null);
     const [filePath, setFilePath] = useState(null);
     const toast = useRef(null);
