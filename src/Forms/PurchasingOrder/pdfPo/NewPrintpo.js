@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 
 export const NewPrintpo = (props) => {
+  console.log(props)
   const handleDownload = (blob) => {
     Swal.fire({
       title: `Data ${props.data.idpo} sudah tersimpan ke folder anda`,
@@ -92,7 +93,7 @@ export const NewPrintpo = (props) => {
                     note={props.note}
                   />
                 }
-                fileName={`${props.data.idpo}.pdf`}
+                fileName={`${props.data.idpo} - ${props.data.exprovider}.pdf`}
                 onDownload={handleDownload}
               >
                 {({ blob, url, loading, error }) => (

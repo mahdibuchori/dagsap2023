@@ -116,6 +116,7 @@ export const PrintPo = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [stAppro, setStAppro] = useState(false);
     const [stVeri, setStVeri] = useState(false);
+    const [isReady, setIsReady] = useState(false);
     const [text, setText] = useState(`<p><span style="background-color: rgb(255, 255, 255); color: rgb(38, 40, 42);">Dear </span></p><p><br></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">MOHON MEMBERI FEEDBACK APABILA SUDAH MENERIMA EMAIL INI</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"> </span></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">Berikut kami lampirkan </span><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">${location.state.data.id_po} </strong><span style="color: rgb(0, 0, 0); background-color: inherit;"> Mohon dibantu untuk dikirim sesuai dengan jadwal yang tertulis  di jadwal pengiriman  </span><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">(terlampir)</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"> </span></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">NOTE : MOHON MENYERTAKAN</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> COPY PO SAAT PENGIRIMAN, APABILA TIDAK DILAMPIRKAN MAKA BARANG TIDAK BISA DITERIMA  </strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"> </span></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">SYARAT PENGIRIMAN BARANG :</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> </strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">1. HARUS ADA COA YANG SESUAI DENGAN MATERIAL YANG DI KIRIM</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">2. HARUS ADA LAMPIRAN COPY</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> PO</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">Demikian</span><span style="color: rgb(0, 0, 0); background-color: inherit;"> PO ini kami sampaikan atas perhatian dan kerjasamanya terima kasih.</span></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(80, 0, 80);"> </span></p><p><em style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"><u>Note : Mohon disampaikan ke bagian Invoice / keuangan agar mengikuti persyaratan tukar faktur dibawah ini :</u></em><em style="color: rgb(0, 0, 0); background-color: inherit;"><u> </u></em></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(80, 0, 80);"> </span></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">PERSYARATAN TUKAR FAKTUR :</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">1. Invoice 2 Rangkap</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> </strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">2. Faktur pajak 2 Rangkap</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">3. Surat Jalan 2 Rangkap</strong></p><p><strong style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">4. Copy</strong><strong style="color: rgb(0, 0, 0); background-color: inherit;"> PO 2 Rangkap</strong></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(80, 0, 80);"> </span></p><p><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">Mohon diperhatiikan persyaratan tukar faktur tersebut,</span><span style="color: rgb(0, 0, 0); background-color: inherit;"> jika tidak sesuai dengan persyaratan Invoice tidak kami proses</span></p><p><span style="background-color: rgb(255, 255, 255);">--</span></p><p><span style="background-color: inherit;">Best Regards,</span></p><p><br></p><p><span style="background-color: rgb(255, 255, 255);">${userData.uname}</span></p><p><em style="background-color: rgb(255, 255, 255);">Purchase Departement</em></p><p><strong style="background-color: rgb(255, 255, 255);">PT. DAGSAP ENDURA EATORE</strong></p><p><span style="background-color: rgb(255, 255, 255);">Jl. Cahaya Raya Kav. H-3 Kawasan Industri Sentul</span></p><p><span style="background-color: rgb(255, 255, 255);">Mobile: +6281280464885</span></p><p><span style="background-color: rgb(255, 255, 255);">Phone: (021) 87920420</span></p><p><span style="background-color: rgb(255, 255, 255);">Fax: (021) 87920409</span></p><p><a href="http://www.dagsap.co.id/" rel="noopener noreferrer" target="_blank" style="background-color: rgb(255, 255, 255); color: rgb(17, 85, 204);">www.dagsap.co.id</a></p><p><br></p>`);
     
     const tHeigt = parseInt(window.innerHeight);
@@ -213,12 +214,60 @@ export const PrintPo = () => {
     onProvider()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        const handleEmail = () => {
+            if(userData.uname === "Endang Wahyu Wirawati"){
+                setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+            }
+            else if(userData.uname === "Kevin"){
+                setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+            }
+            else{
+                setCcemails([])
+            }
+        }
+        handleEmail()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     useEffect(() => {
         if (!providerReady) return;
         cekProvider()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [providerReady]);
+
+    useEffect (() => {
+            if(!isReady) return;
+            const gntiDta = async () =>{
+              try {
+                setIsLoading(true);
+                if(userData.uname === "Endang Wahyu Wirawati"){
+                    setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+                }
+                else if(userData.uname === "Kevin"){
+                    setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+                }
+                else{
+                    setCcemails([])
+                }
+                setIsReady(false);
+                setIsLoading(false);
+              } catch (error) {
+                  setIsLoading(false);
+                  Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Pengambilan Data Pengadaan Gagal!',
+                  footer: error
+                })
+                setIsReady(false);
+              }
+            } 
+        
+            gntiDta();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isReady]);
 
     const handleClose = () => setShow(false);
     const handleCloseMail = () => {
@@ -239,6 +288,15 @@ export const PrintPo = () => {
     }
 
     const handleShowMail = () => {
+        if(userData.uname === "Endang Wahyu Wirawati"){
+            setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+        }
+        else if(userData.uname === "Kevin"){
+            setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+        }
+        else{
+            setCcemails([])
+        }
         setPdfFile({
             idpo : location.state.data.id_po,
             exprovider : exprovider,
@@ -373,6 +431,15 @@ export const PrintPo = () => {
                 console.log(next.status)
                 Swal.fire(`${location.state.data.id_po} berhasil terkirim ke-`,`${emails}`,'success')
                 setShowMail(false)
+                /* console.log({
+                    "to" : emails,
+                    "cc" : ccemails,
+                    "bcc" : "",
+                    "subject" : subject,
+                    "html" : text,
+                    "uri" : filePath.file.filename,
+                    "filename" : file.name
+                }) */
                 setIsLoading(false)
             }
         } catch (error) {
@@ -385,7 +452,7 @@ export const PrintPo = () => {
 
     const handleFileInputChange = (e) =>{
         const image = e.target.files[0];
-        console.log(e.target.files[0]);
+        // console.log(e.target.files[0]);
         setFile(image)
         uploadImage(image)
     }
@@ -396,14 +463,12 @@ export const PrintPo = () => {
         }
         else{
           let formData = new FormData();
-          console.log(image)
           formData.append("photo", image);
-          console.log(formData)
           try {
             const result = await API_AUTH.post("/upload",formData);
             setFilePath(result.data)
           } catch (error) {
-            console.log()
+            console.log("Format Error")
           }
         }
     }
@@ -722,10 +787,12 @@ export const PrintPo = () => {
                             }}
                         />
                     </div>
-                    <div className="p-inputgroup flex-1 mt-2 mb-2">
+
+                    <div className="p-inputgroup flex-1 mt-2">
                         <span className="p-inputgroup-addon">CC :</span>
                         <ReactMultiEmail
-                            placeholder="Input your email"
+                            placeholder="Input your cc email"
+                            style={{width: "80%"}}
                             emails={ccemails}
                             onChange={_emails => {
                                 setCcemails(_emails)
@@ -741,7 +808,11 @@ export const PrintPo = () => {
                             )
                             }}
                         />
+                        <button type="button" className="btn btn-danger" style={{width: '50px'}} onClick={()=> setIsReady(true)}>
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
                     </div>
+                    
                     <div className="p-inputgroup flex-1 mt-2 mb-2">
                         <span className="p-inputgroup-addon">Subject :</span>
                         <InputText 
