@@ -221,7 +221,7 @@ export const PrintPo = () => {
                 setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
             }
             else if(userData.uname === "Kevin"){
-                setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "purchasingdagsap@gmail.com", "mawi.prabudi@yahoo.co.id"])
+                setCcemails(["purchasingdagsap@yahoo.com", "rusli@dagsap.co.id", "endangpurchasingde@yahoo.com", "mawi.prabudi@yahoo.co.id"])
             }
             else{
                 setCcemails([])
