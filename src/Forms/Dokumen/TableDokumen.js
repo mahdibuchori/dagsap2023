@@ -58,17 +58,6 @@ export const TableDokumen = () => {
     const [screenWidth, setScreenWidth] = useState(tWidth);
     const [screenHeight, setScreenHeight] = useState(tHeigt);
 
-    useEffect(() => { 
-        setIsLoading(true);
-        const date = new Date();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        let bb = String(month).padStart(2, '0');
-        setBulan(`${year}-${bb}`);
-        fetchDokumen(`${year}-${bb}`);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     useEffect(() => {
         const handleResize = () => {
           let total = 0;
@@ -90,153 +79,25 @@ export const TableDokumen = () => {
         };
     }, []);
 
+    useEffect(() => { 
+        setIsLoading(true);
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        let bb = String(month).padStart(2, '0');
+        setBulan(`${year}-${bb}`);
+        fetchDokumen(`${year}-${bb}`);
+        console.log(`${year}-${bb}`)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     useEffect(() => {
         // setIsLoading(true);
+        console.log(dokumenReady)
         if (!dokumenReady) return;
         onGridReady()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dokumenReady]);
-    
-    const buttonTemplate = (data) => (
-        <div className="flex flex-wrap gap-2">
-            <Button
-                type="button"
-                icon="pi pi-pencil"
-                severity="success"
-                onClick={(e) => {
-                    console.log("data")
-                    console.log(data)
-                    splitBtn(data, 'edit')
-                }}
-                className="buttonCancel"
-                tooltip="Edit Doc"
-                tooltipOptions={{ position: 'bottom' }}
-                style={{width:'30px', height: '30px'}}
-            >
-            </Button>
-            <Button 
-                type="button"
-                icon="pi pi-check"
-                onClick={(e) => splitBtn(data, 'verify')}
-                className="buttonSet"
-                tooltip="Verifikasi Doc"
-                tooltipOptions={{ position: 'bottom' }}
-                style={{width:'30px', height: '30px'}}
-            ></Button>
-            <Button 
-                type="button"
-                icon="pi pi-print"
-                onClick={(e) => splitBtn(data, 'print')}
-                className="buttonRead"
-                tooltip="Print Label Doc"
-                tooltipOptions={{ position: 'bottom' }}
-                style={{width:'30px', height: '30px'}}
-            ></Button>
-        </div>
-    );
-
-    const splitBtn = (d, text) => {
-        let idDoc = d.idDoc;
-        let dTetap = nodes.filter(i=> i.idDoc === idDoc);
-        if(text === 'edit'){
-            const subVal = FileDepoCabang.filter(i=> i.value === dTetap[0].data.cabang);
-            let check = newDokumen.filter(i =>i.idForm === idDoc )
-            // console.log(dTetap)
-            // console.log(d)
-            if(userData.ulevel === 0 || userData.uuid === d.uuid){
-                navigate(`/form/dokumen/update`,{state:{
-                    data : dTetap[0],
-                    depo : subVal,
-                    inputList :(check.length > 0) ? check[0].data : []
-                }});
-            }
-            else{
-                Swal.fire('Opss...', 'Anda tidak memiliki akses untuk edit data', 'warning')
-            }
-            
-        }
-        else if(text === 'verify'){
-            if(userData.udivisi === "Develop" || userData.udivisi === "BOD/BOC" || userData.uuid === "DEE-SSM02" ){
-                let mData = dTetap[0].children;
-                let cekId = mData.filter(i=> i.data.idForm=== d.data.idForm);
-                if(cekId.length > 0){
-                    if(cekId[0].data.status !== "Selesai"){
-                        setDataSementara(cekId)
-                        handleShow()
-                    }
-                }
-                else{
-                    Swal.fire('Oppss..', 'Data id dokumen tidak ditemukan','info')
-                }
-            }
-            else{
-                Swal.fire('Oppss..','Maaf tidak memiliki akses untuk verifikasi dokumen', 'info')
-            }
-        }
-        else{
-            let dData = [];
-            for(let i = 0; i < dTetap.length; i++){
-                let idDoc = dTetap[i].idDoc;
-                let cCab =  dTetap[i].data.cabang;
-                let pengirim = dTetap[i].data.pengirim;
-                let tKirim = dTetap[i].data.tgl_kirim;
-                let child = dTetap[i].children
-                for(let y = 0; y < child.length; y++){
-                    dData.push({
-                        idDoc : idDoc,
-                        idForm : child[y].data.idForm,
-                        pengirim : pengirim,
-                        cabang : cCab,
-                        dokumen : child[y].data.dokumen,
-                        tgl_kirim : tKirim,
-                        tgl_terima : child[y].data.tgl_terima,
-                        tgl_ulang : child[y].data.tgl_ulang,
-                        status : child[y].data.status,
-                        keterangan : child[y].data.keterangan
-                    })
-
-                }
-            }
-            navigate(`/form/dokumen/view`,{state:{
-                data : dData
-            }});
-            // console.log(dData)
-        }
-    };
-
-    const getHeader = () => {
-        return (
-            <div style={{display:'flex', flexDirection: 'row-reverse', padding: 0}}>
-                <IconField iconPosition="left">
-                    <InputIcon className="pi pi-search" />
-                    <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Global Search" />
-                </IconField>
-            </div>
-        );
-    };
-
-    let header = getHeader();
-    const statusBodyTemplate = (product) => {
-        let data = product.data.status
-        return <div style={{textAlign:'center'}}><Tag value={data} severity={getSeverity(product)}></Tag></div>;
-    };
-
-    const getSeverity = (product) => {
-        switch (product.data.status) {
-            case 'Selesai':
-                return 'success';
-            case 'Verifikasi':
-                return 'info';
-            case 'Hold':
-                return 'warning';
-            case 'Pengajuan':
-                return 'danger';
-            case 'Reject':
-                return 'primary';
-            default:
-                return null;
-        }
-    };
 
     const onGridReady = () =>{
         if(userData.udivisi === "Develop" || userData.udivisi === "BOD/BOC" || userData.uuid === "DEE-SSM02" ){
@@ -298,6 +159,7 @@ export const TableDokumen = () => {
                     return dateB - dateA
                 });
                 setNodes(mDoc)
+                console.log(mDoc)
             }
             
         }
@@ -363,6 +225,7 @@ export const TableDokumen = () => {
                         return dateB - dateA
                     });
                     setNodes(mDoc)
+                    console.log(mDoc)
                 }
             }
         }
@@ -370,57 +233,22 @@ export const TableDokumen = () => {
     }
 
     const onSetDate =async (event) => {
-        setIsLoading(true)
-        setBulan(event.target.value);
+        try {
+            console.log(event.target.value)
+            setIsLoading(true)
+            await dokumenFalse()
+            setBulan(`${event.target.value}`);
+            await fetchDokumen(`${event.target.value}`);
+            // onGridReady()
+        } catch (error) {
+            console.log(error)
+            setIsLoading(false)
+        }
     }
 
     const createDokumen =async () =>{
         await dokumenFalse()
         navigate('/form/dokumen/create')
-    }
-
-    const handleSwap =async (e, i) =>{
-        try {
-            let bul = format(new Date(), "MM", { locale: id });
-            let days = format(new Date(), "dd", { locale: id });
-            let yea = format(new Date(), "yyyy", { locale: id });
-            let tanggal = `${yea}-${bul}-${days}`
-            await dokumenFalse()
-            let mFile = {
-                idDoc : e.idDoc,
-                idForm : e.data.idForm,
-                status : i,
-                tanggal : tanggal
-            }
-            setNodes([])
-            handleVerify(mFile)
-            handleClose()
-            
-        } catch (error) {
-           console.log(error) 
-        }
-    }
-
-    const handleVerify = async (e) =>{
-        try {
-            setIsLoading(true)
-            await dokumenFalse()
-            let bln = format(new Date(), "MM", { locale: id });
-            let tahu = format(new Date(), "yyyy", { locale: id });
-        
-            const next = await API_AUTH.put(`/dokumen/verify/${e.idDoc}`, {
-                "idDoc": e.idDoc,
-                "idForm": e.idForm,
-                "status": e.status,
-                "tanggal": e.tanggal
-            });
-            await fetchDokumen(`${tahu}-${bln}`);
-            Swal.fire(`${next.data.success}`, navigate('/form/dokumen'), 'success');
-            setIsLoading(false)
-        } catch (error) {
-            console.log(error.response.data.message);
-            setIsLoading(false);
-        }
     }
 
     const createDocForm = () =>{
@@ -523,163 +351,8 @@ export const TableDokumen = () => {
                     </Dropdown>
                 </div>
             </Stack>
-
-            <div style={{height: screenHeight, width: screenWidth, padding: 10}}>
-                <TreeTable 
-                    value={nodes}
-                    tableStyle={{fontSize: '1em', height: screenHeight }}
-                    size="small"
-                    width={`${screenWidth}px`}
-                    scrollHeight={`${screenHeight}px`}
-                    responsiveLayout="scroll"
-                    header={header}
-                    globalFilter={globalFilter}
-                    frozenHeaderColumnGroup={true}
-                    stripedRows
-                    scrollable
-                    showGridlines
-                >
-                    <Column field="idForm" header="Id Form" expander sortable style={{fontSize: '0.8em', height: '20px', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="pengirim" header="Nama Pengirim" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="cabang" header="Depo/ Cabang" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="dokumen" header="Nama Dokumen" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="tgl_kirim" header="Tgl Kirim" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="tgl_terima" header="Tgl terima" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="tgl_ulang" header="Tgl Kirim Ulang" sortable style={{fontSize: '0.8em', textAlign:'center', minWidth: '10rem', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="status" header="Status" body={statusBodyTemplate} style={{ minWidth: '10rem', textAlign:'center', borderBottom: '0.5px outset #287aff'}}/>
-                    <Column field="Action" header="Action" body={buttonTemplate} style={{ minWidth: '10rem', textAlign:'center', borderBottom: '0.5px outset #287aff'}}/>
-                </TreeTable>
-            </div>
         </div>
-
-        <Modal show={show} centered>
-            <Modal.Header>
-            <Modal.Title>Data Dokumen</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-            <Form>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Nama Dokumen</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={dataSementara[0]?.data.dokumen}
-                        disabled
-                    />
-                </Form.Group>
-                <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-                >
-                <Form.Label>Keterangan</Form.Label>
-                <Form.Control 
-                    as="textarea"
-                    rows={2} 
-                    value={dataSementara[0]?.data.keterangan}
-                    disabled
-                />
-                </Form.Group>
-                <div className="row  g-2 ">
-                    <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Tanggal terima</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={dataSementara[0]?.data.tgl_terima}
-                                disabled
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Tanggal Kirim Ulang</Form.Label>
-                            <Form.Control
-                                type="text"
-                                value={dataSementara[0]?.data.tgl_ulang}
-                                disabled
-                            />
-                        </Form.Group>
-                    </div>
-                </div>
-                <Form.Group className="mb-3" controlId="validationCustom01">
-                    <Form.Label>Jasa Pengiriman</Form.Label>
-                    <Form.Control
-                        required
-                        name="Jasa Pengiriman"
-                        type="text"
-                        // value={x.iddokumen}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Harap Masukan Pengirim / Jasa Pengiriman
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="validationCustom01">
-                    <Form.Label>Nama Pengirim / Jasa Pengiriman</Form.Label>
-                    <Form.Control
-                        required
-                        name="Nama Pengirim / Jasa Pengiriman"
-                        type="text"
-                        // value={x.namadokumen}
-                        // onChange={(e) => handleInputChange(e, i)}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Harap Masukan Nama Pengirim / Jasa Pengiriman
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="validationCustom01">
-                    <Form.Label>No kendaraan / No Resi</Form.Label>
-                    <Form.Control
-                        required
-                        name="No kendaraan / No Resi"
-                        type="text"
-                        placeholder="No kendaraan / No Resi"
-                        // value={x.namadokumen}
-                        // onChange={(e) => handleInputChange(e, i)}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Harap Masukan No kendaraan / No Resi
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Form>
-            </Modal.Body>
-            <Modal.Footer>
-            {
-                (dataSementara[0]?.data.status === "Pengajuan" || dataSementara[0]?.data.status === "Hold" || dataSementara[0]?.data.status === "Reject")
-                ?
-                <div>
-                    <Button className="buttonReset" onClick={(e)=>{handleSwap(dataSementara[0], 'Hold')}}>
-                        Hold
-                    </Button>
-                    <Button className="buttonRead" onClick={(e)=>{handleSwap(dataSementara[0], 'Reject')}}>
-                        Reject
-                    </Button>
-                    <Button className="buttonSet" onClick={(e)=>{handleSwap(dataSementara[0], 'Verifikasi')}}>
-                        Verify
-                    </Button>
-                    <Button className="buttonCancel" onClick={handleClose}>
-                        Close
-                    </Button>
-                </div>
-                :
-                (dataSementara[0]?.data.status === "Verifikasi")
-                ?
-                <div>
-                    <Button className="buttonSet" onClick={(e)=>{handleSwap(dataSementara[0], 'Selesai')}}>
-                        Save Changes
-                    </Button>
-                    <Button className="buttonCancel" onClick={handleClose}>
-                        Close
-                    </Button>
-                </div>
-                :
-                <Button className="buttonCancel" onClick={handleClose}>
-                    Close
-                </Button>
-            
-            }
-            </Modal.Footer>
-        </Modal>
-
         {isLoading && <LoadingPage/>}
-       </>
+        </>
     )
 }

@@ -12,6 +12,7 @@ const useDokumenStore = create(
             fetchDokumen: async (id) => {
                 try {
                     const { data } =  await API_AUTH.get(`dokumen/${id}`);
+                    console.log(id)
                     set(produce((state) => {
                         state.dokumen = data;
                         state.dokumenReady = true;
