@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { format } from "date-fns";
-import id from 'date-fns/locale/id';
-import { Breadcrumb, Dropdown, Form, InputGroup, Modal, Stack } from 'react-bootstrap';
+// import { format } from "date-fns";
+// import id from 'date-fns/locale/id';
+import { Breadcrumb, Dropdown, Form, InputGroup, Stack } from 'react-bootstrap'; //Modal
 import '../PengadaanBarang/pengadaan.css';
 import 'primeicons/primeicons.css';
 import { utils, writeFileXLSX } from 'xlsx';
 
-import { API_AUTH } from '../../apis/apisData';
-import { FileDepoCabang } from '../../datafile/FileSelect';
+// import { API_AUTH } from '../../apis/apisData';
+// import { FileDepoCabang } from '../../datafile/FileSelect';
 import { LoadingPage } from '../../LoadingPage/LoadingPage';
 import useAuthStore, { selectUser } from '../../store/DataUser';
 import useDokumenStore, {selectDokumen, selectFetchDokumen, selectDokumenReady, selectFalseDokumen} from '../../store/DataDokumen'
 
-import { TreeTable } from 'primereact/treetable';
-import { Column } from 'primereact/column';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
-import { Tag } from 'primereact/tag';
-import Swal from 'sweetalert2';
+// import { TreeTable } from 'primereact/treetable';
+// import { Column } from 'primereact/column';
+// import { Button } from 'primereact/button';
+// import { InputText } from 'primereact/inputtext';
+// import { IconField } from 'primereact/iconfield';
+// import { InputIcon } from 'primereact/inputicon';
+// import { Tag } from 'primereact/tag';
+// import Swal from 'sweetalert2';
 
 export const TableDokumen = () => {
     let navigate = useNavigate();
@@ -31,20 +31,20 @@ export const TableDokumen = () => {
     const dokumenFalse = useDokumenStore(selectFalseDokumen);
 
     const [bulan, setBulan] = useState('');
-    const [globalFilter, setGlobalFilter] = useState('');
+    // const [globalFilter, setGlobalFilter] = useState('');
     const [nodes, setNodes] = useState([]);
-    const [dataSementara, setDataSementara] = useState([]);
+    // const [dataSementara, setDataSementara] = useState([]);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
 
-    const handleClose = () => {
+    /* const handleClose = () => {
         setDataSementara([])
         setShow(false)
     };
     const handleShow = () => {
         setShow(true)
-    };
+    }; */
 
     const tHeigt = parseInt(window.innerHeight) - 300;
     let tWidth = 0;
@@ -88,6 +88,9 @@ export const TableDokumen = () => {
         setBulan(`${year}-${bb}`);
         fetchDokumen(`${year}-${bb}`);
         console.log(`${year}-${bb}`)
+        console.log(nodes)
+        console.log(screenHeight)
+        console.log(screenWidth)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
