@@ -174,8 +174,10 @@ export const FileDepoCabang = [
   { idDepo: '74EF4FEA', area: 'Timur', value: 'Depo Banjarmasin', label: 'Depo Banjarmasin' },	
   { idDepo: '92CC8245', area: 'Timur', value: 'Depo Jember', label: 'Depo Jember' },	
   { idDepo: 'CE6FE993', area: 'Timur', value: 'Depo Madiun', label: 'Depo Madiun' },	
-  { idDepo: '32945493', area: 'Timur', value: 'Kalimantan Timur', label: 'Kalimantan Timur' },	
- 
+  { idDepo: '32945493', area: 'Timur', value: 'Kalimantan Timur', label: 'Kalimantan Timur' },
+]
 
-
+export const FileTransport = [
+  { value: 'Eksternal', label: 'Eksternal' },
+  { value: 'Internal', label: 'Internal' }
 ]

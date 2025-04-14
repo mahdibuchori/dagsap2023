@@ -152,8 +152,7 @@ export const TablePo = ({columns}) => {
         poFalse();
         setBulan(event.target.value);
         await fetchPo(event.target.value, userData.uplan);
-        
-      } 
+    } 
 
     const defaultColDef = useMemo(() => {
         return {

@@ -60,7 +60,6 @@ export const EditDokumen = () => {
                     i.idDepo === cabs[0].idDepo
                 )
             });
-            console.log(location.state.data)
             let filPengajuan = list.filter(a => a.status === "Pengajuan");
             let filVerifikasi = list.filter(a => a.status === "Verifikasi");
             let filSelesai = list.filter(a => a.status === "Selesai");
@@ -337,6 +336,7 @@ export const EditDokumen = () => {
                             <Accordion.Header>Data Dokumen</Accordion.Header>
                             <Accordion.Body>
                             {inputList.map((x, i) => {
+                                console.log(x)
                                 let d = false
                                 let colo = 'danger'
                                 if(x.status === 'Pengajuan'){
