@@ -2254,6 +2254,11 @@ export const COLUMNS_PO =[
         field : 'tgl_approve',
     },
     {
+        headerName: 'Tgl Email',
+        width: 150,
+        field : 'tgl_email',
+    },
+    {
         field : 'Action',
         headerName: 'Action',
         cellRenderer: BtnPurchasing,

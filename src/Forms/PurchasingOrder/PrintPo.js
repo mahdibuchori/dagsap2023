@@ -419,6 +419,7 @@ export const PrintPo = () => {
                 setIsLoading(false)
             }else{
                 // console.log(filePath)
+                const tanggal = format(new Date(), "yyyy-MM-dd", { locale: id });
                 const next = await API_AUTH.post(`/sendmail`, {
                     "to" : emails,
                     "cc" : ccemails,
@@ -426,7 +427,9 @@ export const PrintPo = () => {
                     "subject" : subject,
                     "html" : text,
                     "uri" : filePath.file.filename,
-                    "filename" : file.name
+                    "filename" : file.name,
+                    "id" : location.state.data.id_po,
+                    "tanggal" : tanggal
                 })
                 console.log(next.status)
                 Swal.fire(`${location.state.data.id_po} berhasil terkirim ke-`,`${emails}`,'success')
