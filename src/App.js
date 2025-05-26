@@ -45,49 +45,49 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Dashboard />} errorElement={<PageNotFo />}>
-        <Route path='' element={<Home />}></Route>
-        <Route path='/profile' element={<Profil />}></Route>
-        <Route path='/news' element={<News />}></Route>
-        <Route path='/form' element={<MenuCenter />} errorElement={<PageNotFo />}></Route>
-        <Route path="/form/pengadaan" element={<Pengadaan />} />
-        <Route path="/form/pengadaan/create" element={<CreatePengadaan />} />
-        <Route path="/form/pengadaan/data" element={<UpdatePengadaan />} />
-        <Route path="/form/pengadaan/update" element={<UpdatePrevPengada />} />
-        <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} />
-        <Route path="/form/pengadaan/printview" element={<CetakPengadaan />} />
-        <Route path="/form/pengadaan/tableadd" element={<TableAddRemove />} />
+          <Route path='' element={<Home />}></Route>
+          <Route path='/profile' element={<Profil />}></Route>
+          <Route path='/news' element={<News />}></Route>
+          <Route path='/form' element={<MenuCenter />} errorElement={<PageNotFo />}></Route>
+          <Route path="/form/pengadaan" element={<Pengadaan />} />
+          <Route path="/form/pengadaan/create" element={<CreatePengadaan />} />
+          <Route path="/form/pengadaan/data" element={<UpdatePengadaan />} />
+          <Route path="/form/pengadaan/update" element={<UpdatePrevPengada />} />
+          <Route path="/form/pengadaan/verfikasi" element={<VerifyPengadaan />} />
+          <Route path="/form/pengadaan/printview" element={<CetakPengadaan />} />
+          <Route path="/form/pengadaan/tableadd" element={<TableAddRemove />} />
 
-        <Route path="/form/purchaseorder" element={<PurcahsingOrder />} />
-        <Route path="/form/purchaseorder/create" element={<CreatePo />} />
-        {/* <Route path="/form/purchaseorder/update" element={<EditPo />} /> */}
-        <Route path="/form/purchaseorder/update" element={<NewEditPo />} />
-        <Route path="/form/purchaseorder/data" element={<ViewPo />} />
-        <Route path="/form/purchaseorder/verifikasi" element={<VerifikasiPo />} />
-        <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} />
-        <Route path="/form/purchaseorder/printview" element={<PrintPo />} />
+          <Route path="/form/purchaseorder" element={<PurcahsingOrder />} />
+          <Route path="/form/purchaseorder/create" element={<CreatePo />} />
+          {/* <Route path="/form/purchaseorder/update" element={<EditPo />} /> */}
+          <Route path="/form/purchaseorder/update" element={<NewEditPo />} />
+          <Route path="/form/purchaseorder/data" element={<ViewPo />} />
+          <Route path="/form/purchaseorder/verifikasi" element={<VerifikasiPo />} />
+          <Route path="/form/purchaseorder/reloadpo" element={<ReloadPo />} />
+          <Route path="/form/purchaseorder/printview" element={<PrintPo />} />
 
 
-        <Route path="/form/Kedatangan" element={<KedatanganBarang />} />
-        <Route path="/form/Kedatangan/terimaview" element={<ViewTerima />} />
-        <Route path="/form/Kedatangan/logbook" element={<LogBook />} />
-        <Route path="/form/Kedatangan/logbookview" element={<ViewLogbook />} />
-        <Route path="/form/Kedatangan/labelbarang" element={<LabelPrint />} />
+          <Route path="/form/Kedatangan" element={<KedatanganBarang />} />
+          <Route path="/form/Kedatangan/terimaview" element={<ViewTerima />} />
+          <Route path="/form/Kedatangan/logbook" element={<LogBook />} />
+          <Route path="/form/Kedatangan/logbookview" element={<ViewLogbook />} />
+          <Route path="/form/Kedatangan/labelbarang" element={<LabelPrint />} />
 
-        <Route path="/form/karyawan" element={<Karyawan />} />
-        <Route path="/form/karyawan/create" element={<InputKaryawan />} />
-        
-        <Route path="/form/okp" element={<Okp />} />
-        <Route path="/form/okp/create" element={<InputOkp />} />
-        <Route path="/form/okp/printview" element={<CetakOkp />} />
+          <Route path="/form/karyawan" element={<Karyawan />} />
+          <Route path="/form/karyawan/create" element={<InputKaryawan />} />
+          
+          <Route path="/form/okp" element={<Okp />} />
+          <Route path="/form/okp/create" element={<InputOkp />} />
+          <Route path="/form/okp/printview" element={<CetakOkp />} />
 
-        <Route path="/form/expro" element={<TabelExpro />} />
-        <Route path="/form/material" element={<TabelMaterial />} />
-        <Route path="/form/departemen" element={<TabelDepartemen />} />
-        
-        <Route path="/form/dokumen" element={<TableDokumen />} />
-        <Route path="/form/dokumen/create" element={<CreateDokumen />} />
-        <Route path="/form/dokumen/update" element={<EditDokumen />} /> 
-        <Route path="/form/dokumen/view" element={<PrintDokumen />} />
+          <Route path="/form/expro" element={<TabelExpro />} />
+          <Route path="/form/material" element={<TabelMaterial />} />
+          <Route path="/form/departemen" element={<TabelDepartemen />} />
+          
+          <Route path="/form/dokumen" element={<TableDokumen />} />
+          <Route path="/form/dokumen/create" element={<CreateDokumen />} />
+          <Route path="/form/dokumen/update" element={<EditDokumen />} /> 
+          <Route path="/form/dokumen/view" element={<PrintDokumen />} />
         </Route>
         <Route path='/login' element={<Portofolio />}></Route>
       </Routes>

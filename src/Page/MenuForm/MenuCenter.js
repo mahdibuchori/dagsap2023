@@ -36,7 +36,6 @@ const MenuCenter = () => {
         <MenuDevelop />
         <p style={{display: 'none'}}>{divisi}</p>
       </div>
-      
     )
   }
   else if(userData?.udivisi === "PPIC-Purchasing" && userData?.ulevel === 2){

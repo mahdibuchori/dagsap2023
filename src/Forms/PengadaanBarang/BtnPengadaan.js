@@ -36,7 +36,7 @@ export const BtnPengadaan = (props) => {
       <Tooltip id="button-tooltip" {...props}>
         Time Line Data
       </Tooltip>
-  )
+    )
 
     const handleEdit = () =>{
       navigate(`/form/pengadaan/data`,{state:{
@@ -102,7 +102,7 @@ export const BtnPengadaan = (props) => {
                             }
                           break;
                           case "MAINTENANCE":
-                            if(level === 2 || level === 3){
+                            if(level === 2){
                               navigate(`/form/pengadaan/verfikasi`,{state:{
                                 data : props.data
                               }});
@@ -332,9 +332,9 @@ export const BtnPengadaan = (props) => {
             </OverlayTrigger>
 
             <OverlayTrigger
-                placement="bottom"
-                delay={{ show: 150, hide: 250 }}
-                overlay={renderVerify}
+              placement="bottom"
+              delay={{ show: 150, hide: 250 }}
+              overlay={renderVerify}
             >
                 <button
                     style={{ height: 30, lineHeight: 0.5, marginTop : 5}}

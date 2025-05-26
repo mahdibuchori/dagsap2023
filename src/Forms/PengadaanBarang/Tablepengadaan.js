@@ -102,7 +102,7 @@ export const Tablepengadaan = ({columns}) => {
   }, []);
   
   useEffect(() => { 
-    setIsLoading(true);
+    setIsLoading(true); 
     pengadaanFalse();
     const date = new Date();
     const month = date.getMonth() + 1;
