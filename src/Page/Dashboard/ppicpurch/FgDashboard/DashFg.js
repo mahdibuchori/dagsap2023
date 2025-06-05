@@ -8,7 +8,7 @@ import usePengadaanStore, {selectPengadaan, selectFetchPengadaan, selectPengadaa
 
 export const DashFg = () => {
   const navigate = useNavigate();
-  const userData = useAuthStore(selectUser);
+  const userData = useAuthStore(selectUser); 
 
   const newPengadaan = usePengadaanStore(selectPengadaan);
   const fetchPengadaan = usePengadaanStore(selectFetchPengadaan);

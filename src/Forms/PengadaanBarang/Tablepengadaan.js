@@ -1191,7 +1191,15 @@ export const Tablepengadaan = ({columns}) => {
 
   const createPengadaan = () =>{
     if(userData.udivisi === "Maintenance"){
-      if(userData.uuid === "DEE-MTC01" ||userData.uuid === "DEE-MTC02" || userData.uuid === "DEE-MTC05" || userData.uuid === "DEE-SPART01"){
+      if(userData.uuid === "DEE-MTC02" || userData.uuid === "DEE-MTC05" || userData.uuid === "DEE-SPART01"){
+        navigate('/form/pengadaan/create')
+      }
+      else{
+        Swal.fire("Oppss...","Maaf akses dibatasi", 'info');
+      }
+    }
+    if(userData.udivisi === "SSD"){
+      if(userData.uuid === "DEE-SSD03"){
         navigate('/form/pengadaan/create')
       }
       else{

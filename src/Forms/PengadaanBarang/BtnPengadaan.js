@@ -301,7 +301,7 @@ export const BtnPengadaan = (props) => {
     
       }
       else if(String(props.data.status).toUpperCase() === "VERIFIKASI"){
-          Swal.fire('info','Pengadaan barang sedang diproses oleh purchasing','info')
+        Swal.fire('info','Pengadaan barang sedang diproses oleh purchasing','info')
       }
       else{}
 
