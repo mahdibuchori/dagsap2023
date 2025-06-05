@@ -1198,7 +1198,7 @@ export const Tablepengadaan = ({columns}) => {
         Swal.fire("Oppss...","Maaf akses dibatasi", 'info');
       }
     }
-    if(userData.udivisi === "SSD"){
+    else if(userData.udivisi === "SSD"){
       if(userData.uuid === "DEE-SSD03"){
         navigate('/form/pengadaan/create')
       }
