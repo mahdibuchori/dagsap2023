@@ -946,6 +946,7 @@ export const Tablepengadaan = ({columns}) => {
             }
           )
         })
+        console.log(menu_data)
         navigate(`/form/purchaseorder/create`,{
           state:{
             data : menu_data
@@ -1190,7 +1191,8 @@ export const Tablepengadaan = ({columns}) => {
   }
 
   const createPengadaan = () =>{
-    if(userData.udivisi === "Maintenance"){
+    Swal.fire('Info','Batas Pembuatan Pengadaan 23 Desember 2025, Akan Dibukan Kembali 02 Januari 2026', 'info')
+    /* if(userData.udivisi === "Maintenance"){
       if(userData.uuid === "DEE-MTC02" || userData.uuid === "DEE-MTC05" || userData.uuid === "DEE-SPART01"){
         navigate('/form/pengadaan/create')
       }
@@ -1208,7 +1210,7 @@ export const Tablepengadaan = ({columns}) => {
     }
     else{
       navigate('/form/pengadaan/create')
-    }
+    } */
   }
   return (
     <>

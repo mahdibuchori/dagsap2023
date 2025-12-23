@@ -622,6 +622,7 @@ export const CreatePo = () => {
 
                     )
                 })
+                console.log(cekM)
                 setRowData(cekM)
                 let filTgl = [];
                 for(let x = 0; x < cekM.length; x++){
@@ -705,7 +706,7 @@ export const CreatePo = () => {
                     Swal.fire("Opps",fMate,'info')
                 }
                 else{
-                    setIsLoading(true)
+                    // setIsLoading(true)
                     /* let parRow = [];
                     for(let x = 0; x < rowData.length; x++){
                         parRow = rowData[x].parsial;
@@ -1710,7 +1711,6 @@ export const CreatePo = () => {
                                 singleClickEdit={true}
                                 onCellClicked={onCellClicked}
                                 onCellValueChanged={onCellValueChanged}
-                      
                             />
                         </div>
                         <div className='row g-2 mb-1'>

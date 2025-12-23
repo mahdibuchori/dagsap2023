@@ -141,7 +141,7 @@ export const PopupCellRenderer = (props) => {
         itemsToUpdate.push(data);
         props.api.applyTransaction({
             update: itemsToUpdate
-        });
+        }); 
     };
 
     return (

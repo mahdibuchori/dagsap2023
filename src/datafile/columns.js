@@ -1584,7 +1584,7 @@ export const COLUMNS_DATAPOEDIT =[
                 const id = data.mypo
                 const hil_max = dt_A.findIndex((i) => i.noAkun === "max" && i.po === id);
                 if(hil_max >= 0){dt_A.splice(hil_max, 1)}else{};
-               const nec = dt_A.map((obj, i)=>{
+                const nec = dt_A.map((obj, i)=>{
                     let cc = "";
                     let epro = ""
                     if(obj.po === id){cc = ""; epro =""}else{cc = obj.po; epro = obj.expro}

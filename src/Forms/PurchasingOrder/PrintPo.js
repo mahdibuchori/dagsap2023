@@ -182,6 +182,7 @@ export const PrintPo = () => {
                 setStAppro(false);
                 setStVeri(false)
             }
+            
             let data = location.state.data.dataPO.map((e)=>{
                 return(
                     e.parsial.map((i) =>{

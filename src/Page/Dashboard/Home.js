@@ -21,7 +21,7 @@ const Home = () => {
   const userData = useAuthStore(selectUser);
   useEffect(() => {
     getUsers()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getUsers =async () =>{
@@ -34,7 +34,6 @@ const Home = () => {
         <DashDev />
         <p style={{display: 'none'}}>{divisi}</p>
       </div>
-      
     )
   }
   else if(userData?.udivisi === "PPIC-Purchasing" && userData?.ulevel === 2){
